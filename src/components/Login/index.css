@@ -17,3 +17,13 @@ body {
     padding-bottom: 20px;
     max-width: calc(33%);
 }
+
+.button {
+    background-color: #5FAEF3;
+    color: white;
+    margin-top: 20px;
+}
+
+.card {
+    background-color: #FBF8F8;
+}
