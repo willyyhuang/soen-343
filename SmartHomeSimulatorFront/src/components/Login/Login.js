@@ -45,6 +45,8 @@ const Login = () => {
         onClick={() => {
           if (confirmPassword !== signUpPayload.password) {
             message.error('password does not match')
+          } else if (!signUpPayload.username || !signUpPayload.password) {
+            message.error('missing username or password')
           } else {
             signUp(signUpPayload)
           }
@@ -74,14 +76,30 @@ const Login = () => {
           })}
           className='row'
           placeholder='password' />
-        <Button onClick={() => logIn(signInPayload)} className='button' block type='ghost'>Log In</Button>
+        <Button
+          onClick={() => {
+            if (!signInPayload.username || !signInPayload.password) {
+              message.error('missing username or password')
+            } else {
+              logIn(signInPayload)
+            }
+          }}
+          className='button'
+          block
+          type='ghost'>
+          Log In
+        </Button>
       </Card>
       <Divider />
       <Card className='card'>
         <Typography.Text>
           Don&apos;t have an account?
         </Typography.Text>
-        <Button onClick={() => setIsSignUpPage(true)} type='link'>Sign up here!</Button>
+        <Button
+          onClick={() => setIsSignUpPage(true)}
+          type='link'>
+          Sign up here!
+        </Button>
       </Card>
     </>
   )
