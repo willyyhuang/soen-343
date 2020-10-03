@@ -2,53 +2,49 @@ import {
   Button, Card, Col, Divider, Input, message, Row, Typography,
 } from 'antd'
 import React, {useState} from 'react'
+import {connect} from 'react-redux'
 import {logIn, signUp} from '../../services'
 import placeholderLogo from '../../images/placeholderLogo.jpg'
 import './index.css'
 
-const Login = () => {
+const Login = ({authentication, dispatch}) => {
+  const setUserName = (text) => {
+    dispatch({type: 'SET_USERNAME', payload: text})
+  }
+  const setPassword = (text) => {
+    dispatch({type: 'SET_PASSWORD', payload: text})
+  }
+  const setConfirmPassword = (text) => {
+    dispatch({type: 'SET_CONFIRM_PASSWORD', payload: text})
+  }
+  const {username, password, confirmPassword} = authentication
   const [isSignUpPage, setIsSignUpPage] = useState(false)
-  const [signUpPayload, setSignUpPayload] = useState({
-    username: undefined,
-    password: undefined,
-  })
-  const [signInPayload, setSignInPayload] = useState({
-    username: undefined,
-    password: undefined,
-  })
-  const [confirmPassword, setConfirmPassword] = useState()
 
   const SignUpCard = (
     <Card className='card'>
       <Input
-        onChange={(e) => setSignUpPayload({
-          username: e.target.value,
-          password: signUpPayload.password,
-        })}
+        onChange={(e) => setUserName(e.target.value)}
         placeholder='username or email'
-        value={signUpPayload.username} />
+        value={username} />
       <Input.Password
-        onChange={(e) => setSignUpPayload({
-          username: signUpPayload.username,
-          password: e.target.value,
-        })}
+        onChange={(e) => setPassword(e.target.value)}
         className='row'
         placeholder='password'
-        value={signUpPayload.password} />
+        value={password} />
       <Input.Password
         onChange={(e) => setConfirmPassword(e.target.value)}
         className='row'
-        disabled={!signUpPayload.password}
+        disabled={!password}
         placeholder='confirm password'
         value={confirmPassword} />
       <Button
         onClick={() => {
-          if (confirmPassword !== signUpPayload.password) {
+          if (confirmPassword !== password) {
             message.error('password does not match')
-          } else if (!signUpPayload.username || !signUpPayload.password) {
+          } else if (!username || !password) {
             message.error('missing username or password')
           } else {
-            signUp(signUpPayload)
+            signUp({username, password})
           }
         }}
         className='button'
@@ -56,7 +52,16 @@ const Login = () => {
         type='ghost'>
         Sign Up
       </Button>
-      <Button className='row' block onClick={() => setIsSignUpPage(false)} type='link'>Back to sign in page</Button>
+      <Button
+        className='row'
+        block
+        onClick={() => {
+          dispatch({type: 'RESET_STATE'})
+          setIsSignUpPage(false)
+        }}
+        type='link'>
+        Back to sign in page
+      </Button>
     </Card>
   )
 
@@ -64,24 +69,18 @@ const Login = () => {
     <>
       <Card className='card'>
         <Input
-          onChange={(e) => setSignInPayload({
-            username: e.target.value,
-            password: signInPayload.password,
-          })}
+          onChange={(e) => setUserName(e.target.value)}
           placeholder='username or email' />
         <Input.Password
-          onChange={(e) => setSignInPayload({
-            username: signInPayload.username,
-            password: e.target.value,
-          })}
+          onChange={(e) => setPassword(e.target.value)}
           className='row'
           placeholder='password' />
         <Button
           onClick={() => {
-            if (!signInPayload.username || !signInPayload.password) {
+            if (!username || !password) {
               message.error('missing username or password')
             } else {
-              logIn(signInPayload)
+              logIn({username, password})
             }
           }}
           className='button'
@@ -96,7 +95,10 @@ const Login = () => {
           Don&apos;t have an account?
         </Typography.Text>
         <Button
-          onClick={() => setIsSignUpPage(true)}
+          onClick={() => {
+            dispatch({type: 'RESET_STATE'})
+            setIsSignUpPage(true)
+          }}
           type='link'>
           Sign up here!
         </Button>
@@ -116,5 +118,9 @@ const Login = () => {
   )
 }
 
+const mapStateToProps = (state) => ({
+  authentication: state.authentication,
+})
+
 Login.displayName = 'Login'
-export default Login
+export default connect(mapStateToProps)(Login)
