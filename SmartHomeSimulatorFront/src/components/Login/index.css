@@ -1,0 +1,29 @@
+body {
+    letter-spacing: 130%;
+}
+
+.login {
+    margin-top: 10%;
+}
+
+.row {
+    margin-top: 20px;
+}
+
+.logo {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    padding-bottom: 20px;
+    max-width: calc(33%);
+}
+
+.button {
+    background-color: #5FAEF3;
+    color: white;
+    margin-top: 20px;
+}
+
+.card {
+    background-color: #FBF8F8;
+}
