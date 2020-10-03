@@ -1,8 +1,6 @@
 @import '~antd/dist/antd.css';
-@font-face {
-    font-family: 'Helvetica400';
-    src: url(./font/Helvetica400.ttf) format('tff');
-}
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+
 body {
-    font-family: 'Helvetica400';
+    font-family: 'Open Sans', sans-serif;
 }
