@@ -43,9 +43,5 @@ First time running the code of backend?
 	
 ### If it works
 
-You'll see this logo appear in your console and all the services starting in port 8080:
- .   ____          _            __ _ _
- /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
-( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
- \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
-  '  |____| .__|_| |_|_| |_\__, | / / / /
+You'll see the Spring logo appear in your console and all the services starting in port 8080.
+
