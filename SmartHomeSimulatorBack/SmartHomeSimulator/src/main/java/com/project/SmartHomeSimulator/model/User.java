@@ -1,32 +1,20 @@
 package com.project.SmartHomeSimulator.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Getter;
+import lombok.Setter;
 
-import java.util.UUID;
+import javax.validation.constraints.NotBlank;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
+@Entity
+@Getter
+@Setter
 public class User {
-    private final UUID id;
-    private final String username;
-    private final String password;
+    @Id
+    private String username;
+    @NotBlank(message = "Password cannot be blank")
+    private String password;
 
-
-    public User(@JsonProperty("id") UUID id,
-                @JsonProperty("username") String username,
-                @JsonProperty("password") String password) {
-        this.id = id;
-        this.username = username;
-        this.password = password;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public UUID getId() {
-        return id;
-    }
 }
