@@ -34,7 +34,7 @@ It contains the controllers, the classes that will receive the https calls.
 
 Here is what we have for now:
 
-**Adding a user (POST)**: "localhost:8080/api/v1/user" and it has to have a user in the body in JSON format
+**Adding a user (POST)**: "http://localhost:8080/api/v1/user/register" and it has to have a user in the body in JSON format
 
 ###Service
 
