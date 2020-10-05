@@ -3,7 +3,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import {createStore} from 'redux'
 import {Provider} from 'react-redux'
-import Layout from './Layout'
+import Router from './Router'
 import rootReducer from './models'
 
 const store = createStore(rootReducer,
@@ -12,7 +12,7 @@ const store = createStore(rootReducer,
 
 const App = () => (
   <Provider store={store}>
-    <Layout />
+    <Router />
   </Provider>
 )
 
