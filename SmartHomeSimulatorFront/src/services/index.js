@@ -1,7 +1,8 @@
 import axios from 'axios'
+import appsettings from '../appsettings.json'
 
 // API routes
-export const userSignUp = 'localhost:8080/api/v1/user'
+export const userSignUp = `${appsettings.baseApiUrl}/api/v1/user/register`
 export const userLogin = ''
 
 export async function signUp(payload) {
