@@ -17,4 +17,11 @@ public class User {
     @NotBlank(message = "Password cannot be blank")
     private String password;
 
+    public String getUsername() {
+        return username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
 }
