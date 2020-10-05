@@ -25,5 +25,9 @@ public class UserService {
         }
         return null;
     }
+    public long removeUser (String username)
+    {
+        return userRepository.deleteByUsername(username);
+    }
 
 }
