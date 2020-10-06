@@ -16,6 +16,14 @@ const Login = ({authentication, dispatch}) => {
   const setConfirmPassword = (text) => {
     dispatch({type: 'SET_CONFIRM_PASSWORD', payload: text})
   }
+  const login = () => {
+    dispatch({type: 'LOGIN'})
+  }
+  const signUp = () => {
+    dispatch({type: 'SIGN_UP'})
+    dispatch({type: 'LOGIN'})
+  }
+
   const {username, password, confirmPassword} = authentication
   const [isSignUpPage, setIsSignUpPage] = useState(false)
 
@@ -43,8 +51,7 @@ const Login = ({authentication, dispatch}) => {
           } else if (!username || !password) {
             message.error('missing username or password')
           } else {
-            dispatch({type: 'SIGN_UP'})
-            dispatch({type: 'LOGIN'})
+            signUp()
           }
         }}
         className='button'
@@ -80,7 +87,7 @@ const Login = ({authentication, dispatch}) => {
             if (!username || !password) {
               message.error('missing username or password')
             } else {
-              dispatch({type: 'LOGIN'})
+              login()
             }
           }}
           className='button'
