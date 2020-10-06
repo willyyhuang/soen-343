@@ -4,7 +4,6 @@ import {
 } from 'antd'
 import React, {useState} from 'react'
 import {connect} from 'react-redux'
-import {logIn, signUp} from '../../services'
 import placeholderLogo from '../../images/placeholderLogo.jpg'
 
 const Login = ({authentication, dispatch}) => {
@@ -44,7 +43,8 @@ const Login = ({authentication, dispatch}) => {
           } else if (!username || !password) {
             message.error('missing username or password')
           } else {
-            signUp({username, password})
+            dispatch({type: 'SIGN_UP'})
+            dispatch({type: 'LOGIN'})
           }
         }}
         className='button'
@@ -80,7 +80,7 @@ const Login = ({authentication, dispatch}) => {
             if (!username || !password) {
               message.error('missing username or password')
             } else {
-              logIn({username, password})
+              dispatch({type: 'LOGIN'})
             }
           }}
           className='button'
