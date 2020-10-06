@@ -43,6 +43,7 @@
         "array-callback-return": "off",
         "react/prop-types": "off",
         "linebreak-style":"off",
-        "no-param-reassign": "off"
+        "no-param-reassign": "off",
+        "no-underscore-dangle": "off"
     }
 }

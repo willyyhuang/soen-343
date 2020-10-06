@@ -1,6 +1,6 @@
+import './Router.css'
 import {BrowserRouter, Redirect, Route} from 'react-router-dom'
 import React from 'react'
-import './Router.css'
 import {connect} from 'react-redux'
 import {Login} from './components'
 

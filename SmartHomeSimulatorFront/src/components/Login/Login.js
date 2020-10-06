@@ -1,3 +1,4 @@
+import './index.css'
 import {
   Button, Card, Col, Divider, Input, message, Row, Typography,
 } from 'antd'
@@ -5,7 +6,6 @@ import React, {useState} from 'react'
 import {connect} from 'react-redux'
 import {logIn, signUp} from '../../services'
 import placeholderLogo from '../../images/placeholderLogo.jpg'
-import './index.css'
 
 const Login = ({authentication, dispatch}) => {
   const setUserName = (text) => {
