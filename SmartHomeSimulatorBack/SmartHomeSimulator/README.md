@@ -47,7 +47,7 @@ Returns 0 if user exists and 1 if it was successful
 
 Returns 0 if user doesn't exist and 1 if it was successful
 
-**Identifying a user (GET)**: "http://localhost:****/api/v1/user/login"  
+**Identifying a user (POST)**: "http://localhost:****/api/v1/user/login"  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;body:  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"username":"username",  
