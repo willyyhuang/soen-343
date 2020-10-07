@@ -17,7 +17,7 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping(value = "/find")
+    @GetMapping(value = "/login")
     @ResponseStatus(value = HttpStatus.OK)
     @ResponseBody
     public String identifyUser(@RequestBody @Valid User user)
