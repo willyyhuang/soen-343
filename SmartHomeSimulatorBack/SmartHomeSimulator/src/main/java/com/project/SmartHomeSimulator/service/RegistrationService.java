@@ -18,8 +18,13 @@ public class RegistrationService {
         this.userRepository = userRepository;
     }
 
-    public void createUser(final User user)
+    //returns 0 if user exists returns 1 if successfully created
+    public int createUser(final User user)
     {
+        if(userRepository.findByUsername(user.getUsername()) != null){
+            return 0;
+        }
         userRepository.save(user);
+        return 1;
     }
 }
