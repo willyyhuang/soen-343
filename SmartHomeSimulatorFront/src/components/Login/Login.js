@@ -21,7 +21,6 @@ const Login = ({authentication, dispatch}) => {
   }
   const signUp = () => {
     dispatch({type: 'SIGN_UP'})
-    dispatch({type: 'LOGIN'})
   }
 
   const {username, password, confirmPassword} = authentication

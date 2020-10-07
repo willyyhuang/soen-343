@@ -27,20 +27,12 @@ const authentication = produce((state, action) => {
       logIn({
         username: state.username,
         password: state.password,
-      }).then((response) => {
-        if (response.success) {
-          state.isLoggedIn = true
-        }
       })
       return state
     case 'SIGN_UP':
       signUp({
         username: state.username,
         password: state.password,
-      }).then((response) => {
-        if (response.success) {
-          state.isLoggedIn = true
-        }
       })
       return state
     default: return state
