@@ -20,14 +20,14 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public User identifyUser (User user)
+    public String identifyUser (User user)
     {
         User found = userRepository.findByUsername(user.getUsername());
         if(found == null){
             return null;
         }
         if(user.getPassword().equals(found.getPassword())){
-            return user;
+            return user.getUsername();
         }
         return null;
     }
@@ -36,28 +36,13 @@ public class UserService {
         return userRepository.deleteByUsername(username);
     }
 
-    public int editUsername ( User user, String newUsername)
-    {
-        User oldUser =  userRepository.findByUsername(user.getUsername());
-        if (oldUser == null)
-            return 0;
-        User newUser = new User();
-        newUser.setUsername(newUsername);
-        newUser.setPassword(oldUser.getPassword());
-        newUser.setHomeLocation(oldUser.getHomeLocation());
-        removeUser(oldUser.getUsername());
-        registrationService.createUser(newUser);
-        return 1;
-    }
-
     public int editPassword (User user)
     {
         User currentUser = userRepository.findByUsername(user.getUsername());
         if (currentUser == null)
             return 0;
-        user.setHomeLocation(currentUser.getHomeLocation());
-        removeUser(currentUser.getUsername());
-        registrationService.createUser(user);
+        currentUser.setPassword(user.getPassword());
+        userRepository.save(currentUser);
         return 1;
     }
 
@@ -66,9 +51,8 @@ public class UserService {
         User currentUser = userRepository.findByUsername(user.getUsername());
         if (currentUser == null)
             return 0;
-        user.setPassword(currentUser.getPassword());
-        removeUser(currentUser.getUsername());
-        registrationService.createUser(user);
+        currentUser.setHomeLocation(user.getHomeLocation());
+        userRepository.save(currentUser);
         return 1;
     }
 

@@ -17,17 +17,17 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping(value = "api/v1/user/find")
+    @GetMapping(value = "/find")
     @ResponseStatus(value = HttpStatus.OK)
     @ResponseBody
     public String identifyUser(@RequestBody @Valid User user)
     {
-        String username = userService.identifyUser(user).getUsername();
+        String username = userService.identifyUser(user);
         return username;
     }
 
     //Returns 0 if not found, or 1 if successfully deleted
-    @PostMapping(value = "api/v1/user/remove")
+    @PostMapping(value = "/remove")
     @ResponseStatus(value = HttpStatus.OK)
     @ResponseBody
     @Transactional
@@ -37,17 +37,7 @@ public class UserController {
     }
 
     //Returns 0 if not found, or 1 if successfully edited
-    @PostMapping(value = "api/v1/user/editUsername")
-    @ResponseStatus(value = HttpStatus.OK)
-    @ResponseBody
-    @Transactional
-    public int editUsername (@RequestBody @Valid User user, @RequestParam("newUsername") String newUsername)
-    {
-       return userService.editUsername(user, newUsername);
-    }
-
-    //Returns 0 if not found, or 1 if successfully edited
-    @PostMapping(value = "api/v1/user/editPassword")
+    @PostMapping(value = "/editPassword")
     @ResponseStatus(value = HttpStatus.OK)
     @ResponseBody
     @Transactional
@@ -57,7 +47,7 @@ public class UserController {
     }
 
     //Returns 0 if not found, or 1 if successfully edited
-    @PostMapping(value = "api/v1/user/editHomeLocation")
+    @PostMapping(value = "/editHomeLocation")
     @ResponseStatus(value = HttpStatus.OK)
     @ResponseBody
     @Transactional
