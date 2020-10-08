@@ -24,8 +24,9 @@ const Login = ({authentication, dispatch}) => {
     logIn({
       username, password,
     }).then((response) => {
-      if (response.data) {
-        console.log('login success')
+      const {data} = response
+      if (data.success) {
+        console.log(data.user)
       }
     })
   }
