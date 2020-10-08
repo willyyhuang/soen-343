@@ -3,7 +3,7 @@ import appsettings from '../appsettings.json'
 
 // API routes
 export const userSignUp = `${appsettings.baseApiUrl}/api/v1/user/register`
-export const userLogin = ''
+export const userLogin = `${appsettings.baseApiUrl}/api/v1/user/login`
 
 export async function signUp(payload) {
   return axios.post(userSignUp, payload)

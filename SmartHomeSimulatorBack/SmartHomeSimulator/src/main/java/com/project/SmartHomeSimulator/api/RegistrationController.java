@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @RestController
+@CrossOrigin(origins = {"*"})
 @RequestMapping("/api/v1")
 public class RegistrationController {
 
@@ -17,8 +18,9 @@ public class RegistrationController {
 
     @PostMapping(value = "/user/register")
     @ResponseStatus(value = HttpStatus.CREATED)
-    public void createUser(@RequestBody @Valid User user)
+    @ResponseBody
+    public int createUser(@RequestBody @Valid User user)
     {
-        registrationService.createUser(user);
+        return registrationService.createUser(user);
     }
 }

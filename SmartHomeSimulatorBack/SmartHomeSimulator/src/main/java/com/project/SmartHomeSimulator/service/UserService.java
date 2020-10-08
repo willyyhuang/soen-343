@@ -1,6 +1,7 @@
 package com.project.SmartHomeSimulator.service;
 
 import com.project.SmartHomeSimulator.dao.UserRepository;
+import com.project.SmartHomeSimulator.model.APIResponseLogin;
 import com.project.SmartHomeSimulator.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,17 +18,22 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    // Returns username if right password, Not Found if user does not exist and No Match if wrong password
-    public String identifyUser (User user)
+    // Returns user if the password match or null if user does not exist or password does not match
+    public APIResponseLogin identifyUser (User user)
     {
         User found = userRepository.findByUsername(user.getUsername());
+        APIResponseLogin response = new APIResponseLogin();
+        response.setUser(found);
         if(found == null){
-            return "Not Found";
+            response.setSuccess(false);
+            return null;
         }
-        if(user.getPassword().equals(found.getPassword())){
-            return user.getUsername();
+        else if(user.getPassword().equals(found.getPassword())){
+            response.setSuccess(true);
+            return response;
         }
-        return "No Match";
+        response.setSuccess(false);
+        return null;
     }
 
     //returns 0 if user was not found and 1 if successfully deleted

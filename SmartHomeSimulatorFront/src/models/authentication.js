@@ -1,5 +1,4 @@
 import produce from 'immer'
-import {logIn, signUp} from '../services'
 
 const initialState = {
   username: '',
@@ -20,28 +19,11 @@ const authentication = produce((state, action) => {
     case 'SET_CONFIRM_PASSWORD':
       state.confirmPassword = payload
       return state
+    case 'SET_IS_LOGGED':
+      state.isLoggedIn = payload
+      return state
     case 'RESET_STATE':
       state = initialState
-      return state
-    case 'LOGIN':
-      logIn({
-        username: state.username,
-        password: state.password,
-      }).then((response) => {
-        if (response.success) {
-          state.isLoggedIn = true
-        }
-      })
-      return state
-    case 'SIGN_UP':
-      signUp({
-        username: state.username,
-        password: state.password,
-      }).then((response) => {
-        if (response.success) {
-          state.isLoggedIn = true
-        }
-      })
       return state
     default: return state
   }

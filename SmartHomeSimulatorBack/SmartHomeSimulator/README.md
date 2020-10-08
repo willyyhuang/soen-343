@@ -34,7 +34,47 @@ It contains the controllers, the classes that will receive the https calls.
 
 Here is what we have for now:
 
-**Adding a user (POST)**: "http://localhost:8080/api/v1/user/register" and it has to have a user in the body in JSON format
+**Adding a user (POST)**: "http://localhost:****/api/v1/user/register"  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;body:  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"username":"username",  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "password":"password"  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+
+Returns 0 if user exists and 1 if it was successful 
+
+**Removing a user (POST)**: "http://localhost:****/api/v1/user/remove?username=username"  
+
+Returns 0 if user doesn't exist and 1 if it was successful
+
+**Identifying a user (POST)**: "http://localhost:****/api/v1/user/login"  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;body:  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"username":"username",  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "password":"password"  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+
+Returns username if right password, Not found if user does not exist and No Match if wrong password
+
+**Edit Password (POST)**: "http://localhost:****/api/v1/user/editPassword"  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;body:  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"username":"username",  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "password":"NewPassword"  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+
+Returns 0 if user doesn't exist and 1 if it was successful     
+
+**Edit HomeLocation (POST)**: "http://localhost:****/api/v1/user/editHomeLocation"  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;body:  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"username":"username",  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "password":"PasswordNotNecessary",
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "homeLocation":"homeLocation"  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+
+Returns 0 if user doesn't exist and 1 if it was successful   
+
 
 ###Service
 

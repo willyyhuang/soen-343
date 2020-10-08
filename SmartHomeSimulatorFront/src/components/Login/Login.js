@@ -5,8 +5,12 @@ import {
 import React, {useState} from 'react'
 import {connect} from 'react-redux'
 import placeholderLogo from '../../images/placeholderLogo.jpg'
+import {logIn, signUp} from '../../services'
 
 const Login = ({authentication, dispatch}) => {
+  const {username, password, confirmPassword} = authentication
+  const [isSignUpPage, setIsSignUpPage] = useState(false)
+
   const setUserName = (text) => {
     dispatch({type: 'SET_USERNAME', payload: text})
   }
@@ -17,15 +21,15 @@ const Login = ({authentication, dispatch}) => {
     dispatch({type: 'SET_CONFIRM_PASSWORD', payload: text})
   }
   const login = () => {
-    dispatch({type: 'LOGIN'})
+    logIn({
+      username, password,
+    }).then((response) => {
+      const {data} = response
+      if (data.success) {
+        dispatch({type: 'SET_IS_LOGGED', payload: true})
+      }
+    })
   }
-  const signUp = () => {
-    dispatch({type: 'SIGN_UP'})
-    dispatch({type: 'LOGIN'})
-  }
-
-  const {username, password, confirmPassword} = authentication
-  const [isSignUpPage, setIsSignUpPage] = useState(false)
 
   const SignUpCard = (
     <Card className='card'>
@@ -51,7 +55,13 @@ const Login = ({authentication, dispatch}) => {
           } else if (!username || !password) {
             message.error('missing username or password')
           } else {
-            signUp()
+            signUp({
+              username, password,
+            }).then((response) => {
+              if (response.data) {
+                login()
+              }
+            })
           }
         }}
         className='button'
