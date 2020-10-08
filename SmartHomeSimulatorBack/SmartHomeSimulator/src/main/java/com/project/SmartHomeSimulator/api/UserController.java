@@ -1,5 +1,6 @@
 package com.project.SmartHomeSimulator.api;
 
+import com.project.SmartHomeSimulator.model.APIResponseLogin;
 import com.project.SmartHomeSimulator.model.User;
 import com.project.SmartHomeSimulator.service.RegistrationService;
 import com.project.SmartHomeSimulator.service.UserService;
@@ -22,10 +23,9 @@ public class UserController {
     @PostMapping(value = "/login")
     @ResponseStatus(value = HttpStatus.OK)
     @ResponseBody
-    public String identifyUser(@RequestBody @Valid User user)
+    public APIResponseLogin identifyUser(@RequestBody @Valid User user)
     {
-        String username = userService.identifyUser(user);
-        return username;
+        return userService.identifyUser(user);
     }
 
     //Returns 0 if not found, or 1 if successfully deleted
