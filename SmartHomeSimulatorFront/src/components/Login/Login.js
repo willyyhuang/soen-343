@@ -26,7 +26,7 @@ const Login = ({authentication, dispatch}) => {
     }).then((response) => {
       const {data} = response
       if (data.success) {
-        console.log(data.user)
+        dispatch({type: 'SET_IS_LOGGED', payload: true})
       }
     })
   }

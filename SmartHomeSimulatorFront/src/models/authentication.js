@@ -19,6 +19,9 @@ const authentication = produce((state, action) => {
     case 'SET_CONFIRM_PASSWORD':
       state.confirmPassword = payload
       return state
+    case 'SET_IS_LOGGED':
+      state.isLoggedIn = payload
+      return state
     case 'RESET_STATE':
       state = initialState
       return state
