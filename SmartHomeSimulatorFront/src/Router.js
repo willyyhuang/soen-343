@@ -2,14 +2,14 @@ import './Router.css'
 import {BrowserRouter, Redirect, Route} from 'react-router-dom'
 import React from 'react'
 import {connect} from 'react-redux'
-import {Login} from './components'
+import {Dashboard, Login} from './components'
 
 const Router = ({authentication}) => {
   const {isLoggedIn} = authentication
   return (
     <BrowserRouter>
       <Route path='/login' component={Login} />
-      <Route path='/dashboard' component={null} />
+      <Route path='/dashboard' component={Dashboard} />
       <Route
         path='/*'>
         {(isLoggedIn ? <Redirect to='/dashboard' /> : <Redirect to='/login' />)}
