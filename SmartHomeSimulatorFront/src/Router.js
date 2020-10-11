@@ -1,10 +1,21 @@
 import './Router.css'
 import {BrowserRouter, Redirect, Route} from 'react-router-dom'
-import React from 'react'
+import React, {useEffect} from 'react'
 import {connect} from 'react-redux'
 import {Dashboard, Login} from './components'
 
-const Router = ({authentication}) => {
+const Router = ({dispatch, authentication}) => {
+  useEffect(() => {
+    const payload = localStorage.getItem('authentication')
+    if (payload) {
+      dispatch({type: 'SET_STATE', payload: JSON.parse(payload)})
+    }
+  }, [])
+
+  useEffect(() => {
+    localStorage.setItem('authentication', JSON.stringify(authentication))
+  })
+
   const {isLoggedIn} = authentication
   return (
     <BrowserRouter>
