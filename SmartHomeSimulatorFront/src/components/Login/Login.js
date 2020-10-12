@@ -128,7 +128,7 @@ const Login = ({authentication, dispatch}) => {
     <Row type='flex' align='middle'>
       <Col span={8} />
       <Col span={8} className='login'>
-        <img src={placeholderLogo} className='logo' alt='placeholderLogo' />
+        {/* <img src={placeholderLogo} className='logo' alt='placeholderLogo' /> */}
         {isSignUpPage ? SignUpCard : SignInCard}
       </Col>
       <Col span={8} />

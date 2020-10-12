@@ -1,11 +1,11 @@
 import {
-  Button, Card, Col, Divider, Form, Input, InputNumber, Modal, Row, Switch, Typography, Upload,
+  Button, Card, Col, Divider, Form, Input, InputNumber, Layout, Modal, Row, Switch, Typography, Upload,
 } from 'antd'
 import React, {useState} from 'react'
 import {connect} from 'react-redux'
 import './Dashboard.css'
 
-const Dashboard = () => {
+const Dashboard = ({dispatch}) => {
   const [isModalVisible, setIsModalVisible] = useState(false)
   const parameterCard = (
     <Card
@@ -58,18 +58,29 @@ const Dashboard = () => {
   )
 
   return (
-    <Row type='flex' align='middle'>
-      {addUserModal}
-      <Col span={8} />
-      <Col className='layout' span={8}>
-        {parameterCard}
-        <Divider />
-        {userCard}
-        <Divider />
-        {simulationSwitchCard}
-      </Col>
-      <Col span={8} />
-    </Row>
+    <Layout className='layout'>
+      <Layout.Header>
+        <Row>
+          <Col push={23}>
+            <Button onClick={() => dispatch({type: 'RESET_STATE'})}>Log Out</Button>
+          </Col>
+        </Row>
+      </Layout.Header>
+      <Layout.Content className='content'>
+        <Row type='flex' align='middle'>
+          {addUserModal}
+          <Col span={8} />
+          <Col span={8}>
+            {parameterCard}
+            <Divider />
+            {userCard}
+            <Divider />
+            {simulationSwitchCard}
+          </Col>
+          <Col span={8} />
+        </Row>
+      </Layout.Content>
+    </Layout>
   )
 }
 
