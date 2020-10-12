@@ -4,7 +4,7 @@ import {
 } from 'antd'
 import React, {useState} from 'react'
 import {connect} from 'react-redux'
-import placeholderLogo from '../../images/placeholderLogo.jpg'
+// import placeholderLogo from '../../images/placeholderLogo.jpg'
 import {logIn, signUp} from '../../services'
 
 const Login = ({authentication, dispatch}) => {

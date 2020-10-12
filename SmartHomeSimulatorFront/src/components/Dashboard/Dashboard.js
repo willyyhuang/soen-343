@@ -1,5 +1,17 @@
 import {
-  Button, Card, Col, Divider, Form, Input, InputNumber, Layout, Modal, Row, Switch, Typography, Upload,
+  Button,
+  Card,
+  Col,
+  Divider,
+  Form,
+  Input,
+  InputNumber,
+  Layout,
+  Modal,
+  Row,
+  Switch,
+  Typography,
+  Upload,
 } from 'antd'
 import React, {useState} from 'react'
 import {connect} from 'react-redux'
@@ -45,11 +57,8 @@ const Dashboard = ({dispatch}) => {
 
   const addUserModal = (
     <Modal title='Add User Modal' onCancel={() => setIsModalVisible(false)} visible={isModalVisible}>
-      <Form.Item label='Username'>
-        <Input placeholder='enter an username' />
-      </Form.Item>
-      <Form.Item label='Password'>
-        <Input placeholder='enter a password' />
+      <Form.Item label='Role'>
+        <Input placeholder='enter a role' />
       </Form.Item>
       <Form.Item label='Home Location'>
         <Input placeholder='enter a home location' />
