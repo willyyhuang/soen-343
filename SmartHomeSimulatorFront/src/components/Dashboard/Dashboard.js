@@ -1,10 +1,12 @@
 import {
-  Button, Card, Col, Divider, Form, InputNumber, Row, Switch, Typography, Upload,
+  Button, Card, Col, Divider, Form, Input, InputNumber, Modal, Row, Switch, Typography, Upload,
 } from 'antd'
-import React from 'react'
+import React, {useState} from 'react'
 import {connect} from 'react-redux'
+import './Dashboard.css'
 
 const Dashboard = () => {
+  const [isModalVisible, setIsModalVisible] = useState(false)
   const parameterCard = (
     <Card
       extra={<Upload>
@@ -18,23 +20,51 @@ const Dashboard = () => {
       <Form.Item label='Temperature Outdoor (°C)'>
         <InputNumber />
       </Form.Item>
+      <Form.Item label='Time'>
+        <Input placeholder='enter a time' />
+      </Form.Item>
     </Card>
   )
+
+  const userCard = (
+    <Card title='Simulation Users'>
+      <Button onClick={() => setIsModalVisible(true)}>Add User</Button>
+    </Card>
+  )
+
   const simulationSwitchCard = (
     <Card>
       <Row>
         <Col span={8}>
-          <Switch style={{marginRight: 10}} />
+          <Switch className='item' />
           <Typography.Text>Simulation Mode</Typography.Text>
         </Col>
       </Row>
     </Card>
   )
+
+  const addUserModal = (
+    <Modal title='Add User Modal' onCancel={() => setIsModalVisible(false)} visible={isModalVisible}>
+      <Form.Item label='Username'>
+        <Input placeholder='enter an username' />
+      </Form.Item>
+      <Form.Item label='Password'>
+        <Input placeholder='enter a password' />
+      </Form.Item>
+      <Form.Item label='Home Location'>
+        <Input placeholder='enter a home location' />
+      </Form.Item>
+    </Modal>
+  )
+
   return (
     <Row type='flex' align='middle'>
+      {addUserModal}
       <Col span={8} />
-      <Col style={{marginTop: '10%'}} span={8}>
+      <Col className='layout' span={8}>
         {parameterCard}
+        <Divider />
+        {userCard}
         <Divider />
         {simulationSwitchCard}
       </Col>
