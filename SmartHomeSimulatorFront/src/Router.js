@@ -6,14 +6,16 @@ import {Dashboard, Login} from './components'
 
 const Router = ({dispatch, authentication}) => {
   useEffect(() => {
-    const payload = localStorage.getItem('authentication')
+    const payload = sessionStorage.getItem('authentication')
     if (payload) {
       dispatch({type: 'SET_STATE', payload: JSON.parse(payload)})
+    } else {
+      dispatch({type: 'RESET_STATE'})
     }
   }, [])
 
   useEffect(() => {
-    localStorage.setItem('authentication', JSON.stringify(authentication))
+    sessionStorage.setItem('authentication', JSON.stringify(authentication))
   })
 
   const {isLoggedIn} = authentication
