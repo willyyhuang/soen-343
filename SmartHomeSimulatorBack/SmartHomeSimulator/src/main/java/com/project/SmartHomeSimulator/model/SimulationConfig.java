@@ -1,13 +1,9 @@
 package com.project.SmartHomeSimulator.model;
 
-import com.project.SmartHomeSimulator.dao.SimulationUserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 
 public class SimulationConfig {
-
-    private String username;
 
     private boolean success = true;
     private ArrayList<SimulationUser> simulationUsers ;
