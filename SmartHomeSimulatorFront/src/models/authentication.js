@@ -10,6 +10,9 @@ const initialState = {
 const authentication = produce((state, action) => {
   const {type, payload} = action
   switch (type) {
+    case 'SET_STATE':
+      state = payload
+      return state
     case 'SET_USERNAME':
       state.username = payload
       return state

@@ -4,7 +4,7 @@ import {
 } from 'antd'
 import React, {useState} from 'react'
 import {connect} from 'react-redux'
-import placeholderLogo from '../../images/placeholderLogo.jpg'
+// import placeholderLogo from '../../images/placeholderLogo.jpg'
 import {logIn, signUp} from '../../services'
 
 const Login = ({authentication, dispatch}) => {
@@ -27,6 +27,7 @@ const Login = ({authentication, dispatch}) => {
       const {data} = response
       if (data.success) {
         dispatch({type: 'SET_IS_LOGGED', payload: true})
+        dispatch({type: 'SET_USER', payload: data.user})
       }
     })
   }
@@ -127,7 +128,7 @@ const Login = ({authentication, dispatch}) => {
     <Row type='flex' align='middle'>
       <Col span={8} />
       <Col span={8} className='login'>
-        <img src={placeholderLogo} className='logo' alt='placeholderLogo' />
+        {/* <img src={placeholderLogo} className='logo' alt='placeholderLogo' /> */}
         {isSignUpPage ? SignUpCard : SignInCard}
       </Col>
       <Col span={8} />
