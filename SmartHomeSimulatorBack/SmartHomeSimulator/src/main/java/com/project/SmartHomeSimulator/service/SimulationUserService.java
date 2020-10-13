@@ -70,7 +70,7 @@ public class SimulationUserService {
             simulationConfig.setSuccess(false);
             return simulationConfig;
         }
-        user.setCurrentSimulationUser(username);
+        user.setCurrentSimulationProfile(username);
         userRepository.save(user);
         simulationConfig.setCurrentSimulationUser(simulationUserRepository.findByUsername(username));
         simulationConfig.setSuccess(true);

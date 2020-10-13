@@ -3,7 +3,7 @@ package com.project.SmartHomeSimulator.model;
 public class APIResponseLogin {
 
     public boolean success;
-    public User user;
+    public String username;
 
     public APIResponseLogin(){
 
@@ -13,7 +13,7 @@ public class APIResponseLogin {
         this.success = success;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUsername(String username) {
+        this.username = username;
     }
 }

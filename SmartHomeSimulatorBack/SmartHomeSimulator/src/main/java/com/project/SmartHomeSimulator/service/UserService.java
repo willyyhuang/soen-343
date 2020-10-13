@@ -21,7 +21,7 @@ public class UserService {
     public APIResponseLogin identifyUser(User user) {
         User found = userRepository.findByUsername(user.getUsername());
         APIResponseLogin response = new APIResponseLogin();
-        response.setUser(found);
+        response.setUsername(found.getUsername());
         if (found == null) {
             response.setSuccess(false);
             return null;
@@ -52,7 +52,7 @@ public class UserService {
     public APIResponseLogin getUser(String username) {
         User found = userRepository.findByUsername(username);
         APIResponseLogin response = new APIResponseLogin();
-        response.setUser(found);
+        response.setUsername(found.getUsername());
         if (found == null) {
             response.setSuccess(false);
             return null;

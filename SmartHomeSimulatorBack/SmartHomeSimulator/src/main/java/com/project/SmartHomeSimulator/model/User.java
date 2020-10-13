@@ -2,7 +2,6 @@ package com.project.SmartHomeSimulator.model;
 
 import lombok.Getter;
 import lombok.Setter;
-import springfox.documentation.swagger2.mappers.ModelMapper;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -15,7 +14,7 @@ public class User {
     private String username;
     @NotBlank(message = "Password cannot be blank")
     private String password;
-    private String currentSimulationUser;
+    private String currentSimulationProfile;
 
     public String getUsername() {
         return username;
@@ -25,8 +24,8 @@ public class User {
         return password;
     }
 
-    public void setCurrentSimulationUser(String currentSimulationUser) {
-        this.currentSimulationUser = currentSimulationUser;
+    public void setCurrentSimulationProfile(String currentSimulationUser) {
+        this.currentSimulationProfile = currentSimulationUser;
     }
 
     public void setPassword(String password) {
