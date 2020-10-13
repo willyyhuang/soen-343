@@ -24,8 +24,8 @@ public class User {
         return password;
     }
 
-    public void setCurrentSimulationProfile(String currentSimulationUser) {
-        this.currentSimulationProfile = currentSimulationUser;
+    public void setCurrentSimulationProfile(String currentSimulationProfile) {
+        this.currentSimulationProfile = currentSimulationProfile;
     }
 
     public void setPassword(String password) {
