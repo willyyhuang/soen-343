@@ -2,7 +2,6 @@ package com.project.SmartHomeSimulator.api;
 
 import com.project.SmartHomeSimulator.model.APIResponseLogin;
 import com.project.SmartHomeSimulator.model.User;
-import com.project.SmartHomeSimulator.service.RegistrationService;
 import com.project.SmartHomeSimulator.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,7 +14,6 @@ import javax.validation.Valid;
 @RestController
 @CrossOrigin(origins = {"*"})
 @RequestMapping("api/v1/user")
-
 public class UserController {
     @Autowired
     private UserService userService;
@@ -57,4 +55,13 @@ public class UserController {
     {
         return userService.editHomeLocation(user);
     }
+
+    //returns user if it exists
+    @GetMapping(value= "/{username}")
+    @ResponseStatus(value = HttpStatus.OK)
+    public APIResponseLogin getUser (@PathVariable String username)
+    {
+        return userService.getUser(username);
+    }
+
 }
