@@ -46,15 +46,6 @@ public class UserController {
         return userService.editPassword(user);
     }
 
-    //Returns 0 if not found, or 1 if successfully edited
-    @PostMapping(value = "/editHomeLocation")
-    @ResponseStatus(value = HttpStatus.OK)
-    @ResponseBody
-    @Transactional
-    public int editHomeLocation (@RequestBody @Valid User user)
-    {
-        return userService.editHomeLocation(user);
-    }
 
     //returns user if it exists
     @GetMapping(value= "/{username}")

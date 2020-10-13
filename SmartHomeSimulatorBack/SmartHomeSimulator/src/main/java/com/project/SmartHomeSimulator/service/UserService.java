@@ -48,16 +48,6 @@ public class UserService {
         return 1;
     }
 
-    //returns 0 if user was not found and 1 if successfully edited
-    public int editHomeLocation(User user) {
-        User currentUser = userRepository.findByUsername(user.getUsername());
-        if (currentUser == null)
-            return 0;
-        currentUser.setHomeLocation(user.getHomeLocation());
-        userRepository.save(currentUser);
-        return 1;
-    }
-
     // Returns user if it exists
     public APIResponseLogin getUser(String username) {
         User found = userRepository.findByUsername(username);
