@@ -10,6 +10,7 @@ import {
   Modal,
   Row,
   Switch,
+  Table,
   Typography,
   Upload,
 } from 'antd'
@@ -18,7 +19,7 @@ import {connect} from 'react-redux'
 import './Dashboard.css'
 import {addProfile, getProfile} from '../../services'
 
-const Dashboard = ({authentication, dispatch}) => {
+const Dashboard = ({simulationConfig, authentication, dispatch}) => {
   const fetchUserProfiles = () => {
     getProfile({username: authentication.username}).then((response) => {
       const {data} = response
@@ -53,9 +54,23 @@ const Dashboard = ({authentication, dispatch}) => {
     </Card>
   )
 
+  const columns = [{
+    title: 'Name',
+    dataIndex: 'name',
+  },
+  {
+    title: 'Role',
+    dataIndex: 'role',
+  }, {
+    title: 'Home Location',
+    dataIndex: 'homeLocation',
+  }]
+
   const profileCard = (
     <Card title='Simulation Profiles'>
       <Button onClick={() => setIsModalVisible(true)}>Add Profile</Button>
+      <Divider />
+      <Table pagination={false} dataSource={simulationConfig.simulationProfiles} columns={columns} />
     </Card>
   )
 
@@ -132,7 +147,7 @@ const Dashboard = ({authentication, dispatch}) => {
 
 const mapStateToProps = (state) => ({
   authentication: state.authentication,
-  simulatorConfig: state.simulatorConfig,
+  simulationConfig: state.simulationConfig,
 })
 
 Dashboard.displayName = 'Dashboard'
