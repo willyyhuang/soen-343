@@ -51,7 +51,7 @@ public class UserController {
     @ResponseStatus(value = HttpStatus.OK)
     @ResponseBody
     @Transactional
-    public int editInsideTemp (@RequestBody @Valid User user)
+    public int editInsideTemp (@RequestParam("insideTemp") int insideTemp)
     {
         return userService.editInsideTemp(user);
     }
@@ -61,17 +61,14 @@ public class UserController {
     @ResponseStatus(value = HttpStatus.OK)
     @ResponseBody
     @Transactional
-    public int editOutsideTemp (@RequestBody @Valid User user)
-    {
-        return userService.editOutsideTemp(user);
-    }
+    public int editOutsideTemp (@RequestParam("outsideTemp") int outsideTemp) { return userService.editOutsideTemp(user);}
 
     //Returns 0 if not found, or 1 if successfully edited
     @PostMapping(value = "/editTime ")
     @ResponseStatus(value = HttpStatus.OK)
     @ResponseBody
     @Transactional
-    public int editTime (@RequestBody @Valid User user)
+    public int editTime (@RequestParam("time") String time)
     {
         return userService.editTime(user);
     }
@@ -81,7 +78,7 @@ public class UserController {
     @ResponseStatus(value = HttpStatus.OK)
     @ResponseBody
     @Transactional
-    public int editDate (@RequestBody @Valid User user)
+    public int editDate (@RequestParam("date") String date)
     {
         return userService.editDate(user);
     }
