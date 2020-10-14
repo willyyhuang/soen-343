@@ -28,4 +28,12 @@ public class SimulationProfile {
     public String getName() {
         return name;
     }
+
+    public String getHomeLocation() {
+        return homeLocation;
+    }
+
+    public Role getRole() {
+        return role;
+    }
 }
