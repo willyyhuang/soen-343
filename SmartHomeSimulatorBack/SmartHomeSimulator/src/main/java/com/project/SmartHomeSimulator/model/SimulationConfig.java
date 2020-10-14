@@ -5,24 +5,20 @@ import java.util.ArrayList;
 
 public class SimulationConfig {
 
-    private boolean success = true;
-    private ArrayList<SimulationUser> simulationUsers ;
-    private SimulationUser currentSimulationUser;
+    private ArrayList<SimulationProfile> simulationProfiles ;
+    private SimulationProfile currentSimulationProfile;
 
-    public SimulationConfig (ArrayList<SimulationUser> simulationUsers){
+    public SimulationConfig (ArrayList<SimulationProfile> simulationProfiles, SimulationProfile simulationProfile){
 
-        this.simulationUsers = simulationUsers;
+        this.simulationProfiles = simulationProfiles;
+        this.currentSimulationProfile = simulationProfile;
     }
 
-    public SimulationUser getCurrentSimulationUser() {
-        return currentSimulationUser;
+    public ArrayList<SimulationProfile> getSimulationProfiles() {
+        return simulationProfiles;
     }
 
-    public void setCurrentSimulationUser(SimulationUser currentSimulationUser) {
-        this.currentSimulationUser = currentSimulationUser;
-    }
-
-    public void setSuccess(boolean success) {
-        this.success = success;
+    public SimulationProfile getCurrentSimulationProfile() {
+        return currentSimulationProfile;
     }
 }

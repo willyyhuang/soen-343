@@ -50,7 +50,7 @@ public class UserController {
     //returns user if it exists
     @GetMapping(value= "/{username}")
     @ResponseStatus(value = HttpStatus.OK)
-    public APIResponseLogin getUser (@PathVariable String username)
+    public User getUser (@PathVariable String username)
     {
         return userService.getUser(username);
     }
