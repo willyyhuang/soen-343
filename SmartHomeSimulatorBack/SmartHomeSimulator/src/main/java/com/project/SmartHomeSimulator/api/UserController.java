@@ -1,5 +1,6 @@
 package com.project.SmartHomeSimulator.api;
 
+import com.project.SmartHomeSimulator.model.HouseLayout;
 import com.project.SmartHomeSimulator.model.User;
 import com.project.SmartHomeSimulator.service.RegistrationService;
 import com.project.SmartHomeSimulator.service.UserService;
@@ -21,6 +22,15 @@ public class UserController {
     @ResponseStatus(value = HttpStatus.OK)
     @ResponseBody
     public String identifyUser(@RequestBody @Valid User user)
+    {
+        String username = userService.identifyUser(user).getUsername();
+        return username;
+    }
+    
+    @GetMapping(value = "api/v1/user/layout")
+    @ResponseStatus(value = HttpStatus.OK)
+    @ResponseBody
+    public String loadUserLayout(@RequestBody @Valid User user)
     {
         String username = userService.identifyUser(user).getUsername();
         return username;
@@ -65,4 +75,15 @@ public class UserController {
     {
         return userService.editHomeLocation(user);
     }
+    
+    //Returns 0 if not found, or 1 if successfully edited
+    @PostMapping(value = "api/v1/user/loadLayout")
+    @ResponseStatus(value = HttpStatus.OK)
+    @ResponseBody
+    @Transactional
+    public HouseLayout loadLayout (@RequestBody @Valid User user)
+    {
+        return userService.loadLayout(user);
+    }
+    
 }

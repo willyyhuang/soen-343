@@ -7,7 +7,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class SmartHomeSimulatorApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(SmartHomeSimulatorApplication.class, args);
+		
+		//SpringApplication.run(SmartHomeSimulatorApplication.class, args);
+		
 	}
 
 }

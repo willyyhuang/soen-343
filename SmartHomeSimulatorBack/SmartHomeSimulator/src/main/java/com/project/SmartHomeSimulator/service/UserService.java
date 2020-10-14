@@ -1,9 +1,11 @@
 package com.project.SmartHomeSimulator.service;
 
-import com.project.SmartHomeSimulator.dao.UserRepository;
-import com.project.SmartHomeSimulator.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.project.SmartHomeSimulator.dao.UserRepository;
+import com.project.SmartHomeSimulator.model.HouseLayout;
+import com.project.SmartHomeSimulator.model.User;
 
 @Service("userService")
 public class UserService {
@@ -70,6 +72,16 @@ public class UserService {
         removeUser(currentUser.getUsername());
         registrationService.createUser(user);
         return 1;
+    }
+    
+    public HouseLayout loadLayout(User user) 
+    {
+    	User currentUser = userRepository.findByUsername(user.getUsername());
+        if (currentUser == null)
+            return null;
+        currentUser.setFileLayout(user.getFileLayout());
+        HouseLayout layoutUploader = new HouseLayout(currentUser.getFileLayout());
+        return layoutUploader;
     }
 
 }

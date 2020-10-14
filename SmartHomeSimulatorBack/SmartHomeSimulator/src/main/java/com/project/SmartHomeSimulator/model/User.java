@@ -1,13 +1,13 @@
 package com.project.SmartHomeSimulator.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Getter;
-import lombok.Setter;
+import java.io.File;
 
-import javax.persistence.Column;
-import javax.validation.constraints.NotBlank;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.validation.constraints.NotBlank;
+
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Getter
@@ -19,6 +19,8 @@ public class User {
     private String password;
 
     private String homeLocation;
+    
+    private File fileLayout;
 
     public String getUsername() {
         return username;
@@ -43,4 +45,13 @@ public class User {
     public void setUsername(String username) {
         this.username = username;
     }
+
+	public File getFileLayout() {
+		return fileLayout;
+	}
+
+	public void setFileLayout(File fileLayout) {
+		this.fileLayout = fileLayout;
+	}
+    
 }
