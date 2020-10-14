@@ -2,6 +2,7 @@ import {
   Button,
   Card,
   Col,
+  DatePicker,
   Divider,
   Form,
   Input,
@@ -11,6 +12,7 @@ import {
   Row,
   Switch,
   Table,
+  TimePicker,
   Typography,
   Upload,
 } from 'antd'
@@ -48,8 +50,11 @@ const Dashboard = ({simulationConfig, authentication, dispatch}) => {
       <Form.Item label='Temperature Outdoor (°C)'>
         <InputNumber />
       </Form.Item>
+      <Form.Item label='Date'>
+        <DatePicker placeholder='enter a date' />
+      </Form.Item>
       <Form.Item label='Time'>
-        <Input placeholder='enter a time' />
+        <TimePicker placeholder='enter a time' />
       </Form.Item>
     </Card>
   )
