@@ -51,11 +51,11 @@ public class SimulationProfileController {
     }
 
     // returns true if user was edited or false if user does not exist
-    @PostMapping(value = "/editCurrentSimulationProfile")
+    @PostMapping(value = "/setCurrentSimulationProfile")
     @ResponseStatus(value = HttpStatus.OK)
     @ResponseBody
     @Transactional
-    public boolean editCurrentUser (@RequestParam("name") String name, @RequestParam("username") String username)
+    public boolean setCurrentProfile (@RequestParam("name") String name, @RequestParam("username") String username)
     {
         return simulationProfileService.setCurrentSimulationProfile(name, username);
     }
