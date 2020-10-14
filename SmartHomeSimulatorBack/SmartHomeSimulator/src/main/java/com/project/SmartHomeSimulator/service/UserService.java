@@ -25,7 +25,7 @@ public class UserService {
     // Returns user if the password match or null if user does not exist or password does not match
     public APIResponseLogin identifyUser(User user) {
         User found = userRepository.findByUsername(user.getUsername());
-        SimulationConfig simulationConfig = new SimulationConfig(simulationProfileRepository.findAll(), simulationProfileRepository.findByName(user.getCurrentSimulationProfile()));
+        SimulationConfig simulationConfig = new SimulationConfig(simulationProfileRepository.findAll(), simulationProfileRepository.findByName(found.getCurrentSimulationProfile()));
         APIResponseLogin response = new APIResponseLogin(simulationConfig);
         if (user.getPassword().equals(found.getPassword())) {
             response.setSuccess(true);
