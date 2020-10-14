@@ -16,7 +16,7 @@ import {
 import React, {useState} from 'react'
 import {connect} from 'react-redux'
 import './Dashboard.css'
-import {getProfile} from '../../services'
+import {addProfile, getProfile} from '../../services'
 
 const Dashboard = ({authentication, dispatch}) => {
   const fetchUserProfiles = () => {
@@ -27,6 +27,12 @@ const Dashboard = ({authentication, dispatch}) => {
       dispatch({type: 'SET_CURRENT_SIMULATION_PROFILE', payload: currentSimulatorProfiles})
     })
   }
+  const ADD_PROFILE_DATA_INITIAL_STATE = {
+    name: '',
+    role: '',
+    homeLocation: '',
+  }
+  const [addProfileFormData, setAddProfileFormData] = useState(ADD_PROFILE_DATA_INITIAL_STATE)
   const [isModalVisible, setIsModalVisible] = useState(false)
   const parameterCard = (
     <Card
@@ -47,9 +53,9 @@ const Dashboard = ({authentication, dispatch}) => {
     </Card>
   )
 
-  const userCard = (
-    <Card title='Simulation Users'>
-      <Button onClick={() => setIsModalVisible(true)}>Add User</Button>
+  const profileCard = (
+    <Card title='Simulation Profiles'>
+      <Button onClick={() => setIsModalVisible(true)}>Add Profile</Button>
     </Card>
   )
 
@@ -64,24 +70,35 @@ const Dashboard = ({authentication, dispatch}) => {
     </Card>
   )
 
-  const addUserModal = (
+  const addProfileModal = (
     <Modal
       okText='add'
       onOk={() => {
-        fetchUserProfiles()
+        addProfile({
+          username: authentication.username,
+          ...addProfileFormData,
+        }).then((response) => {
+          if (response.data) {
+            fetchUserProfiles()
+          }
+        })
+        setAddProfileFormData(ADD_PROFILE_DATA_INITIAL_STATE)
         setIsModalVisible(false)
       }}
-      title='Add User Modal'
-      onCancel={() => setIsModalVisible(false)}
+      title='Add Profile Modal'
+      onCancel={() => {
+        setAddProfileFormData(ADD_PROFILE_DATA_INITIAL_STATE)
+        setIsModalVisible(false)
+      }}
       visible={isModalVisible}>
       <Form.Item label='Name'>
-        <Input placeholder='enter a name' />
+        <Input value={addProfileFormData.name} onChange={(e) => setAddProfileFormData({name: e.target.value, role: addProfileFormData.role, homeLocation: addProfileFormData.homeLocation})} placeholder='enter a name' />
       </Form.Item>
       <Form.Item label='Role'>
-        <Input placeholder='enter a role' />
+        <Input value={addProfileFormData.role} onChange={(e) => setAddProfileFormData({name: addProfileFormData.name, role: e.target.value, homeLocation: addProfileFormData.homeLocation})} placeholder='enter a role' />
       </Form.Item>
       <Form.Item label='Home Location'>
-        <Input placeholder='enter a home location' />
+        <Input value={addProfileFormData.homeLocation} onChange={(e) => setAddProfileFormData({name: addProfileFormData.name, role: addProfileFormData.role, homeLocation: e.target.value})} placeholder='enter a home location' />
       </Form.Item>
     </Modal>
   )
@@ -97,12 +114,12 @@ const Dashboard = ({authentication, dispatch}) => {
       </Layout.Header>
       <Layout.Content className='content'>
         <Row type='flex' align='middle'>
-          {addUserModal}
+          {addProfileModal}
           <Col span={8} />
           <Col span={8}>
             {parameterCard}
             <Divider />
-            {userCard}
+            {profileCard}
             <Divider />
             {simulationSwitchCard}
           </Col>

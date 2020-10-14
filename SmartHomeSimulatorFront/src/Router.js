@@ -17,7 +17,7 @@ const Router = ({dispatch, authentication, simulationConfig}) => {
       dispatch({type: 'SET_SIMULATION_CONFIG_STATE', payload: JSON.parse(sessionConfig)})
     } else {
       dispatch({type: 'RESET_STATE'})
-    }
+    } // eslint-disable-next-line
   }, [])
 
   useEffect(() => {

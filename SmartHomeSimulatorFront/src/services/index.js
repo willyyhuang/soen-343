@@ -19,10 +19,12 @@ export async function logIn(payload) {
 }
 
 export async function addProfile(payload) {
-  return axios.post({
+  return axios({
+    method: 'POST',
     url: addSimulationProfile,
-    data: payload.username,
-  }, payload)
+    params: {username: payload.username},
+    data: payload,
+  })
 }
 
 export async function getProfile(payload) {
