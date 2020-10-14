@@ -4,11 +4,17 @@ import React, {useEffect} from 'react'
 import {connect} from 'react-redux'
 import {Dashboard, Login} from './components'
 
-const Router = ({dispatch, authentication}) => {
+const Router = ({dispatch, authentication, simulationConfig}) => {
   useEffect(() => {
-    const payload = sessionStorage.getItem('authentication')
-    if (payload) {
-      dispatch({type: 'SET_STATE', payload: JSON.parse(payload)})
+    const sessionAuthentication = sessionStorage.getItem('authentication')
+    const sessionConfig = sessionStorage.getItem('simulationConfig')
+    if (sessionAuthentication) {
+      dispatch({type: 'SET_STATE', payload: JSON.parse(sessionAuthentication)})
+    } else {
+      dispatch({type: 'RESET_STATE'})
+    }
+    if (sessionConfig) {
+      dispatch({type: 'SET_SIMULATION_CONFIG_STATE', payload: JSON.parse(sessionConfig)})
     } else {
       dispatch({type: 'RESET_STATE'})
     }
@@ -16,6 +22,7 @@ const Router = ({dispatch, authentication}) => {
 
   useEffect(() => {
     sessionStorage.setItem('authentication', JSON.stringify(authentication))
+    sessionStorage.setItem('simulationConfig', JSON.stringify(simulationConfig))
   })
 
   const {isLoggedIn} = authentication
@@ -33,6 +40,7 @@ const Router = ({dispatch, authentication}) => {
 
 const mapStateToProps = (state) => ({
   authentication: state.authentication,
+  simulationConfig: state.simulationConfig,
 })
 
 Router.displayName = 'Router'

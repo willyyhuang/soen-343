@@ -16,8 +16,17 @@ import {
 import React, {useState} from 'react'
 import {connect} from 'react-redux'
 import './Dashboard.css'
+import {getProfile} from '../../services'
 
-const Dashboard = ({dispatch}) => {
+const Dashboard = ({authentication, dispatch}) => {
+  const fetchUserProfiles = () => {
+    getProfile({username: authentication.username}).then((response) => {
+      const {data} = response
+      const {currentSimulatorProfiles, simulationProfiles} = data
+      dispatch({type: 'SET_SIMULATION_PROFILES', payload: simulationProfiles})
+      dispatch({type: 'SET_CURRENT_SIMULATION_PROFILE', payload: currentSimulatorProfiles})
+    })
+  }
   const [isModalVisible, setIsModalVisible] = useState(false)
   const parameterCard = (
     <Card
@@ -56,7 +65,18 @@ const Dashboard = ({dispatch}) => {
   )
 
   const addUserModal = (
-    <Modal title='Add User Modal' onCancel={() => setIsModalVisible(false)} visible={isModalVisible}>
+    <Modal
+      okText='add'
+      onOk={() => {
+        fetchUserProfiles()
+        setIsModalVisible(false)
+      }}
+      title='Add User Modal'
+      onCancel={() => setIsModalVisible(false)}
+      visible={isModalVisible}>
+      <Form.Item label='Name'>
+        <Input placeholder='enter a name' />
+      </Form.Item>
       <Form.Item label='Role'>
         <Input placeholder='enter a role' />
       </Form.Item>
@@ -94,7 +114,8 @@ const Dashboard = ({dispatch}) => {
 }
 
 const mapStateToProps = (state) => ({
-  user: state.user,
+  authentication: state.authentication,
+  simulatorConfig: state.simulatorConfig,
 })
 
 Dashboard.displayName = 'Dashboard'
