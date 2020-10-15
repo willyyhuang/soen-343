@@ -27,7 +27,7 @@ const Login = ({authentication, dispatch}) => {
       const {data} = response
       if (data.success) {
         dispatch({type: 'SET_IS_LOGGED', payload: true})
-        dispatch({type: 'SET_USER', payload: data.user})
+        dispatch({type: 'SET_SIMULATION_CONFIG_STATE', payload: data.simulationConfig})
       }
     })
   }
