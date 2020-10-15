@@ -19,7 +19,7 @@ public class UserController {
     @PostMapping(value = "/add")
     @ResponseStatus(value = HttpStatus.OK)
     @ResponseBody
-    public boolean identifyUser(@RequestBody @Valid User user)
+    public boolean addUser(@RequestBody @Valid User user)
     {
         return userService.addUser(user);
     }
