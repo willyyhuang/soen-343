@@ -67,7 +67,7 @@ public class UserController {
     }
     
     //Return House Layout if it exists
-    @PostMapping(value = "api/v1/user/loadLayout")
+    @PostMapping(value = "/loadLayout")
     @ResponseStatus(value = HttpStatus.OK)
     @ResponseBody
     @Transactional
