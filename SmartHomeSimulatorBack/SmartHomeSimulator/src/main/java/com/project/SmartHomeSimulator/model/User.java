@@ -1,14 +1,14 @@
 package com.project.SmartHomeSimulator.model;
 
 import java.io.File;
-
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-
+import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -20,11 +20,9 @@ public class User {
     private String username;
     @NotBlank(message = "Password cannot be blank")
     private String password;
-    @NotNull(message = "Role cannot be blank")
-    @Enumerated(EnumType.STRING)
-    private Role role;
+  
     private File fileLayout;
-    private String homeLocation;
+    private String currentSimulationProfile;
 
     public String getUsername() {
         return username;
@@ -34,28 +32,23 @@ public class User {
         return password;
     }
 
-    public String getHomeLocation() {
-        return homeLocation;
+    public String getCurrentSimulationProfile() {
+        return currentSimulationProfile;
+    }
+
+    public void setCurrentSimulationProfile(String currentSimulationProfile) {
+        this.currentSimulationProfile = currentSimulationProfile;
     }
 
     public void setPassword(String password) {
         this.password = password;
     }
 
-    public void setHomeLocation(String homeLocation) {
-        this.homeLocation = homeLocation;
+    public File getFileLayout() {
+      return fileLayout;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setFileLayout(File fileLayout) {
+      this.fileLayout = fileLayout;
     }
-
-	public File getFileLayout() {
-		return fileLayout;
-	}
-
-	public void setFileLayout(File fileLayout) {
-		this.fileLayout = fileLayout;
-	}
-    
 }

@@ -1,11 +1,15 @@
 package com.project.SmartHomeSimulator.service;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.project.SmartHomeSimulator.dao.UserRepository;
 import com.project.SmartHomeSimulator.model.APIResponseLogin;
 import com.project.SmartHomeSimulator.model.HouseLayout;
+import com.project.SmartHomeSimulator.dao.SimulationProfileRepository;
+import com.project.SmartHomeSimulator.dao.UserRepository;
+import com.project.SmartHomeSimulator.model.APIResponseLogin;
+import com.project.SmartHomeSimulator.model.SimulationConfig;
 import com.project.SmartHomeSimulator.model.User;
 
 @Service("userService")
@@ -13,26 +17,26 @@ public class UserService {
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private SimulationProfileRepository simulationProfileRepository;
 
     @Autowired
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, SimulationProfileRepository simulationProfileRepository) {
         this.userRepository = userRepository;
+        this.simulationProfileRepository = simulationProfileRepository;
     }
 
     // Returns user if the password match or null if user does not exist or password does not match
     public APIResponseLogin identifyUser(User user) {
         User found = userRepository.findByUsername(user.getUsername());
-        APIResponseLogin response = new APIResponseLogin();
-        response.setUser(found);
-        if (found == null) {
-            response.setSuccess(false);
-            return null;
-        } else if (user.getPassword().equals(found.getPassword())) {
+        SimulationConfig simulationConfig = new SimulationConfig(simulationProfileRepository.findAll(), simulationProfileRepository.findByName(found.getCurrentSimulationProfile()));
+        APIResponseLogin response = new APIResponseLogin(simulationConfig);
+        if (user.getPassword().equals(found.getPassword())) {
             response.setSuccess(true);
             return response;
         }
         response.setSuccess(false);
-        return null;
+        return response;
     }
 
     //returns 0 if user was not found and 1 if successfully deleted
@@ -50,28 +54,13 @@ public class UserService {
         return 1;
     }
 
-    //returns 0 if user was not found and 1 if successfully edited
-    public int editHomeLocation(User user) {
-        User currentUser = userRepository.findByUsername(user.getUsername());
-        if (currentUser == null)
-            return 0;
-        currentUser.setHomeLocation(user.getHomeLocation());
-        userRepository.save(currentUser);
-        return 1;
-    }
-
-    // Returns user if it exists
-    public APIResponseLogin getUser(String username) {
+    // Returns user if it exists or null
+    public User getUser(String username) {
         User found = userRepository.findByUsername(username);
-        APIResponseLogin response = new APIResponseLogin();
-        response.setUser(found);
         if (found == null) {
-            response.setSuccess(false);
             return null;
         }
-
-        response.setSuccess(true);
-        return response;
+        return found;
 
     }
     
