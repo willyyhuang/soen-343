@@ -13,10 +13,10 @@ public class SimulationProfile {
     @Id
     private String name;
 
-    @NotBlank(message = "Role cannot be blank")
+//    @NotBlank(message = "Role cannot be blank")
     private Role role;
 
-    @NotBlank(message = "Home location cannot be blank")
+//    @NotBlank(message = "Home location cannot be blank")
     private String homeLocation;
 
     public void setHomeLocation(String homeLocation) {
