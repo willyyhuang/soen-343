@@ -17,7 +17,7 @@ public class UserService {
 
     @Autowired
     public UserService(SimulationContext simulationContext) {
-        this.simulationContext = simulationContext;
+       this.simulationContext = simulationContext;
     }
 
     //adds a new user to the simulation context users list

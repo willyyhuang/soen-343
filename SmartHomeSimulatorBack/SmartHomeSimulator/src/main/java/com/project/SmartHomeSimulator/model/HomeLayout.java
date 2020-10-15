@@ -4,7 +4,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Getter;
 import lombok.Setter;
-import org.json.JSONObject;
 import org.springframework.boot.jackson.JsonComponent;
 
 import java.util.List;

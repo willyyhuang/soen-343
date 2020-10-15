@@ -19,7 +19,7 @@ public class SimulationContextService {
 
     public boolean startSimulation(SimulationContext simulationContext) {
         if (simulationContext != null) {
-            this.simulationContext = new SimulationContext(simulationContext);
+            this.simulationContext.clone(simulationContext);
             return true;
         }
         return false;

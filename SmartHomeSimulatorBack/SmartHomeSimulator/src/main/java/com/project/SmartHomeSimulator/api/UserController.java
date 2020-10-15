@@ -40,7 +40,7 @@ public class UserController {
 
     @PostMapping(value = "/editHomeLocation")
     @ResponseStatus(value = HttpStatus.OK)
-    public boolean editHomeLocation (@RequestParam("name") String name, @RequestParam("homeLocation") String homeLocation,  @RequestParam("username") String username)
+    public boolean editHomeLocation (@RequestParam("name") String name, @RequestParam("homeLocation") String homeLocation)
     {
         return userService.editHomeLocation(name,homeLocation);
     }

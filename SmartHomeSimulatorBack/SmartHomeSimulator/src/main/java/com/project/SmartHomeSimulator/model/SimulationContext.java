@@ -4,7 +4,6 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -20,9 +19,7 @@ public class SimulationContext {
     private HomeLayout homeLayout;
     private boolean simulationRunning;
 
-    public SimulationContext()
-    {}
-    public SimulationContext(SimulationContext simulationContext)
+    public void clone(SimulationContext simulationContext)
     {
         this.insideTemp = simulationContext.insideTemp;
         this.outsideTemp = simulationContext.outsideTemp;
