@@ -17,6 +17,7 @@ Start local server by typing `yarn start`
 ```
 cd SmartHomeSimulatorFront
 npm install
+npm install react-router-dom --save
 ```
 
 Start local server by typing `npm start`
