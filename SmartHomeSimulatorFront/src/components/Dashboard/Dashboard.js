@@ -1,48 +1,21 @@
 import {
-  Button,
-  Card,
-  Col,
-  Divider,
-  Form,
-  Input,
-  InputNumber,
-  Layout,
-  Modal,
-  Row,
-  Switch,
-  Typography,
-  Upload,
+  Button, Card, Col, Divider, Layout, Row, Switch, Typography,
 } from 'antd'
-import React, {useState} from 'react'
+import React from 'react'
 import {connect} from 'react-redux'
+import {SimulationParameterCard, SimulationProfileCard} from '../index'
 import './Dashboard.css'
+import {getProfile} from '../../services'
 
-const Dashboard = ({dispatch}) => {
-  const [isModalVisible, setIsModalVisible] = useState(false)
-  const parameterCard = (
-    <Card
-      extra={<Upload>
-        <Button>Upload House Layout File</Button>
-      </Upload>}
-      actions={[<Button>Save</Button>]}
-      title='Set up simulation parameter'>
-      <Form.Item label='Temperature Indoor (°C)'>
-        <InputNumber />
-      </Form.Item>
-      <Form.Item label='Temperature Outdoor (°C)'>
-        <InputNumber />
-      </Form.Item>
-      <Form.Item label='Time'>
-        <Input placeholder='enter a time' />
-      </Form.Item>
-    </Card>
-  )
-
-  const userCard = (
-    <Card title='Simulation Users'>
-      <Button onClick={() => setIsModalVisible(true)}>Add User</Button>
-    </Card>
-  )
+const Dashboard = ({simulationConfig, authentication, dispatch}) => {
+  const fetchUserProfiles = () => {
+    getProfile({username: authentication.username}).then((response) => {
+      const {data} = response
+      const {currentSimulationProfile, simulationProfiles} = data
+      dispatch({type: 'SET_SIMULATION_PROFILES', payload: simulationProfiles})
+      dispatch({type: 'SET_CURRENT_SIMULATION_PROFILE', payload: currentSimulationProfile})
+    })
+  }
 
   const simulationSwitchCard = (
     <Card>
@@ -53,17 +26,6 @@ const Dashboard = ({dispatch}) => {
         </Col>
       </Row>
     </Card>
-  )
-
-  const addUserModal = (
-    <Modal title='Add User Modal' onCancel={() => setIsModalVisible(false)} visible={isModalVisible}>
-      <Form.Item label='Role'>
-        <Input placeholder='enter a role' />
-      </Form.Item>
-      <Form.Item label='Home Location'>
-        <Input placeholder='enter a home location' />
-      </Form.Item>
-    </Modal>
   )
 
   return (
@@ -77,12 +39,11 @@ const Dashboard = ({dispatch}) => {
       </Layout.Header>
       <Layout.Content className='content'>
         <Row type='flex' align='middle'>
-          {addUserModal}
           <Col span={8} />
           <Col span={8}>
-            {parameterCard}
+            <SimulationParameterCard />
             <Divider />
-            {userCard}
+            <SimulationProfileCard simulationConfig={simulationConfig} authentication={authentication} fetchUserProfiles={fetchUserProfiles} />
             <Divider />
             {simulationSwitchCard}
           </Col>
@@ -94,7 +55,8 @@ const Dashboard = ({dispatch}) => {
 }
 
 const mapStateToProps = (state) => ({
-  user: state.user,
+  authentication: state.authentication,
+  simulationConfig: state.simulationConfig,
 })
 
 Dashboard.displayName = 'Dashboard'

@@ -1,7 +1,7 @@
 import {combineReducers} from 'redux'
 import authentication from './authentication'
-import user from './user'
+import simulationConfig from './simulationConfig'
 
-const rootReducer = combineReducers({authentication, user})
+const rootReducer = combineReducers({authentication, simulationConfig})
 
 export default rootReducer
