@@ -1,13 +1,11 @@
 package com.project.SmartHomeSimulator.api;
 
-import com.project.SmartHomeSimulator.model.APIResponseLogin;
 import com.project.SmartHomeSimulator.model.User;
 import com.project.SmartHomeSimulator.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 
@@ -18,50 +16,34 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @PostMapping(value = "/login")
+    @PostMapping(value = "/add")
     @ResponseStatus(value = HttpStatus.OK)
     @ResponseBody
-    public APIResponseLogin identifyUser(@RequestBody @Valid User user)
+    public boolean identifyUser(@RequestBody @Valid User user)
     {
-        return userService.identifyUser(user);
+        return userService.addUser(user);
     }
 
-    //Returns 0 if not found, or 1 if successfully deleted
-    @PostMapping(value = "/remove")
+    @PostMapping(value = "/remove/{name}")
     @ResponseStatus(value = HttpStatus.OK)
-    @ResponseBody
-    @Transactional
-    public long removeUser(@RequestParam("username") String username)
+    public boolean removeUser(@PathVariable String name)
     {
-        return userService.removeUser(username);
+        return userService.removeUser(name);
     }
 
-    //Returns 0 if not found, or 1 if successfully edited
-    @PostMapping(value = "/editPassword")
+    @PostMapping(value = "/edit/{name}")
     @ResponseStatus(value = HttpStatus.OK)
-    @ResponseBody
-    @Transactional
-    public int editPassword (@RequestBody @Valid User user)
+    public boolean editUser(@PathVariable String name,@RequestParam("newName") String newName)
     {
-        return userService.editPassword(user);
+        return userService.editUser(name, newName);
     }
 
-    //Returns 0 if not found, or 1 if successfully edited
     @PostMapping(value = "/editHomeLocation")
     @ResponseStatus(value = HttpStatus.OK)
-    @ResponseBody
-    @Transactional
-    public int editHomeLocation (@RequestBody @Valid User user)
+    public boolean editHomeLocation (@RequestParam("name") String name, @RequestParam("homeLocation") String homeLocation,  @RequestParam("username") String username)
     {
-        return userService.editHomeLocation(user);
+        return userService.editHomeLocation(name,homeLocation);
     }
 
-    //returns user if it exists
-    @GetMapping(value= "/{username}")
-    @ResponseStatus(value = HttpStatus.OK)
-    public APIResponseLogin getUser (@PathVariable String username)
-    {
-        return userService.getUser(username);
-    }
 
 }

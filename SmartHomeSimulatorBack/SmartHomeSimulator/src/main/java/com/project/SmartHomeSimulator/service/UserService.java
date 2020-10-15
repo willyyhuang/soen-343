@@ -1,75 +1,87 @@
 package com.project.SmartHomeSimulator.service;
 
-import com.project.SmartHomeSimulator.dao.UserRepository;
-import com.project.SmartHomeSimulator.model.APIResponseLogin;
+import com.project.SmartHomeSimulator.model.Room;
+import com.project.SmartHomeSimulator.model.SimulationContext;
 import com.project.SmartHomeSimulator.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service("userService")
 public class UserService {
 
     @Autowired
-    private UserRepository userRepository;
+    private SimulationContext simulationContext;
 
     @Autowired
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public UserService(SimulationContext simulationContext) {
+        this.simulationContext = simulationContext;
     }
 
-    // Returns user if the password match or null if user does not exist or password does not match
-    public APIResponseLogin identifyUser(User user) {
-        User found = userRepository.findByUsername(user.getUsername());
-        APIResponseLogin response = new APIResponseLogin();
-        response.setUser(found);
-        if (found == null) {
-            response.setSuccess(false);
-            return null;
-        } else if (user.getPassword().equals(found.getPassword())) {
-            response.setSuccess(true);
-            return response;
+    //adds a new user to the simulation context users list
+    public boolean addUser(User user) {
+        User userAlreadyExist = findUserByName(user.getName());
+        if (userAlreadyExist == null) {
+            if (simulationContext.getSimulationUsers() ==null){
+                simulationContext.setSimulationUsers(new ArrayList<User>());
+            }
+            simulationContext.getSimulationUsers().add(user);
+            return true;
         }
-        response.setSuccess(false);
+        return false;
+    }
+
+    //returns false if user was not found and true if successfully deleted
+    public boolean removeUser(String name) {
+        User toBeRemovedUser = findUserByName(name);
+        if (toBeRemovedUser != null) {
+            simulationContext.getSimulationUsers().remove(toBeRemovedUser);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean editUser(String name, String newName) {
+        User user = findUserByName(name);
+        if (user != null) {
+            user.setName(newName);
+            return true;
+        }
+        return false;
+    }
+
+    //adds new home location to user
+    public boolean editHomeLocation(String name, String homeLocation) {
+        Room newLocation = simulationContext.getHomeLayout().getRoomByName(homeLocation);
+        User currentUser = simulationContext.getCurrentSimulationUser();
+        User user = findUserByName(name);
+
+        if (newLocation != null) {
+            if (currentUser.getName().equals("name")) {
+                currentUser.setHomeLocation(newLocation);
+                newLocation.addUser(currentUser);
+                return true;
+            } else if (user != null) {
+                user.setHomeLocation(newLocation);
+                newLocation.addUser(user);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    //finds user by name and returns it
+    User findUserByName(String name) {
+        List<User> users = simulationContext.getSimulationUsers();
+        if (users != null) {
+            for (User user : users) {
+                if (user.getName().equals(name)) {
+                    return user;
+                }
+            }
+        }
         return null;
-    }
-
-    //returns 0 if user was not found and 1 if successfully deleted
-    public long removeUser(String username) {
-        return userRepository.deleteByUsername(username);
-    }
-
-    //returns 0 if user was not found and 1 if successfully edited
-    public int editPassword(User user) {
-        User currentUser = userRepository.findByUsername(user.getUsername());
-        if (currentUser == null)
-            return 0;
-        currentUser.setPassword(user.getPassword());
-        userRepository.save(currentUser);
-        return 1;
-    }
-
-    //returns 0 if user was not found and 1 if successfully edited
-    public int editHomeLocation(User user) {
-        User currentUser = userRepository.findByUsername(user.getUsername());
-        if (currentUser == null)
-            return 0;
-        currentUser.setHomeLocation(user.getHomeLocation());
-        userRepository.save(currentUser);
-        return 1;
-    }
-
-    // Returns user if it exists
-    public APIResponseLogin getUser(String username) {
-        User found = userRepository.findByUsername(username);
-        APIResponseLogin response = new APIResponseLogin();
-        response.setUser(found);
-        if (found == null) {
-            response.setSuccess(false);
-            return null;
-        }
-
-        response.setSuccess(true);
-        return response;
-
     }
 }
