@@ -1,22 +1,24 @@
 import {
   Button, Card, Col, Divider, Layout, Row, Switch, Typography,
 } from 'antd'
-import React from 'react'
+import React, {useEffect} from 'react'
 import {connect} from 'react-redux'
 import {SimulationParameterCard, SimulationProfileCard} from '../index'
 import './Dashboard.css'
 import {getProfile} from '../../services'
 
-const Dashboard = ({simulationConfig, authentication, dispatch}) => {
+const Dashboard = ({simulationConfig, dispatch}) => {
   const fetchUserProfiles = () => {
-    getProfile({username: authentication.username}).then((response) => {
+    getProfile().then((response) => {
       const {data} = response
-      const {currentSimulationProfile, simulationProfiles} = data
-      dispatch({type: 'SET_SIMULATION_PROFILES', payload: simulationProfiles})
-      dispatch({type: 'SET_CURRENT_SIMULATION_PROFILE', payload: currentSimulationProfile})
+      dispatch({type: 'SET_SIMULATION_CONFIG_STATE', payload: data})
     })
   }
 
+  useEffect(() => {
+    fetchUserProfiles()
+    // eslint-disable-next-line
+}, [])
   const simulationSwitchCard = (
     <Card>
       <Row>
@@ -43,7 +45,7 @@ const Dashboard = ({simulationConfig, authentication, dispatch}) => {
           <Col span={8}>
             <SimulationParameterCard />
             <Divider />
-            <SimulationProfileCard simulationConfig={simulationConfig} authentication={authentication} fetchUserProfiles={fetchUserProfiles} />
+            <SimulationProfileCard simulationConfig={simulationConfig} fetchUserProfiles={fetchUserProfiles} />
             <Divider />
             {simulationSwitchCard}
           </Col>
@@ -55,7 +57,6 @@ const Dashboard = ({simulationConfig, authentication, dispatch}) => {
 }
 
 const mapStateToProps = (state) => ({
-  authentication: state.authentication,
   simulationConfig: state.simulationConfig,
 })
 

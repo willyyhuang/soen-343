@@ -2,48 +2,48 @@ import axios from 'axios'
 import appsettings from '../appsettings.json'
 
 // API routes
-export const userSignUp = `${appsettings.baseApiUrl}/api/v1/user/register`
-export const userLogin = `${appsettings.baseApiUrl}/api/v1/user/login`
-export const addSimulationProfile = `${appsettings.baseApiUrl}/api/v1/simulation/add`
-export const removeSimulationProfile = `${appsettings.baseApiUrl}/api/v1/simulation/remove`
-export const editSimulationProfile = `${appsettings.baseApiUrl}/api/v1/simulation/editHomeLocation`
+export const addSimulationProfile = `${appsettings.baseApiUrl}/api/v1/user/add`
+export const editName = `${appsettings.baseApiUrl}/api/v1/user/edit/:name`
+export const editLocation = `${appsettings.baseApiUrl}/api/v1/user/editHomeLocation`
+export const removeSimulationProfile = `${appsettings.baseApiUrl}/api/v1/user/remove/:name`
+
 export const setSimulationProfile = `${appsettings.baseApiUrl}/api/v1/simulation/setCurrentSimulationProfile`
-export const getSimulationProfile = `${appsettings.baseApiUrl}/api/v1/simulation/simulationConfig`
+export const getSimulationProfile = `${appsettings.baseApiUrl}/api/v1/simulation/get`
 
-export async function signUp(payload) {
-  return axios.post(userSignUp, payload)
-}
-
-export async function logIn(payload) {
-  return axios.post(userLogin, payload)
+// User Profile
+export async function getProfile() {
+  return axios.get(getSimulationProfile)
 }
 
 export async function addProfile(payload) {
   return axios({
     method: 'POST',
     url: addSimulationProfile,
-    params: {username: payload.username},
     data: payload,
   })
 }
 
-export async function getProfile(payload) {
-  return axios.get(getSimulationProfile, {params: payload})
+export async function editProfileName(payload) {
+  return axios({
+    method: 'POST',
+    url: editName.replace(':name', payload),
+  })
 }
 
 export async function editProfile(payload) {
   return axios({
     method: 'POST',
-    url: editSimulationProfile,
-    params: {username: payload.username, homeLocation: payload.homeLocation, name: payload.name},
+    url: payload.type === 'editLocation' ? editLocation : editName.replace(':name', payload.name),
+    params: payload.type === 'editLocation' ? {homeLocation: payload.homeLocation, name: payload.name} : {
+      newName: payload.newName,
+    },
   })
 }
 
 export async function deleteProfile(payload) {
   return axios({
     method: 'POST',
-    url: removeSimulationProfile,
-    params: {username: payload.username, name: payload.name},
+    url: removeSimulationProfile.replace(':name', payload),
   })
 }
 
@@ -51,6 +51,6 @@ export async function setCurrentProfile(payload) {
   return axios({
     method: 'POST',
     url: setSimulationProfile,
-    params: {username: payload.username, name: payload.name},
+    params: {name: payload},
   })
 }
