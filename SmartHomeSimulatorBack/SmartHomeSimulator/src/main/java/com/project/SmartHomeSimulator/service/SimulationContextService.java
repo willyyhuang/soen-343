@@ -1,6 +1,6 @@
 package com.project.SmartHomeSimulator.service;
 
-import com.project.SmartHomeSimulator.model.roomObjects.Object;
+import com.project.SmartHomeSimulator.model.roomObjects.RoomObject;
 import com.project.SmartHomeSimulator.model.roomObjects.Window;
 import com.project.SmartHomeSimulator.model.HomeLayout;
 import com.project.SmartHomeSimulator.model.Room;
@@ -78,10 +78,10 @@ public class SimulationContextService {
         if (simulationContext.isSimulationRunning()) {
             Room room = simulationContext.getHomeLayout().getRoomByName(roomName);
             UUID objectID = UUID.fromString(id);
-            Object object = room.getObjectByID(objectID);
-            if (room != null && object != null) {
-                if (object instanceof Window) {
-                    Window window = (Window) object;
+            RoomObject roomObject = room.getObjectByID(objectID);
+            if (room != null && roomObject != null) {
+                if (roomObject instanceof Window) {
+                    Window window = (Window) roomObject;
                     window.setBlocked(block);
                     return true;
                 }

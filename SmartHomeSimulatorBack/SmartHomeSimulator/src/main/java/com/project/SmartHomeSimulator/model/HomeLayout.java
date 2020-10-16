@@ -2,8 +2,8 @@ package com.project.SmartHomeSimulator.model;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.project.SmartHomeSimulator.model.roomObjects.Object;
-import com.project.SmartHomeSimulator.model.roomObjects.ObjectType;
+import com.project.SmartHomeSimulator.model.roomObjects.RoomObject;
+import com.project.SmartHomeSimulator.model.roomObjects.RoomObjectType;
 import com.project.SmartHomeSimulator.model.roomObjects.Window;
 import org.springframework.boot.jackson.JsonComponent;
 
@@ -36,19 +36,19 @@ public class HomeLayout {
     }
 
     public List<Room> createWindowObjects(List<Room> rooms) {
-        List<Object> objects;
+        List<RoomObject> roomObjects;
         Window window;
         if (rooms != null) {
             for (Room room : rooms) {
-                objects = room.getObjects();
-                for (Object object : objects) {
-                    if (object.getObjectType() == ObjectType.WINDOW) {
-                        window = new Window(object);
-                        objects.remove(object);
-                        objects.add(window);
+                roomObjects = room.getObjects();
+                for (RoomObject roomObject : roomObjects) {
+                    if (roomObject.getObjectType() == RoomObjectType.WINDOW) {
+                        window = new Window(roomObject);
+                        roomObjects.remove(roomObject);
+                        roomObjects.add(window);
                     }
                 }
-                room.setObjects(objects);
+                room.setObjects(roomObjects);
             }
             return rooms;
         }
