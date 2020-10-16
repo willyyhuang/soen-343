@@ -22,6 +22,7 @@ public class SimulationContextService {
     public boolean startSimulation(SimulationContext simulationContext) {
         if (simulationContext != null) {
             this.simulationContext.clone(simulationContext);
+            this.simulationContext.setSimulationRunning(true);
             return true;
         }
         return false;
@@ -35,20 +36,36 @@ public class SimulationContextService {
         return simulationContext;
     }
 
-    public void editInsideTemp(int insideTemp) {
-        simulationContext.setInsideTemp(insideTemp);
+    public boolean editInsideTemp(int insideTemp) {
+        if (simulationContext.isSimulationRunning()) {
+            simulationContext.setInsideTemp(insideTemp);
+            return true;
+        }
+        return false;
     }
 
-    public void editOutsideTemp(int outsideTemp) {
-        simulationContext.setOutsideTemp(outsideTemp);
+    public boolean editOutsideTemp(int outsideTemp) {
+        if (simulationContext.isSimulationRunning()) {
+            simulationContext.setOutsideTemp(outsideTemp);
+            return true;
+        }
+        return false;
     }
 
-    public void editTime(String time) {
-        simulationContext.setTime(time);
+    public boolean editTime(String time) {
+        if (simulationContext.isSimulationRunning()) {
+            simulationContext.setTime(time);
+            return true;
+        }
+        return false;
     }
 
-    public void editDate(String date) {
-        simulationContext.setDate(date);
+    public boolean editDate(String date) {
+        if (simulationContext.isSimulationRunning()) {
+            simulationContext.setDate(date);
+            return true;
+        }
+        return false;
     }
 
     public void setCurrentSimulationUser(User user) {
@@ -56,20 +73,23 @@ public class SimulationContextService {
     }
 
     public boolean blockWindow(String roomName) {
-        Room roomToBeBlocked = simulationContext.getHomeLayout().getRoomByName(roomName);
-        if (roomToBeBlocked != null && roomToBeBlocked.getWindow() != null) {
-            roomToBeBlocked.getWindow().setBlocked(true);
-            return true;
+        if (simulationContext.isSimulationRunning()) {
+            Room roomToBeBlocked = simulationContext.getHomeLayout().getRoomByName(roomName);
+            if (roomToBeBlocked != null && roomToBeBlocked.getWindow() != null) {
+                roomToBeBlocked.getWindow().setBlocked(true);
+                return true;
+            }
         }
         return false;
     }
 
     public boolean unblockWindow(String roomName) {
+        if (simulationContext.isSimulationRunning()){
         Room roomToBeBlocked = simulationContext.getHomeLayout().getRoomByName(roomName);
         if (roomToBeBlocked != null && roomToBeBlocked.getWindow() != null) {
             roomToBeBlocked.getWindow().setBlocked(false);
             return true;
-        }
+        }}
         return false;
     }
 

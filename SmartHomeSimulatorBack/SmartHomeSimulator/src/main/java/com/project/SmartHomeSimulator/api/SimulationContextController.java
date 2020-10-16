@@ -44,26 +44,26 @@ public class SimulationContextController {
 
     @PostMapping(value = "/editInsideTemp ")
     @ResponseStatus(value = HttpStatus.OK)
-    public void editInsideTemp(@RequestParam("insideTemp") int insideTemp) {
-        simulationContextService.editInsideTemp(insideTemp);
+    public boolean editInsideTemp(@RequestParam("insideTemp") int insideTemp) {
+       return simulationContextService.editInsideTemp(insideTemp);
     }
 
     @PostMapping(value = "/editOutsideTemp ")
     @ResponseStatus(value = HttpStatus.OK)
-    public void editOutsideTemp(@RequestParam("outsideTemp") int outsideTemp) {
-        simulationContextService.editOutsideTemp(outsideTemp);
+    public boolean editOutsideTemp(@RequestParam("outsideTemp") int outsideTemp) {
+       return simulationContextService.editOutsideTemp(outsideTemp);
     }
 
     @PostMapping(value = "/editTime ")
     @ResponseStatus(value = HttpStatus.OK)
-    public void editTime(@RequestParam("time") String time) {
-        simulationContextService.editTime(time);
+    public boolean editTime(@RequestParam("time") String time) {
+       return simulationContextService.editTime(time);
     }
 
     @PostMapping(value = "/editDate ")
     @ResponseStatus(value = HttpStatus.OK)
-    public void editDate(@RequestParam("date") String date) {
-        simulationContextService.editDate(date);
+    public boolean editDate(@RequestParam("date") String date) {
+        return simulationContextService.editDate(date);
     }
 
     @PostMapping(value = "/blockWindow ")

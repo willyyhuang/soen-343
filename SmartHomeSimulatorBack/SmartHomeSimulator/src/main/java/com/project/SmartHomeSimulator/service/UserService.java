@@ -60,11 +60,11 @@ public class UserService {
 
         if (newLocation != null) {
             if (currentUser.getName().equals("name")) {
-                currentUser.setHomeLocation(newLocation);
+                currentUser.setHomeLocation(homeLocation);
                 newLocation.addUser(currentUser);
                 return true;
             } else if (user != null) {
-                user.setHomeLocation(newLocation);
+                user.setHomeLocation(homeLocation);
                 newLocation.addUser(user);
                 return true;
             }

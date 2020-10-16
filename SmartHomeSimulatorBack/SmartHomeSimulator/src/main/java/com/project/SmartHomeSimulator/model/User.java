@@ -9,7 +9,7 @@ import org.springframework.boot.jackson.JsonComponent;
 public class User {
     private String name;
     private Role role;
-    private Room homeLocation;
+    private String homeLocation;
 
     public String getName() {
         return name;
@@ -27,11 +27,11 @@ public class User {
         this.role = role;
     }
 
-    public Room getHomeLocation() {
+    public String getHomeLocation() {
         return homeLocation;
     }
 
-    public void setHomeLocation(Room homeLocation) {
+    public void setHomeLocation(String homeLocation) {
         this.homeLocation = homeLocation;
     }
 }
