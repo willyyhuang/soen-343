@@ -1,10 +1,16 @@
 package com.project.SmartHomeSimulator.model;
 
-import lombok.Getter;
-import lombok.Setter;
-
+import java.io.File;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.Id;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Getter
@@ -14,11 +20,14 @@ public class User {
     private String username;
     @NotBlank(message = "Password cannot be blank")
     private String password;
-  
+
     private int insideTemp;
     private int outsideTemp;
     private String time;
     private String date;
+
+    private File fileLayout;
+
     private String currentSimulationProfile;
 
     public String getUsername() {
@@ -42,6 +51,7 @@ public class User {
     }
 
 
+
     public void setUsername(String username) {
         this.username = username;
     }
@@ -61,4 +71,13 @@ public class User {
     public void setTime(String time) { this.time = time; }
 
     public void setDate(String date) { this.date = date; }
+
+    public File getFileLayout() {
+      return fileLayout;
+    }
+
+    public void setFileLayout(File fileLayout) {
+      this.fileLayout = fileLayout;
+    }
+
 }
