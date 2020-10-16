@@ -11,6 +11,7 @@ public class User {
     private Role role;
     private String homeLocation;
 
+
     public String getName() {
         return name;
     }
