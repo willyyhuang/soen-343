@@ -57,6 +57,42 @@ public class UserController {
         return userService.editPassword(user);
     }
 
+    //Returns 0 if not found, or 1 if successfully edited
+    @PostMapping(value = "/editInsideTemp ")
+    @ResponseStatus(value = HttpStatus.OK)
+    @ResponseBody
+    @Transactional
+    public int editInsideTemp (@RequestParam("insideTemp") int insideTemp)
+    {
+        return userService.editInsideTemp(user);
+    }
+
+    //Returns 0 if not found, or 1 if successfully edited
+    @PostMapping(value = "/editOutsideTemp ")
+    @ResponseStatus(value = HttpStatus.OK)
+    @ResponseBody
+    @Transactional
+    public int editOutsideTemp (@RequestParam("outsideTemp") int outsideTemp) { return userService.editOutsideTemp(user);}
+
+    //Returns 0 if not found, or 1 if successfully edited
+    @PostMapping(value = "/editTime ")
+    @ResponseStatus(value = HttpStatus.OK)
+    @ResponseBody
+    @Transactional
+    public int editTime (@RequestParam("time") String time)
+    {
+        return userService.editTime(user);
+    }
+
+    //Returns 0 if not found, or 1 if successfully edited
+    @PostMapping(value = "/editDate ")
+    @ResponseStatus(value = HttpStatus.OK)
+    @ResponseBody
+    @Transactional
+    public int editDate (@RequestParam("date") String date)
+    {
+        return userService.editDate(user);
+    }
 
     //returns user if it exists
     @GetMapping(value= "/{username}")

@@ -54,6 +54,47 @@ public class UserService {
         return 1;
     }
 
+
+    //returns 0 if user was not found and 1 if successfully edited
+    public int editInsideTemp(User user) {
+        User currentUser = userRepository.findByUsername(user.getUsername());
+        if (currentUser == null)
+            return 0;
+        currentUser.setInsideTemp (user.getInsideTemp() );
+        userRepository.save(currentUser);
+        return 1;
+    }
+
+    //returns 0 if user was not found and 1 if successfully edited
+    public int editOutsideTemp(User user) {
+        User currentUser = userRepository.findByUsername(user.getUsername());
+        if (currentUser == null)
+            return 0;
+        currentUser.setOutsideTemp(user.getInsideTemp() );
+        userRepository.save(currentUser);
+        return 1;
+    }
+
+    //returns 0 if user was not found and 1 if successfully edited
+    public int editTime(User user) {
+        User currentUser = userRepository.findByUsername(user.getUsername());
+        if (currentUser == null)
+            return 0;
+        currentUser.setTime (user.getTime() );
+        userRepository.save(currentUser);
+        return 1;
+    }
+
+    //returns 0 if user was not found and 1 if successfully edited
+    public int editDate(User user) {
+        User currentUser = userRepository.findByUsername(user.getUsername());
+        if (currentUser == null)
+            return 0;
+        currentUser.setDate (user.getDate() );
+        userRepository.save(currentUser);
+        return 1;
+    }
+ 
     // Returns user if it exists or null
     public User getUser(String username) {
         User found = userRepository.findByUsername(username);
@@ -61,7 +102,6 @@ public class UserService {
             return null;
         }
         return found;
-
     }
     
     public HouseLayout loadLayout(User user) 
