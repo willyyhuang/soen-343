@@ -2,12 +2,16 @@ package com.project.SmartHomeSimulator.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.project.SmartHomeSimulator.model.roomObjects.Object;
+import com.project.SmartHomeSimulator.model.roomObjects.Window;
 import com.project.SmartHomeSimulator.model.HomeLayout;
 import com.project.SmartHomeSimulator.model.Room;
 import com.project.SmartHomeSimulator.model.SimulationContext;
 import com.project.SmartHomeSimulator.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.UUID;
 
 @Service
 public class SimulationContextService {
@@ -72,26 +76,22 @@ public class SimulationContextService {
         simulationContext.setCurrentSimulationUser(user);
     }
 
-    public boolean blockWindow(String roomName) {
+    public boolean blockWindow(String roomName, String id, boolean block ) {
         if (simulationContext.isSimulationRunning()) {
-            Room roomToBeBlocked = simulationContext.getHomeLayout().getRoomByName(roomName);
-            if (roomToBeBlocked != null && roomToBeBlocked.getWindow() != null) {
-                roomToBeBlocked.getWindow().setBlocked(true);
-                return true;
+            Room room = simulationContext.getHomeLayout().getRoomByName(roomName);
+            UUID objectID = UUID.fromString(id);
+            Object object = room.getObjectByID(objectID);
+            if (room != null && object != null) {
+                if (object instanceof Window) {
+                    Window window = (Window) object;
+                    window.setBlocked(block);
+                    return true;
+                }
             }
         }
         return false;
     }
 
-    public boolean unblockWindow(String roomName) {
-        if (simulationContext.isSimulationRunning()){
-        Room roomToBeBlocked = simulationContext.getHomeLayout().getRoomByName(roomName);
-        if (roomToBeBlocked != null && roomToBeBlocked.getWindow() != null) {
-            roomToBeBlocked.getWindow().setBlocked(false);
-            return true;
-        }}
-        return false;
-    }
 
     public HomeLayout loadLayout(String homeLayoutFile) {
         HomeLayout homeLayout = simulationContext.getHomeLayout();

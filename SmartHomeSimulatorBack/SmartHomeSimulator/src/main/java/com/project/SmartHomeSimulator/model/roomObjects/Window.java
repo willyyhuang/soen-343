@@ -1,17 +1,7 @@
 package com.project.SmartHomeSimulator.model.roomObjects;
 
-
-public class Window {
-    private boolean isOpen;
+public class Window extends Object {
     private boolean isBlocked;
-
-    public boolean isOpen() {
-        return isOpen;
-    }
-
-    public void setOpen(boolean open) {
-        isOpen = open;
-    }
 
     public boolean isBlocked() {
         return isBlocked;

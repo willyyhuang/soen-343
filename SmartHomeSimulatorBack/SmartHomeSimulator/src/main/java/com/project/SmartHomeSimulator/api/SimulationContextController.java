@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.UUID;
 
 @RestController
 @CrossOrigin(origins = {"*"})
@@ -68,14 +69,14 @@ public class SimulationContextController {
 
     @PostMapping(value = "/blockWindow ")
     @ResponseStatus(value = HttpStatus.OK)
-    public boolean blockWindow(@RequestParam("roomName") String roomName) {
-        return simulationContextService.blockWindow(roomName);
+    public boolean blockWindow(@RequestParam("roomName") String roomName,@RequestParam("objectID") String objectID) {
+        return simulationContextService.blockWindow(roomName, objectID, true);
     }
 
     @PostMapping(value = "/unblockWindow ")
     @ResponseStatus(value = HttpStatus.OK)
-    public boolean unblockWindow(@RequestParam("roomName") String roomName) {
-        return simulationContextService.unblockWindow(roomName);
+    public boolean unblockWindow(@RequestParam("roomName") String roomName,@RequestParam("objectID") String objectID) {
+        return simulationContextService.blockWindow(roomName, objectID, false);
     }
 
     @PostMapping(value = "/loadLayout")
