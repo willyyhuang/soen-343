@@ -1,5 +1,7 @@
 package com.project.SmartHomeSimulator.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.project.SmartHomeSimulator.model.HomeLayout;
 import com.project.SmartHomeSimulator.model.Room;
 import com.project.SmartHomeSimulator.model.SimulationContext;
@@ -71,9 +73,17 @@ public class SimulationContextService {
         return false;
     }
 
-    public HomeLayout loadLayout(String homeLayout) {
-        simulationContext.getHomeLayout().readHomeLayout(homeLayout);
-        return simulationContext.getHomeLayout();
+    public HomeLayout loadLayout(String homeLayoutFile) {
+        HomeLayout homeLayout = simulationContext.getHomeLayout();
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            homeLayout = objectMapper.readValue(homeLayoutFile, HomeLayout.class);
+            simulationContext.setHomeLayout(homeLayout);
+            return homeLayout;
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
 }

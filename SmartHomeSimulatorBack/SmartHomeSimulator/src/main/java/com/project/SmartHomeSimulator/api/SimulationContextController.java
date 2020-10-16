@@ -80,7 +80,7 @@ public class SimulationContextController {
 
     @PostMapping(value = "/loadLayout")
     @ResponseStatus(value = HttpStatus.OK)
-    public HomeLayout loadLayout(@RequestParam("homeLayout") String homeLayout) {
+    public HomeLayout loadLayout(@RequestBody String homeLayout) {
         return simulationContextService.loadLayout(homeLayout);
     }
 
