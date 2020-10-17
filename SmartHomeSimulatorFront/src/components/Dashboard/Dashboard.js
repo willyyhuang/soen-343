@@ -32,13 +32,7 @@ const Dashboard = ({simulationConfig, dispatch}) => {
 
   return (
     <Layout className='layout'>
-      <Layout.Header>
-        <Row>
-          <Col push={23}>
-            <Button onClick={() => dispatch({type: 'RESET_STATE'})}>Log Out</Button>
-          </Col>
-        </Row>
-      </Layout.Header>
+      <Layout.Header />
       <Layout.Content className='content'>
         <Row type='flex' align='middle'>
           <Col span={8} />

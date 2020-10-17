@@ -17,7 +17,7 @@ public class SmartHomeSimulatorApplication {
 		return new WebMvcConfigurer() {
 			@Override
 			public void addCorsMappings(CorsRegistry registry) {
-				registry.addMapping("/api/v1/*").allowedOrigins("*");
+				registry.addMapping("/api/v1/simulation/*").allowedOrigins("*");
 				registry.addMapping("/api/v1/user/*").allowedOrigins("*");
 			}
 		};
