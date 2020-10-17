@@ -1,14 +1,14 @@
 package com.project.SmartHomeSimulator.model.roomObjects;
 
-public class Window extends Object {
+public class Window extends RoomObject {
     private boolean isBlocked;
 
     public Window(){
     }
-    public Window(Object object){
+    public Window(RoomObject roomObject){
         super();
-        setIs_On_Open(object.isIs_On_Open());
-        setObjectType(object.getObjectType());
+        setStatus(roomObject.isStatus());
+        setObjectType(roomObject.getObjectType());
         this.isBlocked = false;
     }
 

@@ -1,6 +1,6 @@
 package com.project.SmartHomeSimulator.model;
 
-import com.project.SmartHomeSimulator.model.roomObjects.Object;
+import com.project.SmartHomeSimulator.model.roomObjects.RoomObject;
 import org.springframework.boot.jackson.JsonComponent;
 
 import java.util.List;
@@ -11,7 +11,7 @@ import java.util.UUID;
 public class Room {
     private String name;
     private List<User> users;
-    private List<Object> objects;
+    private List<RoomObject> roomObjects;
 
     public boolean addUser(User user){
         return this.users.add(user);
@@ -39,19 +39,19 @@ public class Room {
         this.users = users;
     }
 
-    public List<Object> getObjects() {
-        return objects;
+    public List<RoomObject> getObjects() {
+        return roomObjects;
     }
 
-    public void setObjects(List<Object> objects) {
-        this.objects = objects;
+    public void setObjects(List<RoomObject> roomObjects) {
+        this.roomObjects = roomObjects;
     }
 
-    public Object getObjectByID(UUID deviceID){
+    public RoomObject getObjectByID(UUID deviceID){
         if (this.getObjects() != null){
-            for (Object object : this.getObjects()) {
-                if (object.getId().compareTo(deviceID) == 0) {
-                    return object;
+            for (RoomObject roomObject : this.getObjects()) {
+                if (roomObject.getId().compareTo(deviceID) == 0) {
+                    return roomObject;
                 }
             }
         }
