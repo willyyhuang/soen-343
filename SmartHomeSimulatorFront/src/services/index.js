@@ -52,7 +52,7 @@ export async function uploadLayout(payload) {
   return axios({
     method: 'POST',
     url: loadLayout,
-    data: {homeLayout: payload},
+    data: {roomList: payload},
   })
 }
 
