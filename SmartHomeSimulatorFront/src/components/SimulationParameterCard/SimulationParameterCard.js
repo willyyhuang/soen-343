@@ -2,10 +2,26 @@ import {
   Button, Card, Upload, InputNumber, Form, TimePicker, DatePicker,
 } from 'antd'
 import React from 'react'
+import {uploadLayout} from '../../services'
 
-const SimulationParameterCard = () => (
+const SimulationParameterCard = ({fetchUserProfiles}) => (
   <Card
-    extra={<Upload>
+    extra={<Upload
+      customRequest={async (options) => {
+        const {file, onSuccess} = options
+        const reader = new FileReader()
+        let payload
+        reader.onloadend = (e) => {
+          payload = e.target.result
+          if (payload) {
+            uploadLayout(payload).then((response) => {
+              onSuccess(response.body)
+              fetchUserProfiles()
+            })
+          }
+        }
+        reader.readAsText(file)
+      }}>
       <Button>Upload House Layout File</Button>
     </Upload>}
     actions={[<Button>Save</Button>]}

@@ -43,7 +43,7 @@ const Dashboard = ({simulationConfig, dispatch}) => {
         <Row type='flex' align='middle'>
           <Col span={8} />
           <Col span={8}>
-            <SimulationParameterCard />
+            <SimulationParameterCard fetchUserProfiles={fetchUserProfiles} />
             <Divider />
             <SimulationProfileCard simulationConfig={simulationConfig} fetchUserProfiles={fetchUserProfiles} />
             <Divider />
