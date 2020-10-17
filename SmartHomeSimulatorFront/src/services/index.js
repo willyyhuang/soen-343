@@ -11,6 +11,42 @@ export const removeSimulationProfile = `${appsettings.baseApiUrl}/api/v1/user/re
 export const setSimulationProfile = `${appsettings.baseApiUrl}/api/v1/simulation/setCurrentSimulationProfile`
 export const getSimulationProfile = `${appsettings.baseApiUrl}/api/v1/simulation/get`
 export const loadLayout = `${appsettings.baseApiUrl}/api/v1/simulation/loadLayout`
+export const setDate = `${appsettings.baseApiUrl}/api/v1/simulation/setDate`
+export const setTime = `${appsettings.baseApiUrl}/api/v1/simulation/setTime`
+export const setInsideTemp = `${appsettings.baseApiUrl}/api/v1/simulation/setInsideTemp`
+export const setOutsideTemp = `${appsettings.baseApiUrl}/api/v1/simulation/setOutsideTemp`
+
+export async function setSimulationDate(payload) {
+  return axios({
+    method: 'POST',
+    url: setDate,
+    params: {date: payload},
+  })
+}
+
+export async function setSimulationTime(payload) {
+  return axios({
+    method: 'POST',
+    url: setTime,
+    params: {time: payload},
+  })
+}
+
+export async function setSimulationInsideTemp(payload) {
+  return axios({
+    method: 'POST',
+    url: setInsideTemp,
+    params: {insideTemp: payload},
+  })
+}
+
+export async function setSimulationOutsideTemp(payload) {
+  return axios({
+    method: 'POST',
+    url: setOutsideTemp,
+    params: {outsideTemp: payload},
+  })
+}
 
 export async function uploadLayout(payload) {
   return axios({

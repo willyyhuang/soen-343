@@ -3,8 +3,8 @@ import produce from 'immer'
 const initialState = {
   currentSimulationUser: {},
   simulationUsers: [],
-  insideTemp: null,
-  outsideTemp: null,
+  insideTemp: 0,
+  outsideTemp: 0,
   time: null,
   date: null,
   homeLayout: null,
