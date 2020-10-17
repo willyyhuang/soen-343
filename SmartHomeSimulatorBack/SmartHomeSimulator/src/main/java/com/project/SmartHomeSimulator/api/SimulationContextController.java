@@ -21,13 +21,13 @@ public class SimulationContextController {
 
     @PostMapping(value = "/start")
     @ResponseStatus(value = HttpStatus.OK)
-    public boolean startSimulation(@RequestBody @Valid SimulationContext simulationContext) {
-        return simulationContextService.startSimulation(simulationContext);
+    public void startSimulation() {
+        simulationContextService.startSimulation();
     }
 
     @PostMapping(value = "/stop")
     @ResponseStatus(value = HttpStatus.OK)
-    public void stopSimulation(@RequestBody @Valid SimulationContext simulationContext) {
+    public void stopSimulation() {
         simulationContextService.stopSimulation();
     }
 
@@ -43,28 +43,28 @@ public class SimulationContextController {
         simulationContextService.setCurrentSimulationUser(user);
     }
 
-    @PostMapping(value = "/editInsideTemp ")
+    @PostMapping(value = "/setInsideTemp ")
     @ResponseStatus(value = HttpStatus.OK)
-    public boolean editInsideTemp(@RequestParam("insideTemp") int insideTemp) {
-       return simulationContextService.editInsideTemp(insideTemp);
+    public boolean setInsideTemp(@RequestParam("insideTemp") int insideTemp) {
+       return simulationContextService.setInsideTemp(insideTemp);
     }
 
-    @PostMapping(value = "/editOutsideTemp ")
+    @PostMapping(value = "/setOutsideTemp ")
     @ResponseStatus(value = HttpStatus.OK)
-    public boolean editOutsideTemp(@RequestParam("outsideTemp") int outsideTemp) {
-       return simulationContextService.editOutsideTemp(outsideTemp);
+    public boolean setOutsideTemp(@RequestParam("outsideTemp") int outsideTemp) {
+       return simulationContextService.setOutsideTemp(outsideTemp);
     }
 
-    @PostMapping(value = "/editTime ")
+    @PostMapping(value = "/setTime ")
     @ResponseStatus(value = HttpStatus.OK)
-    public boolean editTime(@RequestParam("time") String time) {
-       return simulationContextService.editTime(time);
+    public boolean setTime(@RequestParam("time") String time) {
+       return simulationContextService.setTime(time);
     }
 
     @PostMapping(value = "/editDate ")
     @ResponseStatus(value = HttpStatus.OK)
-    public boolean editDate(@RequestParam("date") String date) {
-        return simulationContextService.editDate(date);
+    public boolean setDate(@RequestParam("date") String date) {
+        return simulationContextService.setDate(date);
     }
 
     @PostMapping(value = "/blockWindow ")

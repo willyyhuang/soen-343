@@ -1,11 +1,8 @@
 package com.project.SmartHomeSimulator.service;
 
+import com.project.SmartHomeSimulator.model.*;
 import com.project.SmartHomeSimulator.model.roomObjects.RoomObject;
 import com.project.SmartHomeSimulator.model.roomObjects.Window;
-import com.project.SmartHomeSimulator.model.HomeLayout;
-import com.project.SmartHomeSimulator.model.Room;
-import com.project.SmartHomeSimulator.model.SimulationContext;
-import com.project.SmartHomeSimulator.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,13 +18,8 @@ public class SimulationContextService {
         this.simulationContext = simulationContext;
     }
 
-    public boolean startSimulation(SimulationContext simulationContext) {
-        if (simulationContext != null) {
-            this.simulationContext.clone(simulationContext);
-            this.simulationContext.setSimulationRunning(true);
-            return true;
-        }
-        return false;
+    public void startSimulation() {
+        simulationContext.setSimulationRunning(true);
     }
 
     public void stopSimulation() {
@@ -38,7 +30,7 @@ public class SimulationContextService {
         return simulationContext;
     }
 
-    public boolean editInsideTemp(int insideTemp) {
+    public boolean setInsideTemp(int insideTemp) {
         if (simulationContext.isSimulationRunning()) {
             simulationContext.setInsideTemp(insideTemp);
             return true;
@@ -46,7 +38,7 @@ public class SimulationContextService {
         return false;
     }
 
-    public boolean editOutsideTemp(int outsideTemp) {
+    public boolean setOutsideTemp(int outsideTemp) {
         if (simulationContext.isSimulationRunning()) {
             simulationContext.setOutsideTemp(outsideTemp);
             return true;
@@ -54,7 +46,7 @@ public class SimulationContextService {
         return false;
     }
 
-    public boolean editTime(String time) {
+    public boolean setTime(String time) {
         if (simulationContext.isSimulationRunning()) {
             simulationContext.setTime(time);
             return true;
@@ -62,7 +54,7 @@ public class SimulationContextService {
         return false;
     }
 
-    public boolean editDate(String date) {
+    public boolean setDate(String date) {
         if (simulationContext.isSimulationRunning()) {
             simulationContext.setDate(date);
             return true;
@@ -75,7 +67,7 @@ public class SimulationContextService {
     }
 
     public boolean blockWindow(String roomName, String id, boolean block) {
-        if (simulationContext.isSimulationRunning()) {
+        if (simulationContext.isSimulationRunning() && simulationContext.getCurrentSimulationUser().getRole() == Role.STRANGER) {
             Room room = simulationContext.getHomeLayout().getRoomByName(roomName);
             UUID objectID = UUID.fromString(id);
             RoomObject roomObject = room.getObjectByID(objectID);
