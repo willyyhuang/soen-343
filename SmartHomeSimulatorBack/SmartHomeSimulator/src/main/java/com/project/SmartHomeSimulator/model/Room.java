@@ -1,5 +1,6 @@
 package com.project.SmartHomeSimulator.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.project.SmartHomeSimulator.model.roomObjects.RoomObject;
 import org.springframework.boot.jackson.JsonComponent;
 
@@ -8,20 +9,11 @@ import java.util.UUID;
 
 
 @JsonComponent
+@JsonIgnoreProperties("users")
 public class Room {
     private String name;
-    private List<User> users;
     private List<RoomObject> roomObjects;
 
-    public boolean addUser(User user){
-        return this.users.add(user);
-    }
-    public boolean removeUser(User user){
-        return this.users.remove(user);
-    }
-    public boolean isEmpty(){
-        return users.isEmpty();
-    }
 
     public String getName() {
         return name;
@@ -29,14 +21,6 @@ public class Room {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public List<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(List<User> users) {
-        this.users = users;
     }
 
     public List<RoomObject> getObjects() {

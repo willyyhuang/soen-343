@@ -1,6 +1,5 @@
 package com.project.SmartHomeSimulator.service;
 
-import com.project.SmartHomeSimulator.model.Room;
 import com.project.SmartHomeSimulator.model.SimulationContext;
 import com.project.SmartHomeSimulator.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,14 +16,14 @@ public class UserService {
 
     @Autowired
     public UserService(SimulationContext simulationContext) {
-       this.simulationContext = simulationContext;
+        this.simulationContext = simulationContext;
     }
 
     //adds a new user to the simulation context users list
     public boolean addUser(User user) {
         User userAlreadyExist = findUserByName(user.getName());
         if (userAlreadyExist == null) {
-            if (simulationContext.getSimulationUsers() ==null){
+            if (simulationContext.getSimulationUsers() == null) {
                 simulationContext.setSimulationUsers(new ArrayList<User>());
             }
             simulationContext.getSimulationUsers().add(user);
@@ -54,20 +53,15 @@ public class UserService {
 
     //adds new home location to user
     public boolean editHomeLocation(String name, String homeLocation) {
-        Room newLocation = simulationContext.getHomeLayout().getRoomByName(homeLocation);
         User currentUser = simulationContext.getCurrentSimulationUser();
         User user = findUserByName(name);
 
-        if (newLocation != null) {
-            if (currentUser.getName().equals("name")) {
-                currentUser.setHomeLocation(homeLocation);
-                newLocation.addUser(currentUser);
-                return true;
-            } else if (user != null) {
-                user.setHomeLocation(homeLocation);
-                newLocation.addUser(user);
-                return true;
-            }
+        if (currentUser != null && currentUser.getName().equals("name")) {
+            currentUser.setHomeLocation(homeLocation);
+            return true;
+        } else if (user != null) {
+            user.setHomeLocation(homeLocation);
+            return true;
         }
         return false;
     }
