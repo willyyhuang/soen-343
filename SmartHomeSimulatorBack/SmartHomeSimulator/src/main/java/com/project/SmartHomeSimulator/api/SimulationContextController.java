@@ -8,8 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
-import java.util.UUID;
 
 @RestController
 @CrossOrigin(origins = {"*"})
@@ -61,7 +59,7 @@ public class SimulationContextController {
        return simulationContextService.setTime(time);
     }
 
-    @PostMapping(value = "/editDate ")
+    @PostMapping(value = "/setDate ")
     @ResponseStatus(value = HttpStatus.OK)
     public boolean setDate(@RequestParam("date") String date) {
         return simulationContextService.setDate(date);

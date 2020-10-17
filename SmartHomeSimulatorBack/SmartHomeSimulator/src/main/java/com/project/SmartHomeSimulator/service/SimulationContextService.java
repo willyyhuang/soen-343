@@ -31,7 +31,7 @@ public class SimulationContextService {
     }
 
     public boolean setInsideTemp(int insideTemp) {
-        if (simulationContext.isSimulationRunning()) {
+        if (simulationContext.isSimulationRunning() && simulationContext.getCurrentSimulationUser().getRole() != Role.STRANGER) {
             simulationContext.setInsideTemp(insideTemp);
             return true;
         }
@@ -39,7 +39,7 @@ public class SimulationContextService {
     }
 
     public boolean setOutsideTemp(int outsideTemp) {
-        if (simulationContext.isSimulationRunning()) {
+        if (simulationContext.isSimulationRunning() && simulationContext.getCurrentSimulationUser().getRole() != Role.STRANGER) {
             simulationContext.setOutsideTemp(outsideTemp);
             return true;
         }
@@ -47,7 +47,7 @@ public class SimulationContextService {
     }
 
     public boolean setTime(String time) {
-        if (simulationContext.isSimulationRunning()) {
+        if (simulationContext.isSimulationRunning() && simulationContext.getCurrentSimulationUser().getRole() != Role.STRANGER) {
             simulationContext.setTime(time);
             return true;
         }
@@ -55,7 +55,7 @@ public class SimulationContextService {
     }
 
     public boolean setDate(String date) {
-        if (simulationContext.isSimulationRunning()) {
+        if (simulationContext.isSimulationRunning() && simulationContext.getCurrentSimulationUser().getRole() != Role.STRANGER) {
             simulationContext.setDate(date);
             return true;
         }
@@ -81,7 +81,6 @@ public class SimulationContextService {
         }
         return false;
     }
-
 
     public HomeLayout loadLayout(String homeLayoutFile) {
         HomeLayout homeLayout = new HomeLayout();
