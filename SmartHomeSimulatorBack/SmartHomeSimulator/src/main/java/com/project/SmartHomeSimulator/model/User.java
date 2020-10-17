@@ -8,6 +8,7 @@ import org.springframework.boot.jackson.JsonComponent;
 @JsonIgnoreProperties
 public class User {
     private String name;
+
     private Role role;
     private String homeLocation;
 
