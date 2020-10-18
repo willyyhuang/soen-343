@@ -26,6 +26,7 @@ const SimulationParameterCard = ({simulationConfig, fetchUserProfiles}) => {
       time: time ? moment(time) : null,
       date: date ? moment(date) : null,
     })
+    // eslint-disable-next-line
   }, [simulationConfig])
 
   return (

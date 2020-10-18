@@ -49,7 +49,7 @@ const Dashboard = ({simulationConfig, dispatch}) => {
           </Col>
           <Col span={2} />
           <Col span={10}>
-            {simulationRunning && homeLayout && homeLayout.roomList.map((room) => <RoomCard room={room} fetchUserProfiles={fetchUserProfiles} />)}
+            {simulationRunning && homeLayout && homeLayout.roomList.map((room) => <RoomCard key={room.name} room={room} fetchUserProfiles={fetchUserProfiles} />)}
           </Col>
           <Col span={2} />
         </Row>
