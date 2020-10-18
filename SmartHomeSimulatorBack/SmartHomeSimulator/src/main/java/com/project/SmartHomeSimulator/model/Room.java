@@ -1,35 +1,44 @@
 package com.project.SmartHomeSimulator.model;
 
-import java.util.Arrays;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.project.SmartHomeSimulator.model.roomObjects.RoomObject;
+import org.springframework.boot.jackson.JsonComponent;
 
+import java.util.List;
+import java.util.UUID;
+
+
+@JsonComponent
+@JsonIgnoreProperties("users")
 public class Room {
-	
-	private String name;
-	private String[] devices;
+    private String name;
+    private List<RoomObject> roomObjects;
 
-	public Room() {
-		// default constructor
-	}
-	
-	public String getName() {
-		return name;
-	}
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public String[] getDevices() {
-		return devices;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void setDevices(String[] devices) {
-		this.devices = devices;
-	}
-	
-	@Override
-	public String toString() {
-		return "[name=" + name + ", devices=" + Arrays.toString(devices) + "]";
-	}
+    public List<RoomObject> getObjects() {
+        return roomObjects;
+    }
 
+    public void setObjects(List<RoomObject> roomObjects) {
+        this.roomObjects = roomObjects;
+    }
+
+    public RoomObject getObjectByID(UUID deviceID){
+        if (this.getObjects() != null){
+            for (RoomObject roomObject : this.getObjects()) {
+                if (roomObject.getId().compareTo(deviceID) == 0) {
+                    return roomObject;
+                }
+            }
+        }
+        return null;
+    }
 }

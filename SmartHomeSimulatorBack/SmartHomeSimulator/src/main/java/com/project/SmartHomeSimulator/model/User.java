@@ -1,83 +1,39 @@
 package com.project.SmartHomeSimulator.model;
 
-import java.io.File;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.Id;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import lombok.Getter;
-import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.springframework.boot.jackson.JsonComponent;
 
-@Entity
-@Getter
-@Setter
+
+@JsonComponent
+@JsonIgnoreProperties
 public class User {
-    @Id
-    private String username;
-    @NotBlank(message = "Password cannot be blank")
-    private String password;
+    private String name;
 
-    private int insideTemp;
-    private int outsideTemp;
-    private String time;
-    private String date;
+    private Role role;
+    private String homeLocation;
 
-    private File fileLayout;
 
-    private String currentSimulationProfile;
-
-    public String getUsername() {
-        return username;
+    public String getName() {
+        return name;
     }
 
-    public String getPassword() {
-        return password;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getCurrentSimulationProfile() {
-        return currentSimulationProfile;
+    public Role getRole() {
+        return role;
     }
 
-    public void setCurrentSimulationProfile(String currentSimulationProfile) {
-        this.currentSimulationProfile = currentSimulationProfile;
+    public void setRole(Role role) {
+        this.role = role;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public String getHomeLocation() {
+        return homeLocation;
     }
 
-
-
-    public void setUsername(String username) {
-        this.username = username;
+    public void setHomeLocation(String homeLocation) {
+        this.homeLocation = homeLocation;
     }
-
-    public int getInsideTemp() { return insideTemp; }
-
-    public int getOutsideTemp() { return outsideTemp; }
-
-    public String getTime() { return time; }
-
-    public String getDate() { return date; }
-
-    public void setInsideTemp(int insideTemp) { this.insideTemp = insideTemp; }
-
-    public void setOutsideTemp(int outsideTemp) { this.outsideTemp = outsideTemp; }
-
-    public void setTime(String time) { this.time = time; }
-
-    public void setDate(String date) { this.date = date; }
-
-    public File getFileLayout() {
-      return fileLayout;
-    }
-
-    public void setFileLayout(File fileLayout) {
-      this.fileLayout = fileLayout;
-    }
-
 }
