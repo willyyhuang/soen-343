@@ -1,7 +1,7 @@
 import {
   Button, Card, Upload, InputNumber, Form, TimePicker, DatePicker,
 } from 'antd'
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import moment from 'moment'
 import {
   setSimulationDate, setSimulationTime, setSimulationInsideTemp, setSimulationOutsideTemp, uploadLayout,
@@ -18,6 +18,15 @@ const SimulationParameterCard = ({simulationConfig, fetchUserProfiles}) => {
     date: date ? moment(date) : null,
   }
   const [parameterFormData, setParameterFormData] = useState(PARAMETER_FORM_DATA_INITIAL_STATE)
+
+  useEffect(() => {
+    setParameterFormData({
+      insideTemp,
+      outsideTemp,
+      time: time ? moment(time) : null,
+      date: date ? moment(date) : null,
+    })
+  }, [simulationConfig])
 
   return (
     <Card
@@ -49,7 +58,7 @@ const SimulationParameterCard = ({simulationConfig, fetchUserProfiles}) => {
           setSimulationOutsideTemp(parameterFormData.outsideTemp)
         }
         if (parameterFormData.time !== PARAMETER_FORM_DATA_INITIAL_STATE.time) {
-          setSimulationTime(parameterFormData.time.format('LT'))
+          setSimulationTime(parameterFormData.time.format())
         }
         if (parameterFormData.date !== PARAMETER_FORM_DATA_INITIAL_STATE.date) {
           setSimulationDate(parameterFormData.date.format('L'))
@@ -94,12 +103,14 @@ const SimulationParameterCard = ({simulationConfig, fetchUserProfiles}) => {
       </Form.Item>
       <Form.Item label='Time'>
         <TimePicker
-          onChange={(value) => setParameterFormData({
-            insideTemp: parameterFormData.insideTemp,
-            outsideTemp: parameterFormData.outsideTemp,
-            time: value,
-            date: parameterFormData.date,
-          })}
+          onChange={(value) => {
+            setParameterFormData({
+              insideTemp: parameterFormData.insideTemp,
+              outsideTemp: parameterFormData.outsideTemp,
+              time: value,
+              date: parameterFormData.date,
+            })
+          }}
           placeholder='enter a time'
           value={parameterFormData.time} />
       </Form.Item>

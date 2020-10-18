@@ -21,7 +21,7 @@ const EDIT_PROFILE_DATA_INITIAL_STATE = {
 }
 
 const SimulationProfileCard = ({simulationConfig, fetchUserProfiles}) => {
-  const {simulationUsers, currentSimulationProfile} = simulationConfig
+  const {simulationUsers, currentSimulationUser} = simulationConfig
 
   const [addProfileFormData, setAddProfileFormData] = useState(ADD_PROFILE_DATA_INITIAL_STATE)
   const [isAddUserModalVisible, setIsAddUserModalVisible] = useState(false)
@@ -146,7 +146,7 @@ const SimulationProfileCard = ({simulationConfig, fetchUserProfiles}) => {
             }
           })
         }}
-        value={currentSimulationProfile && currentSimulationProfile.name}
+        value={currentSimulationUser && currentSimulationUser.name}
         placeholder='No Profile Selected'>
         {simulationUsers && simulationUsers.map((item) => <Select.Option key={item.name}>{item.name}</Select.Option>)}
       </Select>

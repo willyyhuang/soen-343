@@ -1,11 +1,11 @@
 import {
-  Button, Card, Col, Divider, Layout, Row, Switch, Typography,
+  Card, Col, Divider, Layout, Row, Switch, Typography,
 } from 'antd'
 import React, {useEffect} from 'react'
 import {connect} from 'react-redux'
 import {SimulationParameterCard, SimulationProfileCard} from '../index'
 import './Dashboard.css'
-import {getProfile} from '../../services'
+import {getProfile, start, stop} from '../../services'
 
 const Dashboard = ({simulationConfig, dispatch}) => {
   const fetchUserProfiles = () => {
@@ -23,7 +23,10 @@ const Dashboard = ({simulationConfig, dispatch}) => {
     <Card>
       <Row>
         <Col span={8}>
-          <Switch className='item' />
+          <Switch
+            className='item'
+            value={simulationConfig.simulationRunning}
+            onChange={(value) => (value ? start() && fetchUserProfiles() : stop() && fetchUserProfiles())} />
           <Typography.Text>Simulation Mode</Typography.Text>
         </Col>
       </Row>

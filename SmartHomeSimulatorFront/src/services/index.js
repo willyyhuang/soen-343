@@ -8,13 +8,29 @@ export const addSimulationProfile = `${appsettings.baseApiUrl}/api/v1/user/add`
 export const editName = `${appsettings.baseApiUrl}/api/v1/user/edit/:name`
 export const editLocation = `${appsettings.baseApiUrl}/api/v1/user/editHomeLocation`
 export const removeSimulationProfile = `${appsettings.baseApiUrl}/api/v1/user/remove/:name`
-export const setSimulationProfile = `${appsettings.baseApiUrl}/api/v1/simulation/setCurrentSimulationProfile`
+export const setSimulationProfile = `${appsettings.baseApiUrl}/api/v1/simulation/setCurrentSimulationUser`
 export const getSimulationProfile = `${appsettings.baseApiUrl}/api/v1/simulation/get`
 export const loadLayout = `${appsettings.baseApiUrl}/api/v1/simulation/loadLayout`
 export const setDate = `${appsettings.baseApiUrl}/api/v1/simulation/setDate`
 export const setTime = `${appsettings.baseApiUrl}/api/v1/simulation/setTime`
 export const setInsideTemp = `${appsettings.baseApiUrl}/api/v1/simulation/setInsideTemp`
 export const setOutsideTemp = `${appsettings.baseApiUrl}/api/v1/simulation/setOutsideTemp`
+export const startSimulation = `${appsettings.baseApiUrl}/api/v1/simulation/start`
+export const stopSimulation = `${appsettings.baseApiUrl}/api/v1/simulation/stop`
+
+export async function start() {
+  return axios({
+    method: 'POST',
+    url: startSimulation,
+  })
+}
+
+export async function stop() {
+  return axios({
+    method: 'POST',
+    url: stopSimulation,
+  })
+}
 
 export async function setSimulationDate(payload) {
   return axios({
