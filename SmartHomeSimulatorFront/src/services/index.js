@@ -25,7 +25,7 @@ export async function block(payload) {
     method: 'POST',
     url: blockWindow,
     params: {
-      objectId: payload.id,
+      objectID: payload.id,
       roomName: payload.name,
     },
   })
