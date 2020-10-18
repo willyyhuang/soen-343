@@ -36,7 +36,7 @@ export async function unblock(payload) {
     method: 'POST',
     url: unblockWindow,
     params: {
-      objectId: payload.id,
+      objectID: payload.id,
       roomName: payload.name,
     },
   })
