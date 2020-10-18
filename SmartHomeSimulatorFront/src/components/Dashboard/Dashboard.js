@@ -3,7 +3,7 @@ import {
 } from 'antd'
 import React, {useEffect} from 'react'
 import {connect} from 'react-redux'
-import {SimulationParameterCard, SimulationProfileCard} from '../index'
+import {RoomCard, SimulationParameterCard, SimulationProfileCard} from '../index'
 import './Dashboard.css'
 import {getProfile, start, stop} from '../../services'
 
@@ -25,7 +25,7 @@ const Dashboard = ({simulationConfig, dispatch}) => {
         <Col span={8}>
           <Switch
             className='item'
-            value={simulationConfig.simulationRunning}
+            checked={simulationConfig.simulationRunning}
             onChange={(value) => (value ? start() && fetchUserProfiles() : stop() && fetchUserProfiles())} />
           <Typography.Text>Simulation Mode</Typography.Text>
         </Col>
@@ -33,12 +33,13 @@ const Dashboard = ({simulationConfig, dispatch}) => {
     </Card>
   )
 
+  const {homeLayout, simulationRunning} = simulationConfig
   return (
     <Layout className='layout'>
       <Layout.Header />
       <Layout.Content className='content'>
-        <Row type='flex' align='middle'>
-          <Col span={8} />
+        <Row type='flex' align='top'>
+          <Col span={2} />
           <Col span={8}>
             <SimulationParameterCard simulationConfig={simulationConfig} fetchUserProfiles={fetchUserProfiles} />
             <Divider />
@@ -46,7 +47,11 @@ const Dashboard = ({simulationConfig, dispatch}) => {
             <Divider />
             {simulationSwitchCard}
           </Col>
-          <Col span={8} />
+          <Col span={2} />
+          <Col span={10}>
+            {simulationRunning && homeLayout && homeLayout.roomList.map((room) => <RoomCard room={room} fetchUserProfiles={fetchUserProfiles} />)}
+          </Col>
+          <Col span={2} />
         </Row>
       </Layout.Content>
     </Layout>

@@ -17,6 +17,30 @@ export const setInsideTemp = `${appsettings.baseApiUrl}/api/v1/simulation/setIns
 export const setOutsideTemp = `${appsettings.baseApiUrl}/api/v1/simulation/setOutsideTemp`
 export const startSimulation = `${appsettings.baseApiUrl}/api/v1/simulation/start`
 export const stopSimulation = `${appsettings.baseApiUrl}/api/v1/simulation/stop`
+export const blockWindow = `${appsettings.baseApiUrl}/api/v1/simulation/blockWindow`
+export const unblockWindow = `${appsettings.baseApiUrl}/api/v1/simulation/unblockWindow`
+
+export async function block(payload) {
+  return axios({
+    method: 'POST',
+    url: blockWindow,
+    params: {
+      objectId: payload.id,
+      roomName: payload.name,
+    },
+  })
+}
+
+export async function unblock(payload) {
+  return axios({
+    method: 'POST',
+    url: unblockWindow,
+    params: {
+      objectId: payload.id,
+      roomName: payload.name,
+    },
+  })
+}
 
 export async function start() {
   return axios({
