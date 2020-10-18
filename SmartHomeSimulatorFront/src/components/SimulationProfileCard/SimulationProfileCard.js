@@ -7,20 +7,26 @@ import {
   addProfile, editProfile, deleteProfile, setCurrentProfile,
 } from '../../services'
 
-const SimulationProfileCard = ({simulationConfig, authentication, fetchUserProfiles}) => {
-  const {username} = authentication
-  const ADD_PROFILE_DATA_INITIAL_STATE = {
-    name: '',
-    role: '',
-    homeLocation: '',
-  }
+const ADD_PROFILE_DATA_INITIAL_STATE = {
+  name: '',
+  role: '',
+  homeLocation: '',
+}
+const EDIT_PROFILE_DATA_INITIAL_STATE = {
+  name: '',
+  visible: false,
+  type: '',
+  homeLocation: '',
+  newName: '',
+}
+
+const SimulationProfileCard = ({simulationConfig, fetchUserProfiles}) => {
+  const {simulationUsers, currentSimulationUser} = simulationConfig
+
   const [addProfileFormData, setAddProfileFormData] = useState(ADD_PROFILE_DATA_INITIAL_STATE)
   const [isAddUserModalVisible, setIsAddUserModalVisible] = useState(false)
-  const [editUserModalProps, setEditUserModalProps] = useState({
-    name: '',
-    visible: false,
-  })
-  const [homeLocation, setHomeLocation] = useState()
+  const [editProfileFormData, setEditProfileFormData] = useState(EDIT_PROFILE_DATA_INITIAL_STATE)
+  const [isEditUserModalVisible, setIsEditUserModalVisible] = useState(false)
 
   const columns = [{
     title: 'Name',
@@ -39,17 +45,22 @@ const SimulationProfileCard = ({simulationConfig, authentication, fetchUserProfi
     render: (data) => {
       const menu = (
         <Menu onClick={(value) => {
-          if (value.key === 'edit') {
-            setEditUserModalProps({name: data.name, visible: true})
+          if (value.key === 'editLocation') {
+            setEditProfileFormData({name: data.name, type: value.key})
+            setIsEditUserModalVisible(true)
+          } else if (value.key === 'editName') {
+            setEditProfileFormData({name: data.name, type: value.key})
+            setIsEditUserModalVisible(true)
           } else if (value.key === 'delete') {
-            deleteProfile({username, name: data.name}).then((response) => {
+            deleteProfile(data.name).then((response) => {
               if (response.data) {
                 fetchUserProfiles()
               }
             })
           }
         }}>
-          <Menu.Item key='edit'>Edit Home Location</Menu.Item>
+          <Menu.Item key='editLocation'>Edit Home Location</Menu.Item>
+          <Menu.Item key='editName'>Edit Name</Menu.Item>
           <Menu.Item key='delete'>Delete</Menu.Item>
         </Menu>
       )
@@ -63,10 +74,7 @@ const SimulationProfileCard = ({simulationConfig, authentication, fetchUserProfi
     <Modal
       okText='add'
       onOk={() => {
-        addProfile({
-          username: authentication.username,
-          ...addProfileFormData,
-        }).then((response) => {
+        addProfile(addProfileFormData).then((response) => {
           if (response.data) {
             fetchUserProfiles()
           }
@@ -96,18 +104,35 @@ const SimulationProfileCard = ({simulationConfig, authentication, fetchUserProfi
     <Modal
       closable={false}
       onOk={() => {
-        editProfile({username, homeLocation, name: editUserModalProps.name}).then((response) => {
+        editProfile(editProfileFormData).then((response) => {
           if (response.data) {
             fetchUserProfiles()
           }
         })
-        setEditUserModalProps({visible: false})
+        setIsEditUserModalVisible(false)
+        setEditProfileFormData(EDIT_PROFILE_DATA_INITIAL_STATE)
       }}
-      onCancel={() => setEditUserModalProps({visible: false})}
-      visible={editUserModalProps.visible}>
-      <Form.Item label='Home Location'>
-        <Input onChange={(e) => setHomeLocation(e.target.value)} placeholder='select a room' />
-      </Form.Item>
+      onCancel={() => setEditProfileFormData(EDIT_PROFILE_DATA_INITIAL_STATE)}
+      visible={isEditUserModalVisible}>
+      {editProfileFormData.type === 'editLocation' ? <Form.Item label='Home Location'>
+        <Input
+          value={editProfileFormData.homeLocation}
+          onChange={(e) => setEditProfileFormData({
+            type: editProfileFormData.type,
+            name: editProfileFormData.name,
+            homeLocation: e.target.value,
+          })}
+          placeholder='select a room' />
+      </Form.Item> : <Form.Item label='New Name'>
+        <Input
+          value={editProfileFormData.newName}
+          onChange={(e) => setEditProfileFormData({
+            type: editProfileFormData.type,
+            name: editProfileFormData.name,
+            newName: e.target.value,
+          })}
+          placeholder='enter a new name' />
+      </Form.Item>}
     </Modal>
   )
 
@@ -115,29 +140,29 @@ const SimulationProfileCard = ({simulationConfig, authentication, fetchUserProfi
     <Form.Item label='Current Logged In Profile'>
       <Select
         onSelect={(value) => {
-          setCurrentProfile({username, name: value}).then((response) => {
+          setCurrentProfile(value).then((response) => {
             if (response.data) {
               fetchUserProfiles()
             }
           })
         }}
-        value={simulationConfig.currentSimulationProfile && simulationConfig.currentSimulationProfile.name}
+        value={currentSimulationUser && currentSimulationUser.name}
         placeholder='No Profile Selected'>
-        {simulationConfig.simulationProfiles.map((item) => <Select.Option key={item.name}>{item.name}</Select.Option>)}
+        {simulationUsers && simulationUsers.map((item) => <Select.Option key={item.name}>{item.name}</Select.Option>)}
       </Select>
     </Form.Item>
   )
 
   return (
     <Card title='Simulation Profiles'>
-      {editProfileModal}
       {addProfileModal}
+      {editProfileModal}
       {profileSelect}
       <Row>
         <Button onClick={() => setIsAddUserModalVisible(true)}>Add Profile</Button>
       </Row>
       <Divider />
-      <Table pagination={false} dataSource={simulationConfig.simulationProfiles} columns={columns} />
+      <Table pagination={false} dataSource={simulationUsers} columns={columns} />
     </Card>
   )
 }

@@ -1,14 +1,20 @@
 import produce from 'immer'
 
 const initialState = {
-  currentSimulationProfile: null,
-  simulationProfiles: [],
+  currentSimulationUser: {},
+  simulationUsers: [],
+  insideTemp: 0,
+  outsideTemp: 0,
+  time: null,
+  date: null,
+  homeLayout: null,
+  simulationRunning: false,
 }
 
 const simulationConfig = produce((state, action) => {
   const {type, payload} = action
   switch (type) {
-    case 'SET_SIMULATION_PROFILES':
+    case 'SET_SIMULATION_CONFIG':
       state.simulationProfiles = payload
       return state
     case 'SET_CURRENT_SIMULATION_PROFILE':

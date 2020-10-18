@@ -1,53 +1,57 @@
 import {
-  Button, Card, Col, Divider, Layout, Row, Switch, Typography,
+  Card, Col, Divider, Layout, Row, Switch, Typography,
 } from 'antd'
-import React from 'react'
+import React, {useEffect} from 'react'
 import {connect} from 'react-redux'
-import {SimulationParameterCard, SimulationProfileCard} from '../index'
+import {RoomCard, SimulationParameterCard, SimulationProfileCard} from '../index'
 import './Dashboard.css'
-import {getProfile} from '../../services'
+import {getProfile, start, stop} from '../../services'
 
-const Dashboard = ({simulationConfig, authentication, dispatch}) => {
+const Dashboard = ({simulationConfig, dispatch}) => {
   const fetchUserProfiles = () => {
-    getProfile({username: authentication.username}).then((response) => {
+    getProfile().then((response) => {
       const {data} = response
-      const {currentSimulationProfile, simulationProfiles} = data
-      dispatch({type: 'SET_SIMULATION_PROFILES', payload: simulationProfiles})
-      dispatch({type: 'SET_CURRENT_SIMULATION_PROFILE', payload: currentSimulationProfile})
+      dispatch({type: 'SET_SIMULATION_CONFIG_STATE', payload: data})
     })
   }
 
+  useEffect(() => {
+    fetchUserProfiles()
+    // eslint-disable-next-line
+}, [])
   const simulationSwitchCard = (
     <Card>
       <Row>
         <Col span={8}>
-          <Switch className='item' />
+          <Switch
+            className='item'
+            checked={simulationConfig.simulationRunning}
+            onChange={(value) => (value ? start() && fetchUserProfiles() : stop() && fetchUserProfiles())} />
           <Typography.Text>Simulation Mode</Typography.Text>
         </Col>
       </Row>
     </Card>
   )
 
+  const {homeLayout, simulationRunning} = simulationConfig
   return (
     <Layout className='layout'>
-      <Layout.Header>
-        <Row>
-          <Col push={23}>
-            <Button onClick={() => dispatch({type: 'RESET_STATE'})}>Log Out</Button>
-          </Col>
-        </Row>
-      </Layout.Header>
+      <Layout.Header />
       <Layout.Content className='content'>
-        <Row type='flex' align='middle'>
-          <Col span={8} />
+        <Row type='flex' align='top'>
+          <Col span={2} />
           <Col span={8}>
-            <SimulationParameterCard />
+            <SimulationParameterCard simulationConfig={simulationConfig} fetchUserProfiles={fetchUserProfiles} />
             <Divider />
-            <SimulationProfileCard simulationConfig={simulationConfig} authentication={authentication} fetchUserProfiles={fetchUserProfiles} />
+            <SimulationProfileCard simulationConfig={simulationConfig} fetchUserProfiles={fetchUserProfiles} />
             <Divider />
             {simulationSwitchCard}
           </Col>
-          <Col span={8} />
+          <Col span={2} />
+          <Col span={10}>
+            {simulationRunning && homeLayout && homeLayout.roomList.map((room) => <RoomCard key={room.name} room={room} fetchUserProfiles={fetchUserProfiles} />)}
+          </Col>
+          <Col span={2} />
         </Row>
       </Layout.Content>
     </Layout>
@@ -55,7 +59,6 @@ const Dashboard = ({simulationConfig, authentication, dispatch}) => {
 }
 
 const mapStateToProps = (state) => ({
-  authentication: state.authentication,
   simulationConfig: state.simulationConfig,
 })
 

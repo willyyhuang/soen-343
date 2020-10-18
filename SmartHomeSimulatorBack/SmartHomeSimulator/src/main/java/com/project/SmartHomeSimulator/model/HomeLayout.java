@@ -23,6 +23,8 @@ public class HomeLayout {
     }
 
     public HomeLayout readHomeLayout(String homeLayoutFile) {
+        homeLayoutFile = homeLayoutFile.replace("\\","");
+        homeLayoutFile = homeLayoutFile.substring(0,12) + homeLayoutFile.substring(13,homeLayoutFile.length()-2) + "}";
         ObjectMapper objectMapper = new ObjectMapper();
         try {
             HomeLayout homeLayout = objectMapper.readValue(homeLayoutFile, HomeLayout.class);

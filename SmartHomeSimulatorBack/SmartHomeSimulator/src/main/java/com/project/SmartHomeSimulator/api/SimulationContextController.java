@@ -37,41 +37,41 @@ public class SimulationContextController {
 
     @PostMapping(value = "/setCurrentSimulationUser")
     @ResponseStatus(value = HttpStatus.OK)
-    public void setCurrentUser(@RequestBody User user) {
-        simulationContextService.setCurrentSimulationUser(user);
+    public boolean setCurrentUser(@RequestParam("name") String name) {
+        return simulationContextService.setCurrentSimulationUser(name);
     }
 
-    @PostMapping(value = "/setInsideTemp ")
+    @PostMapping(value = "/setInsideTemp")
     @ResponseStatus(value = HttpStatus.OK)
     public boolean setInsideTemp(@RequestParam("insideTemp") int insideTemp) {
        return simulationContextService.setInsideTemp(insideTemp);
     }
 
-    @PostMapping(value = "/setOutsideTemp ")
+    @PostMapping(value = "/setOutsideTemp")
     @ResponseStatus(value = HttpStatus.OK)
     public boolean setOutsideTemp(@RequestParam("outsideTemp") int outsideTemp) {
        return simulationContextService.setOutsideTemp(outsideTemp);
     }
 
-    @PostMapping(value = "/setTime ")
+    @PostMapping(value = "/setTime")
     @ResponseStatus(value = HttpStatus.OK)
     public boolean setTime(@RequestParam("time") String time) {
        return simulationContextService.setTime(time);
     }
 
-    @PostMapping(value = "/setDate ")
+    @PostMapping(value = "/setDate")
     @ResponseStatus(value = HttpStatus.OK)
     public boolean setDate(@RequestParam("date") String date) {
         return simulationContextService.setDate(date);
     }
 
-    @PostMapping(value = "/blockWindow ")
+    @PostMapping(value = "/blockWindow")
     @ResponseStatus(value = HttpStatus.OK)
     public boolean blockWindow(@RequestParam("roomName") String roomName,@RequestParam("objectID") String objectID) {
         return simulationContextService.blockWindow(roomName, objectID, true);
     }
 
-    @PostMapping(value = "/unblockWindow ")
+    @PostMapping(value = "/unblockWindow")
     @ResponseStatus(value = HttpStatus.OK)
     public boolean unblockWindow(@RequestParam("roomName") String roomName,@RequestParam("objectID") String objectID) {
         return simulationContextService.blockWindow(roomName, objectID, false);

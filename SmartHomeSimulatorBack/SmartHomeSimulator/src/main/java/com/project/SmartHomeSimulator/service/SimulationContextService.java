@@ -6,6 +6,7 @@ import com.project.SmartHomeSimulator.model.roomObjects.Window;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -31,54 +32,45 @@ public class SimulationContextService {
     }
 
     public boolean setInsideTemp(int insideTemp) {
-        if (simulationContext.isSimulationRunning() && simulationContext.getCurrentSimulationUser().getRole() != Role.STRANGER) {
-            simulationContext.setInsideTemp(insideTemp);
-            return true;
-        }
-        return false;
+        simulationContext.setInsideTemp(insideTemp);
+        return true;
     }
 
     public boolean setOutsideTemp(int outsideTemp) {
-        if (simulationContext.isSimulationRunning() && simulationContext.getCurrentSimulationUser().getRole() != Role.STRANGER) {
-            simulationContext.setOutsideTemp(outsideTemp);
-            return true;
-        }
-        return false;
+        simulationContext.setOutsideTemp(outsideTemp);
+        return true;
     }
 
     public boolean setTime(String time) {
-        if (simulationContext.isSimulationRunning() && simulationContext.getCurrentSimulationUser().getRole() != Role.STRANGER) {
-            simulationContext.setTime(time);
-            return true;
-        }
-        return false;
+       simulationContext.setTime(time);
+       return true;
     }
 
     public boolean setDate(String date) {
-        if (simulationContext.isSimulationRunning() && simulationContext.getCurrentSimulationUser().getRole() != Role.STRANGER) {
-            simulationContext.setDate(date);
-            return true;
+        simulationContext.setDate(date);
+        return true;
+    }
+
+    public boolean setCurrentSimulationUser(String name) {
+        List<User> users = simulationContext.getSimulationUsers();
+        for(User user: users) {
+            if (user.getName().equals(name)) {
+                simulationContext.setCurrentSimulationUser(user);
+                return true;
+            }
         }
         return false;
     }
 
-    public void setCurrentSimulationUser(User user) {
-        simulationContext.setCurrentSimulationUser(user);
-    }
-
     public boolean blockWindow(String roomName, String id, boolean block) {
-        if (simulationContext.isSimulationRunning() && simulationContext.getCurrentSimulationUser().getRole() == Role.STRANGER) {
-            Room room = simulationContext.getHomeLayout().getRoomByName(roomName);
-            UUID objectID = UUID.fromString(id);
-            RoomObject roomObject = room.getObjectByID(objectID);
-            if (room != null && roomObject != null) {
-                if (roomObject instanceof Window) {
-                    Window window = (Window) roomObject;
-                    window.setBlocked(block);
-                    return true;
-                }
+        Room room = simulationContext.getHomeLayout().getRoomByName(roomName);
+        UUID objectID = UUID.fromString(id);
+        RoomObject roomObject = room.getObjectByID(objectID);
+         if (roomObject instanceof Window) {
+                Window window = (Window) roomObject;
+                window.setBlocked(block);
+                return true;
             }
-        }
         return false;
     }
 
