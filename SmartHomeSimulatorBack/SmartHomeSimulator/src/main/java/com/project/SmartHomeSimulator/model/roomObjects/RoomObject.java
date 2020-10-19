@@ -5,6 +5,9 @@ import org.springframework.boot.jackson.JsonComponent;
 
 import java.util.UUID;
 
+/**
+ * All the object in the room will inherit this class
+ */
 @JsonComponent
 public class RoomObject {
     @JsonProperty(required = false)

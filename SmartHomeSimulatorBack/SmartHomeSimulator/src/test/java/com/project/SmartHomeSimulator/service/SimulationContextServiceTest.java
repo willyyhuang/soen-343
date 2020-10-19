@@ -16,6 +16,9 @@ import com.project.SmartHomeSimulator.model.roomObjects.RoomObject;
 
 import net.minidev.json.JSONObject;
 
+/**
+ * SimualtionContextService Unit tests
+ */
 @SpringBootTest
 public class SimulationContextServiceTest {
 
@@ -25,6 +28,9 @@ public class SimulationContextServiceTest {
     @Autowired
     private UserService userService;
 
+    /**
+     * Set Outside temperature test
+     */
     @Test
     public void startSimulation() {
     	simulationContextService.startSimulation();
@@ -58,18 +64,29 @@ public class SimulationContextServiceTest {
         boolean result = simulationContextService.setOutsideTemp(12);
         assertEquals(result,true);
     }
+
+    /**
+     * Set inside temperature test
+     */
     @Test
     public void setTime(){
         boolean result = simulationContextService.setTime("12:15");
         assertEquals(result,true);
     }
 
+    /**
+     * set date test
+     */
     @Test
     public void setDate(){
         boolean result = simulationContextService.setDate("2020-08-25");
         assertEquals(result,true);
     }
 
+    /**
+     * set the current user in charge of the simulation test - switching users
+     * @throws JsonProcessingException
+     */
     @Test
     public void  setCurrentSimulationUser() throws JsonProcessingException {
         JSONObject jsonUser = new JSONObject();
@@ -83,6 +100,9 @@ public class SimulationContextServiceTest {
         assertEquals(result,true);
     }
 
+    /**
+     * choosing to block a window test
+     */
     @Test
     public void blockWindow(){
         String homeLayoutFile = "{\"roomList\":\"[{\"name\":\"string\", \"objects\":[{\"objectType\": \"WINDOW\", \"status\": \"true\"}]}]\"}";
@@ -93,6 +113,9 @@ public class SimulationContextServiceTest {
         assertEquals(result,true);
     }
 
+    /**
+     * load a house layout test
+     */
     @Test
     public void loadLayout(){
         String homeLayoutFile = "{\"roomList\":\"[{\"name\":\"string\", \"objects\":[{\"objectType\": \"WINDOW\", \"status\": \"true\"}]}]\"}";
