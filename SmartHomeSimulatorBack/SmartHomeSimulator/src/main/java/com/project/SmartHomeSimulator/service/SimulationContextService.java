@@ -1,13 +1,17 @@
 package com.project.SmartHomeSimulator.service;
 
-import com.project.SmartHomeSimulator.model.*;
-import com.project.SmartHomeSimulator.model.roomObjects.RoomObject;
-import com.project.SmartHomeSimulator.model.roomObjects.Window;
+import java.util.List;
+import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.UUID;
+import com.project.SmartHomeSimulator.model.HomeLayout;
+import com.project.SmartHomeSimulator.model.Room;
+import com.project.SmartHomeSimulator.model.SimulationContext;
+import com.project.SmartHomeSimulator.model.User;
+import com.project.SmartHomeSimulator.model.roomObjects.RoomObject;
+import com.project.SmartHomeSimulator.model.roomObjects.Window;
 
 @Service
 public class SimulationContextService {

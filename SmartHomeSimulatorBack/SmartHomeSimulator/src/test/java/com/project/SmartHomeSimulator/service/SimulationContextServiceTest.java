@@ -1,5 +1,11 @@
 package com.project.SmartHomeSimulator.service;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.project.SmartHomeSimulator.model.HomeLayout;
@@ -7,14 +13,8 @@ import com.project.SmartHomeSimulator.model.Room;
 import com.project.SmartHomeSimulator.model.SimulationContext;
 import com.project.SmartHomeSimulator.model.User;
 import com.project.SmartHomeSimulator.model.roomObjects.RoomObject;
-import net.minidev.json.JSONObject;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import static org.junit.Assert.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertSame;
 
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import net.minidev.json.JSONObject;
 
 @SpringBootTest
 public class SimulationContextServiceTest {
@@ -25,6 +25,34 @@ public class SimulationContextServiceTest {
     @Autowired
     private UserService userService;
 
+    @Test
+    public void startSimulation() {
+    	simulationContextService.startSimulation();
+    	boolean result = simulationContextService.getSimulationContext().isSimulationRunning();
+    	assertEquals(result, true);
+    }
+    
+    @Test
+    public void stopSimulation() {
+    	simulationContextService.stopSimulation();
+    	boolean result = simulationContextService.getSimulationContext().isSimulationRunning();
+    	assertEquals(result, false);
+    }
+    
+    @Test
+    public void getSimulationContext() {
+    	SimulationContext otherSimulationContextService = new SimulationContext();
+    	otherSimulationContextService.clone(simulationContextService.getSimulationContext());
+    	SimulationContext result = simulationContextService.getSimulationContext();
+    	assertEquals(result.toString(), otherSimulationContextService.toString());
+    }
+    
+    @Test
+    public void setInsideTemp() {
+    	boolean result = simulationContextService.setInsideTemp(20);
+    	assertEquals(result, true);
+    }
+    
     @Test
     public void setOutsideTemp(){
         boolean result = simulationContextService.setOutsideTemp(12);
