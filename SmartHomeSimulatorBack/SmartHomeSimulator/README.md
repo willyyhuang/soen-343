@@ -28,69 +28,9 @@ This Package will contain the models for users and homes. They will have the sam
 This package will deal with the database; Add, Edit or Remove. It has an Interface and its implementation. That way, we 
 can use dependency injection in the Service Package.
 
-###USERS API
+###API's
+All the API;s can be seen here: http://localhost:8080/swagger-ui.htm
 
-It contains the controllers, the classes that will receive the https calls. 
-
-Here is what we have for now:
-
-**Adding a user (POST)**: "http://localhost:****/api/v1/user/register"  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;body:  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"username":"username",  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "password":"password"  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
-
-Returns 0 if user exists and 1 if it was successful 
-
-**Removing a user (POST)**: "http://localhost:****/api/v1/user/remove?username=username"  
-
-Returns 0 if user doesn't exist and 1 if it was successful
-
-**Identifying a user (POST)**: "http://localhost:****/api/v1/user/login"  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;body:  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"username":"username",  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "password":"password"  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
-
-Returns username if right password, Not found if user does not exist and No Match if wrong password
-
-**Edit Password (POST)**: "http://localhost:****/api/v1/user/editPassword"  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;body:  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"username":"username",  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "password":"NewPassword"  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
-
-Returns 0 if user doesn't exist and 1 if it was successful     
-
-##SimulationProfiles API
-**Add a SimulationProfile (POST)**: "http://localhost:****/api/v1/simulation/add?username=UserName"  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;body:  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"name":"name",  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "role":"PARENT or CHILD or GUEST or STRANGER",
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"homeLocation":"room"   
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
-
-Returns true if successful or false if otherwise
-
-**Removing a SimulationProfile (POST)**: "http://localhost:****/api/v1/simulation/remove?name=name&username=UserName"   
-
-Returns true if successful or false if otherwise
-
-**Edit homeLocation of a simulationProfile (POST)**: "http://localhost:****/api/v1/simulation/editHomeLocation?name=name&homeLocation=roomName&username=UserName"
-
-Returns true if successful or false if otherwise
-
-**Set CurrentSimulationProfile (POST)**: "http://localhost:****/api/v1/simulation/setCurrentSimulationProfile?name=nameSimulationProfile&username=UserName"
-
-Returns true if successful or false if otherwise
-
-**Get SimulationConfig (GET)**: "http://localhost:****/api/v1/simulation/simulationConfig?username=UserName"
-
-Returns the list of SimulationProfiles, the current SimulationProfile
 ###Service
 
 This package contains the classes that will be triggered when an API call is made to deal with the database and return 
