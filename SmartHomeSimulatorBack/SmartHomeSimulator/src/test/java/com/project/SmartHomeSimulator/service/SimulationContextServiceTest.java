@@ -2,12 +2,17 @@ package com.project.SmartHomeSimulator.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.project.SmartHomeSimulator.model.HomeLayout;
+import com.project.SmartHomeSimulator.model.Room;
 import com.project.SmartHomeSimulator.model.SimulationContext;
 import com.project.SmartHomeSimulator.model.User;
+import com.project.SmartHomeSimulator.model.roomObjects.RoomObject;
 import net.minidev.json.JSONObject;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertSame;
+
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
@@ -20,6 +25,11 @@ public class SimulationContextServiceTest {
     @Autowired
     private UserService userService;
 
+    @Test
+    public void setOutsideTemp(){
+        boolean result = simulationContextService.setOutsideTemp(12);
+        assertEquals(result,true);
+    }
     @Test
     public void setTime(){
         boolean result = simulationContextService.setTime("12:15");
@@ -47,7 +57,22 @@ public class SimulationContextServiceTest {
 
     @Test
     public void blockWindow(){
+        String homeLayoutFile = "{\"roomList\":\"[{\"name\":\"string\", \"objects\":[{\"objectType\": \"WINDOW\", \"status\": \"true\"}]}]\"}";
+        HomeLayout homeLayout = simulationContextService.loadLayout(homeLayoutFile);
+        Room room = homeLayout.getRoomList().get(0);
+        RoomObject window = room.getObjects().get(0);
+        boolean result = simulationContextService.blockWindow(room.getName(),window.getId().toString(),false);
+        assertEquals(result,true);
+    }
 
+    @Test
+    public void loadLayout(){
+        String homeLayoutFile = "{\"roomList\":\"[{\"name\":\"string\", \"objects\":[{\"objectType\": \"WINDOW\", \"status\": \"true\"}]}]\"}";
+        HomeLayout homeLayout = new HomeLayout();
+        homeLayout = homeLayout.readHomeLayout(homeLayoutFile);
+        HomeLayout result = simulationContextService.loadLayout(homeLayoutFile);
+        homeLayout.getRoomList().get(0).getObjects().get(0).setId(result.getRoomList().get(0).getObjects().get(0).getId());
+        assertEquals(result.toString(),homeLayout.toString());
     }
 
 

@@ -39,4 +39,13 @@ public class RoomObject {
     public void setStatus(boolean status) {
         this.status = status;
     }
+
+    @Override
+    public String toString() {
+        return "RoomObject{" +
+                "id=" + id +
+                ", roomObjectType=" + roomObjectType +
+                ", status=" + status +
+                '}';
+    }
 }

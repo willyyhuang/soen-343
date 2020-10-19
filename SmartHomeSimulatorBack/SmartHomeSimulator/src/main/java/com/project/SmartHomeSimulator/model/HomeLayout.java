@@ -8,6 +8,7 @@ import com.project.SmartHomeSimulator.model.roomObjects.Window;
 import org.springframework.boot.jackson.JsonComponent;
 
 import java.util.List;
+import java.util.Objects;
 
 @JsonComponent
 public class HomeLayout {
@@ -64,5 +65,17 @@ public class HomeLayout {
 
     public void setRoomList(List<Room> roomList) {
         this.roomList = roomList;
+    }
+
+    @Override
+    public String toString() {
+        return "HomeLayout{" +
+                "roomList=" + roomList +
+                '}';
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(roomList);
     }
 }
