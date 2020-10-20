@@ -4,7 +4,9 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-
+/**
+ * SimulationContext class is used to hold information pertaining the simulation context
+ */
 @Component
 public class SimulationContext {
     private int insideTemp;

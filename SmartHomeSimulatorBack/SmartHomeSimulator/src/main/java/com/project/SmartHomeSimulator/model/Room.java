@@ -7,7 +7,9 @@ import org.springframework.boot.jackson.JsonComponent;
 import java.util.List;
 import java.util.UUID;
 
-
+/**
+ * Room class is used to hold information pertaining the rooms in the home layout
+ */
 @JsonComponent
 @JsonIgnoreProperties("users")
 public class Room {
@@ -31,7 +33,12 @@ public class Room {
         this.roomObjects = roomObjects;
     }
 
-    public RoomObject getObjectByID(UUID deviceID){
+    /**
+     * Gets a room object by id
+     * @param deviceID
+     * @return room object
+     */
+    public RoomObject getRoomObjectByID(UUID deviceID){
         if (this.getObjects() != null){
             for (RoomObject roomObject : this.getObjects()) {
                 if (roomObject.getId().compareTo(deviceID) == 0) {
