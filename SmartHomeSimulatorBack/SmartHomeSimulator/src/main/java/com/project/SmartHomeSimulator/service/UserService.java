@@ -19,7 +19,11 @@ public class UserService {
         this.simulationContext = simulationContext;
     }
 
-    //adds a new user to the simulation context users list
+    /**
+     * adds a new user to the simulation context users list
+     * @param user
+     * @return - true if successful false if otherwise
+     */
     public boolean addUser(User user) {
         User userAlreadyExist = findUserByName(user.getName());
         if (userAlreadyExist == null) {
@@ -32,9 +36,13 @@ public class UserService {
         return false;
     }
 
-    //returns false if user was not found and true if successfully deleted
-    public boolean
-    removeUser(String name) {
+
+    /**
+     * returns false if user was not found and true if successfully deleted
+     * @param name
+     * @return  - true if successful false if otherwise
+     */
+    public boolean removeUser(String name) {
         User toBeRemovedUser = findUserByName(name);
         if (toBeRemovedUser != null) {
             simulationContext.getSimulationUsers().remove(toBeRemovedUser);
@@ -43,6 +51,12 @@ public class UserService {
         return false;
     }
 
+    /**
+     * returns false if user was not found and true if successfully deleted
+     * @param name
+     * @param newName
+     * @return - true if successful false if otherwise
+     */
     public boolean editUser(String name, String newName) {
         User user = findUserByName(name);
         if (user != null) {
@@ -52,7 +66,12 @@ public class UserService {
         return false;
     }
 
-    //adds new home location to user
+    /**
+     * adds new home location to user
+     * @param name
+     * @param homeLocation
+     * @return - true if successful false if otherwise
+     */
     public boolean editHomeLocation(String name, String homeLocation) {
         User user = findUserByName(name);
 
@@ -63,7 +82,11 @@ public class UserService {
         return false;
     }
 
-    //finds user by name and returns it
+    /**
+     * finds user by name and returns it
+     * @param name
+     * @return - true if successful false if otherwise
+     */
     User findUserByName(String name) {
         List<User> users = simulationContext.getSimulationUsers();
         if (users != null) {

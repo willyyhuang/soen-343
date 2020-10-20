@@ -1,5 +1,8 @@
 package com.project.SmartHomeSimulator.model.roomObjects;
 
+/**
+ * Window's class
+ */
 public class Window extends RoomObject {
     private boolean isBlocked;
 

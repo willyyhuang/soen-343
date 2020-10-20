@@ -5,6 +5,9 @@ import org.springframework.boot.jackson.JsonComponent;
 
 import java.util.UUID;
 
+/**
+ * All the object in the room will inherit this class
+ */
 @JsonComponent
 public class RoomObject {
     @JsonProperty(required = false)
@@ -38,5 +41,14 @@ public class RoomObject {
 
     public void setStatus(boolean status) {
         this.status = status;
+    }
+
+    @Override
+    public String toString() {
+        return "RoomObject{" +
+                "id=" + id +
+                ", roomObjectType=" + roomObjectType +
+                ", status=" + status +
+                '}';
     }
 }
