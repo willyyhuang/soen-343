@@ -1,4 +1,4 @@
-package com.project.SmartHomeSimulator;
+package com.project.SmartHomeSimulator.service;
 
 import com.project.SmartHomeSimulator.model.Role;
 import com.project.SmartHomeSimulator.model.SimulationContext;
@@ -8,7 +8,9 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-
+/**
+ * UserService Unit Tests
+ */
 public class UserServiceTest {
 
     private UserService userService;

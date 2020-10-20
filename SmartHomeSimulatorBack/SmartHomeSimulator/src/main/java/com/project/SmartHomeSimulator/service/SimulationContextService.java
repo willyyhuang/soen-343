@@ -65,7 +65,7 @@ public class SimulationContextService {
     public boolean blockWindow(String roomName, String id, boolean block) {
         Room room = simulationContext.getHomeLayout().getRoomByName(roomName);
         UUID objectID = UUID.fromString(id);
-        RoomObject roomObject = room.getObjectByID(objectID);
+        RoomObject roomObject = room.getRoomObjectByID(objectID);
          if (roomObject instanceof Window) {
                 Window window = (Window) roomObject;
                 window.setBlocked(block);
