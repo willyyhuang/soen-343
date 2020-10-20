@@ -1,6 +1,5 @@
 package com.project.SmartHomeSimulator.service;
 
-import com.project.SmartHomeSimulator.model.Role;
 import com.project.SmartHomeSimulator.model.SimulationContext;
 import com.project.SmartHomeSimulator.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +35,7 @@ public class UserService {
         }
         return false;
     }
+
 
     /**
      * returns false if user was not found and true if successfully deleted
@@ -73,13 +73,9 @@ public class UserService {
      * @return - true if successful false if otherwise
      */
     public boolean editHomeLocation(String name, String homeLocation) {
-        User currentUser = simulationContext.getCurrentSimulationUser();
         User user = findUserByName(name);
 
-        if (currentUser != null && currentUser.getName().equals("name")) {
-            currentUser.setHomeLocation(homeLocation);
-            return true;
-        } else if (user != null) {
+        if (user != null) {
             user.setHomeLocation(homeLocation);
             return true;
         }

@@ -3,7 +3,9 @@ package com.project.SmartHomeSimulator.model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.boot.jackson.JsonComponent;
 
-
+/**
+ * User class is used to hold information pertaining the users in the simulation
+ */
 @JsonComponent
 @JsonIgnoreProperties
 public class User {

@@ -10,10 +10,18 @@ import org.springframework.boot.jackson.JsonComponent;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * HomeLayout class is used to hold information pertaining the home layout
+ */
 @JsonComponent
 public class HomeLayout {
     private List<Room> roomList;
 
+    /**
+     * Gets a room by name
+     * @param name
+     * @return Room
+     */
     public Room getRoomByName(String name) {
         for (Room room : this.roomList) {
             if (room.getName().equals(name)) {
@@ -23,6 +31,12 @@ public class HomeLayout {
         return null;
     }
 
+    /**
+     * Reads home layout string and maps it to a HomeLayout object
+     * @param homeLayoutFile
+     * @return HomeLayout
+     *
+     */
     public HomeLayout readHomeLayout(String homeLayoutFile) {
         homeLayoutFile = homeLayoutFile.replace("\\","");
         homeLayoutFile = homeLayoutFile.substring(0,12) + homeLayoutFile.substring(13,homeLayoutFile.length()-2) + "}";
@@ -38,6 +52,11 @@ public class HomeLayout {
         }
     }
 
+    /**
+     * Cast roomObjects of roomObjectType window to Window type objects
+     * @param rooms
+     * @return Room list
+     */
     public List<Room> createWindowObjects(List<Room> rooms) {
         List<RoomObject> roomObjects;
         Window window;
