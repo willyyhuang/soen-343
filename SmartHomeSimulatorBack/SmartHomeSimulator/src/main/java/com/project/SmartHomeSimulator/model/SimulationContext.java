@@ -18,6 +18,7 @@ public class SimulationContext {
 	private String time;
 	private String date;
 	private User currentSimulationUser;
+	private User awayModeUser;
 	private List<User> simulationUsers;
 	private HomeLayout homeLayout;
 	private boolean simulationRunning;
