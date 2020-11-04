@@ -95,13 +95,13 @@ public class HomeLayout {
     }
 
     public void addUsersInHome(String homeLocation) {
-        if (!homeLocation.equals("building entrance")){
+        if (!homeLocation.equals("outside")){
             this.usersInHome++;
         }
     }
 
     public void removeUsersInHome(String homeLocation) {
-        if (usersInHome != 0 && !homeLocation.equals("building entrance")) {
+        if (usersInHome != 0 && !homeLocation.equals("outside")) {
             usersInHome--;
         }
     }

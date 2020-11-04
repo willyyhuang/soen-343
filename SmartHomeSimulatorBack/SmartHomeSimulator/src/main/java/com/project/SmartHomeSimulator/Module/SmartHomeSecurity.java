@@ -1,6 +1,5 @@
 package com.project.SmartHomeSimulator.Module;
 
-import com.project.SmartHomeSimulator.model.Role;
 import com.project.SmartHomeSimulator.model.User;
 
 public class SmartHomeSecurity implements Monitor {
@@ -20,9 +19,12 @@ public class SmartHomeSecurity implements Monitor {
     }
 
     @Override
-    public void update(User user) {
-        if ( awayModeConfig.isAwayMode() && (user.getRole() == Role.STRANGER || user.getRole() == Role.STRANGER) ) {
-            System.out.println("if user homelocation is inside the house then send notification");
+    public void update(String awayModeUser,User user) {
+        if ( awayModeConfig.isAwayMode() && !awayModeUser.equals(user.getName()) ) {
+            if (!user.getHomeLocation().equals("outside")){
+                //to do
+                System.out.println("send notification to awayModeUser and print in console");
+            }
         }
     }
 
@@ -32,5 +34,15 @@ public class SmartHomeSecurity implements Monitor {
 
     public void setAwayModeConfig(AwayModeConfig awayModeConfig) {
         this.awayModeConfig = awayModeConfig;
+    }
+
+    public void closWindows() {
+        //to do
+        // should send a command to SHC and log the action in console and corresponding file
+    }
+
+    public void lockDoors() {
+        //to do
+        // should send a command to SHC and log the action in console and corresponding file
     }
 }

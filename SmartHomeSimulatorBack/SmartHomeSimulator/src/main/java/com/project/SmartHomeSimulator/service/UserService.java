@@ -32,6 +32,10 @@ public class UserService {
                 simulationContext.setSimulationUsers(new ArrayList<User>());
             }
             simulationContext.getSimulationUsers().add(user);
+            if (simulationContext.getHomeLayout() != null){
+                simulationContext.getHomeLayout().addUsersInHome(user.getHomeLocation());
+                simulationContext.notifyMonitors(user);
+            }
             return true;
         }
         return false;

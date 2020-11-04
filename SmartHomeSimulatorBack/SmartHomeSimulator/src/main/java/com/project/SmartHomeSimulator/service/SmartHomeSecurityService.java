@@ -19,6 +19,8 @@ public class SmartHomeSecurityService {
     public boolean setAwayMode(boolean awayMode){
         if(simulationContext.getHomeLayout() != null && simulationContext.getHomeLayout().isHomeEmpty()){
             smartHomeSecurity.getAwayModeConfig().setAwayMode(awayMode);
+            smartHomeSecurity.closWindows();
+            smartHomeSecurity.lockDoors();
             return true;
         }
         return false;
