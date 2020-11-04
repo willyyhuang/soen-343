@@ -1,7 +1,10 @@
 package com.project.SmartHomeSimulator.model;
 
+import com.project.SmartHomeSimulator.Module.Monitor;
+import com.project.SmartHomeSimulator.Module.SmartHomeSecurity;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -18,6 +21,12 @@ public class SimulationContext {
 	private List<User> simulationUsers;
 	private HomeLayout homeLayout;
 	private boolean simulationRunning;
+	private List<Monitor> monitors;
+
+	public SimulationContext() {
+		monitors = new ArrayList<Monitor>();
+		this.monitors.add(SmartHomeSecurity.getInstance());
+	}
 
 	public void clone(SimulationContext simulationContext) {
 		this.insideTemp = simulationContext.insideTemp;
@@ -92,6 +101,20 @@ public class SimulationContext {
 
 	public void setSimulationRunning(boolean simulationRunning) {
 		this.simulationRunning = simulationRunning;
+	}
+
+	public void addMonitor(Monitor monitor){
+		this.monitors.add(monitor);
+	}
+
+	public void removeMonitor(Monitor monitor){
+		this.monitors.remove(monitor);
+	}
+
+	public void notifyMonitors(User user){
+		for (Monitor monitor : this.monitors) {
+			monitor.update(user);
+		}
 	}
 
 	@Override

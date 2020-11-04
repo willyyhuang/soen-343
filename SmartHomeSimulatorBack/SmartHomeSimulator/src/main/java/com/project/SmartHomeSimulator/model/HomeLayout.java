@@ -16,9 +16,12 @@ import java.util.Objects;
 @JsonComponent
 public class HomeLayout {
     private List<Room> roomList;
+    private boolean homeEmpty;
+    private int usersInHome;
 
     /**
      * Gets a room by name
+     *
      * @param name
      * @return Room
      */
@@ -33,13 +36,13 @@ public class HomeLayout {
 
     /**
      * Reads home layout string and maps it to a HomeLayout object
+     *
      * @param homeLayoutFile
      * @return HomeLayout
-     *
      */
     public HomeLayout readHomeLayout(String homeLayoutFile) {
-        homeLayoutFile = homeLayoutFile.replace("\\","");
-        homeLayoutFile = homeLayoutFile.substring(0,12) + homeLayoutFile.substring(13,homeLayoutFile.length()-2) + "}";
+        homeLayoutFile = homeLayoutFile.replace("\\", "");
+        homeLayoutFile = homeLayoutFile.substring(0, 12) + homeLayoutFile.substring(13, homeLayoutFile.length() - 2) + "}";
         ObjectMapper objectMapper = new ObjectMapper();
         try {
             HomeLayout homeLayout = objectMapper.readValue(homeLayoutFile, HomeLayout.class);
@@ -54,6 +57,7 @@ public class HomeLayout {
 
     /**
      * Cast roomObjects of roomObjectType window to Window type objects
+     *
      * @param rooms
      * @return Room list
      */
@@ -84,6 +88,22 @@ public class HomeLayout {
 
     public void setRoomList(List<Room> roomList) {
         this.roomList = roomList;
+    }
+
+    public boolean isHomeEmpty() {
+        return usersInHome == 0;
+    }
+
+    public void addUsersInHome(String homeLocation) {
+        if (!homeLocation.equals("building entrance")){
+            this.usersInHome++;
+        }
+    }
+
+    public void removeUsersInHome(String homeLocation) {
+        if (usersInHome != 0 && !homeLocation.equals("building entrance")) {
+            usersInHome--;
+        }
     }
 
     @Override

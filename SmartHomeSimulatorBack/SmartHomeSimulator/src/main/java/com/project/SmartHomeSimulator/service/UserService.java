@@ -21,6 +21,7 @@ public class UserService {
 
     /**
      * adds a new user to the simulation context users list
+     *
      * @param user
      * @return - true if successful false if otherwise
      */
@@ -39,13 +40,15 @@ public class UserService {
 
     /**
      * returns false if user was not found and true if successfully deleted
+     *
      * @param name
-     * @return  - true if successful false if otherwise
+     * @return - true if successful false if otherwise
      */
     public boolean removeUser(String name) {
         User toBeRemovedUser = findUserByName(name);
         if (toBeRemovedUser != null) {
             simulationContext.getSimulationUsers().remove(toBeRemovedUser);
+            simulationContext.getHomeLayout().removeUsersInHome(toBeRemovedUser.getHomeLocation());
             return true;
         }
         return false;
@@ -53,6 +56,7 @@ public class UserService {
 
     /**
      * returns false if user was not found and true if successfully deleted
+     *
      * @param name
      * @param newName
      * @return - true if successful false if otherwise
@@ -68,6 +72,7 @@ public class UserService {
 
     /**
      * adds new home location to user
+     *
      * @param name
      * @param homeLocation
      * @return - true if successful false if otherwise
@@ -77,6 +82,8 @@ public class UserService {
 
         if (user != null) {
             user.setHomeLocation(homeLocation);
+            simulationContext.getHomeLayout().addUsersInHome(user.getHomeLocation());
+            simulationContext.notifyMonitors(user);
             return true;
         }
         return false;
@@ -84,6 +91,7 @@ public class UserService {
 
     /**
      * finds user by name and returns it
+     *
      * @param name
      * @return - true if successful false if otherwise
      */
