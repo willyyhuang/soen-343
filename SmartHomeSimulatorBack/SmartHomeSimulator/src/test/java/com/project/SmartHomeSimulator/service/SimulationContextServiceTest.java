@@ -27,6 +27,20 @@ public class SimulationContextServiceTest {
     private UserService userService;
 
     /**
+     * load a house layout test
+     */
+    @Test
+    public void loadLayout(){
+        String homeLayoutFile = "{\"roomList\":\"[{\"name\":\"string\", \"objects\":[{\"objectType\": \"WINDOW\"}]}]\"}";
+        HomeLayout homeLayout = new HomeLayout();
+        homeLayout = homeLayout.readHomeLayout(homeLayoutFile);
+        HomeLayout.windowCount--;
+        HomeLayout result = simulationContextService.loadLayout(homeLayoutFile);
+        homeLayout.getRoomList().get(0).getObjects().get(0).setId(result.getRoomList().get(0).getObjects().get(0).getId());
+        assertEquals(result.toString(),homeLayout.toString());
+    }
+
+    /**
      * Set Outside temperature test
      */
     @Test
@@ -99,31 +113,11 @@ public class SimulationContextServiceTest {
     }
 
     /**
-     * choosing to block a window test
-     */
-//    @Test
-//    public void blockWindow(){
-//        String homeLayoutFile = "{\"roomList\":\"[{\"name\":\"string\", \"objects\":[{\"objectType\": \"WINDOW\", \"status\": \"true\"}]}]\"}";
-//        HomeLayout homeLayout = simulationContextService.loadLayout(homeLayoutFile);
-//        Room room = homeLayout.getRoomList().get(0);
-//        RoomObject window = room.getObjects().get(0);
-//        boolean result = simulationContextService.blockWindow(room.getName(),window.getId().toString(),false);
-//        assertEquals(result,true);
-//    }
-
-    /**
-     * load a house layout test
+     * Set auto mode test
      */
     @Test
-    public void loadLayout(){
-        String homeLayoutFile = "{\"roomList\":\"[{\"name\":\"string\", \"objects\":[{\"objectType\": \"WINDOW\"}]}]\"}";
-        HomeLayout homeLayout = new HomeLayout();
-        homeLayout = homeLayout.readHomeLayout(homeLayoutFile);
-        HomeLayout.windowCount--;
-        HomeLayout result = simulationContextService.loadLayout(homeLayoutFile);
-        homeLayout.getRoomList().get(0).getObjects().get(0).setId(result.getRoomList().get(0).getObjects().get(0).getId());
-        assertEquals(result.toString(),homeLayout.toString());
+    public void setAutoMode(){
+        boolean result = simulationContextService.setAutoMode(true);
+        assertEquals(result, true);
     }
-
-
 }

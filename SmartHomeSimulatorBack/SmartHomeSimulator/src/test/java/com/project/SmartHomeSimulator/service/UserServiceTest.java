@@ -13,7 +13,6 @@ import org.junit.Test;
 public class UserServiceTest {
 
     private UserService userService;
-    private static SimulationContext simulationContext = SimulationContext.getInstance();
     private User user;
 
     @Before

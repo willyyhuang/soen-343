@@ -102,6 +102,10 @@ public class HomeLayout {
 
     public List<RoomObject> allLights(String roomName){
         Room room = getRoomByName(roomName);
+        if(room == null){
+            List<RoomObject> list = new ArrayList<>();
+            return list;
+        }
         return room.allLights();
     }
 
