@@ -92,7 +92,12 @@ const SimulationProfileCard = ({simulationConfig, fetchUserProfiles}) => {
         <Input value={addProfileFormData.name} onChange={(e) => setAddProfileFormData({name: e.target.value, role: addProfileFormData.role, homeLocation: addProfileFormData.homeLocation})} placeholder='enter a name' />
       </Form.Item>
       <Form.Item label='Role'>
-        <Input value={addProfileFormData.role} onChange={(e) => setAddProfileFormData({name: addProfileFormData.name, role: e.target.value, homeLocation: addProfileFormData.homeLocation})} placeholder='enter a role' />
+        <Select value={addProfileFormData.role} onChange={(value) => setAddProfileFormData({name: addProfileFormData.name, role: value, homeLocation: addProfileFormData.homeLocation})}>
+          <Select.Option value='PARENT'>Parent</Select.Option>
+          <Select.Option value='CHILD'>Child</Select.Option>
+          <Select.Option value='GUEST'>Guest</Select.Option>
+          <Select.Option value='STRANGER'>Stranger</Select.Option>
+        </Select>
       </Form.Item>
       <Form.Item label='Home Location'>
         <Input value={addProfileFormData.homeLocation} onChange={(e) => setAddProfileFormData({name: addProfileFormData.name, role: addProfileFormData.role, homeLocation: e.target.value})} placeholder='enter a home location' />
