@@ -12,11 +12,20 @@ import java.util.UUID;
 public class RoomObject {
     @JsonProperty(required = false)
     private UUID id;
+    @JsonProperty(required = false)
+    private String name;
     private RoomObjectType roomObjectType;
-    private boolean status;
 
     public RoomObject(){
         this.id = UUID.randomUUID();
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public UUID getId() {
@@ -35,20 +44,12 @@ public class RoomObject {
         this.roomObjectType = roomObjectType;
     }
 
-    public boolean isStatus() {
-        return status;
-    }
-
-    public void setStatus(boolean status) {
-        this.status = status;
-    }
-
     @Override
     public String toString() {
         return "RoomObject{" +
+                "name=" + name +
                 "id=" + id +
                 ", roomObjectType=" + roomObjectType +
-                ", status=" + status +
                 '}';
     }
 }

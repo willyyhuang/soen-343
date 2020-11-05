@@ -1,17 +1,13 @@
 package com.project.SmartHomeSimulator.service;
 
 import java.util.List;
-import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.project.SmartHomeSimulator.model.HomeLayout;
-import com.project.SmartHomeSimulator.model.Room;
-import com.project.SmartHomeSimulator.model.SimulationContext;
+import com.project.SmartHomeSimulator.module.SimulationContext;
 import com.project.SmartHomeSimulator.model.User;
-import com.project.SmartHomeSimulator.model.roomObjects.RoomObject;
-import com.project.SmartHomeSimulator.model.roomObjects.Window;
 
 @Service
 public class SimulationContextService {
@@ -98,25 +94,6 @@ public class SimulationContextService {
                 return true;
             }
         }
-        return false;
-    }
-
-    /**
-     * block a window or unblock it
-     * @param roomName
-     * @param id
-     * @param block - blocked or unblocked - replace the state of the window
-     * @return  - true if successful false if otherwise
-     */
-    public boolean blockWindow(String roomName, String id, boolean block) {
-        Room room = simulationContext.getHomeLayout().getRoomByName(roomName);
-        UUID objectID = UUID.fromString(id);
-        RoomObject roomObject = room.getRoomObjectByID(objectID);
-         if (roomObject instanceof Window) {
-                Window window = (Window) roomObject;
-                window.setBlocked(block);
-                return true;
-            }
         return false;
     }
 

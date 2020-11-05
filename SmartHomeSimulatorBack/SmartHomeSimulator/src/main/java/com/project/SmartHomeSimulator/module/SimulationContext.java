@@ -1,7 +1,7 @@
-package com.project.SmartHomeSimulator.model;
+package com.project.SmartHomeSimulator.module;
 
-import com.project.SmartHomeSimulator.Module.Monitor;
-import com.project.SmartHomeSimulator.Module.SmartHomeSecurity;
+import com.project.SmartHomeSimulator.model.HomeLayout;
+import com.project.SmartHomeSimulator.model.User;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;

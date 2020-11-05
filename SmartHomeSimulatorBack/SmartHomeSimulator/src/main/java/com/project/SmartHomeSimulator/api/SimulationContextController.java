@@ -1,8 +1,7 @@
 package com.project.SmartHomeSimulator.api;
 
 import com.project.SmartHomeSimulator.model.HomeLayout;
-import com.project.SmartHomeSimulator.model.SimulationContext;
-import com.project.SmartHomeSimulator.model.User;
+import com.project.SmartHomeSimulator.module.SimulationContext;
 import com.project.SmartHomeSimulator.service.SimulationContextService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -100,30 +99,6 @@ public class SimulationContextController {
     @ResponseStatus(value = HttpStatus.OK)
     public boolean setDate(@RequestParam("date") String date) {
         return simulationContextService.setDate(date);
-    }
-
-    /**
-     * API block a window
-     * @param roomName
-     * @param objectID
-     * @return - true if successful false if otherwise
-     */
-    @PostMapping(value = "/blockWindow")
-    @ResponseStatus(value = HttpStatus.OK)
-    public boolean blockWindow(@RequestParam("roomName") String roomName,@RequestParam("objectID") String objectID) {
-        return simulationContextService.blockWindow(roomName, objectID, true);
-    }
-
-    /**
-     * API unblock a window
-     * @param roomName
-     * @param objectID
-     * @return - true if successful false if otherwise
-     */
-    @PostMapping(value = "/unblockWindow")
-    @ResponseStatus(value = HttpStatus.OK)
-    public boolean unblockWindow(@RequestParam("roomName") String roomName,@RequestParam("objectID") String objectID) {
-        return simulationContextService.blockWindow(roomName, objectID, false);
     }
 
     /**

@@ -1,7 +1,7 @@
 package com.project.SmartHomeSimulator.service;
 
-import com.project.SmartHomeSimulator.Module.SmartHomeSecurity;
-import com.project.SmartHomeSimulator.model.SimulationContext;
+import com.project.SmartHomeSimulator.module.SmartHomeSecurity;
+import com.project.SmartHomeSimulator.module.SimulationContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

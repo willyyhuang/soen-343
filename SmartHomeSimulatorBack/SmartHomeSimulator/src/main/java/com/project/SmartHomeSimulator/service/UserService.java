@@ -1,6 +1,6 @@
 package com.project.SmartHomeSimulator.service;
 
-import com.project.SmartHomeSimulator.model.SimulationContext;
+import com.project.SmartHomeSimulator.module.SimulationContext;
 import com.project.SmartHomeSimulator.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

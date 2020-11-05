@@ -2,11 +2,10 @@ package com.project.SmartHomeSimulator.model;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.project.SmartHomeSimulator.model.roomObjects.RoomObject;
-import com.project.SmartHomeSimulator.model.roomObjects.RoomObjectType;
-import com.project.SmartHomeSimulator.model.roomObjects.Window;
+import com.project.SmartHomeSimulator.model.roomObjects.*;
 import org.springframework.boot.jackson.JsonComponent;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -18,7 +17,9 @@ public class HomeLayout {
     private List<Room> roomList;
     private boolean homeEmpty;
     private int usersInHome;
-
+    private static int windowCount = 1;
+    private static int doorCount = 1;
+    private static int lightCount = 1;
     /**
      * Gets a room by name
      *
@@ -47,6 +48,11 @@ public class HomeLayout {
         try {
             HomeLayout homeLayout = objectMapper.readValue(homeLayoutFile, HomeLayout.class);
             List<Room> rooms = createWindowObjects(homeLayout.getRoomList());
+            rooms = createDoorObjects(rooms);
+            rooms = createLightObjects(rooms);
+            Room outside = new Room();
+            outside.setName("outside");
+            rooms.add(outside);
             homeLayout.setRoomList(rooms);
             return homeLayout;
         } catch (JsonProcessingException e) {
@@ -62,15 +68,16 @@ public class HomeLayout {
      * @return Room list
      */
     public List<Room> createWindowObjects(List<Room> rooms) {
-        List<RoomObject> roomObjects;
+        List<RoomObject> roomObjectsJson;
+        List<RoomObject> roomObjects = new ArrayList<>();
         Window window;
         if (rooms != null) {
             for (Room room : rooms) {
-                roomObjects = room.getObjects();
-                for (RoomObject roomObject : roomObjects) {
+                roomObjectsJson = room.getObjects();
+                for (RoomObject roomObject : roomObjectsJson) {
                     if (roomObject.getObjectType() == RoomObjectType.WINDOW) {
                         window = new Window(roomObject);
-                        roomObjects.remove(roomObject);
+                        window.setName(room.getName() + "-Window" + windowCount++);
                         roomObjects.add(window);
                     }
                 }
@@ -79,7 +86,48 @@ public class HomeLayout {
             return rooms;
         }
         return null;
+    }
 
+    public List<Room> createDoorObjects(List<Room> rooms) {
+        List<RoomObject> roomObjectsJson;
+        List<RoomObject> roomObjects = new ArrayList<>();
+        Door door;
+        if (rooms != null) {
+            for (Room room : rooms) {
+                roomObjectsJson = room.getObjects();
+                for (RoomObject roomObject : roomObjectsJson) {
+                    if (roomObject.getObjectType() == RoomObjectType.DOOR) {
+                        door = new Door(roomObject);
+                        door.setName(room.getName() + " - Door" + doorCount++);
+                        roomObjects.add(door);
+                    }
+                }
+                room.setObjects(roomObjects);
+            }
+            return rooms;
+        }
+        return null;
+    }
+
+    public List<Room> createLightObjects(List<Room> rooms) {
+        List<RoomObject> roomObjectsJson;
+        List<RoomObject> roomObjects = new ArrayList<>();
+        Light light;
+        if (rooms != null) {
+            for (Room room : rooms) {
+                roomObjectsJson = room.getObjects();
+                for (RoomObject roomObject : roomObjectsJson) {
+                    if (roomObject.getObjectType() == RoomObjectType.LIGHT) {
+                        light = new Light(roomObject);
+                        light.setName(room.getName() + " - Light" + lightCount++);
+                        roomObjects.add(light);
+                    }
+                }
+                room.setObjects(roomObjects);
+            }
+            return rooms;
+        }
+        return null;
     }
 
     public List<Room> getRoomList() {

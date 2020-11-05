@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin(origins = {"*"})
-@RequestMapping("api/v1/simulationHomeSecurity")
+@RequestMapping("api/v1/simulation")
 public class SimulationHomeSecurityController {
 
     @Autowired
@@ -15,7 +15,7 @@ public class SimulationHomeSecurityController {
 
     @PutMapping(value = "/awayMode")
     @ResponseStatus(value = HttpStatus.OK)
-    public boolean startSimulation(@RequestParam("awayMode") Boolean awayMode) {
+    public boolean startAwayMode(@RequestParam("awayMode") Boolean awayMode) {
         return smartHomeSecurityService.setAwayMode(awayMode);
     }
 

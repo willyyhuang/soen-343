@@ -1,4 +1,4 @@
-package com.project.SmartHomeSimulator.Module;
+package com.project.SmartHomeSimulator.module;
 
 import com.project.SmartHomeSimulator.model.User;
 

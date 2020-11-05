@@ -1,9 +1,9 @@
-package com.project.SmartHomeSimulator.Module;
+package com.project.SmartHomeSimulator.module;
 
 
 public class AwayModeConfig {
     private boolean awayMode;
-    private String duration;
+    private int duration;
 
     public boolean isAwayMode() {
         return awayMode;
@@ -13,11 +13,11 @@ public class AwayModeConfig {
         this.awayMode = awayMode;
     }
 
-    public String getDuration() {
+    public int getDuration() {
         return duration;
     }
 
-    public void setDuration(String duration) {
+    public void setDuration(int duration) {
         this.duration = duration;
     }
 }
