@@ -17,11 +17,18 @@ public class SmartHomeSecurityService {
     }
 
     public boolean setAwayMode(boolean awayMode){
-        if(simulationContext.getHomeLayout() != null && simulationContext.getHomeLayout().isHomeEmpty()){
+        if(awayMode) {
+            if (simulationContext.getHomeLayout() != null && simulationContext.getHomeLayout().isHomeEmpty()) {
+                smartHomeSecurity.getAwayModeConfig().setAwayMode(awayMode);
+                smartHomeSecurity.closWindows();
+                smartHomeSecurity.lockDoors();
+                simulationContext.setAwayModeUser(simulationContext.getCurrentSimulationUser());
+                return true;
+            }
+        }
+        else {
+            simulationContext.setAwayModeUser(null);
             smartHomeSecurity.getAwayModeConfig().setAwayMode(awayMode);
-            smartHomeSecurity.closWindows();
-            smartHomeSecurity.lockDoors();
-            return true;
         }
         return false;
     }

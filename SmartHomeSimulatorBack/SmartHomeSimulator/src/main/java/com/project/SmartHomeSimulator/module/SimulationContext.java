@@ -40,6 +40,14 @@ public class SimulationContext {
 		this.simulationRunning = simulationContext.simulationRunning;
 	}
 
+	public User getAwayModeUser() {
+		return awayModeUser;
+	}
+
+	public void setAwayModeUser(User awayModeUser) {
+		this.awayModeUser = awayModeUser;
+	}
+
 	public int getInsideTemp() {
 		return insideTemp;
 	}
