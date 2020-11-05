@@ -92,7 +92,7 @@ public class UserService {
         User user = findUserByName(name);
         List<User> usersInOldLocation = new ArrayList<>();
         if(user != null) {
-            simulationContext.getAllUsersInLocation(user.getHomeLocation());
+            usersInOldLocation =  simulationContext.getAllUsersInLocation(user.getHomeLocation());
         }
         List<RoomObject> lightsInRoom = new ArrayList<>();
         if(simulationContext.getHomeLayout() != null) {
