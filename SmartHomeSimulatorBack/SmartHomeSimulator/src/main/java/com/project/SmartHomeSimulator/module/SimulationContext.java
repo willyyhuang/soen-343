@@ -1,24 +1,42 @@
-package com.project.SmartHomeSimulator.model;
+package com.project.SmartHomeSimulator.module;
 
+import com.project.SmartHomeSimulator.model.HomeLayout;
+import com.project.SmartHomeSimulator.model.User;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
 /**
  * SimulationContext class is used to hold information pertaining the simulation context
  */
-@Component
 public class SimulationContext {
+
 	private int insideTemp;
 	private int outsideTemp;
 	private String time;
 	private String date;
 	private User currentSimulationUser;
+	private User awayModeUser;
 	private List<User> simulationUsers;
 	private HomeLayout homeLayout;
 	private boolean simulationRunning;
+	private List<Monitor> monitors;
 
+	public static SimulationContext simulationContext = null;
+
+	public SimulationContext() {
+		monitors = new ArrayList<Monitor>();
+		this.monitors.add(SmartHomeSecurity.getInstance());
+	}
+
+	public static SimulationContext getInstance(){
+		if (simulationContext == null){
+			simulationContext = new SimulationContext();
+		}
+		return simulationContext;
+	}
 	public void clone(SimulationContext simulationContext) {
 		this.insideTemp = simulationContext.insideTemp;
 		this.outsideTemp = simulationContext.outsideTemp;
@@ -28,6 +46,14 @@ public class SimulationContext {
 		this.simulationUsers = simulationContext.simulationUsers;
 		this.homeLayout = simulationContext.homeLayout;
 		this.simulationRunning = simulationContext.simulationRunning;
+	}
+
+	public User getAwayModeUser() {
+		return awayModeUser;
+	}
+
+	public void setAwayModeUser(User awayModeUser) {
+		this.awayModeUser = awayModeUser;
 	}
 
 	public int getInsideTemp() {
@@ -92,6 +118,22 @@ public class SimulationContext {
 
 	public void setSimulationRunning(boolean simulationRunning) {
 		this.simulationRunning = simulationRunning;
+	}
+
+	public void addMonitor(Monitor monitor){
+		this.monitors.add(monitor);
+	}
+
+	public void removeMonitor(Monitor monitor){
+		this.monitors.remove(monitor);
+	}
+
+	public void notifyMonitors(User user){
+		if (awayModeUser != null) {
+			for (Monitor monitor : this.monitors) {
+				monitor.update(awayModeUser.getName(), user);
+			}
+		}
 	}
 
 	@Override

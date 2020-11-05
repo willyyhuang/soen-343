@@ -1,6 +1,9 @@
 package com.project.SmartHomeSimulator.api;
 
+import com.project.SmartHomeSimulator.model.ResponseAPI;
 import com.project.SmartHomeSimulator.model.User;
+import com.project.SmartHomeSimulator.module.SimulationContext;
+import com.project.SmartHomeSimulator.module.SmartHomeSecurity;
 import com.project.SmartHomeSimulator.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,6 +29,9 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    public SmartHomeSecurity smartHomeSecurity = SmartHomeSecurity.getInstance();
+    public SimulationContext simulationContext = SimulationContext.getInstance();
+
     /**
      * Add a user
      * @param user
@@ -34,9 +40,19 @@ public class UserController {
     @PostMapping(value = "/add")
     @ResponseStatus(value = HttpStatus.OK)
     @ResponseBody
-    public boolean addUser(@RequestBody @Valid User user)
+    public ResponseAPI addUser(@RequestBody @Valid User user)
     {
-        return userService.addUser(user);
+        ResponseAPI response = new ResponseAPI();
+        if(smartHomeSecurity.getAwayModeConfig().isAwayMode()){
+            response.success = false;
+            response.awayMode = true;
+            response.timeBeforeAuthorities = smartHomeSecurity.getAwayModeConfig().getTimeBeforeAuthorities();
+            return response;
+        }
+        response.success = userService.addUser(user);
+        response.awayMode = false;
+        response.timeBeforeAuthorities = smartHomeSecurity.getAwayModeConfig().getTimeBeforeAuthorities();
+        return response;
     }
 
     /**
@@ -72,9 +88,19 @@ public class UserController {
      */
     @PostMapping(value = "/editHomeLocation")
     @ResponseStatus(value = HttpStatus.OK)
-    public boolean editHomeLocation (@RequestParam("name") String name, @RequestParam("homeLocation") String homeLocation)
+    public ResponseAPI editHomeLocation (@RequestParam("name") String name, @RequestParam("homeLocation") String homeLocation)
     {
-        return userService.editHomeLocation(name,homeLocation);
+        ResponseAPI response = new ResponseAPI();
+        if(smartHomeSecurity.getAwayModeConfig().isAwayMode() && !name.equals(simulationContext.getCurrentSimulationUser().getName())){
+            response.success = false;
+            response.awayMode = true;
+            response.timeBeforeAuthorities = smartHomeSecurity.getAwayModeConfig().getTimeBeforeAuthorities();
+            return response;
+        }
+        response.success = userService.editHomeLocation(name,homeLocation);
+        response.awayMode = false;
+        response.timeBeforeAuthorities = smartHomeSecurity.getAwayModeConfig().getTimeBeforeAuthorities();
+        return response;
     }
 
 }

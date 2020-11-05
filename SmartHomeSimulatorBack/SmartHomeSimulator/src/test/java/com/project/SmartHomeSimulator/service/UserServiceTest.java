@@ -1,9 +1,8 @@
 package com.project.SmartHomeSimulator.service;
 
 import com.project.SmartHomeSimulator.model.Role;
-import com.project.SmartHomeSimulator.model.SimulationContext;
+import com.project.SmartHomeSimulator.module.SimulationContext;
 import com.project.SmartHomeSimulator.model.User;
-import com.project.SmartHomeSimulator.service.UserService;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,15 +13,13 @@ import org.junit.Test;
 public class UserServiceTest {
 
     private UserService userService;
-    private SimulationContext simulationContext;
+    private static SimulationContext simulationContext = SimulationContext.getInstance();
     private User user;
 
     @Before
     public void setup()
     {
-        simulationContext = new SimulationContext();
-        userService = new UserService(simulationContext);
-
+        userService = new UserService();
         user = new User();
         user.setRole(Role.PARENT);
         user.setName("name");

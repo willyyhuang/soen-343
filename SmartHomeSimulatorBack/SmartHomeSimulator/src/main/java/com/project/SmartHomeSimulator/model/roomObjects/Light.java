@@ -1,25 +1,23 @@
 package com.project.SmartHomeSimulator.model.roomObjects;
 
-/**
- * Window's class
- */
-public class Window extends RoomObject {
-    private boolean isBlocked;
+public class Light extends RoomObject{
+    // true means it's on, false means it's off
+    private boolean isOn;
 
-    public Window(){
+    public Light(){
     }
-    public Window(RoomObject roomObject){
+    public Light(RoomObject roomObject){
         super();
         setObjectType(roomObject.getObjectType());
-        this.isBlocked = false;
+        this.isOn = false;
     }
 
-    public boolean isBlocked() {
-        return isBlocked;
+    public boolean isOn() {
+        return isOn;
     }
 
-    public void setBlocked(boolean blocked) {
-        isBlocked = blocked;
+    public void setIsOn(boolean blocked) {
+        isOn = blocked;
     }
 
     @Override
@@ -28,7 +26,7 @@ public class Window extends RoomObject {
                 "name=" + getName() +
                 ", id=" + getId() +
                 ", roomObjectType=" + getObjectType() +
-                ", isBlocked=" + isBlocked +
+                ", isOn=" + isOn +
                 '}';
     }
 }
