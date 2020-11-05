@@ -1,7 +1,7 @@
 package com.project.SmartHomeSimulator.model.roomObjects;
 
 public class Light extends RoomObject{
-    // true means it's on, false means it's false
+    // true means it's on, false means it's off
     private boolean isOn;
 
     public Light(){
