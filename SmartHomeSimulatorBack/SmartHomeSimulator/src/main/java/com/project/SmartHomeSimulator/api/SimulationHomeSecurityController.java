@@ -19,4 +19,10 @@ public class SimulationHomeSecurityController {
         return smartHomeSecurityService.setAwayMode(awayMode);
     }
 
+    @PutMapping(value = "/awayMode/timeBeforeAuthorities")
+    @ResponseStatus(value = HttpStatus.OK)
+    public int startSimulation(@RequestParam("timeBeforeAuthorities") int timeBeforeAuthorities) {
+        return smartHomeSecurityService.setTimeBeforeAuthorities(timeBeforeAuthorities);
+    }
+
 }

@@ -3,7 +3,7 @@ package com.project.SmartHomeSimulator.module;
 
 public class AwayModeConfig {
     private boolean awayMode;
-    private int duration;
+    private int timeBeforeAuthorities;
 
     public boolean isAwayMode() {
         return awayMode;
@@ -13,11 +13,11 @@ public class AwayModeConfig {
         this.awayMode = awayMode;
     }
 
-    public int getDuration() {
-        return duration;
+    public int getTimeBeforeAuthorities() {
+        return timeBeforeAuthorities;
     }
 
-    public void setDuration(int duration) {
-        this.duration = duration;
+    public void setTimeBeforeAuthorities(int timeBeforeAuthorities) {
+        this.timeBeforeAuthorities = timeBeforeAuthorities;
     }
 }

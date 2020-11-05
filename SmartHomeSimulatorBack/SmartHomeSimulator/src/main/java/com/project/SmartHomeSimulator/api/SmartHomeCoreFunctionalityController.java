@@ -29,12 +29,12 @@ public class SmartHomeCoreFunctionalityController {
         if(smartHomeSecurity.getAwayModeConfig().isAwayMode()){
             response.success = false;
             response.awayMode = true;
-            response.timeBeforeAuthorities = smartHomeSecurity.getAwayModeConfig().getDuration();
+            response.timeBeforeAuthorities = smartHomeSecurity.getAwayModeConfig().getTimeBeforeAuthorities();
             return response;
         }
         response.success = smartHomeCoreFunctionalityService.blockUnblockWindow(roomName, objectID, true);
         response.awayMode = false;
-        response.timeBeforeAuthorities = smartHomeSecurity.getAwayModeConfig().getDuration();
+        response.timeBeforeAuthorities = smartHomeSecurity.getAwayModeConfig().getTimeBeforeAuthorities();
         return response;
     }
 
@@ -51,12 +51,12 @@ public class SmartHomeCoreFunctionalityController {
         if(smartHomeSecurity.getAwayModeConfig().isAwayMode()){
             response.success = false;
             response.awayMode = true;
-            response.timeBeforeAuthorities = smartHomeSecurity.getAwayModeConfig().getDuration();
+            response.timeBeforeAuthorities = smartHomeSecurity.getAwayModeConfig().getTimeBeforeAuthorities();
             return response;
         }
         response.success = smartHomeCoreFunctionalityService.blockUnblockWindow(roomName, objectID, false);
         response.awayMode = false;
-        response.timeBeforeAuthorities = smartHomeSecurity.getAwayModeConfig().getDuration();
+        response.timeBeforeAuthorities = smartHomeSecurity.getAwayModeConfig().getTimeBeforeAuthorities();
         return response;
     }
     /**
@@ -72,12 +72,12 @@ public class SmartHomeCoreFunctionalityController {
         if(smartHomeSecurity.getAwayModeConfig().isAwayMode()){
             response.success = false;
             response.awayMode = true;
-            response.timeBeforeAuthorities = smartHomeSecurity.getAwayModeConfig().getDuration();
+            response.timeBeforeAuthorities = smartHomeSecurity.getAwayModeConfig().getTimeBeforeAuthorities();
             return response;
         }
         response.success = smartHomeCoreFunctionalityService.onOffLights(roomName, objectID, true);
         response.awayMode = false;
-        response.timeBeforeAuthorities = smartHomeSecurity.getAwayModeConfig().getDuration();
+        response.timeBeforeAuthorities = smartHomeSecurity.getAwayModeConfig().getTimeBeforeAuthorities();
         return response;
     }
 
@@ -94,12 +94,12 @@ public class SmartHomeCoreFunctionalityController {
         if(smartHomeSecurity.getAwayModeConfig().isAwayMode()){
             response.success = false;
             response.awayMode = true;
-            response.timeBeforeAuthorities = smartHomeSecurity.getAwayModeConfig().getDuration();
+            response.timeBeforeAuthorities = smartHomeSecurity.getAwayModeConfig().getTimeBeforeAuthorities();
             return response;
         }
         response.success = smartHomeCoreFunctionalityService.onOffLights(roomName, objectID, false);
         response.awayMode = false;
-        response.timeBeforeAuthorities = smartHomeSecurity.getAwayModeConfig().getDuration();
+        response.timeBeforeAuthorities = smartHomeSecurity.getAwayModeConfig().getTimeBeforeAuthorities();
         return response;
     }
 }
