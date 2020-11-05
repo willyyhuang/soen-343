@@ -48,7 +48,7 @@ public class RoomObject {
     public String toString() {
         return "RoomObject{" +
                 "name=" + name +
-                "id=" + id +
+                ", id=" + id +
                 ", roomObjectType=" + roomObjectType +
                 '}';
     }

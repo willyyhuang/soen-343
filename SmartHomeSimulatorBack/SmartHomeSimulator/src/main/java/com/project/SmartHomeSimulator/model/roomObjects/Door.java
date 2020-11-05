@@ -18,4 +18,14 @@ public class Door extends RoomObject {
     public void setBlocked(boolean blocked) {
         isBlocked = blocked;
     }
+
+    @Override
+    public String toString() {
+        return "RoomObject{" +
+                "name=" + getName() +
+                ", id=" + getId() +
+                ", roomObjectType=" + getObjectType() +
+                ", isBlocked=" + isBlocked +
+                '}';
+    }
 }

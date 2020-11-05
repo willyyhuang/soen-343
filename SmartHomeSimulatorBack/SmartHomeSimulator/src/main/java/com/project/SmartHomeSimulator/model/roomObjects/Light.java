@@ -19,4 +19,14 @@ public class Light extends RoomObject{
     public void setIsOn(boolean blocked) {
         isOn = blocked;
     }
+
+    @Override
+    public String toString() {
+        return "RoomObject{" +
+                "name=" + getName() +
+                ", id=" + getId() +
+                ", roomObjectType=" + getObjectType() +
+                ", isOn=" + isOn +
+                '}';
+    }
 }
