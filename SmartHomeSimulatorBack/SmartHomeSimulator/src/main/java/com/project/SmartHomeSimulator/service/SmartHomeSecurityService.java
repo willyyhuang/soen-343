@@ -33,8 +33,7 @@ public class SmartHomeSecurityService {
         return false;
     }
 
-    public int setTimeBeforeAuthorities(int timeBeforeAuthorities){
+    public void setTimeBeforeAuthorities(int timeBeforeAuthorities){
         smartHomeSecurity.getAwayModeConfig().setTimeBeforeAuthorities(timeBeforeAuthorities);
-        return timeBeforeAuthorities;
     }
 }

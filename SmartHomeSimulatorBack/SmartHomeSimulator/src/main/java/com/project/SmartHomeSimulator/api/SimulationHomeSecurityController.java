@@ -21,8 +21,8 @@ public class SimulationHomeSecurityController {
 
     @PutMapping(value = "/awayMode/timeBeforeAuthorities")
     @ResponseStatus(value = HttpStatus.OK)
-    public int setTimeBeforeAuthorities(@RequestParam("timeBeforeAuthorities") int timeBeforeAuthorities) {
-        return smartHomeSecurityService.setTimeBeforeAuthorities(timeBeforeAuthorities);
+    public void setTimeBeforeAuthorities(@RequestParam("timeBeforeAuthorities") int timeBeforeAuthorities) {
+        smartHomeSecurityService.setTimeBeforeAuthorities(timeBeforeAuthorities);
     }
 
 }

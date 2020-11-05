@@ -121,8 +121,10 @@ public class SimulationContext {
 	}
 
 	public void notifyMonitors(User user){
-		for (Monitor monitor : this.monitors) {
-			monitor.update(awayModeUser.getName(), user);
+		if (awayModeUser != null) {
+			for (Monitor monitor : this.monitors) {
+				monitor.update(awayModeUser.getName(), user);
+			}
 		}
 	}
 
