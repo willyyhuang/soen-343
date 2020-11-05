@@ -11,13 +11,7 @@ import java.util.List;
 @Service("userService")
 public class UserService {
 
-    @Autowired
-    private SimulationContext simulationContext;
-
-    @Autowired
-    public UserService(SimulationContext simulationContext) {
-        this.simulationContext = simulationContext;
-    }
+    private static SimulationContext simulationContext = SimulationContext.getInstance();
 
     /**
      * adds a new user to the simulation context users list

@@ -47,11 +47,11 @@ public class HomeLayout {
         ObjectMapper objectMapper = new ObjectMapper();
         try {
             HomeLayout homeLayout = objectMapper.readValue(homeLayoutFile, HomeLayout.class);
-            List<Room> rooms = createWindowObjects(homeLayout.getRoomList());
-            rooms = createDoorObjects(rooms);
-            rooms = createLightObjects(rooms);
+            List<Room> rooms = createObjects(homeLayout.getRoomList());
             Room outside = new Room();
             outside.setName("outside");
+            List<RoomObject> objects = new ArrayList<>();
+            outside.setObjects(objects);
             rooms.add(outside);
             homeLayout.setRoomList(rooms);
             return homeLayout;
@@ -67,10 +67,12 @@ public class HomeLayout {
      * @param rooms
      * @return Room list
      */
-    public List<Room> createWindowObjects(List<Room> rooms) {
+    public List<Room> createObjects(List<Room> rooms) {
         List<RoomObject> roomObjectsJson;
         List<RoomObject> roomObjects = new ArrayList<>();
         Window window;
+        Door door;
+        Light light;
         if (rooms != null) {
             for (Room room : rooms) {
                 roomObjectsJson = room.getObjects();
@@ -80,44 +82,12 @@ public class HomeLayout {
                         window.setName(room.getName() + "-Window" + windowCount++);
                         roomObjects.add(window);
                     }
-                }
-                room.setObjects(roomObjects);
-            }
-            return rooms;
-        }
-        return null;
-    }
-
-    public List<Room> createDoorObjects(List<Room> rooms) {
-        List<RoomObject> roomObjectsJson;
-        List<RoomObject> roomObjects = new ArrayList<>();
-        Door door;
-        if (rooms != null) {
-            for (Room room : rooms) {
-                roomObjectsJson = room.getObjects();
-                for (RoomObject roomObject : roomObjectsJson) {
-                    if (roomObject.getObjectType() == RoomObjectType.DOOR) {
+                    else if (roomObject.getObjectType() == RoomObjectType.DOOR) {
                         door = new Door(roomObject);
                         door.setName(room.getName() + " - Door" + doorCount++);
                         roomObjects.add(door);
                     }
-                }
-                room.setObjects(roomObjects);
-            }
-            return rooms;
-        }
-        return null;
-    }
-
-    public List<Room> createLightObjects(List<Room> rooms) {
-        List<RoomObject> roomObjectsJson;
-        List<RoomObject> roomObjects = new ArrayList<>();
-        Light light;
-        if (rooms != null) {
-            for (Room room : rooms) {
-                roomObjectsJson = room.getObjects();
-                for (RoomObject roomObject : roomObjectsJson) {
-                    if (roomObject.getObjectType() == RoomObjectType.LIGHT) {
+                    else if (roomObject.getObjectType() == RoomObjectType.LIGHT) {
                         light = new Light(roomObject);
                         light.setName(room.getName() + " - Light" + lightCount++);
                         roomObjects.add(light);

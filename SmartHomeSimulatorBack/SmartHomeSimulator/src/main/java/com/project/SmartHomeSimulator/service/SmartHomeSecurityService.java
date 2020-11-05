@@ -8,13 +8,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class SmartHomeSecurityService {
     private SmartHomeSecurity smartHomeSecurity = SmartHomeSecurity.getInstance();
-    @Autowired
-    private SimulationContext simulationContext;
-
-    @Autowired
-    public SmartHomeSecurityService(SimulationContext simulationContext) {
-        this.simulationContext = simulationContext;
-    }
+    private static SimulationContext simulationContext = SimulationContext.getInstance();
 
     public boolean setAwayMode(boolean awayMode){
         if(awayMode) {

@@ -9,8 +9,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class SmartHomeCoreFunctionalityService {
 
-    @Autowired
-    private SimulationContext simulationContext;
+    private static SimulationContext simulationContext = SimulationContext.getInstance();
 
     public PermissionVerifier permissionVerifier = PermissionVerifier.getInstance();
 

@@ -11,13 +11,8 @@ import com.project.SmartHomeSimulator.model.User;
 
 @Service
 public class SimulationContextService {
-    @Autowired
-    private SimulationContext simulationContext;
 
-    @Autowired
-    public SimulationContextService(SimulationContext simulationContext) {
-        this.simulationContext = simulationContext;
-    }
+    private static SimulationContext simulationContext = SimulationContext.getInstance();
 
     /**
      * Start the simulation

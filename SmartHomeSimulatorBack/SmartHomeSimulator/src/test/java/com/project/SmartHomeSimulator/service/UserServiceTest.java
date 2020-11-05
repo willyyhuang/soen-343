@@ -13,15 +13,13 @@ import org.junit.Test;
 public class UserServiceTest {
 
     private UserService userService;
-    private SimulationContext simulationContext;
+    private static SimulationContext simulationContext = SimulationContext.getInstance();
     private User user;
 
     @Before
     public void setup()
     {
-        simulationContext = new SimulationContext();
-        userService = new UserService(simulationContext);
-
+        userService = new UserService();
         user = new User();
         user.setRole(Role.PARENT);
         user.setName("name");

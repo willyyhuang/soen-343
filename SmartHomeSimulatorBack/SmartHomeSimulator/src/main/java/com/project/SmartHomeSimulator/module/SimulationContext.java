@@ -11,8 +11,8 @@ import java.util.List;
 /**
  * SimulationContext class is used to hold information pertaining the simulation context
  */
-@Component
 public class SimulationContext {
+
 	private int insideTemp;
 	private int outsideTemp;
 	private String time;
@@ -24,11 +24,19 @@ public class SimulationContext {
 	private boolean simulationRunning;
 	private List<Monitor> monitors;
 
+	public static SimulationContext simulationContext = null;
+
 	public SimulationContext() {
 		monitors = new ArrayList<Monitor>();
 		this.monitors.add(SmartHomeSecurity.getInstance());
 	}
 
+	public static SimulationContext getInstance(){
+		if (simulationContext == null){
+			simulationContext = new SimulationContext();
+		}
+		return simulationContext;
+	}
 	public void clone(SimulationContext simulationContext) {
 		this.insideTemp = simulationContext.insideTemp;
 		this.outsideTemp = simulationContext.outsideTemp;

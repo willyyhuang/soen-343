@@ -11,8 +11,8 @@ import java.util.UUID;
 public class SmartHomeCoreFunctionality {
 
     private static SmartHomeCoreFunctionality smartHomeCoreFunctionality = null;
-    @Autowired
-    private SimulationContext simulationContext;
+
+    private static SimulationContext simulationContext = SimulationContext.getInstance();
 
     public static SmartHomeCoreFunctionality getInstance(){
         if(smartHomeCoreFunctionality == null){
