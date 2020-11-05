@@ -54,8 +54,8 @@ public class HomeLayout {
             outside.setObjects(objects);
             rooms.add(outside);
             Room backyard = new Room();
-            outside.setName("backyard");
-            outside.setObjects(objects);
+            backyard.setName("backyard");
+            backyard.setObjects(objects);
             rooms.add(backyard);
             homeLayout.setRoomList(rooms);
             return homeLayout;
@@ -73,12 +73,12 @@ public class HomeLayout {
      */
     public List<Room> createObjects(List<Room> rooms) {
         List<RoomObject> roomObjectsJson;
-        List<RoomObject> roomObjects = new ArrayList<>();
         Window window;
         Door door;
         Light light;
         if (rooms != null) {
             for (Room room : rooms) {
+                List<RoomObject> roomObjects = new ArrayList<>();
                 roomObjectsJson = room.getObjects();
                 for (RoomObject roomObject : roomObjectsJson) {
                     if (roomObject.getObjectType() == RoomObjectType.WINDOW) {
