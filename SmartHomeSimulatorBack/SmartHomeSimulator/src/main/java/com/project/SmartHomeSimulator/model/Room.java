@@ -2,8 +2,10 @@ package com.project.SmartHomeSimulator.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.project.SmartHomeSimulator.model.roomObjects.RoomObject;
+import com.project.SmartHomeSimulator.model.roomObjects.RoomObjectType;
 import org.springframework.boot.jackson.JsonComponent;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -47,6 +49,16 @@ public class Room {
             }
         }
         return null;
+    }
+
+    public List<RoomObject> allLights(){
+        List<RoomObject> lights = new ArrayList<>();
+        for(RoomObject object : this.getObjects()){
+            if(object.getObjectType() == RoomObjectType.LIGHT){
+                lights.add(object);
+            }
+        }
+        return lights;
     }
 
     @Override

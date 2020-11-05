@@ -100,6 +100,11 @@ public class HomeLayout {
         return null;
     }
 
+    public List<RoomObject> allLights(String roomName){
+        Room room = getRoomByName(roomName);
+        return room.allLights();
+    }
+
     public List<Room> getRoomList() {
         return roomList;
     }

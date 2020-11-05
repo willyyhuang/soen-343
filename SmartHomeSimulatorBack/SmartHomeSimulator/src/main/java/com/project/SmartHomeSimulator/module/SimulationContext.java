@@ -13,6 +13,7 @@ import java.util.List;
  */
 public class SimulationContext {
 
+	private boolean simulationRunning;
 	private int insideTemp;
 	private int outsideTemp;
 	private String time;
@@ -20,8 +21,8 @@ public class SimulationContext {
 	private User currentSimulationUser;
 	private User awayModeUser;
 	private List<User> simulationUsers;
+	private boolean autoMode = false;
 	private HomeLayout homeLayout;
-	private boolean simulationRunning;
 	private List<Monitor> monitors;
 
 	public static SimulationContext simulationContext = null;
@@ -46,6 +47,25 @@ public class SimulationContext {
 		this.simulationUsers = simulationContext.simulationUsers;
 		this.homeLayout = simulationContext.homeLayout;
 		this.simulationRunning = simulationContext.simulationRunning;
+	}
+
+
+	public List<User> getAllUsersInLocation(String room){
+		List<User> usersInRoom = new ArrayList<>();
+		for (User user : this.simulationUsers){
+			if(user.getHomeLocation().equalsIgnoreCase(room)){
+				usersInRoom.add(user);
+			}
+		}
+		return usersInRoom;
+	}
+
+	public boolean isAutoMode() {
+		return autoMode;
+	}
+
+	public void setAutoMode(boolean autoMode) {
+		this.autoMode = autoMode;
 	}
 
 	public User getAwayModeUser() {
