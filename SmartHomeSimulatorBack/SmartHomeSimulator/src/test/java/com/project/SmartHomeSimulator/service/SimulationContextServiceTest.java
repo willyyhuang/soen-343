@@ -116,9 +116,10 @@ public class SimulationContextServiceTest {
      */
     @Test
     public void loadLayout(){
-        String homeLayoutFile = "{\"roomList\":\"[{\"name\":\"string\", \"objects\":[{\"objectType\": \"WINDOW\", \"status\": \"true\"}]}]\"}";
+        String homeLayoutFile = "{\"roomList\":\"[{\"name\":\"string\", \"objects\":[{\"objectType\": \"WINDOW\"}]}]\"}";
         HomeLayout homeLayout = new HomeLayout();
         homeLayout = homeLayout.readHomeLayout(homeLayoutFile);
+        HomeLayout.windowCount--;
         HomeLayout result = simulationContextService.loadLayout(homeLayoutFile);
         homeLayout.getRoomList().get(0).getObjects().get(0).setId(result.getRoomList().get(0).getObjects().get(0).getId());
         assertEquals(result.toString(),homeLayout.toString());

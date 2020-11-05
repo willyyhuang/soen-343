@@ -28,7 +28,10 @@ public class UserService {
                 simulationContext.setSimulationUsers(new ArrayList<User>());
             }
             simulationContext.getSimulationUsers().add(user);
-            List<RoomObject> lightsInRoom = simulationContext.getHomeLayout().allLights(user.getHomeLocation());
+            List<RoomObject> lightsInRoom = new ArrayList<>();
+            if(simulationContext.getHomeLayout() != null) {
+                lightsInRoom = simulationContext.getHomeLayout().allLights(user.getHomeLocation());
+            }
             if(simulationContext.isAutoMode()){
                 for (RoomObject light : lightsInRoom) {
                     smartHomeCoreFunctionality.objectStateSwitcher(user.getHomeLocation(), light.getId().toString(), true);
@@ -54,7 +57,9 @@ public class UserService {
         User toBeRemovedUser = findUserByName(name);
         if (toBeRemovedUser != null) {
             simulationContext.getSimulationUsers().remove(toBeRemovedUser);
-            simulationContext.getHomeLayout().removeUsersInHome(toBeRemovedUser.getHomeLocation());
+            if (simulationContext.getHomeLayout() != null) {
+                simulationContext.getHomeLayout().removeUsersInHome(toBeRemovedUser.getHomeLocation());
+            }
             return true;
         }
         return false;
@@ -85,8 +90,14 @@ public class UserService {
      */
     public boolean editHomeLocation(String name, String homeLocation) {
         User user = findUserByName(name);
-        List<User> usersInOldLocation = simulationContext.getAllUsersInLocation(user.getHomeLocation());
-        List<RoomObject> lightsInRoom = simulationContext.getHomeLayout().allLights(user.getHomeLocation());
+        List<User> usersInOldLocation = new ArrayList<>();
+        if(user != null) {
+            simulationContext.getAllUsersInLocation(user.getHomeLocation());
+        }
+        List<RoomObject> lightsInRoom = new ArrayList<>();
+        if(simulationContext.getHomeLayout() != null) {
+            lightsInRoom = simulationContext.getHomeLayout().allLights(user.getHomeLocation());
+        }
         if(usersInOldLocation.size() == 1 && simulationContext.isAutoMode()){
             for (RoomObject light : lightsInRoom) {
                 smartHomeCoreFunctionality.objectStateSwitcher(user.getHomeLocation(), light.getId().toString(), false);
@@ -94,13 +105,17 @@ public class UserService {
         }
         if (user != null) {
             user.setHomeLocation(homeLocation);
-            lightsInRoom = simulationContext.getHomeLayout().allLights(user.getHomeLocation());
+            if(simulationContext.getHomeLayout() != null) {
+                lightsInRoom = simulationContext.getHomeLayout().allLights(user.getHomeLocation());
+            }
             if(simulationContext.isAutoMode()){
                 for (RoomObject light : lightsInRoom) {
                     smartHomeCoreFunctionality.objectStateSwitcher(user.getHomeLocation(), light.getId().toString(), true);
                 }
             }
-            simulationContext.getHomeLayout().addUsersInHome(user.getHomeLocation());
+            if(simulationContext.getHomeLayout() != null) {
+                simulationContext.getHomeLayout().addUsersInHome(user.getHomeLocation());
+            }
             simulationContext.notifyMonitors(user);
             return true;
         }

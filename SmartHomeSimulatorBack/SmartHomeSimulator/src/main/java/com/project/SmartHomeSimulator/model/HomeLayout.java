@@ -17,7 +17,7 @@ public class HomeLayout {
     private List<Room> roomList;
     private boolean homeEmpty;
     private int usersInHome;
-    private static int windowCount = 1;
+    public static int windowCount = 1;
     private static int doorCount = 1;
     private static int lightCount = 1;
     /**
