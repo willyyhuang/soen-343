@@ -91,20 +91,12 @@ public class UserController {
     public ResponseAPI editHomeLocation (@RequestParam("name") String name, @RequestParam("homeLocation") String homeLocation)
     {
         ResponseAPI response = new ResponseAPI();
-        if(smartHomeSecurity.getAwayModeConfig().isAwayMode() && !name.equals(simulationContext.getCurrentSimulationUser().getName())){
-            response.success = false;
-            response.awayMode = true;
-            response.timeBeforeAuthorities = smartHomeSecurity.getAwayModeConfig().getTimeBeforeAuthorities();
-            return response;
-        }
-        if(smartHomeSecurity.getAwayModeConfig().isAwayMode() && name.equals(simulationContext.getCurrentSimulationUser().getName())){
+        if(smartHomeSecurity.getAwayModeConfig().isAwayMode() && name.equals(simulationContext.getAwayModeUser().getName())){
             smartHomeSecurity.getAwayModeConfig().setAwayMode(false);
             simulationContext.setAwayModeUser(null);
         }
-        response.success = userService.editHomeLocation(name,homeLocation);
-        response.awayMode = false;
-        response.timeBeforeAuthorities = smartHomeSecurity.getAwayModeConfig().getTimeBeforeAuthorities();
-        return response;
+
+        return userService.editHomeLocation(name,homeLocation);
     }
 
 }

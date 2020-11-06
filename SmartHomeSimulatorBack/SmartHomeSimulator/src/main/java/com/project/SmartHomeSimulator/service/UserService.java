@@ -1,9 +1,11 @@
 package com.project.SmartHomeSimulator.service;
 
+import com.project.SmartHomeSimulator.model.ResponseAPI;
 import com.project.SmartHomeSimulator.model.roomObjects.RoomObject;
 import com.project.SmartHomeSimulator.module.SimulationContext;
 import com.project.SmartHomeSimulator.model.User;
 import com.project.SmartHomeSimulator.module.SmartHomeCoreFunctionality;
+import com.project.SmartHomeSimulator.module.SmartHomeSecurity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -14,6 +16,7 @@ public class UserService {
 
     private SimulationContext simulationContext = SimulationContext.getInstance();
     private SmartHomeCoreFunctionality smartHomeCoreFunctionality = SmartHomeCoreFunctionality.getInstance();
+    private SmartHomeSecurity smartHomeSecurity = SmartHomeSecurity.getInstance();
 
     /**
      * adds a new user to the simulation context users list
@@ -88,38 +91,53 @@ public class UserService {
      * @param homeLocation
      * @return - true if successful false if otherwise
      */
-    public boolean editHomeLocation(String name, String homeLocation) {
+    public ResponseAPI editHomeLocation(String name, String homeLocation) {
         User user = findUserByName(name);
-        List<User> usersInOldLocation = new ArrayList<>();
-        if(user != null) {
-            usersInOldLocation =  simulationContext.getAllUsersInLocation(user.getHomeLocation());
-        }
-        List<RoomObject> lightsInRoom = new ArrayList<>();
-        if(simulationContext.getHomeLayout() != null) {
-            lightsInRoom = simulationContext.getHomeLayout().allLights(user.getHomeLocation());
-        }
-        if(usersInOldLocation.size() == 1 && simulationContext.isAutoMode()){
-            for (RoomObject light : lightsInRoom) {
-                smartHomeCoreFunctionality.objectStateSwitcher(user.getHomeLocation(), light.getId().toString(), false);
+        simulationContext.notifyMonitors(user);
+        ResponseAPI response = new ResponseAPI();
+        if(!smartHomeSecurity.isAlertModeOn()) {
+            List<User> usersInOldLocation = new ArrayList<>();
+            if (user != null) {
+                usersInOldLocation = simulationContext.getAllUsersInLocation(user.getHomeLocation());
             }
-        }
-        if (user != null) {
-            user.setHomeLocation(homeLocation);
-            if(simulationContext.getHomeLayout() != null) {
+            List<RoomObject> lightsInRoom = new ArrayList<>();
+            if (simulationContext.getHomeLayout() != null) {
                 lightsInRoom = simulationContext.getHomeLayout().allLights(user.getHomeLocation());
             }
-            if(simulationContext.isAutoMode()){
+            if (usersInOldLocation.size() == 1 && simulationContext.isAutoMode()) {
                 for (RoomObject light : lightsInRoom) {
-                    smartHomeCoreFunctionality.objectStateSwitcher(user.getHomeLocation(), light.getId().toString(), true);
+                    smartHomeCoreFunctionality.objectStateSwitcher(user.getHomeLocation(), light.getId().toString(), false);
                 }
             }
-            if(simulationContext.getHomeLayout() != null) {
-                simulationContext.getHomeLayout().addUsersInHome(user.getHomeLocation());
+            if (user != null) {
+                user.setHomeLocation(homeLocation);
+                if (simulationContext.getHomeLayout() != null) {
+                    lightsInRoom = simulationContext.getHomeLayout().allLights(user.getHomeLocation());
+                }
+                if (simulationContext.isAutoMode()) {
+                    for (RoomObject light : lightsInRoom) {
+                        smartHomeCoreFunctionality.objectStateSwitcher(user.getHomeLocation(), light.getId().toString(), true);
+                    }
+                }
+                if (simulationContext.getHomeLayout() != null) {
+                    simulationContext.getHomeLayout().addUsersInHome(user.getHomeLocation());
+                    simulationContext.getHomeLayout().removeUsersInHome(user.getHomeLocation());
+                }
+                response.success = true;
+                response.awayMode = false;
+                response.timeBeforeAuthorities = smartHomeSecurity.getAwayModeConfig().getTimeBeforeAuthorities();
+                return response;
             }
-            simulationContext.notifyMonitors(user);
-            return true;
+        }else {
+            response.success = false;
+            response.awayMode = true;
+            response.timeBeforeAuthorities = smartHomeSecurity.getAwayModeConfig().getTimeBeforeAuthorities();
+            return response;
         }
-        return false;
+        response.success = false;
+        response.awayMode = false;
+        response.timeBeforeAuthorities = smartHomeSecurity.getAwayModeConfig().getTimeBeforeAuthorities();
+        return response;
     }
 
     /**

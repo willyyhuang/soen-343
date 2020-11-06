@@ -131,7 +131,7 @@ public class HomeLayout {
     }
 
     public void removeUsersInHome(String homeLocation) {
-        if (usersInHome != 0 && !homeLocation.equals("outside")) {
+        if (usersInHome != 0 && homeLocation.equals("outside")) {
             usersInHome--;
         }
     }

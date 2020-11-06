@@ -10,14 +10,15 @@ import java.util.List;
 
 public class SmartHomeSecurity implements Monitor {
 
-    private static SmartHomeSecurity instance = new SmartHomeSecurity();
-    private AwayModeConfig awayModeConfig = new AwayModeConfig();
-    private static SmartHomeCoreFunctionality smartHomeCoreFunctionality = SmartHomeCoreFunctionality.getInstance();
-    private static SimulationContext simulationContext = SimulationContext.getInstance();
+    private static SmartHomeSecurity instance;
+    private static SmartHomeCoreFunctionality smartHomeCoreFunctionality;
+    public static SimulationContext simulationContext = SimulationContext.getInstance();
+    private AwayModeConfig awayModeConfig;
     private boolean alertModeOn;
 
     //this class cannot be instantiated
     private SmartHomeSecurity() {
+        this.awayModeConfig = new AwayModeConfig();
     }
 
     public static SmartHomeSecurity getInstance() {
@@ -38,6 +39,8 @@ public class SmartHomeSecurity implements Monitor {
     }
 
     public void closWindows() {
+        smartHomeCoreFunctionality = SmartHomeCoreFunctionality.getInstance();
+        simulationContext = SimulationContext.getInstance();
         List<Room> rooms = simulationContext.getHomeLayout().getRoomList();
         List<RoomObject> roomObjects;
         for (Room room : rooms) {
@@ -52,6 +55,8 @@ public class SmartHomeSecurity implements Monitor {
     }
 
     public void lockDoors() {
+        smartHomeCoreFunctionality = SmartHomeCoreFunctionality.getInstance();
+        simulationContext = SimulationContext.getInstance();
         List<Room> rooms = simulationContext.getHomeLayout().getRoomList();
         List<RoomObject> roomObjects;
         for (Room room : rooms) {
