@@ -20,6 +20,18 @@ public class SmartHomeCoreFunctionality {
         return smartHomeCoreFunctionality;
     }
 
+    public boolean blockUnblockWindow (String roomName, String id, boolean state){
+        Room room = simulationContext.getHomeLayout().getRoomByName(roomName);
+        UUID objectID = UUID.fromString(id);
+        RoomObject roomObject = room.getRoomObjectByID(objectID);
+        if (roomObject instanceof Window) {
+            Window window = (Window) roomObject;
+            window.setBlocked(state);
+            return true;
+        }
+        return false;
+    }
+
     /**
      * block a window or unblock it
      * @param roomName
@@ -33,12 +45,12 @@ public class SmartHomeCoreFunctionality {
         RoomObject roomObject = room.getRoomObjectByID(objectID);
         if (roomObject instanceof Window) {
             Window window = (Window) roomObject;
-            window.setBlocked(state);
+            window.setStatus(state);
             return true;
         }
         else if (roomObject instanceof Light){
             Light light = (Light) roomObject;
-            light.setIsOn(state);
+            light.setStatus(state);
             return true;
         }
         return false;
