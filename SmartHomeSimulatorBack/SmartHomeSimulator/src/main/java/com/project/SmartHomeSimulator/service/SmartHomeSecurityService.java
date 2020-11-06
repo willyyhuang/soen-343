@@ -1,33 +1,52 @@
 package com.project.SmartHomeSimulator.service;
 
+import com.project.SmartHomeSimulator.model.Role;
 import com.project.SmartHomeSimulator.module.SmartHomeSecurity;
 import com.project.SmartHomeSimulator.module.SimulationContext;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.project.SmartHomeSimulator.module.SmartHomeSecurityProxy;
 import org.springframework.stereotype.Service;
 
 @Service
 public class SmartHomeSecurityService {
-    private SmartHomeSecurity smartHomeSecurity = SmartHomeSecurity.getInstance();
+    private SmartHomeSecurityProxy smartHomeSecurityProxy = new SmartHomeSecurityProxy(SmartHomeSecurity.getInstance());
     private static SimulationContext simulationContext = SimulationContext.getInstance();
+    private Role currentSimulationUserRole;
 
+    /**
+     * sets Away mode to either true or false based on the current simulation user role
+     *
+     * @param awayMode - boolean true to turn on the away mode and false to turn it off
+     * @return boolean
+     */
     public boolean setAwayMode(boolean awayMode){
+        this.currentSimulationUserRole = simulationContext.getCurrentSimulationUser().getRole();
         if(awayMode) {
             if (simulationContext.getHomeLayout() != null && simulationContext.getHomeLayout().isHomeEmpty()) {
-                smartHomeSecurity.getAwayModeConfig().setAwayMode(awayMode);
-                smartHomeSecurity.closWindows();
-                smartHomeSecurity.lockDoors();
-                simulationContext.setAwayModeUser(simulationContext.getCurrentSimulationUser());
-                return true;
+                if (smartHomeSecurityProxy.setAwayMode(currentSimulationUserRole,awayMode)){
+                    simulationContext.setAwayModeUser(simulationContext.getCurrentSimulationUser());
+                    smartHomeSecurityProxy.closeWindows();
+                    smartHomeSecurityProxy.closeDoors();
+                    return true;
+                }
             }
         }
         else {
             simulationContext.setAwayModeUser(null);
-            smartHomeSecurity.getAwayModeConfig().setAwayMode(awayMode);
+            smartHomeSecurityProxy.setAwayMode(currentSimulationUserRole,awayMode);
         }
         return false;
     }
 
-    public void setTimeBeforeAuthorities(int timeBeforeAuthorities){
-        smartHomeSecurity.getAwayModeConfig().setTimeBeforeAuthorities(timeBeforeAuthorities);
+    /**
+     * sets how much time should pass before alerting the authorities
+     *
+     * @param timeBeforeAuthorities - integer value of the time that needs to pass
+     * @return boolean true if setting timeBeforeAuthority was successful
+     */
+    public boolean setTimeBeforeAuthorities(int timeBeforeAuthorities){
+        this.currentSimulationUserRole = simulationContext.getCurrentSimulationUser().getRole();
+        return smartHomeSecurityProxy.setTimeBeforeAuthorities(currentSimulationUserRole, timeBeforeAuthorities);
     }
+
+
 }

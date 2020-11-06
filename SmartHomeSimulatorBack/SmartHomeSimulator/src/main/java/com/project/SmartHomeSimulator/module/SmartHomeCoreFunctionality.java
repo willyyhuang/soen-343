@@ -4,7 +4,6 @@ import com.project.SmartHomeSimulator.model.Room;
 import com.project.SmartHomeSimulator.model.roomObjects.Light;
 import com.project.SmartHomeSimulator.model.roomObjects.RoomObject;
 import com.project.SmartHomeSimulator.model.roomObjects.Window;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.UUID;
 
