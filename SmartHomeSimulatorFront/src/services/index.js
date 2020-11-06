@@ -19,6 +19,30 @@ export const startSimulation = `${appsettings.baseApiUrl}/api/v1/simulation/star
 export const stopSimulation = `${appsettings.baseApiUrl}/api/v1/simulation/stop`
 export const blockWindow = `${appsettings.baseApiUrl}/api/v1/simulation/blockWindow`
 export const unblockWindow = `${appsettings.baseApiUrl}/api/v1/simulation/unblockWindow`
+export const onLight = `${appsettings.baseApiUrl}/api/v1/simulation/onLight`
+export const offLight = `${appsettings.baseApiUrl}/api/v1/simulation/offLight`
+
+export async function on(payload) {
+  return axios({
+    method: 'POST',
+    url: onLight,
+    params: {
+      objectID: payload.id,
+      roomName: payload.name,
+    },
+  })
+}
+
+export async function off(payload) {
+  return axios({
+    method: 'POST',
+    url: offLight,
+    params: {
+      objectID: payload.id,
+      roomName: payload.name,
+    },
+  })
+}
 
 export async function block(payload) {
   return axios({

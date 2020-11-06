@@ -36,22 +36,26 @@ const Dashboard = ({simulationConfig, dispatch}) => {
   const {homeLayout, simulationRunning} = simulationConfig
   return (
     <Layout className='layout'>
-      <Layout.Header />
       <Layout.Content className='content'>
         <Row type='flex' align='top'>
-          <Col span={2} />
-          <Col span={8}>
+          <Col span={1} />
+          <Col span={6}>
             <SimulationParameterCard simulationConfig={simulationConfig} fetchUserProfiles={fetchUserProfiles} />
             <Divider />
             <SimulationProfileCard simulationConfig={simulationConfig} fetchUserProfiles={fetchUserProfiles} />
             <Divider />
             {simulationSwitchCard}
           </Col>
-          <Col span={2} />
-          <Col span={10}>
-            {simulationRunning && homeLayout && homeLayout.roomList.map((room) => <RoomCard key={room.name} room={room} fetchUserProfiles={fetchUserProfiles} />)}
+          <Col span={1} />
+          <Col span={15}>
+            <Card title='Smart Home Core Functionality'>
+              <Row>
+                {simulationRunning && homeLayout && homeLayout.roomList.map((room) => <Col span={8}>
+                  <RoomCard key={room.name} room={room} fetchUserProfiles={fetchUserProfiles} />
+                </Col>)}
+              </Row>
+            </Card>
           </Col>
-          <Col span={2} />
         </Row>
       </Layout.Content>
     </Layout>
