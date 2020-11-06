@@ -13,6 +13,9 @@ public class SmartHomeCoreFunctionality {
 
     private static SimulationContext simulationContext = SimulationContext.getInstance();
 
+    //this class cannot be instantiated
+    private SmartHomeCoreFunctionality() {}
+
     public static SmartHomeCoreFunctionality getInstance(){
         if(smartHomeCoreFunctionality == null){
             smartHomeCoreFunctionality = new SmartHomeCoreFunctionality();
