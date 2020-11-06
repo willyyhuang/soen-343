@@ -1,6 +1,10 @@
 package com.project.SmartHomeSimulator.module;
 
 import com.project.SmartHomeSimulator.model.Role;
+import com.project.SmartHomeSimulator.model.roomObjects.Light;
+
+import java.util.List;
+import java.util.UUID;
 
 public class SmartHomeSecurityProxy {
     private SmartHomeSecurity smartHomeSecurity;
@@ -28,6 +32,14 @@ public class SmartHomeSecurityProxy {
     public boolean setTimeBeforeAuthorities(Role role,int timeBeforeAuthorities){
         if ( verifyPermission(role)){
             smartHomeSecurity.getAwayModeConfig().setTimeBeforeAuthorities(timeBeforeAuthorities);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean setLightsToRemainOn(Role role, List<String> lightIDs, int timeToKeepLightsOn){
+        if ( verifyPermission(role)) {
+            smartHomeSecurity.setLightsToRemainOn(lightIDs, timeToKeepLightsOn);
             return true;
         }
         return false;

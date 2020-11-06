@@ -6,6 +6,7 @@ import com.project.SmartHomeSimulator.model.roomObjects.Door;
 import com.project.SmartHomeSimulator.model.roomObjects.RoomObject;
 import com.project.SmartHomeSimulator.model.roomObjects.Window;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SmartHomeSecurity implements Monitor {
@@ -15,10 +16,13 @@ public class SmartHomeSecurity implements Monitor {
     public static SimulationContext simulationContext = SimulationContext.getInstance();
     private AwayModeConfig awayModeConfig;
     private boolean alertModeOn;
+    private List<String> lightIDs;
+    private int timeToKeepLightsOn;
 
     //this class cannot be instantiated
     private SmartHomeSecurity() {
         this.awayModeConfig = new AwayModeConfig();
+        this.lightIDs = new ArrayList<String>();
     }
 
     public static SmartHomeSecurity getInstance() {
@@ -69,6 +73,19 @@ public class SmartHomeSecurity implements Monitor {
             }
         }
         //todo log the action in console and corresponding file
+    }
+
+    public void setLightsToRemainOn(List<String> lightIDs, int timeToKeepLightsOn){
+        this.lightIDs = lightIDs;
+        this.timeToKeepLightsOn = timeToKeepLightsOn;
+    }
+
+    public int getTimeToKeepLightsOn() {
+        return timeToKeepLightsOn;
+    }
+
+    public void setTimeToKeepLightsOn(int timeToKeepLightsOn) {
+        this.timeToKeepLightsOn = timeToKeepLightsOn;
     }
 
     public boolean isAlertModeOn() {
