@@ -21,8 +21,10 @@ export const blockWindow = `${appsettings.baseApiUrl}/api/v1/simulation/blockWin
 export const unblockWindow = `${appsettings.baseApiUrl}/api/v1/simulation/unblockWindow`
 export const onLight = `${appsettings.baseApiUrl}/api/v1/simulation/onLight`
 export const offLight = `${appsettings.baseApiUrl}/api/v1/simulation/offLight`
+export const openWindow = `${appsettings.baseApiUrl}/api/v1/simulation/openWindow`
+export const closeWindow = `${appsettings.baseApiUrl}/api/v1/simulation/closeWindow`
 
-export async function on(payload) {
+export async function turnOnLight(payload) {
   return axios({
     method: 'POST',
     url: onLight,
@@ -33,7 +35,29 @@ export async function on(payload) {
   })
 }
 
-export async function off(payload) {
+export async function openRoomWindow(payload) {
+  return axios({
+    method: 'POST',
+    url: openWindow,
+    params: {
+      objectID: payload.id,
+      roomName: payload.name,
+    },
+  })
+}
+
+export async function closeRoomWindow(payload) {
+  return axios({
+    method: 'POST',
+    url: closeWindow,
+    params: {
+      objectID: payload.id,
+      roomName: payload.name,
+    },
+  })
+}
+
+export async function turnOffLight(payload) {
   return axios({
     method: 'POST',
     url: offLight,

@@ -1,7 +1,7 @@
 import React from 'react'
-import {Popover, Switch} from 'antd'
+import {Popover, Form, Switch} from 'antd'
 import {
-  block, unblock, on, off,
+  block, unblock, turnOnLight, turnOffLight, openRoomWindow, closeRoomWindow,
 } from '../../services'
 import './ObjectIcon.css'
 
@@ -19,16 +19,32 @@ const ObjectIcon = ({roomName, object, fetchUserProfiles}) => {
   let Content
   switch (objectType) {
     case 'LIGHT':
-      Icon = object.on ? LightIconOn : LightIconOff
-      Content = <Switch onChange={(value) => (value ? on(payload) && fetchUserProfiles() : off(payload) && fetchUserProfiles())} checked={object.on} />
+      Icon = object.status ? LightIconOn : LightIconOff
+      Content = <Switch
+        onChange={(value) => (value ? turnOnLight(payload) && fetchUserProfiles() : turnOffLight(payload) && fetchUserProfiles())}
+        checked={object.status} />
       break
     case 'DOOR':
-      Icon = object.blocked ? DoorClosed : DoorOpened
+      Icon = object.status ? DoorClosed : DoorOpened
       Content = <Switch checked={object.blocked} />
       break
     case 'WINDOW':
-      Icon = object.blocked ? WindowClosed : WindowOpened
-      Content = <Switch onChange={(value) => (value ? block(payload) && fetchUserProfiles() : unblock(payload) && fetchUserProfiles())} checked={object.blocked} />
+      Icon = object.status ? WindowOpened : WindowClosed
+      Content = (
+        <>
+          <Form.Item label='Block with object'>
+            <Switch
+              onChange={(value) => (value ? block(payload) && fetchUserProfiles() : unblock(payload) && fetchUserProfiles())}
+              checked={object.blocked} />
+          </Form.Item>
+          <Form.Item label='Turn on/off'>
+            <Switch
+              onChange={(value) => (value ? openRoomWindow(payload) && fetchUserProfiles() : closeRoomWindow(payload) && fetchUserProfiles())}
+              disabled={object.blocked}
+              checked={object.status} />
+          </Form.Item>
+        </>
+      )
       break
     default:
       Icon = null
@@ -36,7 +52,7 @@ const ObjectIcon = ({roomName, object, fetchUserProfiles}) => {
 
   return Icon && (
     <Popover content={Content} title={name} placement='bottom' trigger='click'>
-      <img className='image' width={50} src={Icon} />
+      <img alt='objectIcon' className='image' width={50} src={Icon} />
     </Popover>
   )
 }
