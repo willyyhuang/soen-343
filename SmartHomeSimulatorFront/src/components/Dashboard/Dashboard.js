@@ -49,10 +49,10 @@ const Dashboard = ({simulationConfig, dispatch}) => {
           <Col span={1} />
           <Col span={15}>
             <Card title='Smart Home Core Functionality'>
-              <Row>
-                {simulationRunning && homeLayout && homeLayout.roomList.map((room) => <Col span={8}>
+              <Row gutter={[16, 16]}>
+                {simulationRunning ? homeLayout && homeLayout.roomList.map((room) => <Col span={8}>
                   <RoomCard key={room.name} room={room} fetchUserProfiles={fetchUserProfiles} />
-                </Col>)}
+                </Col>) : 'Simulation is off'}
               </Row>
             </Card>
           </Col>
