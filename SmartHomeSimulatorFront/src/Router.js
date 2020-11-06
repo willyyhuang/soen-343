@@ -24,7 +24,6 @@ const Router = ({dispatch, simulationConfig}) => {
       <Route
         path='/*'>
         <Redirect to='/dashboard' />
-        )
       </Route>
     </BrowserRouter>
   )

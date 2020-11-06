@@ -7,7 +7,7 @@ import {RoomCard, SimulationParameterCard, SimulationProfileCard} from '../index
 import './Dashboard.css'
 import {getProfile, start, stop} from '../../services'
 
-const Dashboard = ({simulationConfig, dispatch}) => {
+const Dashboard = ({simulationConfig, consoleMessage, dispatch}) => {
   const fetchUserProfiles = () => {
     getProfile().then((response) => {
       const {data} = response
@@ -22,18 +22,17 @@ const Dashboard = ({simulationConfig, dispatch}) => {
   const simulationSwitchCard = (
     <Card>
       <Row>
-        <Col span={8}>
-          <Switch
-            className='item'
-            checked={simulationConfig.simulationRunning}
-            onChange={(value) => (value ? start() && fetchUserProfiles() : stop() && fetchUserProfiles())} />
-          <Typography.Text>Simulation Mode</Typography.Text>
-        </Col>
+        <Switch
+          className='item'
+          checked={simulationConfig.simulationRunning}
+          onChange={(value) => (value ? start() && fetchUserProfiles() : stop() && fetchUserProfiles())} />
+        <Typography.Text>Simulation Mode</Typography.Text>
       </Row>
     </Card>
   )
 
   const {homeLayout, simulationRunning} = simulationConfig
+  const {messages} = consoleMessage
   return (
     <Layout className='layout'>
       <Layout.Content className='content'>
@@ -50,20 +49,32 @@ const Dashboard = ({simulationConfig, dispatch}) => {
           <Col span={15}>
             <Card title='Smart Home Core Functionality'>
               <Row gutter={[16, 16]}>
-                {simulationRunning ? homeLayout && homeLayout.roomList.map((room) => <Col span={8}>
-                  <RoomCard key={room.name} room={room} fetchUserProfiles={fetchUserProfiles} />
-                </Col>) : 'Simulation is off'}
+                {simulationRunning
+                  ? homeLayout && homeLayout.roomList.map((room) => <Col span={8}>
+                    <RoomCard key={room.name} room={room} fetchUserProfiles={fetchUserProfiles} />
+                  </Col>)
+                  : 'Simulation is off'}
               </Row>
             </Card>
           </Col>
         </Row>
       </Layout.Content>
+      <Layout.Footer style={{padding: 0}}>
+        <Card title='Output Console'>
+          {messages.length > 0 ? messages.forEach((message) => (
+            <Row>
+              <Typography.Text>{message}</Typography.Text>
+            </Row>
+          )) : null}
+        </Card>
+      </Layout.Footer>
     </Layout>
   )
 }
 
 const mapStateToProps = (state) => ({
   simulationConfig: state.simulationConfig,
+  consoleMessage: state.consoleMessage,
 })
 
 Dashboard.displayName = 'Dashboard'
