@@ -3,13 +3,11 @@ package com.project.SmartHomeSimulator.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.project.SmartHomeSimulator.model.HomeLayout;
-import com.project.SmartHomeSimulator.model.Role;
 import com.project.SmartHomeSimulator.model.Room;
 import com.project.SmartHomeSimulator.model.User;
 import com.project.SmartHomeSimulator.model.roomObjects.RoomObject;
 import com.project.SmartHomeSimulator.module.SimulationContext;
 import net.minidev.json.JSONObject;
-import org.junit.Before;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -52,11 +50,11 @@ public class SmartHomeCoreFunctionalityServiceTest {
         RoomObject window = room.getObjects().get(0);
 
         //unblock
-        boolean result = smartHomeCoreFunctionalityService.blockUnblockWindow(room.getName(),window.getId().toString(),false);
+        boolean result = smartHomeCoreFunctionalityService.openCloseWindow(room.getName(),window.getId().toString(),false);
         assertEquals(result,true);
 
         //block
-        result = smartHomeCoreFunctionalityService.blockUnblockWindow(room.getName(),window.getId().toString(),true);
+        result = smartHomeCoreFunctionalityService.openCloseWindow(room.getName(),window.getId().toString(),true);
         assertEquals(result,true);
     }
 
