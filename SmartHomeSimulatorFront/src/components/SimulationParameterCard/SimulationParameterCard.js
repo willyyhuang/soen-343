@@ -14,7 +14,7 @@ const SimulationParameterCard = ({simulationConfig, fetchUserProfiles}) => {
   const PARAMETER_FORM_DATA_INITIAL_STATE = {
     insideTemp,
     outsideTemp,
-    time: time ? moment(time) : null,
+    time: time ? moment(date.concat(time)) : null,
     date: date ? moment(date) : null,
   }
   const [parameterFormData, setParameterFormData] = useState(PARAMETER_FORM_DATA_INITIAL_STATE)
@@ -23,7 +23,7 @@ const SimulationParameterCard = ({simulationConfig, fetchUserProfiles}) => {
     setParameterFormData({
       insideTemp,
       outsideTemp,
-      time: time ? moment(time) : null,
+      time: time ? moment(date.concat(time)) : null,
       date: date ? moment(date) : null,
     })
     // eslint-disable-next-line
@@ -59,10 +59,12 @@ const SimulationParameterCard = ({simulationConfig, fetchUserProfiles}) => {
           setSimulationOutsideTemp(parameterFormData.outsideTemp)
         }
         if (parameterFormData.time !== PARAMETER_FORM_DATA_INITIAL_STATE.time) {
-          setSimulationTime(parameterFormData.time.format())
+          const formattedTime = parameterFormData.time.format()
+          setSimulationTime(formattedTime.substring(formattedTime.indexOf('T'), formattedTime.length))
         }
         if (parameterFormData.date !== PARAMETER_FORM_DATA_INITIAL_STATE.date) {
-          setSimulationDate(parameterFormData.date.format('L'))
+          const formattedDate = parameterFormData.date.format()
+          setSimulationDate(formattedDate.substring(0, formattedDate.indexOf('T')))
         }
         fetchUserProfiles()
       }}>

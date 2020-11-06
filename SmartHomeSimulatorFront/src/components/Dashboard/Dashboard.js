@@ -3,11 +3,15 @@ import {
 } from 'antd'
 import React, {useEffect} from 'react'
 import {connect} from 'react-redux'
-import {RoomCard, SimulationParameterCard, SimulationProfileCard} from '../index'
+import {SimulationParameterCard, SimulationProfileCard, SimulationFunctionalityCard} from '../index'
 import './Dashboard.css'
-import {getProfile, start, stop} from '../../services'
+import {
+  getProfile, start, stop, setAutoMode,
+} from '../../services'
 
 const Dashboard = ({simulationConfig, consoleMessage, dispatch}) => {
+  const {messages} = consoleMessage
+
   const fetchUserProfiles = () => {
     getProfile().then((response) => {
       const {data} = response
@@ -19,6 +23,7 @@ const Dashboard = ({simulationConfig, consoleMessage, dispatch}) => {
     fetchUserProfiles()
     // eslint-disable-next-line
 }, [])
+
   const simulationSwitchCard = (
     <Card>
       <Row>
@@ -28,11 +33,16 @@ const Dashboard = ({simulationConfig, consoleMessage, dispatch}) => {
           onChange={(value) => (value ? start() && fetchUserProfiles() : stop() && fetchUserProfiles())} />
         <Typography.Text>Simulation Mode</Typography.Text>
       </Row>
+      <Row style={{marginTop: 5}}>
+        <Switch
+          className='item'
+          checked={simulationConfig.autoMode}
+          onChange={(value) => setAutoMode(value) && fetchUserProfiles()} />
+        <Typography.Text>Light Auto Mode</Typography.Text>
+      </Row>
     </Card>
   )
 
-  const {homeLayout, simulationRunning} = simulationConfig
-  const {messages} = consoleMessage
   return (
     <Layout className='layout'>
       <Layout.Content className='content'>
@@ -47,15 +57,7 @@ const Dashboard = ({simulationConfig, consoleMessage, dispatch}) => {
           </Col>
           <Col span={1} />
           <Col span={15}>
-            <Card title='Smart Home Core Functionality'>
-              <Row gutter={[16, 16]}>
-                {simulationRunning
-                  ? homeLayout && homeLayout.roomList.map((room) => <Col span={8}>
-                    <RoomCard key={room.name} room={room} fetchUserProfiles={fetchUserProfiles} />
-                  </Col>)
-                  : 'Simulation is off'}
-              </Row>
-            </Card>
+            <SimulationFunctionalityCard simulationConfig={simulationConfig} fetchUserProfiles={fetchUserProfiles} />
           </Col>
         </Row>
       </Layout.Content>

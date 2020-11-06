@@ -23,6 +23,17 @@ export const onLight = `${appsettings.baseApiUrl}/api/v1/simulation/onLight`
 export const offLight = `${appsettings.baseApiUrl}/api/v1/simulation/offLight`
 export const openWindow = `${appsettings.baseApiUrl}/api/v1/simulation/openWindow`
 export const closeWindow = `${appsettings.baseApiUrl}/api/v1/simulation/closeWindow`
+export const autoMode = `${appsettings.baseApiUrl}/api/v1/simulation/autoMode`
+
+export async function setAutoMode(payload) {
+  return axios({
+    method: 'POST',
+    url: autoMode,
+    params: {
+      autoMode: payload,
+    },
+  })
+}
 
 export async function turnOnLight(payload) {
   return axios({
