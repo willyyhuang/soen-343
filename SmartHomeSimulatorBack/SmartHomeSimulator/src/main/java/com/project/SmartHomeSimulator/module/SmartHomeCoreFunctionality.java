@@ -57,7 +57,7 @@ public class SmartHomeCoreFunctionality {
         }
         else if (roomObject instanceof Door){
             Door door = (Door) roomObject;
-            door.setOpen(state);
+            door.setStatus(state);
             return true;
         }
         return false;

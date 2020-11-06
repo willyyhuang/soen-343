@@ -184,7 +184,7 @@ public class SmartHomeCoreFunctionalityController {
             response.timeBeforeAuthorities = smartHomeSecurity.getAwayModeConfig().getTimeBeforeAuthorities();
             return response;
         }
-        response.success = smartHomeCoreFunctionalityService.openCloseDoors(roomName, objectID, true);
+        response.success = smartHomeCoreFunctionalityService.openCloseDoors(roomName, objectID, false);
         response.awayMode = false;
         response.timeBeforeAuthorities = smartHomeSecurity.getAwayModeConfig().getTimeBeforeAuthorities();
         return response;

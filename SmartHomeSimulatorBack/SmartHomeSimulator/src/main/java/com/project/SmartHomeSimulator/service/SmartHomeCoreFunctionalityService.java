@@ -59,6 +59,6 @@ public class SmartHomeCoreFunctionalityService {
      */
     public boolean openCloseDoors (String roomName, String id, boolean state) {
         User user = simulationContext.getCurrentSimulationUser();
-        return permissionVerifier.verifyPermission(user,"light",roomName, id, state);
+        return permissionVerifier.verifyPermission(user,"door",roomName, id, state);
     }
 }
