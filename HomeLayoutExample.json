@@ -1,0 +1,1 @@
+[{"name":"bedroom", "objects":[{"objectType": "WINDOW"},{"objectType": "LIGHT"}, {"objectType": "DOOR"}]},{"name":"garage", "objects":[{"objectType": "LIGHT"}, {"objectType": "DOOR"}]}, {"name":"building entrance", "objects":[{"objectType": "LIGHT"}, {"objectType": "DOOR"}]}]

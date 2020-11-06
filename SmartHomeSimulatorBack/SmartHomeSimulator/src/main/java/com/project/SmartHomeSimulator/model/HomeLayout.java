@@ -17,7 +17,7 @@ public class HomeLayout {
     private List<Room> roomList;
     private boolean homeEmpty;
     private int usersInHome;
-    private static int windowCount = 1;
+    public static int windowCount = 1;
     private static int doorCount = 1;
     private static int lightCount = 1;
     /**
@@ -53,6 +53,10 @@ public class HomeLayout {
             List<RoomObject> objects = new ArrayList<>();
             outside.setObjects(objects);
             rooms.add(outside);
+            Room backyard = new Room();
+            backyard.setName("backyard");
+            backyard.setObjects(objects);
+            rooms.add(backyard);
             homeLayout.setRoomList(rooms);
             return homeLayout;
         } catch (JsonProcessingException e) {
@@ -69,12 +73,12 @@ public class HomeLayout {
      */
     public List<Room> createObjects(List<Room> rooms) {
         List<RoomObject> roomObjectsJson;
-        List<RoomObject> roomObjects = new ArrayList<>();
         Window window;
         Door door;
         Light light;
         if (rooms != null) {
             for (Room room : rooms) {
+                List<RoomObject> roomObjects = new ArrayList<>();
                 roomObjectsJson = room.getObjects();
                 for (RoomObject roomObject : roomObjectsJson) {
                     if (roomObject.getObjectType() == RoomObjectType.WINDOW) {
@@ -98,6 +102,15 @@ public class HomeLayout {
             return rooms;
         }
         return null;
+    }
+
+    public List<RoomObject> allLights(String roomName){
+        Room room = getRoomByName(roomName);
+        if(room == null){
+            List<RoomObject> list = new ArrayList<>();
+            return list;
+        }
+        return room.allLights();
     }
 
     public List<Room> getRoomList() {

@@ -43,7 +43,7 @@ public class UserController {
     public ResponseAPI addUser(@RequestBody @Valid User user)
     {
         ResponseAPI response = new ResponseAPI();
-        if(smartHomeSecurity.getAwayModeConfig().isAwayMode()){
+        if(smartHomeSecurity.getAwayModeConfig().isAwayMode() && !user.getHomeLocation().equalsIgnoreCase("outside")){
             response.success = false;
             response.awayMode = true;
             response.timeBeforeAuthorities = smartHomeSecurity.getAwayModeConfig().getTimeBeforeAuthorities();
@@ -96,6 +96,10 @@ public class UserController {
             response.awayMode = true;
             response.timeBeforeAuthorities = smartHomeSecurity.getAwayModeConfig().getTimeBeforeAuthorities();
             return response;
+        }
+        if(smartHomeSecurity.getAwayModeConfig().isAwayMode() && name.equals(simulationContext.getCurrentSimulationUser().getName())){
+            smartHomeSecurity.getAwayModeConfig().setAwayMode(false);
+            simulationContext.setAwayModeUser(null);
         }
         response.success = userService.editHomeLocation(name,homeLocation);
         response.awayMode = false;
