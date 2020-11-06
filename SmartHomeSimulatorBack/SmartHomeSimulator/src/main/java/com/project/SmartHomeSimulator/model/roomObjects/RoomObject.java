@@ -14,10 +14,21 @@ public class RoomObject {
     private UUID id;
     @JsonProperty(required = false)
     private String name;
+    @JsonProperty(required = false)
+    private boolean status;
     private RoomObjectType roomObjectType;
 
     public RoomObject(){
         this.id = UUID.randomUUID();
+        this.status = false;
+    }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
     }
 
     public String getName() {

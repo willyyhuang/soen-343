@@ -104,4 +104,14 @@ public class SimulationContextService {
         return homeLayout;
     }
 
+    /**
+     * Set autoMode
+     * @param autoMode
+     * @return - true if successful false if otherwise
+     */
+    public boolean setAutoMode(boolean autoMode) {
+        simulationContext.setAutoMode(autoMode);
+        return true;
+    }
+
 }

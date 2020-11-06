@@ -28,6 +28,7 @@ public class Window extends RoomObject {
                 "name=" + getName() +
                 ", id=" + getId() +
                 ", roomObjectType=" + getObjectType() +
+                ", status=" + isStatus() +
                 ", isBlocked=" + isBlocked +
                 '}';
     }

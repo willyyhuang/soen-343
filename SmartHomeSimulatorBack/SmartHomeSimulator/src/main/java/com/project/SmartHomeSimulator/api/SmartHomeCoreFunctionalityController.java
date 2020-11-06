@@ -37,9 +37,8 @@ public class SmartHomeCoreFunctionalityController {
         response.timeBeforeAuthorities = smartHomeSecurity.getAwayModeConfig().getTimeBeforeAuthorities();
         return response;
     }
-
     /**
-     * API unblock a window
+     * API block a window
      * @param roomName
      * @param objectID
      * @return - true if successful false if otherwise
@@ -55,6 +54,50 @@ public class SmartHomeCoreFunctionalityController {
             return response;
         }
         response.success = smartHomeCoreFunctionalityService.blockUnblockWindow(roomName, objectID, false);
+        response.awayMode = false;
+        response.timeBeforeAuthorities = smartHomeSecurity.getAwayModeConfig().getTimeBeforeAuthorities();
+        return response;
+    }
+
+    /**
+     * API open a window
+     * @param roomName
+     * @param objectID
+     * @return - true if successful false if otherwise
+     */
+    @PostMapping(value = "/openWindow")
+    @ResponseStatus(value = HttpStatus.OK)
+    public ResponseAPI openWindow(@RequestParam("roomName") String roomName,@RequestParam("objectID") String objectID) {
+        ResponseAPI response = new ResponseAPI();
+        if(smartHomeSecurity.getAwayModeConfig().isAwayMode()){
+            response.success = false;
+            response.awayMode = true;
+            response.timeBeforeAuthorities = smartHomeSecurity.getAwayModeConfig().getTimeBeforeAuthorities();
+            return response;
+        }
+        response.success = smartHomeCoreFunctionalityService.openCloseWindow(roomName, objectID, true);
+        response.awayMode = false;
+        response.timeBeforeAuthorities = smartHomeSecurity.getAwayModeConfig().getTimeBeforeAuthorities();
+        return response;
+    }
+
+    /**
+     * API close a window
+     * @param roomName
+     * @param objectID
+     * @return - true if successful false if otherwise
+     */
+    @PostMapping(value = "/closeWindow")
+    @ResponseStatus(value = HttpStatus.OK)
+    public ResponseAPI closeWindow(@RequestParam("roomName") String roomName,@RequestParam("objectID") String objectID) {
+        ResponseAPI response = new ResponseAPI();
+        if(smartHomeSecurity.getAwayModeConfig().isAwayMode()){
+            response.success = false;
+            response.awayMode = true;
+            response.timeBeforeAuthorities = smartHomeSecurity.getAwayModeConfig().getTimeBeforeAuthorities();
+            return response;
+        }
+        response.success = smartHomeCoreFunctionalityService.openCloseWindow(roomName, objectID, false);
         response.awayMode = false;
         response.timeBeforeAuthorities = smartHomeSecurity.getAwayModeConfig().getTimeBeforeAuthorities();
         return response;
