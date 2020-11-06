@@ -6,7 +6,7 @@ import com.project.SmartHomeSimulator.model.roomObjects.Door;
 import com.project.SmartHomeSimulator.model.roomObjects.RoomObject;
 import com.project.SmartHomeSimulator.model.roomObjects.Window;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class SmartHomeSecurity implements Monitor {
@@ -16,13 +16,13 @@ public class SmartHomeSecurity implements Monitor {
     public static SimulationContext simulationContext = SimulationContext.getInstance();
     private AwayModeConfig awayModeConfig;
     private boolean alertModeOn;
-    private List<String> lightIDs;
+    private HashMap<String,String> lights;
     private int timeToKeepLightsOn;
 
     //this class cannot be instantiated
     private SmartHomeSecurity() {
         this.awayModeConfig = new AwayModeConfig();
-        this.lightIDs = new ArrayList<String>();
+        this.lights = new HashMap<String, String>();
     }
 
     public static SmartHomeSecurity getInstance() {
@@ -75,9 +75,14 @@ public class SmartHomeSecurity implements Monitor {
         //todo log the action in console and corresponding file
     }
 
-    public void setLightsToRemainOn(List<String> lightIDs, int timeToKeepLightsOn){
-        this.lightIDs = lightIDs;
+    public void setLightsToRemainOn(HashMap<String, String> lights, int timeToKeepLightsOn){
+        this.lights = lights;
         this.timeToKeepLightsOn = timeToKeepLightsOn;
+    }
+
+    public void turnOffLights(){
+        smartHomeCoreFunctionality = SmartHomeCoreFunctionality.getInstance();
+        this.lights.forEach((roomName, lightID) -> smartHomeCoreFunctionality.objectStateSwitcher(roomName,lightID, false));
     }
 
     public int getTimeToKeepLightsOn() {

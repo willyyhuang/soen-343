@@ -6,7 +6,7 @@ import com.project.SmartHomeSimulator.module.SimulationContext;
 import com.project.SmartHomeSimulator.module.SmartHomeSecurityProxy;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.HashMap;
 
 @Service
 public class SmartHomeSecurityService {
@@ -55,11 +55,15 @@ public class SmartHomeSecurityService {
         return false;
     }
 
-    public boolean setLightsToRemainOn(List lightIDs, int timeToKeepLightsOn) {
+    public boolean setLightsToRemainOn(HashMap<String, String> lights, int timeToKeepLightsOn) {
         if (simulationContext.getCurrentSimulationUser() != null) {
             this.currentSimulationUserRole = simulationContext.getCurrentSimulationUser().getRole();
-            return smartHomeSecurityProxy.setLightsToRemainOn(currentSimulationUserRole, lightIDs,timeToKeepLightsOn);
+            return smartHomeSecurityProxy.setLightsToRemainOn(currentSimulationUserRole, lights, timeToKeepLightsOn);
         }
         return false;
+    }
+
+    public void turnOffLights() {
+        smartHomeSecurityProxy.turnOffLights();
     }
 }
