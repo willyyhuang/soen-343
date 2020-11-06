@@ -22,7 +22,7 @@ public class SimulationHomeSecurityController {
     public ResponseAPI startAwayMode(@RequestParam("awayMode") Boolean awayMode) {
         ResponseAPI responseAPI = new ResponseAPI();
 
-        responseAPI.awayMode = smartHomeSecurityService.setAwayMode(awayMode);
+        responseAPI.awayMode = SmartHomeSecurity.getInstance().getAwayModeConfig().isAwayMode();
         responseAPI.success = smartHomeSecurityService.setAwayMode(awayMode);
         responseAPI.timeBeforeAuthorities = SmartHomeSecurity.getInstance().getAwayModeConfig().getTimeBeforeAuthorities();
         responseAPI.timeToKeepLightsOn = SmartHomeSecurity.getInstance().getTimeToKeepLightsOn();
