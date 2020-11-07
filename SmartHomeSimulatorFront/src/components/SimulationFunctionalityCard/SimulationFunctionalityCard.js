@@ -25,6 +25,7 @@ const SimulationFunctionalityCard = ({speedRate, simulationConfig, fetchUserProf
     return () => {
       clearInterval(interval)
     }
+    // eslint-disable-next-line
   }, [simulationConfig])
 
   return (
