@@ -26,24 +26,52 @@ public class SmartHomeCoreFunctionalityServiceTest {
     @Autowired
     private UserService userService;
     private static SimulationContext simulationContext = SimulationContext.getInstance();
-    private User user;
 
 
     /**
      * choosing to block or unblock a window test
+     * Use case ID = 0
      */
     @Test
-    public void blockUnblockWindow() throws JsonProcessingException {
+    public void blocckunblockWindow_0() throws JsonProcessingException {
         JSONObject jsonUser = new JSONObject();
         jsonUser.put("name", "testUser");
         jsonUser.put("role", "PARENT");
-        jsonUser.put("homeLocation", "bedroom");
+        jsonUser.put("homeLocation", "outside");
         ObjectMapper objectMapper = new ObjectMapper();
         User user = objectMapper.readValue(jsonUser.toString(), User.class);
         userService.addUser(user);
         simulationContextService.setCurrentSimulationUser(user.getName());
 
-        System.out.println(simulationContext);
+        String homeLayoutFile = "{\"roomList\":\"[{\"name\":\"string\", \"objects\":[{\"objectType\": \"WINDOW\"}]}]\"}";
+        HomeLayout homeLayout = simulationContextService.loadLayout(homeLayoutFile);
+        Room room = homeLayout.getRoomList().get(0);
+        RoomObject window = room.getObjects().get(0);
+
+        //unblock
+        boolean result = smartHomeCoreFunctionalityService.blockUnblockWindow(room.getName(),window.getId().toString(),false);
+        assertEquals(result,true);
+
+        //block
+        result = smartHomeCoreFunctionalityService.blockUnblockWindow(room.getName(),window.getId().toString(),true);
+        assertEquals(result,true);
+    }
+
+    /**
+     * choosing to open or close a window test
+     * Use case ID = 1
+     */
+    @Test
+    public void opencloseWindow_1() throws JsonProcessingException {
+        JSONObject jsonUser = new JSONObject();
+        jsonUser.put("name", "testUser");
+        jsonUser.put("role", "PARENT");
+        jsonUser.put("homeLocation", "outside");
+        ObjectMapper objectMapper = new ObjectMapper();
+        User user = objectMapper.readValue(jsonUser.toString(), User.class);
+        userService.addUser(user);
+        simulationContextService.setCurrentSimulationUser(user.getName());
+
         String homeLayoutFile = "{\"roomList\":\"[{\"name\":\"string\", \"objects\":[{\"objectType\": \"WINDOW\"}]}]\"}";
         HomeLayout homeLayout = simulationContextService.loadLayout(homeLayoutFile);
         Room room = homeLayout.getRoomList().get(0);
@@ -59,20 +87,49 @@ public class SmartHomeCoreFunctionalityServiceTest {
     }
 
     /**
-     * choosing to turn off or on a light test
+     * choosing to open or close a door test
+     * Use case ID = 2
      */
     @Test
-    public void onOffLights() throws JsonProcessingException {
+    public void opencloseDoor_2() throws JsonProcessingException {
         JSONObject jsonUser = new JSONObject();
         jsonUser.put("name", "testUser");
         jsonUser.put("role", "PARENT");
-        jsonUser.put("homeLocation", "bedroom");
+        jsonUser.put("homeLocation", "outside");
         ObjectMapper objectMapper = new ObjectMapper();
         User user = objectMapper.readValue(jsonUser.toString(), User.class);
         userService.addUser(user);
         simulationContextService.setCurrentSimulationUser(user.getName());
 
-        System.out.println(simulationContext);
+        String homeLayoutFile = "{\"roomList\":\"[{\"name\":\"string\", \"objects\":[{\"objectType\": \"DOOR\"}]}]\"}";
+        HomeLayout homeLayout = simulationContextService.loadLayout(homeLayoutFile);
+        Room room = homeLayout.getRoomList().get(0);
+        RoomObject door = room.getObjects().get(0);
+
+        //unblock
+        boolean result = smartHomeCoreFunctionalityService.openCloseDoors(room.getName(),door.getId().toString(),false);
+        assertEquals(result,true);
+
+        //block
+        result = smartHomeCoreFunctionalityService.openCloseDoors(room.getName(),door.getId().toString(),true);
+        assertEquals(result,true);
+    }
+
+    /**
+     * choosing to turn off or on a light test
+     * Use case ID = 3
+     */
+    @Test
+    public void onOffLights_3() throws JsonProcessingException {
+        JSONObject jsonUser = new JSONObject();
+        jsonUser.put("name", "testUser");
+        jsonUser.put("role", "PARENT");
+        jsonUser.put("homeLocation", "outside");
+        ObjectMapper objectMapper = new ObjectMapper();
+        User user = objectMapper.readValue(jsonUser.toString(), User.class);
+        userService.addUser(user);
+        simulationContextService.setCurrentSimulationUser(user.getName());
+
         String homeLayoutFile = "{\"roomList\":\"[{\"name\":\"string\", \"objects\":[{\"objectType\": \"LIGHT\"}]}]\"}";
         HomeLayout homeLayout = simulationContextService.loadLayout(homeLayoutFile);
         Room room = homeLayout.getRoomList().get(0);
@@ -88,4 +145,61 @@ public class SmartHomeCoreFunctionalityServiceTest {
     }
 
 
+    /**
+     * Set lights to automode on
+     * Use case ID = 4
+     */
+    @Test
+    public void automodeLights_4() throws JsonProcessingException {
+
+        System.out.println(simulationContext);
+        String homeLayoutFile = "{\"roomList\":\"[{\"name\":\"string\", \"objects\":[{\"objectType\": \"LIGHT\"}]}]\"}";
+        HomeLayout homeLayout = simulationContextService.loadLayout(homeLayoutFile);
+        Room room = homeLayout.getRoomList().get(0);
+        RoomObject light = room.getObjects().get(0);
+
+        JSONObject jsonUser = new JSONObject();
+        jsonUser.put("name", "testUser");
+        jsonUser.put("role", "PARENT");
+        jsonUser.put("homeLocation", "outside");
+        ObjectMapper objectMapper = new ObjectMapper();
+        User user = objectMapper.readValue(jsonUser.toString(), User.class);
+        userService.addUser(user);
+        simulationContextService.setCurrentSimulationUser(user.getName());
+
+        simulationContextService.setAutoMode(true);
+        userService.editHomeLocation(user.getName(),"string");
+        assertEquals(light.isStatus(),true);
+
+    }
+
+    /**
+     * verify permissions
+     * Use case ID = 5
+     */
+    @Test
+    public void pemrissionCheck_5() throws JsonProcessingException {
+        JSONObject jsonUser = new JSONObject();
+        jsonUser.put("name", "testUser");
+        jsonUser.put("role", "CHILD");
+        jsonUser.put("homeLocation", "outside");
+        ObjectMapper objectMapper = new ObjectMapper();
+        User user = objectMapper.readValue(jsonUser.toString(), User.class);
+        userService.addUser(user);
+        simulationContextService.setCurrentSimulationUser(user.getName());
+
+        String homeLayoutFile = "{\"roomList\":\"[{\"name\":\"string\", \"objects\":[{\"objectType\": \"DOOR\"}, {\"objectType\": \"WINDOW\"}]}]\"}";
+        HomeLayout homeLayout = simulationContextService.loadLayout(homeLayoutFile);
+        Room room = homeLayout.getRoomList().get(0);
+        RoomObject door = room.getObjects().get(0);
+        RoomObject window = room.getObjects().get(1);
+
+        //on
+        boolean result = smartHomeCoreFunctionalityService.openCloseDoors(room.getName(),door.getId().toString(),true);
+        assertEquals(result,false);
+
+        //off
+        result = smartHomeCoreFunctionalityService.onOffLights(room.getName(),window.getId().toString(),false);
+        assertEquals(result,false);
+    }
 }
