@@ -18,7 +18,7 @@ public class SmartHomeSecurity extends Module implements Monitor {
     private AwayModeConfig awayModeConfig;
     private boolean alertModeOn;
     private HashMap<String, String> lights;
-    private int timeToKeepLightsOn;
+    private String timeToKeepLightsOn;
 
     //this class cannot be instantiated
     private SmartHomeSecurity() {
@@ -36,12 +36,15 @@ public class SmartHomeSecurity extends Module implements Monitor {
 
     @Override
     public void update(String awayModeUser, User user) {
-        if (awayModeConfig.isAwayMode() && !awayModeUser.equals(user.getName())) {
-            if (!user.getHomeLocation().equals("outside")) {
+        if (awayModeConfig.isAwayMode()) {
+            if (!awayModeUser.equals(user.getName()) && !user.getHomeLocation().equals("outside")) {
                 this.alertModeOn = true;
                 logMessage("[Alert] " + user.getName() + " is detected in the house during away mode");
+                return;
             }
         }
+        this.alertModeOn = false;
+
     }
 
     public void closWindows() {
@@ -88,16 +91,16 @@ public class SmartHomeSecurity extends Module implements Monitor {
         }
     }
 
-    public void setLightsToRemainOn(HashMap<String, String> lights, int timeToKeepLightsOn) {
+    public void setLightsToRemainOn(HashMap<String, String> lights, String timeToKeepLightsOn) {
         this.lights = lights;
         this.timeToKeepLightsOn = timeToKeepLightsOn;
     }
 
-    public boolean turnOffLights() {
+    public boolean turnOnOffLights(boolean status) {
         smartHomeCoreFunctionality = SmartHomeCoreFunctionality.getInstance();
         this.lights.forEach((roomName, lightID) -> {
-                    if (smartHomeCoreFunctionality.objectStateSwitcher(roomName, lightID, false)) {
-                        logSuccess("Light", roomName, "turn off", "SHP module");
+                    if (smartHomeCoreFunctionality.objectStateSwitcher(roomName, lightID, status)) {
+                        logSuccess("Light", roomName, status ? "turned on" : "turned off", "SHP module");
                     } else {
                         logMessage("[Failed] Turning off lights in " + roomName + ", requested by SHP, failed.");
                     }
@@ -106,11 +109,11 @@ public class SmartHomeSecurity extends Module implements Monitor {
         return true;
     }
 
-    public int getTimeToKeepLightsOn() {
+    public String getTimeToKeepLightsOn() {
         return timeToKeepLightsOn;
     }
 
-    public void setTimeToKeepLightsOn(int timeToKeepLightsOn) {
+    public void setTimeToKeepLightsOn(String timeToKeepLightsOn) {
         this.timeToKeepLightsOn = timeToKeepLightsOn;
     }
 

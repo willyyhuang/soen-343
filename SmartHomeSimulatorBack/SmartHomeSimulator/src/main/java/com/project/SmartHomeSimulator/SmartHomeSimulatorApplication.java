@@ -10,9 +10,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class SmartHomeSimulatorApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(SmartHomeSimulatorApplication.class, args);
-		String one = "hello"+"\n";
-		String two = "you";
-		System.out.println(one+two);
 	}
 
 	@Bean

@@ -31,6 +31,9 @@ public class SmartHomeCoreFunctionalityController {
             response.success = false;
             response.awayMode = true;
             response.timeBeforeAuthorities = smartHomeSecurity.getAwayModeConfig().getTimeBeforeAuthorities();
+            response.timeToKeepLightsOn = smartHomeSecurity.getTimeToKeepLightsOn();
+            response.consoleMessage = SmartHomeCoreFunctionality.getInstance().getConsoleMessage();
+            response.alertModeOn = true;
             return response;
         }
         response.success = smartHomeCoreFunctionalityService.blockUnblockWindow(roomName, objectID, true);
@@ -38,6 +41,7 @@ public class SmartHomeCoreFunctionalityController {
         response.timeBeforeAuthorities = smartHomeSecurity.getAwayModeConfig().getTimeBeforeAuthorities();
         response.timeToKeepLightsOn = smartHomeSecurity.getTimeToKeepLightsOn();
         response.consoleMessage = SmartHomeCoreFunctionality.getInstance().getConsoleMessage();
+        response.alertModeOn = false;
         return response;
     }
     /**
@@ -54,6 +58,9 @@ public class SmartHomeCoreFunctionalityController {
             response.success = false;
             response.awayMode = true;
             response.timeBeforeAuthorities = smartHomeSecurity.getAwayModeConfig().getTimeBeforeAuthorities();
+            response.timeToKeepLightsOn = smartHomeSecurity.getTimeToKeepLightsOn();
+            response.consoleMessage = SmartHomeCoreFunctionality.getInstance().getConsoleMessage();
+            response.alertModeOn = true;
             return response;
         }
         response.success = smartHomeCoreFunctionalityService.blockUnblockWindow(roomName, objectID, false);
@@ -61,6 +68,7 @@ public class SmartHomeCoreFunctionalityController {
         response.timeBeforeAuthorities = smartHomeSecurity.getAwayModeConfig().getTimeBeforeAuthorities();
         response.timeToKeepLightsOn = smartHomeSecurity.getTimeToKeepLightsOn();
         response.consoleMessage = SmartHomeCoreFunctionality.getInstance().getConsoleMessage();
+        response.alertModeOn = false;
         return response;
     }
 
@@ -78,6 +86,9 @@ public class SmartHomeCoreFunctionalityController {
             response.success = false;
             response.awayMode = true;
             response.timeBeforeAuthorities = smartHomeSecurity.getAwayModeConfig().getTimeBeforeAuthorities();
+            response.timeToKeepLightsOn = smartHomeSecurity.getTimeToKeepLightsOn();
+            response.consoleMessage = SmartHomeCoreFunctionality.getInstance().getConsoleMessage();
+            response.alertModeOn = true;
             return response;
         }
         response.success = smartHomeCoreFunctionalityService.openCloseWindow(roomName, objectID, true);
@@ -85,6 +96,7 @@ public class SmartHomeCoreFunctionalityController {
         response.timeBeforeAuthorities = smartHomeSecurity.getAwayModeConfig().getTimeBeforeAuthorities();
         response.timeToKeepLightsOn = smartHomeSecurity.getTimeToKeepLightsOn();
         response.consoleMessage = SmartHomeCoreFunctionality.getInstance().getConsoleMessage();
+        response.alertModeOn = false;
         return response;
     }
 
@@ -102,6 +114,9 @@ public class SmartHomeCoreFunctionalityController {
             response.success = false;
             response.awayMode = true;
             response.timeBeforeAuthorities = smartHomeSecurity.getAwayModeConfig().getTimeBeforeAuthorities();
+            response.timeToKeepLightsOn = smartHomeSecurity.getTimeToKeepLightsOn();
+            response.consoleMessage = SmartHomeCoreFunctionality.getInstance().getConsoleMessage();
+            response.alertModeOn = true;
             return response;
         }
         response.success = smartHomeCoreFunctionalityService.openCloseWindow(roomName, objectID, false);
@@ -109,6 +124,7 @@ public class SmartHomeCoreFunctionalityController {
         response.timeBeforeAuthorities = smartHomeSecurity.getAwayModeConfig().getTimeBeforeAuthorities();
         response.timeToKeepLightsOn = smartHomeSecurity.getTimeToKeepLightsOn();
         response.consoleMessage = SmartHomeCoreFunctionality.getInstance().getConsoleMessage();
+        response.alertModeOn = false;
         return response;
     }
     /**
@@ -125,6 +141,9 @@ public class SmartHomeCoreFunctionalityController {
             response.success = false;
             response.awayMode = true;
             response.timeBeforeAuthorities = smartHomeSecurity.getAwayModeConfig().getTimeBeforeAuthorities();
+            response.timeToKeepLightsOn = smartHomeSecurity.getTimeToKeepLightsOn();
+            response.consoleMessage = SmartHomeCoreFunctionality.getInstance().getConsoleMessage();
+            response.alertModeOn = true;
             return response;
         }
         response.success = smartHomeCoreFunctionalityService.onOffLights(roomName, objectID, true);
@@ -132,6 +151,7 @@ public class SmartHomeCoreFunctionalityController {
         response.timeBeforeAuthorities = smartHomeSecurity.getAwayModeConfig().getTimeBeforeAuthorities();
         response.timeToKeepLightsOn = smartHomeSecurity.getTimeToKeepLightsOn();
         response.consoleMessage = SmartHomeCoreFunctionality.getInstance().getConsoleMessage();
+        response.alertModeOn = false;
         return response;
     }
 
@@ -149,6 +169,9 @@ public class SmartHomeCoreFunctionalityController {
             response.success = false;
             response.awayMode = true;
             response.timeBeforeAuthorities = smartHomeSecurity.getAwayModeConfig().getTimeBeforeAuthorities();
+            response.timeToKeepLightsOn = smartHomeSecurity.getTimeToKeepLightsOn();
+            response.consoleMessage = SmartHomeCoreFunctionality.getInstance().getConsoleMessage();
+            response.alertModeOn = true;
             return response;
         }
         response.success = smartHomeCoreFunctionalityService.onOffLights(roomName, objectID, false);
@@ -156,6 +179,7 @@ public class SmartHomeCoreFunctionalityController {
         response.timeBeforeAuthorities = smartHomeSecurity.getAwayModeConfig().getTimeBeforeAuthorities();
         response.timeToKeepLightsOn = smartHomeSecurity.getTimeToKeepLightsOn();
         response.consoleMessage = SmartHomeCoreFunctionality.getInstance().getConsoleMessage();
+        response.alertModeOn = false;
         return response;
     }
     /**
@@ -172,6 +196,9 @@ public class SmartHomeCoreFunctionalityController {
             response.success = false;
             response.awayMode = true;
             response.timeBeforeAuthorities = smartHomeSecurity.getAwayModeConfig().getTimeBeforeAuthorities();
+            response.timeToKeepLightsOn = smartHomeSecurity.getTimeToKeepLightsOn();
+            response.consoleMessage = SmartHomeCoreFunctionality.getInstance().getConsoleMessage();
+            response.alertModeOn = true;
             return response;
         }
         response.success = smartHomeCoreFunctionalityService.openCloseDoors(roomName, objectID, true);
@@ -179,6 +206,7 @@ public class SmartHomeCoreFunctionalityController {
         response.timeBeforeAuthorities = smartHomeSecurity.getAwayModeConfig().getTimeBeforeAuthorities();
         response.timeToKeepLightsOn = smartHomeSecurity.getTimeToKeepLightsOn();
         response.consoleMessage = SmartHomeCoreFunctionality.getInstance().getConsoleMessage();
+        response.alertModeOn = false;
         return response;
     }
 
@@ -197,6 +225,9 @@ public class SmartHomeCoreFunctionalityController {
             response.success = false;
             response.awayMode = true;
             response.timeBeforeAuthorities = smartHomeSecurity.getAwayModeConfig().getTimeBeforeAuthorities();
+            response.timeToKeepLightsOn = smartHomeSecurity.getTimeToKeepLightsOn();
+            response.consoleMessage = SmartHomeCoreFunctionality.getInstance().getConsoleMessage();
+            response.alertModeOn = true;
             return response;
         }
         response.success = smartHomeCoreFunctionalityService.openCloseDoors(roomName, objectID, false);
@@ -204,6 +235,7 @@ public class SmartHomeCoreFunctionalityController {
         response.timeBeforeAuthorities = smartHomeSecurity.getAwayModeConfig().getTimeBeforeAuthorities();
         response.timeToKeepLightsOn = smartHomeSecurity.getTimeToKeepLightsOn();
         response.consoleMessage = SmartHomeCoreFunctionality.getInstance().getConsoleMessage();
+        response.alertModeOn = false;
         return response;
     }
 

@@ -63,7 +63,7 @@ public class SmartHomeSecurityService {
      * @param timeToKeepLightsOn- amount of time to wait before closing the lights
      * @return- boolean
      */
-    public boolean setLightsToRemainOn(HashMap<String, String> lights, int timeToKeepLightsOn) {
+    public boolean setLightsToRemainOn(HashMap<String, String> lights, String timeToKeepLightsOn) {
         if (simulationContext.getCurrentSimulationUser() != null) {
             this.currentSimulationUserRole = simulationContext.getCurrentSimulationUser().getRole();
             return smartHomeSecurityProxy.setLightsToRemainOn(currentSimulationUserRole, lights, timeToKeepLightsOn);
@@ -72,11 +72,11 @@ public class SmartHomeSecurityService {
     }
 
     /**
-     * Turn of the lights that are specified in the attribute "lights"
+     * Turn on/off the lights that are specified in the attribute "lights"
      *
      * @return- boolean
      */
-    public boolean turnOffLights() {
-        return smartHomeSecurityProxy.turnOffLights();
+    public boolean turnOnOffLights(boolean status) {
+        return smartHomeSecurityProxy.turnOnOffLights(status);
     }
 }

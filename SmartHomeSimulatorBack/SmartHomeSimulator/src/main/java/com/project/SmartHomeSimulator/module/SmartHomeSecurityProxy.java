@@ -35,7 +35,7 @@ public class SmartHomeSecurityProxy {
         return false;
     }
 
-    public boolean setLightsToRemainOn(Role role, HashMap<String, String> lights, int timeToKeepLightsOn) {
+    public boolean setLightsToRemainOn(Role role, HashMap<String, String> lights, String timeToKeepLightsOn) {
         if (verifyPermission(role)) {
             smartHomeSecurity.setLightsToRemainOn(lights, timeToKeepLightsOn);
             return true;
@@ -43,8 +43,8 @@ public class SmartHomeSecurityProxy {
         return false;
     }
 
-    public boolean turnOffLights() {
-        return smartHomeSecurity.turnOffLights();
+    public boolean turnOnOffLights(boolean status) {
+        return smartHomeSecurity.turnOnOffLights(status);
     }
 
     private boolean verifyPermission(Role role) {
