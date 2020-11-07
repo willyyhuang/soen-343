@@ -9,7 +9,7 @@ import 'react-clock/dist/Clock.css'
 
 const SimulationFunctionalityCard = ({speedRate, simulationConfig, fetchUserProfiles}) => {
   const {
-    simulationRunning, homeLayout, date, time,
+    simulationUsers, simulationRunning, homeLayout, date, time,
   } = simulationConfig
   const [currentTime, setCurrentTime] = useState(moment(date.concat(time)))
   const [value, setValue] = useState(new Date(currentTime.format('YYYY-MM-DD HH:mm:ss')))
@@ -47,9 +47,13 @@ const SimulationFunctionalityCard = ({speedRate, simulationConfig, fetchUserProf
       </Row>
       <Row gutter={[16, 16]}>
         {simulationRunning
-          ? homeLayout && homeLayout.roomList.map((room) => <Col span={8}>
-            <RoomCard key={room.name} room={room} fetchUserProfiles={fetchUserProfiles} />
-          </Col>)
+          ? homeLayout && homeLayout.roomList.map((room) => {
+            const {name} = room
+            const users = simulationUsers.filter((user) => user.homeLocation === name)
+            return (<Col span={8}>
+              <RoomCard users={users} key={name} room={room} fetchUserProfiles={fetchUserProfiles} />
+            </Col>)
+          })
           : 'Simulation is off'}
       </Row>
     </Card>
