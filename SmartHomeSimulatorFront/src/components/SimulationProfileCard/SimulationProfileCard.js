@@ -1,8 +1,10 @@
 import React, {useState} from 'react'
 import {
-  Dropdown, Menu, Table, Modal, Row, Form, Input, Card, Button, Divider, Select,
+  Dropdown, Menu, Table, Modal, Row, Form, Input, Card, Button, Divider, Select, Typography,
 } from 'antd'
-import {DownOutlined} from '@ant-design/icons'
+import {
+  DownOutlined, UserAddOutlined, UserDeleteOutlined, EditOutlined, UserSwitchOutlined,
+} from '@ant-design/icons'
 import {
   addProfile, editProfile, deleteProfile, setCurrentProfile,
 } from '../../services'
@@ -79,9 +81,18 @@ const SimulationProfileCard = ({simulationConfig, fetchUserProfiles}) => {
             })
           }
         }}>
-          <Menu.Item key='editLocation'>Edit Home Location</Menu.Item>
-          <Menu.Item key='editName'>Edit Name</Menu.Item>
-          <Menu.Item key='delete'>Delete</Menu.Item>
+          <Menu.Item key='editLocation'>
+            <EditOutlined />
+            Edit Home Location
+          </Menu.Item>
+          <Menu.Item key='editName'>
+            <EditOutlined />
+            Edit Name
+          </Menu.Item>
+          <Menu.Item key='delete'>
+            <UserDeleteOutlined />
+            Delete
+          </Menu.Item>
         </Menu>
       )
       return <Dropdown overlay={menu} trigger={['click']}>
@@ -179,12 +190,19 @@ const SimulationProfileCard = ({simulationConfig, fetchUserProfiles}) => {
   )
 
   return (
-    <Card title='Simulation Profiles'>
+    <Card
+      title={<Typography.Text>
+        <UserSwitchOutlined style={{marginRight: 10}} />
+        Simulation Profiles
+      </Typography.Text>}>
       {addProfileModal}
       {editProfileModal}
       {profileSelect}
       <Row>
-        <Button onClick={() => setIsAddUserModalVisible(true)}>Add Profile</Button>
+        <Button onClick={() => setIsAddUserModalVisible(true)}>
+          <UserAddOutlined />
+          Add Profile
+        </Button>
       </Row>
       <Divider />
       <Table pagination={false} dataSource={simulationUsers} columns={columns} />

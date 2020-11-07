@@ -1,8 +1,9 @@
 import {
-  Button, Card, Upload, InputNumber, Form, TimePicker, DatePicker,
+  Button, Card, Upload, InputNumber, Form, TimePicker, DatePicker, Typography,
 } from 'antd'
 import React, {useEffect, useState} from 'react'
 import moment from 'moment'
+import {SettingOutlined, HomeOutlined} from '@ant-design/icons'
 import {
   setSimulationDate, setSimulationTime, setSimulationInsideTemp, setSimulationOutsideTemp, uploadLayout, stop,
 } from '../../services'
@@ -51,6 +52,7 @@ const SimulationParameterCard = ({
           reader.readAsText(file)
         }}>
         <Button>
+          <HomeOutlined />
           Upload House Layout File
         </Button>
       </Upload>}
@@ -79,7 +81,10 @@ const SimulationParameterCard = ({
       }}>
         Save
       </Button>]}
-      title='Set up simulation parameter'>
+      title={<Typography.Text>
+        <SettingOutlined style={{marginRight: 10}} />
+        Simulation Parameter
+      </Typography.Text>}>
       <Form.Item label='Temperature Indoor (°C)'>
         <InputNumber
           onChange={(value) => {
