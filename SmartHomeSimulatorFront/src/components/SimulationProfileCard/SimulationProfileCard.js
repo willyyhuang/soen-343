@@ -152,17 +152,21 @@ const SimulationProfileCard = ({simulationConfig, fetchUserProfiles}) => {
         setIsEditUserModalVisible(false)
         setEditProfileFormData(EDIT_PROFILE_DATA_INITIAL_STATE)
       }}
-      onCancel={() => setEditProfileFormData(EDIT_PROFILE_DATA_INITIAL_STATE)}
+      onCancel={() => {
+        setIsEditUserModalVisible(false)
+        setEditProfileFormData(EDIT_PROFILE_DATA_INITIAL_STATE)
+      }}
       visible={isEditUserModalVisible}>
       {editProfileFormData.type === 'editLocation' ? <Form.Item label='Home Location'>
-        <Input
+        <Select
           value={editProfileFormData.homeLocation}
-          onChange={(e) => setEditProfileFormData({
+          onChange={(value) => setEditProfileFormData({
             type: editProfileFormData.type,
             name: editProfileFormData.name,
-            homeLocation: e.target.value,
-          })}
-          placeholder='select a room' />
+            homeLocation: value,
+          })}>
+          {roomList.length === 0 ? null : roomList.map((room) => <Select.Option value={room.name}>{room.name}</Select.Option>)}
+        </Select>
       </Form.Item> : <Form.Item label='New Name'>
         <Input
           value={editProfileFormData.newName}
