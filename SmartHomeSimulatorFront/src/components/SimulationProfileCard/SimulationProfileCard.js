@@ -35,6 +35,26 @@ const SimulationProfileCard = ({simulationConfig, fetchUserProfiles}) => {
   {
     title: 'Role',
     dataIndex: 'role',
+    render: (data) => {
+      let enumString
+      switch (data) {
+        case 'PARENT':
+          enumString = 'Parent'
+          break
+        case 'CHILD':
+          enumString = 'Child'
+          break
+        case 'GUEST':
+          enumString = 'Guest'
+          break
+        case 'STRANGER':
+          enumString = 'Stranger'
+          break
+        default:
+          enumString = null
+      }
+      return enumString
+    },
   },
   {
     title: 'Home Location',
