@@ -32,6 +32,7 @@ public class SmartHomeCoreFunctionalityController {
             response.awayMode = true;
             response.timeBeforeAuthorities = smartHomeSecurity.getAwayModeConfig().getTimeBeforeAuthorities();
             response.timeToKeepLightsOn = smartHomeSecurity.getTimeToKeepLightsOn();
+            SmartHomeCoreFunctionality.getInstance().logMessage("[Alert] Someone is trying to break in.");
             response.consoleMessage = SmartHomeCoreFunctionality.getInstance().getConsoleMessage();
             response.alertModeOn = true;
             return response;
@@ -59,6 +60,7 @@ public class SmartHomeCoreFunctionalityController {
             response.awayMode = true;
             response.timeBeforeAuthorities = smartHomeSecurity.getAwayModeConfig().getTimeBeforeAuthorities();
             response.timeToKeepLightsOn = smartHomeSecurity.getTimeToKeepLightsOn();
+            SmartHomeCoreFunctionality.getInstance().logMessage("[Alert] Someone is trying to break in.");
             response.consoleMessage = SmartHomeCoreFunctionality.getInstance().getConsoleMessage();
             response.alertModeOn = true;
             return response;
@@ -87,6 +89,7 @@ public class SmartHomeCoreFunctionalityController {
             response.awayMode = true;
             response.timeBeforeAuthorities = smartHomeSecurity.getAwayModeConfig().getTimeBeforeAuthorities();
             response.timeToKeepLightsOn = smartHomeSecurity.getTimeToKeepLightsOn();
+            SmartHomeCoreFunctionality.getInstance().logMessage("[Alert] Someone is trying to break in.");
             response.consoleMessage = SmartHomeCoreFunctionality.getInstance().getConsoleMessage();
             response.alertModeOn = true;
             return response;
@@ -115,6 +118,7 @@ public class SmartHomeCoreFunctionalityController {
             response.awayMode = true;
             response.timeBeforeAuthorities = smartHomeSecurity.getAwayModeConfig().getTimeBeforeAuthorities();
             response.timeToKeepLightsOn = smartHomeSecurity.getTimeToKeepLightsOn();
+            SmartHomeCoreFunctionality.getInstance().logMessage("[Alert] Someone is trying to break in.");
             response.consoleMessage = SmartHomeCoreFunctionality.getInstance().getConsoleMessage();
             response.alertModeOn = true;
             return response;
@@ -142,6 +146,7 @@ public class SmartHomeCoreFunctionalityController {
             response.awayMode = true;
             response.timeBeforeAuthorities = smartHomeSecurity.getAwayModeConfig().getTimeBeforeAuthorities();
             response.timeToKeepLightsOn = smartHomeSecurity.getTimeToKeepLightsOn();
+            SmartHomeCoreFunctionality.getInstance().logMessage("[Alert] Someone is trying to break in.");
             response.consoleMessage = SmartHomeCoreFunctionality.getInstance().getConsoleMessage();
             response.alertModeOn = true;
             return response;
@@ -170,6 +175,7 @@ public class SmartHomeCoreFunctionalityController {
             response.awayMode = true;
             response.timeBeforeAuthorities = smartHomeSecurity.getAwayModeConfig().getTimeBeforeAuthorities();
             response.timeToKeepLightsOn = smartHomeSecurity.getTimeToKeepLightsOn();
+            SmartHomeCoreFunctionality.getInstance().logMessage("[Alert] Someone is trying to break in.");
             response.consoleMessage = SmartHomeCoreFunctionality.getInstance().getConsoleMessage();
             response.alertModeOn = true;
             return response;
@@ -197,6 +203,7 @@ public class SmartHomeCoreFunctionalityController {
             response.awayMode = true;
             response.timeBeforeAuthorities = smartHomeSecurity.getAwayModeConfig().getTimeBeforeAuthorities();
             response.timeToKeepLightsOn = smartHomeSecurity.getTimeToKeepLightsOn();
+            SmartHomeCoreFunctionality.getInstance().logMessage("[Alert] Someone is trying to break in.");
             response.consoleMessage = SmartHomeCoreFunctionality.getInstance().getConsoleMessage();
             response.alertModeOn = true;
             return response;
@@ -226,6 +233,7 @@ public class SmartHomeCoreFunctionalityController {
             response.awayMode = true;
             response.timeBeforeAuthorities = smartHomeSecurity.getAwayModeConfig().getTimeBeforeAuthorities();
             response.timeToKeepLightsOn = smartHomeSecurity.getTimeToKeepLightsOn();
+            SmartHomeCoreFunctionality.getInstance().logMessage("[Alert] Someone is trying to break in.");
             response.consoleMessage = SmartHomeCoreFunctionality.getInstance().getConsoleMessage();
             response.alertModeOn = true;
             return response;
@@ -238,7 +246,4 @@ public class SmartHomeCoreFunctionalityController {
         response.alertModeOn = false;
         return response;
     }
-
-
-
 }

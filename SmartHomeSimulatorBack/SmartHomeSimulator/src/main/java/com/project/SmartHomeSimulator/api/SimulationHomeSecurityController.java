@@ -26,6 +26,7 @@ public class SimulationHomeSecurityController {
         responseAPI.timeBeforeAuthorities = SmartHomeSecurity.getInstance().getAwayModeConfig().getTimeBeforeAuthorities();
         responseAPI.timeToKeepLightsOn = SmartHomeSecurity.getInstance().getTimeToKeepLightsOn();
         responseAPI.consoleMessage = SmartHomeSecurity.getInstance().getConsoleMessage();
+        responseAPI.alertModeOn = false;
         return responseAPI;
     }
 
@@ -49,6 +50,7 @@ public class SimulationHomeSecurityController {
         responseAPI.timeBeforeAuthorities = SmartHomeSecurity.getInstance().getAwayModeConfig().getTimeBeforeAuthorities();
         responseAPI.timeToKeepLightsOn = SmartHomeSecurity.getInstance().getTimeToKeepLightsOn();
         responseAPI.consoleMessage = SmartHomeSecurity.getInstance().getConsoleMessage();
+        responseAPI.alertModeOn = false;
         return responseAPI;
     }
 
