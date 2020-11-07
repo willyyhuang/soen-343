@@ -7,7 +7,9 @@ import {
   setSimulationDate, setSimulationTime, setSimulationInsideTemp, setSimulationOutsideTemp, uploadLayout, stop,
 } from '../../services'
 
-const SimulationParameterCard = ({simulationConfig, fetchUserProfiles}) => {
+const SimulationParameterCard = ({
+  simulationConfig, fetchUserProfiles, setSpeedRate, speedRate,
+}) => {
   const {
     insideTemp, outsideTemp, time, date, simulationRunning,
   } = simulationConfig
@@ -18,6 +20,7 @@ const SimulationParameterCard = ({simulationConfig, fetchUserProfiles}) => {
     date: date ? moment(date) : null,
   }
   const [parameterFormData, setParameterFormData] = useState(PARAMETER_FORM_DATA_INITIAL_STATE)
+  const [speedRateFormData, setSpeedRateFormData] = useState(speedRate)
 
   useEffect(() => {
     setParameterFormData({
@@ -65,6 +68,9 @@ const SimulationParameterCard = ({simulationConfig, fetchUserProfiles}) => {
         if (parameterFormData.date !== PARAMETER_FORM_DATA_INITIAL_STATE.date) {
           const formattedDate = parameterFormData.date.format()
           setSimulationDate(formattedDate.substring(0, formattedDate.indexOf('T')))
+        }
+        if (speedRateFormData !== speedRate) {
+          setSpeedRate(speedRateFormData)
         }
         fetchUserProfiles()
         if (simulationRunning) {
@@ -119,6 +125,14 @@ const SimulationParameterCard = ({simulationConfig, fetchUserProfiles}) => {
           }}
           placeholder='enter a time'
           value={parameterFormData.time} />
+      </Form.Item>
+      <Form.Item label='Speed Rate'>
+        <InputNumber
+          step={0.1}
+          min={0}
+          max={5}
+          onChange={(value) => setSpeedRateFormData(value)}
+          value={speedRateFormData} />
       </Form.Item>
     </Card>
   )

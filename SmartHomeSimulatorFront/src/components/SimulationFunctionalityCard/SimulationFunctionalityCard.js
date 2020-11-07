@@ -7,7 +7,7 @@ import Clock from 'react-clock'
 import {RoomCard} from '../index'
 import 'react-clock/dist/Clock.css'
 
-const SimulationFunctionalityCard = ({simulationConfig, fetchUserProfiles}) => {
+const SimulationFunctionalityCard = ({speedRate, simulationConfig, fetchUserProfiles}) => {
   const {
     simulationRunning, homeLayout, date, time,
   } = simulationConfig
@@ -20,7 +20,7 @@ const SimulationFunctionalityCard = ({simulationConfig, fetchUserProfiles}) => {
         setCurrentTime(currentTime.add(1, 'seconds'))
         setValue(new Date(currentTime.format('YYYY-MM-DD HH:mm:ss')))
       },
-      1000,
+      1000 / speedRate,
     )
     return () => {
       clearInterval(interval)

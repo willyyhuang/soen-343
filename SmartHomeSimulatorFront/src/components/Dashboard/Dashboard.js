@@ -1,7 +1,7 @@
 import {
   Card, Col, Divider, Layout, Row, Switch, Typography,
 } from 'antd'
-import React, {useEffect} from 'react'
+import React, {useEffect, useState} from 'react'
 import {connect} from 'react-redux'
 import {SimulationParameterCard, SimulationProfileCard, SimulationFunctionalityCard} from '../index'
 import './Dashboard.css'
@@ -11,7 +11,7 @@ import {
 
 const Dashboard = ({simulationConfig, consoleMessage, dispatch}) => {
   const {messages} = consoleMessage
-
+  const [speedRate, setSpeedRate] = useState(1)
   const fetchUserProfiles = () => {
     getProfile().then((response) => {
       const {data} = response
@@ -49,7 +49,7 @@ const Dashboard = ({simulationConfig, consoleMessage, dispatch}) => {
         <Row type='flex' align='top'>
           <Col span={1} />
           <Col span={6}>
-            <SimulationParameterCard simulationConfig={simulationConfig} fetchUserProfiles={fetchUserProfiles} />
+            <SimulationParameterCard speedRate={speedRate} setSpeedRate={setSpeedRate} simulationConfig={simulationConfig} fetchUserProfiles={fetchUserProfiles} />
             <Divider />
             <SimulationProfileCard simulationConfig={simulationConfig} fetchUserProfiles={fetchUserProfiles} />
             <Divider />
@@ -57,7 +57,8 @@ const Dashboard = ({simulationConfig, consoleMessage, dispatch}) => {
           </Col>
           <Col span={1} />
           <Col span={15}>
-            {simulationConfig.simulationRunning && simulationConfig.date && simulationConfig.time && <SimulationFunctionalityCard simulationConfig={simulationConfig} fetchUserProfiles={fetchUserProfiles} />}
+            {simulationConfig.simulationRunning && simulationConfig.date && simulationConfig.time
+              && <SimulationFunctionalityCard speedRate={speedRate} simulationConfig={simulationConfig} fetchUserProfiles={fetchUserProfiles} />}
           </Col>
         </Row>
       </Layout.Content>
