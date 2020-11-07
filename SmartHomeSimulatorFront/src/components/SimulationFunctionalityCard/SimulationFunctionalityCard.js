@@ -29,15 +29,21 @@ const SimulationFunctionalityCard = ({simulationConfig, fetchUserProfiles}) => {
 
   return (
     <Card title='Smart Home Core Functionality'>
-      <div>
-        <p>Current time:</p>
-        <Clock value={value} />
-      </div>
-      {simulationRunning && <Row>
-        <Typography.Text>
-          {`Simulation start time: ${moment(date.concat(time)).format('LLLL')}`}
-        </Typography.Text>
-      </Row>}
+      <Row>
+        <Col span={20}>
+          <Row>
+            <Typography.Text>Current time:</Typography.Text>
+          </Row>
+          <Row>
+            <Typography.Text>
+              {`Simulation start time: ${moment(date.concat(time)).format('LLLL')}`}
+            </Typography.Text>
+          </Row>
+        </Col>
+        <Col span={4}>
+          <Clock value={value} />
+        </Col>
+      </Row>
       <Row gutter={[16, 16]}>
         {simulationRunning
           ? homeLayout && homeLayout.roomList.map((room) => <Col span={8}>
