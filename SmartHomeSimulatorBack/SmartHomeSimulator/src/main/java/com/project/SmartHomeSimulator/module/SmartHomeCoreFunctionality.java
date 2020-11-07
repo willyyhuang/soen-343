@@ -5,15 +5,19 @@ import com.project.SmartHomeSimulator.model.roomObjects.Door;
 import com.project.SmartHomeSimulator.model.roomObjects.Light;
 import com.project.SmartHomeSimulator.model.roomObjects.RoomObject;
 import com.project.SmartHomeSimulator.model.roomObjects.Window;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.UUID;
 
-public class SmartHomeCoreFunctionality {
+public class SmartHomeCoreFunctionality extends Module{
 
     private static SmartHomeCoreFunctionality smartHomeCoreFunctionality = null;
 
     private static SimulationContext simulationContext = SimulationContext.getInstance();
+
+    //this class cannot be instantiated
+    private SmartHomeCoreFunctionality() {
+        setName("SmartHomeCoreFunctionality");
+    }
 
     public static SmartHomeCoreFunctionality getInstance(){
         if(smartHomeCoreFunctionality == null){
@@ -35,7 +39,7 @@ public class SmartHomeCoreFunctionality {
     }
 
     /**
-     * block a window or unblock it
+     * changes the sate of the room object passed to it
      * @param roomName
      * @param id
      * @param state - block or turn on = true and unblock or turn off = false - replace the state of the object

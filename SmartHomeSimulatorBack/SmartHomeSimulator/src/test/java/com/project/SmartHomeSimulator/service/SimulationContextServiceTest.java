@@ -59,7 +59,7 @@ public class SimulationContextServiceTest {
     
     @Test
     public void getSimulationContext() {
-    	SimulationContext otherSimulationContextService = new SimulationContext();
+    	SimulationContext otherSimulationContextService = SimulationContext.getInstance();
     	otherSimulationContextService.clone(simulationContextService.getSimulationContext());
     	SimulationContext result = simulationContextService.getSimulationContext();
     	assertEquals(result.toString(), otherSimulationContextService.toString());

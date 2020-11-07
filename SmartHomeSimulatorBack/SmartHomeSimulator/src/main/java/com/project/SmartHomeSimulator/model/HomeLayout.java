@@ -15,7 +15,6 @@ import java.util.Objects;
 @JsonComponent
 public class HomeLayout {
     private List<Room> roomList;
-    private boolean homeEmpty;
     private int usersInHome;
     public static int windowCount = 1;
     private static int doorCount = 1;
@@ -128,7 +127,7 @@ public class HomeLayout {
     }
 
     public void removeUsersInHome(String homeLocation) {
-        if (usersInHome != 0 && !homeLocation.equals("outside")) {
+        if (usersInHome != 0 && homeLocation.equals("outside")) {
             usersInHome--;
         }
     }

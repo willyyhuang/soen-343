@@ -27,7 +27,7 @@ public class SimulationContext {
 
 	public static SimulationContext simulationContext = null;
 
-	public SimulationContext() {
+	private SimulationContext() {
 		monitors = new ArrayList<Monitor>();
 		this.monitors.add(SmartHomeSecurity.getInstance());
 	}
