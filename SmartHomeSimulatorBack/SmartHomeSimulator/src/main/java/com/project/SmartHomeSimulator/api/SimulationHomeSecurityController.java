@@ -1,6 +1,7 @@
 package com.project.SmartHomeSimulator.api;
 
 import com.project.SmartHomeSimulator.model.ResponseAPI;
+import com.project.SmartHomeSimulator.module.SimulationContext;
 import com.project.SmartHomeSimulator.module.SmartHomeSecurity;
 import com.project.SmartHomeSimulator.service.SmartHomeSecurityService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,12 +18,14 @@ public class SimulationHomeSecurityController {
     @Autowired
     private SmartHomeSecurityService smartHomeSecurityService;
     private ResponseAPI responseAPI = new ResponseAPI();
+    private SimulationContext simulationContext = SimulationContext.getInstance();
 
     @PutMapping(value = "/awayMode")
     @ResponseStatus(value = HttpStatus.OK)
     public ResponseAPI startAwayMode(@RequestParam("awayMode") Boolean awayMode) {
-        responseAPI.awayMode = SmartHomeSecurity.getInstance().getAwayModeConfig().isAwayMode();
         responseAPI.success = smartHomeSecurityService.setAwayMode(awayMode);
+        responseAPI.awayMode = SmartHomeSecurity.getInstance().getAwayModeConfig().isAwayMode();
+        simulationContext.setAwaymode(awayMode);
         responseAPI.timeBeforeAuthorities = SmartHomeSecurity.getInstance().getAwayModeConfig().getTimeBeforeAuthorities();
         responseAPI.timeToKeepLightsOn = SmartHomeSecurity.getInstance().getTimeToKeepLightsOn();
         responseAPI.consoleMessage = SmartHomeSecurity.getInstance().getConsoleMessage();
@@ -32,8 +35,10 @@ public class SimulationHomeSecurityController {
 
     @PutMapping(value = "/awayMode/timeBeforeAuthorities")
     @ResponseStatus(value = HttpStatus.OK)
-    public void setTimeBeforeAuthorities(@RequestParam("timeBeforeAuthorities") int timeBeforeAuthorities) {
+    public boolean setTimeBeforeAuthorities(@RequestParam("timeBeforeAuthorities") int timeBeforeAuthorities) {
         smartHomeSecurityService.setTimeBeforeAuthorities(timeBeforeAuthorities);
+        simulationContext.setTimeBeforeAuthoroties(timeBeforeAuthorities);
+        return true;
     }
 
     @PutMapping(value = "/awayMode/lights")

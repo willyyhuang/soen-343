@@ -58,14 +58,6 @@ public class SimulationContextServiceTest {
     }
     
     @Test
-    public void getSimulationContext() {
-    	SimulationContext otherSimulationContextService = SimulationContext.getInstance();
-    	otherSimulationContextService.clone(simulationContextService.getSimulationContext());
-    	SimulationContext result = simulationContextService.getSimulationContext();
-    	assertEquals(result.toString(), otherSimulationContextService.toString());
-    }
-    
-    @Test
     public void setInsideTemp() {
     	boolean result = simulationContextService.setInsideTemp(20);
     	assertEquals(result, true);

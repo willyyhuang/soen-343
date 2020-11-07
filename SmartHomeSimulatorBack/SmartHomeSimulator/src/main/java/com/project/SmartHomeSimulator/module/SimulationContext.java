@@ -22,8 +22,11 @@ public class SimulationContext {
 	private User awayModeUser;
 	private List<User> simulationUsers;
 	private boolean autoMode = false;
+	private boolean awaymode = false;
+	private int timeBeforeAuthoroties = 0;
 	private HomeLayout homeLayout;
 	private List<Monitor> monitors;
+
 
 	public static SimulationContext simulationContext = null;
 
@@ -38,17 +41,14 @@ public class SimulationContext {
 		}
 		return simulationContext;
 	}
-	public void clone(SimulationContext simulationContext) {
-		this.insideTemp = simulationContext.insideTemp;
-		this.outsideTemp = simulationContext.outsideTemp;
-		this.time = simulationContext.time;
-		this.date = simulationContext.date;
-		this.currentSimulationUser = simulationContext.currentSimulationUser;
-		this.simulationUsers = simulationContext.simulationUsers;
-		this.homeLayout = simulationContext.homeLayout;
-		this.simulationRunning = simulationContext.simulationRunning;
+
+	public int getTimeBeforeAuthoroties() {
+		return timeBeforeAuthoroties;
 	}
 
+	public void setTimeBeforeAuthoroties(int timeBeforeAuthoroties) {
+		this.timeBeforeAuthoroties = timeBeforeAuthoroties;
+	}
 
 	public List<User> getAllUsersInLocation(String room){
 		List<User> usersInRoom = new ArrayList<>();
@@ -154,6 +154,14 @@ public class SimulationContext {
 				monitor.update(awayModeUser.getName(), user);
 			}
 		}
+	}
+
+	public boolean isAwaymode() {
+		return awaymode;
+	}
+
+	public void setAwaymode(boolean awaymode) {
+		this.awaymode = awaymode;
 	}
 
 	@Override
