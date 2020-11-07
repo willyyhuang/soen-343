@@ -6,7 +6,7 @@ import {connect} from 'react-redux'
 import {SimulationParameterCard, SimulationProfileCard, SimulationFunctionalityCard} from '../index'
 import './Dashboard.css'
 import {
-  getProfile, start, stop, setAutoMode,
+  getProfile, start, stop, setAutoMode, setAwayMode,
 } from '../../services'
 
 const Dashboard = ({simulationConfig, consoleMessage, dispatch}) => {
@@ -39,6 +39,12 @@ const Dashboard = ({simulationConfig, consoleMessage, dispatch}) => {
           checked={simulationConfig.autoMode}
           onChange={(value) => setAutoMode(value) && fetchUserProfiles()} />
         <Typography.Text>Light Auto Mode</Typography.Text>
+      </Row>
+      <Row style={{marginTop: 5}}>
+        <Switch
+          className='item'
+          onChange={(value) => setAwayMode(value) && fetchUserProfiles()} />
+        <Typography.Text>Away Mode</Typography.Text>
       </Row>
     </Card>
   )
