@@ -25,7 +25,7 @@ public class SmartHomeCoreFunctionalityServiceTest {
 
     @Autowired
     private UserService userService;
-    private static SimulationContext simulationContext = SimulationContext.getInstance();
+    private SimulationContext simulationContext = SimulationContext.getInstance();
 
 
     /**

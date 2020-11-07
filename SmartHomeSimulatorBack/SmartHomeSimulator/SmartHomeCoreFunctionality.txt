@@ -1,0 +1,10 @@
+[Door] backyard Door was opened by testUser's request
+[Window] backyard Window was opened by testUser's request
+[Door] backyard Door was opened by testUser's request
+[Window] backyard Window was opened by testUser's request
+[Door] backyard Door was opened by testUser's request
+[Window] backyard Window was opened by testUser's request
+[Door] backyard Door was opened by testUser's request
+[Window] backyard Window was opened by testUser's request
+[Door] backyard Door was opened by testUser's request
+[Window] backyard Window was opened by testUser's request
