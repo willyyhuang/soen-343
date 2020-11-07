@@ -57,8 +57,10 @@ const Dashboard = ({simulationConfig, consoleMessage, dispatch}) => {
           <Col span={6}>
             <SimulationParameterCard speedRate={speedRate} setSpeedRate={setSpeedRate} simulationConfig={simulationConfig} fetchUserProfiles={fetchUserProfiles} />
             <Divider />
-            <SimulationProfileCard simulationConfig={simulationConfig} fetchUserProfiles={fetchUserProfiles} />
-            <Divider />
+            {simulationConfig.homeLayout && <>
+              <SimulationProfileCard simulationConfig={simulationConfig} fetchUserProfiles={fetchUserProfiles} />
+              <Divider />
+            </>}
             {simulationSwitchCard}
           </Col>
           <Col span={1} />

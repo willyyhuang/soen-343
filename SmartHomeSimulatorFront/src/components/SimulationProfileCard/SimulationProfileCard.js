@@ -23,8 +23,8 @@ const EDIT_PROFILE_DATA_INITIAL_STATE = {
 }
 
 const SimulationProfileCard = ({simulationConfig, fetchUserProfiles}) => {
-  const {simulationUsers, currentSimulationUser} = simulationConfig
-
+  const {simulationUsers, currentSimulationUser, homeLayout} = simulationConfig
+  const {roomList} = homeLayout
   const [addProfileFormData, setAddProfileFormData] = useState(ADD_PROFILE_DATA_INITIAL_STATE)
   const [isAddUserModalVisible, setIsAddUserModalVisible] = useState(false)
   const [editProfileFormData, setEditProfileFormData] = useState(EDIT_PROFILE_DATA_INITIAL_STATE)
@@ -131,7 +131,11 @@ const SimulationProfileCard = ({simulationConfig, fetchUserProfiles}) => {
         </Select>
       </Form.Item>
       <Form.Item label='Home Location'>
-        <Input value={addProfileFormData.homeLocation} onChange={(e) => setAddProfileFormData({name: addProfileFormData.name, role: addProfileFormData.role, homeLocation: e.target.value})} placeholder='enter a home location' />
+        <Select
+          value={addProfileFormData.homeLocation}
+          onChange={(value) => setAddProfileFormData({name: addProfileFormData.name, role: addProfileFormData.role, homeLocation: value})}>
+          {roomList.length === 0 ? null : roomList.map((room) => <Select.Option value={room.name}>{room.name}</Select.Option>)}
+        </Select>
       </Form.Item>
     </Modal>
   )
