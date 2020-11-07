@@ -9,18 +9,19 @@ import com.project.SmartHomeSimulator.model.roomObjects.Window;
 import java.util.HashMap;
 import java.util.List;
 
-public class SmartHomeSecurity implements Monitor {
+public class SmartHomeSecurity extends Module implements Monitor {
 
     private static SmartHomeSecurity instance;
     private static SmartHomeCoreFunctionality smartHomeCoreFunctionality;
     public static SimulationContext simulationContext = SimulationContext.getInstance();
     private AwayModeConfig awayModeConfig;
     private boolean alertModeOn;
-    private HashMap<String,String> lights;
+    private HashMap<String, String> lights;
     private int timeToKeepLightsOn;
 
     //this class cannot be instantiated
     private SmartHomeSecurity() {
+        this.setName("SmartHomeSecurity");
         this.awayModeConfig = new AwayModeConfig();
         this.lights = new HashMap<String, String>();
     }
@@ -33,11 +34,11 @@ public class SmartHomeSecurity implements Monitor {
     }
 
     @Override
-    public void update(String awayModeUser,User user) {
-        if ( awayModeConfig.isAwayMode() && !awayModeUser.equals(user.getName()) ) {
-            if (!user.getHomeLocation().equals("outside")){
-                //todo print in console
+    public void update(String awayModeUser, User user) {
+        if (awayModeConfig.isAwayMode() && !awayModeUser.equals(user.getName())) {
+            if (!user.getHomeLocation().equals("outside")) {
                 this.alertModeOn = true;
+                logMessage("[Alert] " + user.getName() + " is detected in the house during away mode");
             }
         }
     }
@@ -45,22 +46,29 @@ public class SmartHomeSecurity implements Monitor {
     public void closWindows() {
         smartHomeCoreFunctionality = SmartHomeCoreFunctionality.getInstance();
         simulationContext = SimulationContext.getInstance();
+        boolean success;
         List<Room> rooms = simulationContext.getHomeLayout().getRoomList();
         List<RoomObject> roomObjects;
         for (Room room : rooms) {
             roomObjects = room.getObjects();
             for (RoomObject roomObject : roomObjects) {
                 if (roomObject instanceof Window) {
-                    smartHomeCoreFunctionality.objectStateSwitcher(room.getName(), roomObject.getId().toString(), true );
+                    success = smartHomeCoreFunctionality.objectStateSwitcher(room.getName(), roomObject.getId().toString(), true);
+                    if (success) {
+                        logSuccess("Window", room.getName(), "close", "SHP module");
+                    } else {
+                        logMessage("[Failed] closing window in room " + room.getName() + ", requested by SHP, failed");
+                    }
                 }
             }
         }
-        //todo log the action in console and corresponding file
     }
 
+    //todo lock doors in backyard and front door
     public void lockDoors() {
         smartHomeCoreFunctionality = SmartHomeCoreFunctionality.getInstance();
         simulationContext = SimulationContext.getInstance();
+        boolean success;
         List<Room> rooms = simulationContext.getHomeLayout().getRoomList();
         List<RoomObject> roomObjects;
         for (Room room : rooms) {
@@ -68,21 +76,34 @@ public class SmartHomeSecurity implements Monitor {
             for (RoomObject roomObject : roomObjects) {
                 if (roomObject instanceof Door) {
                     //todo wait for door lock/unlock implementation
-                    smartHomeCoreFunctionality.objectStateSwitcher(room.getName(), roomObject.getId().toString(), true );
+                    success = smartHomeCoreFunctionality.objectStateSwitcher(room.getName(), roomObject.getId().toString(), true);
+                    if (success) {
+                        logSuccess("Door", room.getName(), "lock", "SHP module");
+                    } else {
+                        logMessage("[Failed] locking door in room " + room.getName() + ", requested by SHP, failed");
+                    }
+
                 }
             }
         }
-        //todo log the action in console and corresponding file
     }
 
-    public void setLightsToRemainOn(HashMap<String, String> lights, int timeToKeepLightsOn){
+    public void setLightsToRemainOn(HashMap<String, String> lights, int timeToKeepLightsOn) {
         this.lights = lights;
         this.timeToKeepLightsOn = timeToKeepLightsOn;
     }
 
-    public void turnOffLights(){
+    public boolean turnOffLights() {
         smartHomeCoreFunctionality = SmartHomeCoreFunctionality.getInstance();
-        this.lights.forEach((roomName, lightID) -> smartHomeCoreFunctionality.objectStateSwitcher(roomName,lightID, false));
+        this.lights.forEach((roomName, lightID) -> {
+                    if (smartHomeCoreFunctionality.objectStateSwitcher(roomName, lightID, false)) {
+                        logSuccess("Light", roomName, "turn off", "SHP module");
+                    } else {
+                        logMessage("[Failed] Turning off lights in " + roomName + ", requested by SHP, failed.");
+                    }
+                }
+        );
+        return true;
     }
 
     public int getTimeToKeepLightsOn() {

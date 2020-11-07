@@ -43,8 +43,8 @@ public class SmartHomeSecurityProxy {
         return false;
     }
 
-    public void turnOffLights() {
-        smartHomeSecurity.turnOffLights();
+    public boolean turnOffLights() {
+        return smartHomeSecurity.turnOffLights();
     }
 
     private boolean verifyPermission(Role role) {

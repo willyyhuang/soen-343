@@ -55,6 +55,14 @@ public class SmartHomeSecurityService {
         return false;
     }
 
+    /**
+     * sets the lights that should stay on for a period of time
+     * before turning them off after setting away mode on
+     *
+     * @param lights- HasMap of room names and their corresponding lights IDs
+     * @param timeToKeepLightsOn- amount of time to wait before closing the lights
+     * @return- boolean
+     */
     public boolean setLightsToRemainOn(HashMap<String, String> lights, int timeToKeepLightsOn) {
         if (simulationContext.getCurrentSimulationUser() != null) {
             this.currentSimulationUserRole = simulationContext.getCurrentSimulationUser().getRole();
@@ -63,7 +71,12 @@ public class SmartHomeSecurityService {
         return false;
     }
 
-    public void turnOffLights() {
-        smartHomeSecurityProxy.turnOffLights();
+    /**
+     * Turn of the lights that are specified in the attribute "lights"
+     *
+     * @return- boolean
+     */
+    public boolean turnOffLights() {
+        return smartHomeSecurityProxy.turnOffLights();
     }
 }

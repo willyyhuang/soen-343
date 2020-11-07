@@ -1,5 +1,6 @@
 package com.project.SmartHomeSimulator.api;
 
+import com.project.SmartHomeSimulator.module.SmartHomeCoreFunctionality;
 import com.project.SmartHomeSimulator.module.SmartHomeSecurity;
 import com.project.SmartHomeSimulator.model.ResponseAPI;
 import com.project.SmartHomeSimulator.service.SmartHomeCoreFunctionalityService;
@@ -35,6 +36,8 @@ public class SmartHomeCoreFunctionalityController {
         response.success = smartHomeCoreFunctionalityService.blockUnblockWindow(roomName, objectID, true);
         response.awayMode = false;
         response.timeBeforeAuthorities = smartHomeSecurity.getAwayModeConfig().getTimeBeforeAuthorities();
+        response.timeToKeepLightsOn = smartHomeSecurity.getTimeToKeepLightsOn();
+        response.consoleMessage = SmartHomeCoreFunctionality.getInstance().getConsoleMessage();
         return response;
     }
     /**
@@ -56,6 +59,8 @@ public class SmartHomeCoreFunctionalityController {
         response.success = smartHomeCoreFunctionalityService.blockUnblockWindow(roomName, objectID, false);
         response.awayMode = false;
         response.timeBeforeAuthorities = smartHomeSecurity.getAwayModeConfig().getTimeBeforeAuthorities();
+        response.timeToKeepLightsOn = smartHomeSecurity.getTimeToKeepLightsOn();
+        response.consoleMessage = SmartHomeCoreFunctionality.getInstance().getConsoleMessage();
         return response;
     }
 
@@ -78,6 +83,8 @@ public class SmartHomeCoreFunctionalityController {
         response.success = smartHomeCoreFunctionalityService.openCloseWindow(roomName, objectID, true);
         response.awayMode = false;
         response.timeBeforeAuthorities = smartHomeSecurity.getAwayModeConfig().getTimeBeforeAuthorities();
+        response.timeToKeepLightsOn = smartHomeSecurity.getTimeToKeepLightsOn();
+        response.consoleMessage = SmartHomeCoreFunctionality.getInstance().getConsoleMessage();
         return response;
     }
 
@@ -100,6 +107,8 @@ public class SmartHomeCoreFunctionalityController {
         response.success = smartHomeCoreFunctionalityService.openCloseWindow(roomName, objectID, false);
         response.awayMode = false;
         response.timeBeforeAuthorities = smartHomeSecurity.getAwayModeConfig().getTimeBeforeAuthorities();
+        response.timeToKeepLightsOn = smartHomeSecurity.getTimeToKeepLightsOn();
+        response.consoleMessage = SmartHomeCoreFunctionality.getInstance().getConsoleMessage();
         return response;
     }
     /**
@@ -121,6 +130,8 @@ public class SmartHomeCoreFunctionalityController {
         response.success = smartHomeCoreFunctionalityService.onOffLights(roomName, objectID, true);
         response.awayMode = false;
         response.timeBeforeAuthorities = smartHomeSecurity.getAwayModeConfig().getTimeBeforeAuthorities();
+        response.timeToKeepLightsOn = smartHomeSecurity.getTimeToKeepLightsOn();
+        response.consoleMessage = SmartHomeCoreFunctionality.getInstance().getConsoleMessage();
         return response;
     }
 
@@ -143,6 +154,8 @@ public class SmartHomeCoreFunctionalityController {
         response.success = smartHomeCoreFunctionalityService.onOffLights(roomName, objectID, false);
         response.awayMode = false;
         response.timeBeforeAuthorities = smartHomeSecurity.getAwayModeConfig().getTimeBeforeAuthorities();
+        response.timeToKeepLightsOn = smartHomeSecurity.getTimeToKeepLightsOn();
+        response.consoleMessage = SmartHomeCoreFunctionality.getInstance().getConsoleMessage();
         return response;
     }
 }

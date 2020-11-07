@@ -5,6 +5,7 @@ public class ResponseAPI {
     public int timeBeforeAuthorities;
     public int timeToKeepLightsOn;
     public boolean success;
+    public String consoleMessage;
 
     public void setTimeBeforeAuthorities(int timeBeforeAuthorities) {
         this.timeBeforeAuthorities = timeBeforeAuthorities;
