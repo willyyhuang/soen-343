@@ -177,6 +177,8 @@ public class SmartHomeCoreFunctionalityController {
         response.success = smartHomeCoreFunctionalityService.openCloseDoors(roomName, objectID, true);
         response.awayMode = false;
         response.timeBeforeAuthorities = smartHomeSecurity.getAwayModeConfig().getTimeBeforeAuthorities();
+        response.timeToKeepLightsOn = smartHomeSecurity.getTimeToKeepLightsOn();
+        response.consoleMessage = SmartHomeCoreFunctionality.getInstance().getConsoleMessage();
         return response;
     }
 
@@ -200,6 +202,8 @@ public class SmartHomeCoreFunctionalityController {
         response.success = smartHomeCoreFunctionalityService.openCloseDoors(roomName, objectID, false);
         response.awayMode = false;
         response.timeBeforeAuthorities = smartHomeSecurity.getAwayModeConfig().getTimeBeforeAuthorities();
+        response.timeToKeepLightsOn = smartHomeSecurity.getTimeToKeepLightsOn();
+        response.consoleMessage = SmartHomeCoreFunctionality.getInstance().getConsoleMessage();
         return response;
     }
 

@@ -44,14 +44,27 @@ public class SmartHomeCoreFunctionalityProxy {
     }
 
 
-    public boolean onOffLights(User user, String roomName, String windowID, boolean state) {
+    public boolean onOffLights(User user, String roomName, String lightID, boolean state) {
         boolean success = false;
         if (verifyPermission(user, "light", roomName)) {
-            success = smartHomeCoreFunctionality.objectStateSwitcher(roomName, windowID, state);
+            success = smartHomeCoreFunctionality.objectStateSwitcher(roomName, lightID, state);
             if (success) {
                 smartHomeCoreFunctionality.logSuccess("Light", roomName, state ? "turned on" : "turned off", user.getName());
             } else {
                 smartHomeCoreFunctionality.logFail("light", roomName, (state ? "turning on" : "turning off"), user.getName());
+            }
+        }
+        return success;
+    }
+
+    public boolean openCloseDoors(User user, String roomName, String doorID, boolean state) {
+        boolean success = false;
+        if (verifyPermission(user, "door", roomName)) {
+            success = smartHomeCoreFunctionality.objectStateSwitcher(roomName, doorID, state);
+            if (success) {
+                smartHomeCoreFunctionality.logSuccess("Door", roomName, state ? "opened" : "closed", user.getName());
+            } else {
+                smartHomeCoreFunctionality.logFail("Door", roomName, (state ? "opening" : "closing"), user.getName());
             }
         }
         return success;

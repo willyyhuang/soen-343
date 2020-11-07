@@ -8,6 +8,7 @@ import com.project.SmartHomeSimulator.model.roomObjects.Window;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Stream;
 
 public class SmartHomeSecurity extends Module implements Monitor {
 
@@ -64,25 +65,24 @@ public class SmartHomeSecurity extends Module implements Monitor {
         }
     }
 
-    //todo lock doors in backyard and front door
     public void lockDoors() {
         smartHomeCoreFunctionality = SmartHomeCoreFunctionality.getInstance();
         simulationContext = SimulationContext.getInstance();
-        boolean success;
         List<Room> rooms = simulationContext.getHomeLayout().getRoomList();
+        boolean success;
         List<RoomObject> roomObjects;
         for (Room room : rooms) {
-            roomObjects = room.getObjects();
-            for (RoomObject roomObject : roomObjects) {
-                if (roomObject instanceof Door) {
-                    //todo wait for door lock/unlock implementation
-                    success = smartHomeCoreFunctionality.objectStateSwitcher(room.getName(), roomObject.getId().toString(), true);
-                    if (success) {
-                        logSuccess("Door", room.getName(), "lock", "SHP module");
-                    } else {
-                        logMessage("[Failed] locking door in room " + room.getName() + ", requested by SHP, failed");
+            if (Stream.of("building entrance", "backyard", "garage").anyMatch(room.getName()::equalsIgnoreCase)) {
+                roomObjects = room.getObjects();
+                for (RoomObject roomObject : roomObjects) {
+                    if (roomObject instanceof Door) {
+                        success = smartHomeCoreFunctionality.objectStateSwitcher(room.getName(), roomObject.getId().toString(), true);
+                        if (success) {
+                            logSuccess("Door", room.getName(), "lock", "SHP module");
+                        } else {
+                            logMessage("[Failed] locking door in room " + room.getName() + ", requested by SHP, failed");
+                        }
                     }
-
                 }
             }
         }
