@@ -4,12 +4,12 @@ import {
 import React, {useEffect, useState} from 'react'
 import moment from 'moment'
 import {
-  setSimulationDate, setSimulationTime, setSimulationInsideTemp, setSimulationOutsideTemp, uploadLayout,
+  setSimulationDate, setSimulationTime, setSimulationInsideTemp, setSimulationOutsideTemp, uploadLayout, stop,
 } from '../../services'
 
 const SimulationParameterCard = ({simulationConfig, fetchUserProfiles}) => {
   const {
-    insideTemp, outsideTemp, time, date,
+    insideTemp, outsideTemp, time, date, simulationRunning,
   } = simulationConfig
   const PARAMETER_FORM_DATA_INITIAL_STATE = {
     insideTemp,
@@ -67,6 +67,9 @@ const SimulationParameterCard = ({simulationConfig, fetchUserProfiles}) => {
           setSimulationDate(formattedDate.substring(0, formattedDate.indexOf('T')))
         }
         fetchUserProfiles()
+        if (simulationRunning) {
+          stop()
+        }
       }}>
         Save
       </Button>]}

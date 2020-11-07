@@ -57,7 +57,7 @@ const Dashboard = ({simulationConfig, consoleMessage, dispatch}) => {
           </Col>
           <Col span={1} />
           <Col span={15}>
-            {simulationConfig.date && simulationConfig.time && <SimulationFunctionalityCard simulationConfig={simulationConfig} fetchUserProfiles={fetchUserProfiles} />}
+            {simulationConfig.simulationRunning && simulationConfig.date && simulationConfig.time && <SimulationFunctionalityCard simulationConfig={simulationConfig} fetchUserProfiles={fetchUserProfiles} />}
           </Col>
         </Row>
       </Layout.Content>
