@@ -1,6 +1,7 @@
 package com.project.SmartHomeSimulator.module;
 
 import com.project.SmartHomeSimulator.model.Room;
+import com.project.SmartHomeSimulator.model.roomObjects.Door;
 import com.project.SmartHomeSimulator.model.roomObjects.Light;
 import com.project.SmartHomeSimulator.model.roomObjects.RoomObject;
 import com.project.SmartHomeSimulator.model.roomObjects.Window;
@@ -56,6 +57,11 @@ public class SmartHomeCoreFunctionality extends Module{
         else if (roomObject instanceof Light){
             Light light = (Light) roomObject;
             light.setStatus(state);
+            return true;
+        }
+        else if (roomObject instanceof Door){
+            Door door = (Door) roomObject;
+            door.setStatus(state);
             return true;
         }
         return false;

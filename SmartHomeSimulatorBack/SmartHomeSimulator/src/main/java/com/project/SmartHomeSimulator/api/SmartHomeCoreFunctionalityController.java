@@ -158,4 +158,51 @@ public class SmartHomeCoreFunctionalityController {
         response.consoleMessage = SmartHomeCoreFunctionality.getInstance().getConsoleMessage();
         return response;
     }
+    /**
+     * API  open a door
+     * @param roomName
+     * @param objectID
+     * @return - true if successful false if otherwise
+     */
+    @PostMapping(value = "/openDoor")
+    @ResponseStatus(value = HttpStatus.OK)
+    public ResponseAPI openDoor(@RequestParam("roomName") String roomName,@RequestParam("objectID") String objectID) {
+        ResponseAPI response = new ResponseAPI();
+        if(smartHomeSecurity.getAwayModeConfig().isAwayMode()){
+            response.success = false;
+            response.awayMode = true;
+            response.timeBeforeAuthorities = smartHomeSecurity.getAwayModeConfig().getTimeBeforeAuthorities();
+            return response;
+        }
+        response.success = smartHomeCoreFunctionalityService.openCloseDoors(roomName, objectID, true);
+        response.awayMode = false;
+        response.timeBeforeAuthorities = smartHomeSecurity.getAwayModeConfig().getTimeBeforeAuthorities();
+        return response;
+    }
+
+
+    /**
+     * API  open a door
+     * @param roomName
+     * @param objectID
+     * @return - true if successful false if otherwise
+     */
+    @PostMapping(value = "/closeDoor")
+    @ResponseStatus(value = HttpStatus.OK)
+    public ResponseAPI closeDoor(@RequestParam("roomName") String roomName,@RequestParam("objectID") String objectID) {
+        ResponseAPI response = new ResponseAPI();
+        if(smartHomeSecurity.getAwayModeConfig().isAwayMode()){
+            response.success = false;
+            response.awayMode = true;
+            response.timeBeforeAuthorities = smartHomeSecurity.getAwayModeConfig().getTimeBeforeAuthorities();
+            return response;
+        }
+        response.success = smartHomeCoreFunctionalityService.openCloseDoors(roomName, objectID, false);
+        response.awayMode = false;
+        response.timeBeforeAuthorities = smartHomeSecurity.getAwayModeConfig().getTimeBeforeAuthorities();
+        return response;
+    }
+
+
+
 }

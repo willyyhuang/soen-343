@@ -52,10 +52,6 @@ public class HomeLayout {
             List<RoomObject> objects = new ArrayList<>();
             outside.setObjects(objects);
             rooms.add(outside);
-            Room backyard = new Room();
-            backyard.setName("backyard");
-            backyard.setObjects(objects);
-            rooms.add(backyard);
             homeLayout.setRoomList(rooms);
             return homeLayout;
         } catch (JsonProcessingException e) {
