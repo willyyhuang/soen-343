@@ -24,6 +24,8 @@ export const offLight = `${appsettings.baseApiUrl}/api/v1/simulation/offLight`
 export const openWindow = `${appsettings.baseApiUrl}/api/v1/simulation/openWindow`
 export const closeWindow = `${appsettings.baseApiUrl}/api/v1/simulation/closeWindow`
 export const autoMode = `${appsettings.baseApiUrl}/api/v1/simulation/autoMode`
+export const openDoor = `${appsettings.baseApiUrl}/api/v1/simulation/openDoor`
+export const closeDoor = `${appsettings.baseApiUrl}/api/v1/simulation/closeDoor`
 
 export async function setAutoMode(payload) {
   return axios({
@@ -35,10 +37,21 @@ export async function setAutoMode(payload) {
   })
 }
 
-export async function turnOnLight(payload) {
+export async function openRoomDoor(payload) {
   return axios({
     method: 'POST',
-    url: onLight,
+    url: openDoor,
+    params: {
+      objectID: payload.id,
+      roomName: payload.name,
+    },
+  })
+}
+
+export async function closeRoomDoor(payload) {
+  return axios({
+    method: 'POST',
+    url: closeDoor,
     params: {
       objectID: payload.id,
       roomName: payload.name,
@@ -61,6 +74,17 @@ export async function closeRoomWindow(payload) {
   return axios({
     method: 'POST',
     url: closeWindow,
+    params: {
+      objectID: payload.id,
+      roomName: payload.name,
+    },
+  })
+}
+
+export async function turnOnLight(payload) {
+  return axios({
+    method: 'POST',
+    url: onLight,
     params: {
       objectID: payload.id,
       roomName: payload.name,

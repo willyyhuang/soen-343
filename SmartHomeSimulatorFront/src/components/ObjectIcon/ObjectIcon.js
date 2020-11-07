@@ -1,7 +1,7 @@
 import React from 'react'
 import {Popover, Form, Switch} from 'antd'
 import {
-  block, unblock, turnOnLight, turnOffLight, openRoomWindow, closeRoomWindow,
+  block, unblock, turnOnLight, turnOffLight, openRoomWindow, closeRoomWindow, openRoomDoor, closeRoomDoor,
 } from '../../services'
 import './ObjectIcon.css'
 
@@ -25,8 +25,10 @@ const ObjectIcon = ({roomName, object, fetchUserProfiles}) => {
         checked={object.status} />
       break
     case 'DOOR':
-      Icon = object.status ? DoorClosed : DoorOpened
-      Content = <Switch checked={object.blocked} />
+      Icon = object.status ? DoorOpened : DoorClosed
+      Content = <Switch
+        onChange={(value) => (value ? openRoomDoor(payload) && fetchUserProfiles() : closeRoomDoor(payload) && fetchUserProfiles())}
+        checked={object.status} />
       break
     case 'WINDOW':
       Icon = object.status ? WindowOpened : WindowClosed
