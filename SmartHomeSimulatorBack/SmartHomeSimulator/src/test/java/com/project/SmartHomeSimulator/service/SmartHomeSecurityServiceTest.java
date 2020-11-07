@@ -10,7 +10,6 @@ import com.project.SmartHomeSimulator.module.SimulationContext;
 import net.minidev.json.JSONObject;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.json.AutoConfigureJsonTesters;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.junit.Assert.assertEquals;
