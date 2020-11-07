@@ -11,18 +11,18 @@ public abstract class Module {
 
     public void logSuccess(String roomObjectName, String roomName, String action, String actor){
         String message = createSuccessfulLogMessage(roomObjectName,roomName,action,actor);
-        this.consoleMessage += message + "\n";
+        this.consoleMessage += message + " ";
         logToFile(this.name, message);
     }
 
     public void logFail(String roomObjectName, String roomName, String action, String actor){
         String message = createUnsuccessfulLogMessage(roomObjectName,roomName,action,actor);
-        this.consoleMessage += message + "\n";
+        this.consoleMessage += message + " ";
         logToFile(this.name, message);
     }
 
     public void logMessage(String message){
-        this.consoleMessage += message + "\n";
+        this.consoleMessage += message + " ";
         logToFile(this.name, message);
     }
 
