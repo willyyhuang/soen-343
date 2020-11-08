@@ -12,6 +12,7 @@ import {
   Divider,
   Select,
   Typography,
+  message,
 } from 'antd'
 import {
   DownOutlined,
@@ -40,7 +41,7 @@ const EDIT_PROFILE_DATA_INITIAL_STATE = {
   newName: '',
 }
 
-const SimulationProfileCard = ({simulationConfig, fetchUserProfiles}) => {
+const SimulationProfileCard = ({addConsoleMessage, simulationConfig, fetchUserProfiles}) => {
   const {simulationUsers, currentSimulationUser, homeLayout} = simulationConfig
   const {roomList} = homeLayout
   const [addProfileFormData, setAddProfileFormData] = useState(
@@ -51,6 +52,22 @@ const SimulationProfileCard = ({simulationConfig, fetchUserProfiles}) => {
     EDIT_PROFILE_DATA_INITIAL_STATE,
   )
   const [isEditUserModalVisible, setIsEditUserModalVisible] = useState(false)
+
+  const alertUserAfterTime = (seconds) => {
+    const milliseconds = seconds * 1000
+    const notification = '[Alert] Police is on their way.'
+    setTimeout(() => {
+      addConsoleMessage(notification)
+      message.warning(notification)
+    }, milliseconds)
+  }
+
+  const awayModeNotification = (timeBeforeAuthorities) => {
+    const notification = `[Alert] Police will arrive in ${timeBeforeAuthorities} seconds.`
+    addConsoleMessage(notification)
+    message.warning(notification)
+    alertUserAfterTime(timeBeforeAuthorities)
+  }
 
   const columns = [
     {
@@ -196,9 +213,12 @@ const SimulationProfileCard = ({simulationConfig, fetchUserProfiles}) => {
       closable={false}
       onOk={() => {
         editProfile(editProfileFormData).then((response) => {
-          if (response.data) {
-            fetchUserProfiles()
+          const {data} = response
+          if (data.awayMode) {
+            addConsoleMessage(data.consoleMessage)
+            awayModeNotification(data.timeBeforeAuthorities)
           }
+          fetchUserProfiles()
         })
         setIsEditUserModalVisible(false)
         setEditProfileFormData(EDIT_PROFILE_DATA_INITIAL_STATE)
