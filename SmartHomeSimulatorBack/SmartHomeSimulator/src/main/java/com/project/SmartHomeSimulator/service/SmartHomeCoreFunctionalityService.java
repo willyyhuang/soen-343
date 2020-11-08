@@ -1,10 +1,9 @@
 package com.project.SmartHomeSimulator.service;
 
-import com.project.SmartHomeSimulator.module.PermissionVerifier;
+import com.project.SmartHomeSimulator.module.SmartHomeCoreFunctionalityProxy;
 import com.project.SmartHomeSimulator.module.SimulationContext;
 import com.project.SmartHomeSimulator.model.User;
 import com.project.SmartHomeSimulator.module.SmartHomeCoreFunctionality;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -12,7 +11,7 @@ public class SmartHomeCoreFunctionalityService {
 
     private static SimulationContext simulationContext = SimulationContext.getInstance();
 
-    public PermissionVerifier permissionVerifier = PermissionVerifier.getInstance();
+    public SmartHomeCoreFunctionalityProxy smartHomeCoreFunctionalityProxy = SmartHomeCoreFunctionalityProxy.getInstance();
     public SmartHomeCoreFunctionality smartHomeCoreFunctionality = SmartHomeCoreFunctionality.getInstance();
 
 
@@ -24,7 +23,8 @@ public class SmartHomeCoreFunctionalityService {
      * @return  - true if successful false if otherwise
      */
     public boolean blockUnblockWindow(String roomName, String id, boolean state) {
-        return smartHomeCoreFunctionality.blockUnblockWindow(roomName, id, state);
+        User user = simulationContext.getCurrentSimulationUser();
+        return smartHomeCoreFunctionalityProxy.blockUnblockWindow(user,roomName, id, state);
     }
 
     /**
@@ -36,7 +36,7 @@ public class SmartHomeCoreFunctionalityService {
      */
     public boolean openCloseWindow(String roomName, String id, boolean state) {
         User user = simulationContext.getCurrentSimulationUser();
-        return permissionVerifier.verifyPermission(user,"window",roomName, id, state);
+        return smartHomeCoreFunctionalityProxy.openCloseWindow(user, roomName, id, state);
     }
 
     /**
@@ -48,7 +48,7 @@ public class SmartHomeCoreFunctionalityService {
      */
     public boolean onOffLights (String roomName, String id, boolean state) {
         User user = simulationContext.getCurrentSimulationUser();
-        return permissionVerifier.verifyPermission(user,"light",roomName, id, state);
+        return smartHomeCoreFunctionalityProxy.onOffLights(user,roomName, id, state);
     }
     /**
      * open or close the doors - checks permission
@@ -59,6 +59,6 @@ public class SmartHomeCoreFunctionalityService {
      */
     public boolean openCloseDoors (String roomName, String id, boolean state) {
         User user = simulationContext.getCurrentSimulationUser();
-        return permissionVerifier.verifyPermission(user,"door",roomName, id, state);
+        return smartHomeCoreFunctionalityProxy.openCloseDoors(user,roomName, id, state);
     }
 }

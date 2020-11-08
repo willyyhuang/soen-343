@@ -62,9 +62,9 @@ public class UserServiceTest {
     @Test
     public void editHomeLocation(){
         //successfully edit a user's home location, must return true
-        Assert.assertTrue (userService.editHomeLocation(user.getName(), "testHomeLocation"));
+        Assert.assertTrue (userService.editHomeLocation(user.getName(), "testHomeLocation").success);
 
         //unsuccessful to edit a user's home location, must return false
-        Assert.assertFalse (userService.editHomeLocation("randomName", "testName"));
+        Assert.assertFalse (userService.editHomeLocation("randomName", "testName").success);
     }
 }

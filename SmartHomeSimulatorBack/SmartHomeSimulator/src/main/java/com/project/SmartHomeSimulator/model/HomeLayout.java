@@ -15,7 +15,6 @@ import java.util.Objects;
 @JsonComponent
 public class HomeLayout {
     private List<Room> roomList;
-    private boolean homeEmpty;
     private int usersInHome;
     public static int windowCount = 1;
     private static int doorCount = 1;
@@ -30,6 +29,23 @@ public class HomeLayout {
         for (Room room : this.roomList) {
             if (room.getName().equals(name)) {
                 return room;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Gets a room by object Id
+     *
+     * @param objectID
+     * @return String
+     */
+    public String getRoomNameByObjectID(String objectID) {
+        for (Room room : this.roomList) {
+            for (RoomObject roomObject : room.getObjects()) {
+                if (roomObject.getId().toString().equals(objectID)) {
+                    return room.getName();
+                }
             }
         }
         return null;
@@ -128,7 +144,7 @@ public class HomeLayout {
     }
 
     public void removeUsersInHome(String homeLocation) {
-        if (usersInHome != 0 && !homeLocation.equals("outside")) {
+        if (usersInHome != 0 && homeLocation.equals("outside")) {
             usersInHome--;
         }
     }

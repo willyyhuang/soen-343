@@ -1,6 +1,7 @@
 package com.project.SmartHomeSimulator.api;
 
 import com.project.SmartHomeSimulator.model.ResponseAPI;
+import com.project.SmartHomeSimulator.model.Role;
 import com.project.SmartHomeSimulator.model.User;
 import com.project.SmartHomeSimulator.module.SimulationContext;
 import com.project.SmartHomeSimulator.module.SmartHomeSecurity;
@@ -43,15 +44,12 @@ public class UserController {
     public ResponseAPI addUser(@RequestBody @Valid User user)
     {
         ResponseAPI response = new ResponseAPI();
-        if(smartHomeSecurity.getAwayModeConfig().isAwayMode() && !user.getHomeLocation().equalsIgnoreCase("outside")){
-            response.success = false;
-            response.awayMode = true;
-            response.timeBeforeAuthorities = smartHomeSecurity.getAwayModeConfig().getTimeBeforeAuthorities();
-            return response;
-        }
         response.success = userService.addUser(user);
-        response.awayMode = false;
+        response.awayMode = smartHomeSecurity.getAwayModeConfig().isAwayMode();
         response.timeBeforeAuthorities = smartHomeSecurity.getAwayModeConfig().getTimeBeforeAuthorities();
+        response.timeToKeepLightsOn = smartHomeSecurity.getTimeToKeepLightsOn();
+        response.consoleMessage = smartHomeSecurity.getConsoleMessage();
+        response.alertModeOn = smartHomeSecurity.isAlertModeOn();
         return response;
     }
 
@@ -91,20 +89,12 @@ public class UserController {
     public ResponseAPI editHomeLocation (@RequestParam("name") String name, @RequestParam("homeLocation") String homeLocation)
     {
         ResponseAPI response = new ResponseAPI();
-        if(smartHomeSecurity.getAwayModeConfig().isAwayMode() && !name.equals(simulationContext.getCurrentSimulationUser().getName())){
-            response.success = false;
-            response.awayMode = true;
-            response.timeBeforeAuthorities = smartHomeSecurity.getAwayModeConfig().getTimeBeforeAuthorities();
-            return response;
-        }
-        if(smartHomeSecurity.getAwayModeConfig().isAwayMode() && name.equals(simulationContext.getCurrentSimulationUser().getName())){
+        if(smartHomeSecurity.getAwayModeConfig().isAwayMode() && name.equals(simulationContext.getAwayModeUser().getName())){
             smartHomeSecurity.getAwayModeConfig().setAwayMode(false);
+            simulationContext.setAwaymode(false);
             simulationContext.setAwayModeUser(null);
         }
-        response.success = userService.editHomeLocation(name,homeLocation);
-        response.awayMode = false;
-        response.timeBeforeAuthorities = smartHomeSecurity.getAwayModeConfig().getTimeBeforeAuthorities();
-        return response;
-    }
 
+        return userService.editHomeLocation(name,homeLocation);
+    }
 }
