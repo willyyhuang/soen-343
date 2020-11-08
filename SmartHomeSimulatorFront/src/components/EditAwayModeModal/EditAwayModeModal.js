@@ -1,8 +1,8 @@
 import {
-Form, InputNumber, Modal, Select,
+Form, Input, InputNumber, Modal, Select,
 } from 'antd'
 import React from 'react'
-import {setTimeBeforeAuthority} from '../../services'
+import {setTimeBeforeAuthority, setLights, setTimeToKeepLightOn} from '../../services'
 
 const EditAwayModeModal = ({
 visible, onClose, simulationConfig, fetchUserProfiles,
@@ -33,9 +33,13 @@ visible, onClose, simulationConfig, fetchUserProfiles,
             onChange={(value) => setTimeBeforeAuthority(value) && fetchUserProfiles()} />
         </Form.Item>
         <Form.Item label='Lights to Remain on During Away Mode'>
-          <Select mode='multiple'>
-            {getLights().map((light) => <Select.Option value={light.name}>{light.name}</Select.Option>)}
+          <Select mode='multiple' onChange={(value) => setLights(value) && fetchUserProfiles()}>
+            {getLights().map((light) => <Select.Option value={light.id}>{light.name}</Select.Option>)}
           </Select>
+        </Form.Item>
+        <Form.Item label='Time to Keep Light On (HH:MM to HH:MM)'>
+          <Input
+            onBlur={(e) => setTimeToKeepLightOn(e.target.value) && fetchUserProfiles()} />
         </Form.Item>
       </Modal>
     )

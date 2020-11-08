@@ -35,6 +35,11 @@ const SimulationFunctionalityCard = ({
     }, 1000 / speedRate)
     return () => {
       clearInterval(interval)
+    }
+    // eslint-disable-next-line
+  }, [simulationConfig])
+
+  useEffect(() => () => {
       currentTime.add(secondsPassed * speedRate, 'seconds')
       const formattedDate = currentTime.format()
       setSimulationDate(
@@ -47,10 +52,7 @@ const SimulationFunctionalityCard = ({
         ),
       )
       fetchUserProfiles()
-    }
-    // eslint-disable-next-line
-  }, [simulationConfig])
-
+    }, [])
   return (
     <Card title='Smart Home Core Functionality'>
       <Row>
