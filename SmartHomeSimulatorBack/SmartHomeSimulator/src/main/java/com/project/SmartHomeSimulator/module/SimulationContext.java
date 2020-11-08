@@ -17,6 +17,7 @@ import com.project.SmartHomeSimulator.model.User;
  */
 public class SimulationContext {
 
+	private boolean simulationRunning;
 	private int insideTemp;
 	private int outsideTemp;
 	private String time;
@@ -24,14 +25,18 @@ public class SimulationContext {
 	private User currentSimulationUser;
 	private User awayModeUser;
 	private List<User> simulationUsers;
+	private boolean autoMode = false;
+	private boolean awaymode = false;
+	private int timeBeforeAuthoroties = 0;
 	private HomeLayout homeLayout;
-	private boolean simulationRunning;
 	private List<Monitor> monitors;
+
 	private final File userProfilesJSON = new File("src\\main\\resources\\user_profiles.json.txt");
 	private static int counter = 0;
+
 	public static SimulationContext simulationContext = null;
 
-	public SimulationContext() {
+	private SimulationContext() {
 		monitors = new ArrayList<Monitor>();
 		this.monitors.add(SmartHomeSecurity.getInstance());
 	}
@@ -42,15 +47,31 @@ public class SimulationContext {
 		}
 		return simulationContext;
 	}
-	public void clone(SimulationContext simulationContext) {
-		this.insideTemp = simulationContext.insideTemp;
-		this.outsideTemp = simulationContext.outsideTemp;
-		this.time = simulationContext.time;
-		this.date = simulationContext.date;
-		this.currentSimulationUser = simulationContext.currentSimulationUser;
-		this.simulationUsers = simulationContext.simulationUsers;
-		this.homeLayout = simulationContext.homeLayout;
-		this.simulationRunning = simulationContext.simulationRunning;
+
+	public int getTimeBeforeAuthoroties() {
+		return timeBeforeAuthoroties;
+	}
+
+	public void setTimeBeforeAuthoroties(int timeBeforeAuthoroties) {
+		this.timeBeforeAuthoroties = timeBeforeAuthoroties;
+	}
+
+	public List<User> getAllUsersInLocation(String room){
+		List<User> usersInRoom = new ArrayList<>();
+		for (User user : this.simulationUsers){
+			if(user.getHomeLocation().equalsIgnoreCase(room)){
+				usersInRoom.add(user);
+			}
+		}
+		return usersInRoom;
+	}
+
+	public boolean isAutoMode() {
+		return autoMode;
+	}
+
+	public void setAutoMode(boolean autoMode) {
+		this.autoMode = autoMode;
 	}
 
 	public User getAwayModeUser() {
@@ -153,6 +174,14 @@ public class SimulationContext {
 				monitor.update(awayModeUser.getName(), user);
 			}
 		}
+	}
+
+	public boolean isAwaymode() {
+		return awaymode;
+	}
+
+	public void setAwaymode(boolean awaymode) {
+		this.awaymode = awaymode;
 	}
 
 	@Override

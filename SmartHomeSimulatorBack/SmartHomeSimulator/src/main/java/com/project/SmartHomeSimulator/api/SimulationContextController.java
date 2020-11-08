@@ -112,4 +112,15 @@ public class SimulationContextController {
         return simulationContextService.loadLayout(homeLayout);
     }
 
+    /**
+     * API set Auto Mode
+     * @param autoMode
+     * @return - true if successful false if otherwise
+     */
+    @PostMapping(value = "/autoMode")
+    @ResponseStatus(value = HttpStatus.OK)
+    public boolean setAutomode(@RequestParam("autoMode") boolean autoMode) {
+        return simulationContextService.setAutoMode(autoMode);
+    }
+
 }

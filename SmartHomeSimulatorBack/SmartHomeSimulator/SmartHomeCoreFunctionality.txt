@@ -1,0 +1,55 @@
+[Door] backyard Door was opened by testUser's request
+[Window] backyard Window was opened by testUser's request
+[Door] backyard Door was opened by testUser's request
+[Window] backyard Window was opened by testUser's request
+[Door] backyard Door was opened by testUser's request
+[Window] backyard Window was opened by testUser's request
+[Door] backyard Door was opened by testUser's request
+[Window] backyard Window was opened by testUser's request
+[Door] backyard Door was opened by testUser's request
+[Window] backyard Window was opened by testUser's request
+[Window] string Window was unblocked by testUser's request
+[Window] string Window was blocked by testUser's request
+[Door] string Door was opened by testUser's request
+[Door] string Door was closed by testUser's request
+[Door] string Door was opened by testUser's request
+[Window] string Window was closed by testUser's request
+[Window] string Window was opened by testUser's request
+[Light] string Light was turned on by testUser's request
+[Light] string Light was turned off by testUser's request
+[Window] string Window was unblocked by testUser's request
+[Window] string Window was blocked by testUser's request
+[Door] string Door was opened by testUser's request
+[Door] string Door was closed by testUser's request
+[Door] string Door was opened by testUser's request
+[Window] string Window was closed by testUser's request
+[Window] string Window was opened by testUser's request
+[Light] string Light was turned on by testUser's request
+[Light] string Light was turned off by testUser's request
+[Window] string Window was unblocked by testUser's request
+[Window] string Window was blocked by testUser's request
+[Door] string Door was opened by testUser's request
+[Door] string Door was closed by testUser's request
+[Door] string Door was opened by testUser's request
+[Window] string Window was closed by testUser's request
+[Window] string Window was opened by testUser's request
+[Light] string Light was turned on by testUser's request
+[Light] string Light was turned off by testUser's request
+[Window] string Window was unblocked by testUser's request
+[Window] string Window was blocked by testUser's request
+[Window] string Window was unblocked by testUser's request
+[Window] string Window was blocked by testUser's request
+[Door] string Door was opened by testUser's request
+[Door] string Door was closed by testUser's request
+[Door] string Door was opened by testUser's request
+[Window] string Window was closed by testUser's request
+[Window] string Window was unblocked by testUser's request
+[Window] string Window was blocked by testUser's request
+[Door] string Door was closed by testUser's request
+[Door] string Door was opened by testUser's request
+[Window] string Window was closed by testUser's request
+[Window] string Window was opened by testUser's request
+[Light] string Light was turned on by testUser's request
+[Light] string Light was turned off by testUser's request
+[Door] backyard Door was opened by testUser's request
+[Window] backyard Window was opened by testUser's request
