@@ -88,10 +88,10 @@ public class SmartHomeCoreFunctionalityServiceTest {
 
     /**
      * choosing to open or close a door test
-     * Use case ID = 2
+     * Use case ID = 1
      */
     @Test
-    public void opencloseDoor_2() throws JsonProcessingException {
+    public void opencloseDoor_1() throws JsonProcessingException {
         JSONObject jsonUser = new JSONObject();
         jsonUser.put("name", "testUser");
         jsonUser.put("role", "PARENT");
@@ -117,10 +117,10 @@ public class SmartHomeCoreFunctionalityServiceTest {
 
     /**
      * choosing to turn off or on a light test
-     * Use case ID = 3
+     * Use case ID = 1
      */
     @Test
-    public void onOffLights_3() throws JsonProcessingException {
+    public void onOffLights_1() throws JsonProcessingException {
         JSONObject jsonUser = new JSONObject();
         jsonUser.put("name", "testUser");
         jsonUser.put("role", "PARENT");
@@ -147,10 +147,10 @@ public class SmartHomeCoreFunctionalityServiceTest {
 
     /**
      * Set lights to automode on
-     * Use case ID = 4
+     * Use case ID = 2
      */
     @Test
-    public void automodeLights_4() throws JsonProcessingException {
+    public void automodeLights_2() throws JsonProcessingException {
 
         System.out.println(simulationContext);
         String homeLayoutFile = "{\"roomList\":\"[{\"name\":\"string\", \"objects\":[{\"objectType\": \"LIGHT\"}]}]\"}";
