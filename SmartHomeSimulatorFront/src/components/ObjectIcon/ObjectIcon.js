@@ -22,6 +22,11 @@ addConsoleMessage, roomName, object, fetchUserProfiles,
   const WindowOpened = 'https://img.icons8.com/ios/452/open-window.png'
   const WindowClosed = 'https://icons.iconarchive.com/icons/iconsmind/outline/512/Window-icon.png'
 
+  const alertUserAfterTime = (seconds) => {
+    const milliseconds = seconds * 1000
+    setTimeout(() => { addConsoleMessage('[Alert] Police is on their way.') }, milliseconds)
+  }
+
   const {id, name, objectType} = object
   const payload = {id, name: roomName}
   let Icon
@@ -36,10 +41,18 @@ addConsoleMessage, roomName, object, fetchUserProfiles,
               ? turnOnLight(payload).then((response) => {
                 const {data} = response
                 addConsoleMessage(data.consoleMessage)
+                if (data.awayMode) {
+                  addConsoleMessage(`[Alert] Police will arrive in ${data.timeBeforeAuthorities} seconds.`)
+                  alertUserAfterTime(data.timeBeforeAuthorities)
+                }
               }) && fetchUserProfiles()
               : turnOffLight(payload).then((response) => {
                 const {data} = response
                 addConsoleMessage(data.consoleMessage)
+                if (data.awayMode) {
+                  addConsoleMessage(`[Alert] Police will arrive in ${data.timeBeforeAuthorities} seconds.`)
+                  alertUserAfterTime(data.timeBeforeAuthorities)
+                }
               }) && fetchUserProfiles())}
           checked={object.status} />
       )
@@ -53,10 +66,18 @@ addConsoleMessage, roomName, object, fetchUserProfiles,
               ? openRoomDoor(payload).then((response) => {
                 const {data} = response
                 addConsoleMessage(data.consoleMessage)
+                if (data.awayMode) {
+                  addConsoleMessage(`[Alert] Police will arrive in ${data.timeBeforeAuthorities} seconds.`)
+                  alertUserAfterTime(data.timeBeforeAuthorities)
+                }
               }) && fetchUserProfiles()
               : closeRoomDoor(payload).then((response) => {
                 const {data} = response
                 addConsoleMessage(data.consoleMessage)
+                if (data.awayMode) {
+                  addConsoleMessage(`[Alert] Police will arrive in ${data.timeBeforeAuthorities} seconds.`)
+                  alertUserAfterTime(data.timeBeforeAuthorities)
+                }
               }) && fetchUserProfiles())}
           checked={object.status} />
       )
@@ -72,10 +93,18 @@ addConsoleMessage, roomName, object, fetchUserProfiles,
                   ? block(payload).then((response) => {
                     const {data} = response
                     addConsoleMessage(data.consoleMessage)
+                    if (data.awayMode) {
+                      addConsoleMessage(`[Alert] Police will arrive in ${data.timeBeforeAuthorities} seconds.`)
+                      alertUserAfterTime(data.timeBeforeAuthorities)
+                    }
                   }) && fetchUserProfiles()
                   : unblock(payload).then((response) => {
                     const {data} = response
                     addConsoleMessage(data.consoleMessage)
+                    if (data.awayMode) {
+                      addConsoleMessage(`[Alert] Police will arrive in ${data.timeBeforeAuthorities} seconds.`)
+                      alertUserAfterTime(data.timeBeforeAuthorities)
+                    }
                   }) && fetchUserProfiles())}
               checked={object.blocked} />
           </Form.Item>
@@ -86,10 +115,18 @@ addConsoleMessage, roomName, object, fetchUserProfiles,
                   ? openRoomWindow(payload).then((response) => {
                     const {data} = response
                     addConsoleMessage(data.consoleMessage)
+                    if (data.awayMode) {
+                      addConsoleMessage(`[Alert] Police will arrive in ${data.timeBeforeAuthorities} seconds.`)
+                      alertUserAfterTime(data.timeBeforeAuthorities)
+                    }
                   }) && fetchUserProfiles()
                   : closeRoomWindow(payload).then((response) => {
                     const {data} = response
                     addConsoleMessage(data.consoleMessage)
+                    if (data.awayMode) {
+                      addConsoleMessage(`[Alert] Police will arrive in ${data.timeBeforeAuthorities} seconds.`)
+                      alertUserAfterTime(data.timeBeforeAuthorities)
+                    }
                   }) && fetchUserProfiles())}
               disabled={object.blocked}
               checked={object.status} />
