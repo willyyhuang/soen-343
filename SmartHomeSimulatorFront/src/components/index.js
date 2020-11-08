@@ -5,3 +5,4 @@ export {default as SimulationFunctionalityCard} from './SimulationFunctionalityC
 export {default as RoomCard} from './RoomCard'
 export {default as ObjectIcon} from './ObjectIcon'
 export {default as OutputConsole} from './OutputConsole'
+export {default as EditAwayModeModal} from './EditAwayModeModal'

@@ -1,5 +1,5 @@
 import {
-Card, Col, Divider, Layout, Row, Switch, Typography,
+Button, Card, Col, Divider, Layout, Row, Switch, Typography,
 } from 'antd'
 import React, {useEffect, useState} from 'react'
 import {connect} from 'react-redux'
@@ -8,6 +8,7 @@ import {
   SimulationProfileCard,
   SimulationFunctionalityCard,
   OutputConsole,
+  EditAwayModeModal,
 } from '../index'
 import './Dashboard.css'
 import {
@@ -17,6 +18,7 @@ getProfile, start, stop, setAutoMode, setAwayMode,
 const Dashboard = ({simulationConfig, consoleMessage, dispatch}) => {
   const {messages} = consoleMessage
   const [speedRate, setSpeedRate] = useState(1)
+  const [editAwayModeModalVisible, setEditAwayModeModalVisible] = useState(false)
 
   const addConsoleMessage = (message) => {
     dispatch({type: 'ADD_CONSOLE_MESSAGE', payload: message})
@@ -45,18 +47,27 @@ const Dashboard = ({simulationConfig, consoleMessage, dispatch}) => {
               : stop() && fetchUserProfiles())} />
         <Typography.Text>Simulation Mode</Typography.Text>
       </Row>
-      <Row style={{marginTop: 5}}>
+      <Row className='row'>
         <Switch
           className='item'
           checked={simulationConfig.autoMode}
           onChange={(value) => setAutoMode(value) && fetchUserProfiles()} />
         <Typography.Text>Light Auto Mode</Typography.Text>
       </Row>
-      <Row style={{marginTop: 5}}>
-        <Switch
-          className='item'
-          onChange={(value) => setAwayMode(value) && fetchUserProfiles()} />
-        <Typography.Text>Away Mode</Typography.Text>
+      <Row className='row'>
+        <Col>
+          <Switch
+            className='item'
+            checked={simulationConfig.awaymode}
+            onChange={(value) => setAwayMode(value) && fetchUserProfiles()} />
+        </Col>
+        <Col>
+          <Typography.Text>Away Mode</Typography.Text>
+        </Col>
+        {simulationConfig.awaymode
+          && <Col>
+            <Button className='button' onClick={() => setEditAwayModeModalVisible(true)}>Edit Parameters</Button>
+          </Col>}
       </Row>
     </Card>
   )
@@ -65,6 +76,12 @@ const Dashboard = ({simulationConfig, consoleMessage, dispatch}) => {
     <Layout className='layout'>
       <Layout.Content className='content'>
         <Row type='flex' align='top'>
+          {editAwayModeModalVisible && simulationConfig.homeLayout
+            && <EditAwayModeModal
+              visible={editAwayModeModalVisible}
+              simulationConfig={simulationConfig}
+              onClose={() => setEditAwayModeModalVisible(false)}
+              fetchUserProfiles={fetchUserProfiles} />}
           <Col span={1} />
           <Col span={6}>
             <SimulationParameterCard
