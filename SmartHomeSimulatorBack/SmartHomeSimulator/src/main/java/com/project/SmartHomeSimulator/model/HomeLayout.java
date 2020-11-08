@@ -35,6 +35,23 @@ public class HomeLayout {
     }
 
     /**
+     * Gets a room by object Id
+     *
+     * @param objectID
+     * @return String
+     */
+    public String getRoomNameByObjectID(String objectID) {
+        for (Room room : this.roomList) {
+            for (RoomObject roomObject : room.getObjects()) {
+                if (roomObject.getId().toString().equals(objectID)) {
+                    return room.getName();
+                }
+            }
+        }
+        return null;
+    }
+
+    /**
      * Reads home layout string and maps it to a HomeLayout object
      *
      * @param homeLayoutFile

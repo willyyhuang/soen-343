@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
+import java.util.List;
 
 @RestController
 @CrossOrigin(origins = {"*"})
@@ -41,10 +41,16 @@ public class SimulationHomeSecurityController {
         return true;
     }
 
-    @PutMapping(value = "/awayMode/lights")
+    @PutMapping(value = "/awayMode/setLights")
     @ResponseStatus(value = HttpStatus.OK)
-    public boolean setLightsToRemainOn(@RequestBody HashMap<String, String> lights, @RequestParam("timeToKeepLightsOn") String timeToKeepLightsOn) {
-        return smartHomeSecurityService.setLightsToRemainOn(lights, timeToKeepLightsOn);
+    public boolean setLightIDs(@RequestBody List<String> lightIDs) {
+        return smartHomeSecurityService.setLightIDs(lightIDs);
+    }
+
+    @PutMapping(value = "/awayMode/setTimeToKeepLightsOn")
+    @ResponseStatus(value = HttpStatus.OK)
+    public boolean setTimeToKeepLightsOn(@RequestParam("timeToKeepLightsOn") String timeToKeepLightsOn) {
+        return smartHomeSecurityService.setTimeToKeepLightsOn(timeToKeepLightsOn);
     }
 
     @PutMapping(value = "/awayMode/turnOnOffLights")

@@ -2,7 +2,7 @@ package com.project.SmartHomeSimulator.module;
 
 import com.project.SmartHomeSimulator.model.Role;
 
-import java.util.HashMap;
+import java.util.List;
 
 public class SmartHomeSecurityProxy {
     private SmartHomeSecurity smartHomeSecurity;
@@ -35,9 +35,17 @@ public class SmartHomeSecurityProxy {
         return false;
     }
 
-    public boolean setLightsToRemainOn(Role role, HashMap<String, String> lights, String timeToKeepLightsOn) {
+    public boolean setLightIDs(Role role, List<String> lightIDs) {
         if (verifyPermission(role)) {
-            smartHomeSecurity.setLightsToRemainOn(lights, timeToKeepLightsOn);
+            smartHomeSecurity.setLightIDs(lightIDs);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean setTimeToKeepLightsOn(Role role,String timeToKeepLightsOn) {
+        if (verifyPermission(role)) {
+            smartHomeSecurity.setTimeToKeepLightsOn(timeToKeepLightsOn);
             return true;
         }
         return false;

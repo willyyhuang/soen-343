@@ -41,11 +41,11 @@ public abstract class Module {
     }
 
     private String createSuccessfulLogMessage(String roomObjectName, String roomName, String action, String actor){
-        return "["+roomObjectName+"] " + roomName +" "+ roomObjectName +" was "+ action +" by "+ actor +"'s request";
+        return "["+roomObjectName+"] " + roomName +" "+ roomObjectName +" was "+ action +" by "+ actor +"'s request.";
     }
     
     private String createUnsuccessfulLogMessage(String roomObjectName, String roomName, String action, String actor){
-        return "[Failed] " + action +" "+ roomObjectName +" in "+ roomName +", requested by "+ actor +", failed";
+        return "[Failed] " + action +" "+ roomObjectName +" in "+ roomName +", requested by "+ actor +", failed.";
     }
 
     public String getName() {
