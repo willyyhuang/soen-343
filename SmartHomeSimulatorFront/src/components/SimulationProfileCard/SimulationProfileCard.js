@@ -107,7 +107,7 @@ const SimulationProfileCard = ({simulationConfig, fetchUserProfiles}) => {
             }}>
             <Menu.Item key='editLocation'>
               <EditOutlined />
-              Edit Home Location
+              Change Home Location
             </Menu.Item>
             <Menu.Item key='editName'>
               <EditOutlined />
