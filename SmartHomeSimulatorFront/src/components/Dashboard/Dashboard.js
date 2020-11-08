@@ -66,7 +66,7 @@ const Dashboard = ({simulationConfig, consoleMessage, dispatch}) => {
           <Switch
             disabled={getAwayModeDisableState()}
             className='item'
-            checked={simulationConfig.awaymode}
+            checked={simulationConfig.awayMode}
             onChange={(value) => setAwayMode(value).then((response) => {
               const {data} = response
               addConsoleMessage(data.consoleMessage)
@@ -75,7 +75,7 @@ const Dashboard = ({simulationConfig, consoleMessage, dispatch}) => {
         <Col>
           <Typography.Text>Away Mode</Typography.Text>
         </Col>
-        {simulationConfig.awaymode
+        {simulationConfig.awayMode
           && <Col>
             <Button className='button' onClick={() => setEditAwayModeModalVisible(true)}>Edit Parameters</Button>
           </Col>}
