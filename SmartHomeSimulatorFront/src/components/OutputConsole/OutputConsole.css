@@ -1,0 +1,10 @@
+.card {
+    max-height: 5vh;
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: column-reverse;
+}
+
+.bold {
+    font-weight: bold;
+}

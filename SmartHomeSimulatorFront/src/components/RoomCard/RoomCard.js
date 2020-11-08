@@ -5,7 +5,9 @@ Card, Popover, Row, Typography,
 import React from 'react'
 import {ObjectIcon} from '../index'
 
-const RoomCard = ({users, room, fetchUserProfiles}) => {
+const RoomCard = ({
+addConsoleMessage, users, room, fetchUserProfiles,
+}) => {
   const {name, objects} = room
 
   return (
@@ -23,6 +25,7 @@ const RoomCard = ({users, room, fetchUserProfiles}) => {
           ? 'This room does not have any object'
           : objects.map((item) => (
             <ObjectIcon
+              addConsoleMessage={addConsoleMessage}
               roomName={name}
               object={item}
               fetchUserProfiles={fetchUserProfiles} />

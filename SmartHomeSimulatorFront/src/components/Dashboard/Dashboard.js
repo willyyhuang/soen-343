@@ -7,6 +7,7 @@ import {
   SimulationParameterCard,
   SimulationProfileCard,
   SimulationFunctionalityCard,
+  OutputConsole,
 } from '../index'
 import './Dashboard.css'
 import {
@@ -16,6 +17,10 @@ getProfile, start, stop, setAutoMode, setAwayMode,
 const Dashboard = ({simulationConfig, consoleMessage, dispatch}) => {
   const {messages} = consoleMessage
   const [speedRate, setSpeedRate] = useState(1)
+
+  const addConsoleMessage = (message) => {
+    dispatch({type: 'ADD_CONSOLE_MESSAGE', payload: message})
+  }
   const fetchUserProfiles = () => {
     getProfile().then((response) => {
       const {data} = response
@@ -84,6 +89,7 @@ const Dashboard = ({simulationConfig, consoleMessage, dispatch}) => {
               && simulationConfig.date
               && simulationConfig.time && (
                 <SimulationFunctionalityCard
+                  addConsoleMessage={addConsoleMessage}
                   speedRate={speedRate}
                   simulationConfig={simulationConfig}
                   fetchUserProfiles={fetchUserProfiles} />
@@ -92,15 +98,7 @@ const Dashboard = ({simulationConfig, consoleMessage, dispatch}) => {
         </Row>
       </Layout.Content>
       <Layout.Footer style={{padding: 0}}>
-        <Card title='Output Console'>
-          {messages.length > 0
-            ? messages.forEach((message) => (
-              <Row>
-                <Typography.Text>{message}</Typography.Text>
-              </Row>
-              ))
-            : null}
-        </Card>
+        <OutputConsole messages={messages} />
       </Layout.Footer>
     </Layout>
   )

@@ -8,6 +8,7 @@ import {RoomCard} from '../index'
 import 'react-clock/dist/Clock.css'
 
 const SimulationFunctionalityCard = ({
+  addConsoleMessage,
   speedRate,
   simulationConfig,
   fetchUserProfiles,
@@ -68,6 +69,7 @@ const SimulationFunctionalityCard = ({
                     users={users}
                     key={name}
                     room={room}
+                    addConsoleMessage={addConsoleMessage}
                     fetchUserProfiles={fetchUserProfiles} />
                 </Col>
               )

@@ -12,7 +12,9 @@ import {
 } from '../../services'
 import './ObjectIcon.css'
 
-const ObjectIcon = ({roomName, object, fetchUserProfiles}) => {
+const ObjectIcon = ({
+addConsoleMessage, roomName, object, fetchUserProfiles,
+}) => {
   const LightIconOff = 'https://img.icons8.com/ios/452/light-on.png'
   const LightIconOn = 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a3/Light_bulb_%28yellow%29_icon.svg/1024px-Light_bulb_%28yellow%29_icon.svg.png'
   const DoorClosed = 'https://cdn1.iconfinder.com/data/icons/construction-2-13/48/61-512.png'
@@ -31,8 +33,14 @@ const ObjectIcon = ({roomName, object, fetchUserProfiles}) => {
         <Switch
           onChange={(value) =>
             (value
-              ? turnOnLight(payload) && fetchUserProfiles()
-              : turnOffLight(payload) && fetchUserProfiles())}
+              ? turnOnLight(payload).then((response) => {
+                const {data} = response
+                addConsoleMessage(data.consoleMessage)
+              }) && fetchUserProfiles()
+              : turnOffLight(payload).then((response) => {
+                const {data} = response
+                addConsoleMessage(data.consoleMessage)
+              }) && fetchUserProfiles())}
           checked={object.status} />
       )
       break
@@ -42,8 +50,14 @@ const ObjectIcon = ({roomName, object, fetchUserProfiles}) => {
         <Switch
           onChange={(value) =>
             (value
-              ? openRoomDoor(payload) && fetchUserProfiles()
-              : closeRoomDoor(payload) && fetchUserProfiles())}
+              ? openRoomDoor(payload).then((response) => {
+                const {data} = response
+                addConsoleMessage(data.consoleMessage)
+              }) && fetchUserProfiles()
+              : closeRoomDoor(payload).then((response) => {
+                const {data} = response
+                addConsoleMessage(data.consoleMessage)
+              }) && fetchUserProfiles())}
           checked={object.status} />
       )
       break
@@ -55,16 +69,28 @@ const ObjectIcon = ({roomName, object, fetchUserProfiles}) => {
             <Switch
               onChange={(value) =>
                 (value
-                  ? block(payload) && fetchUserProfiles()
-                  : unblock(payload) && fetchUserProfiles())}
+                  ? block(payload).then((response) => {
+                    const {data} = response
+                    addConsoleMessage(data.consoleMessage)
+                  }) && fetchUserProfiles()
+                  : unblock(payload).then((response) => {
+                    const {data} = response
+                    addConsoleMessage(data.consoleMessage)
+                  }) && fetchUserProfiles())}
               checked={object.blocked} />
           </Form.Item>
           <Form.Item label='Turn on/off'>
             <Switch
               onChange={(value) =>
                 (value
-                  ? openRoomWindow(payload) && fetchUserProfiles()
-                  : closeRoomWindow(payload) && fetchUserProfiles())}
+                  ? openRoomWindow(payload).then((response) => {
+                    const {data} = response
+                    addConsoleMessage(data.consoleMessage)
+                  }) && fetchUserProfiles()
+                  : closeRoomWindow(payload).then((response) => {
+                    const {data} = response
+                    addConsoleMessage(data.consoleMessage)
+                  }) && fetchUserProfiles())}
               disabled={object.blocked}
               checked={object.status} />
           </Form.Item>
