@@ -1,1 +1,1 @@
-[]
+[{"name": "Jenn", "role": "PARENT", "homeLocation": "bedroom"}]

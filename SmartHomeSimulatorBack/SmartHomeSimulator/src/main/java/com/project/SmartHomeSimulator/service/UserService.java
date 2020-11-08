@@ -28,9 +28,6 @@ public class UserService {
 
     private static SimulationContext simulationContext = SimulationContext.getInstance();
     private final File userProfilesFile = new File("src\\main\\resources\\user_profiles.json.txt");
-    
-
-    private SimulationContext simulationContext = SimulationContext.getInstance();
     private SmartHomeCoreFunctionality smartHomeCoreFunctionality = SmartHomeCoreFunctionality.getInstance();
     private SmartHomeSecurity smartHomeSecurity = SmartHomeSecurity.getInstance();
 
@@ -50,45 +47,46 @@ public class UserService {
             simulationContext.getSimulationUsers().add(user);
 
             // adding to user profiles file
-            
+
             try {
-            	String jsonString = new Scanner(userProfilesFile).useDelimiter("\\Z").next();
-            	StringBuilder builder = new StringBuilder(jsonString);
-            	if (jsonString.length() <= 2) { // in case user profiles file is empty, we remove the "," separating elements
-            		builder.insert(jsonString.length() - 1, user.toString());
-            	} else {
-            		builder.insert(jsonString.length() - 1, "," + user.toString());
-            	}
-            	
-            	// writing the new user to the file
-            	FileWriter myWriter = new FileWriter(userProfilesFile);
+                String jsonString = new Scanner(userProfilesFile).useDelimiter("\\Z").next();
+                StringBuilder builder = new StringBuilder(jsonString);
+                if (jsonString.length() <= 2) { // in case user profiles file is empty, we remove the "," separating elements
+                    builder.insert(jsonString.length() - 1, user.toString());
+                } else {
+                    builder.insert(jsonString.length() - 1, "," + user.toString());
+                }
+
+                // writing the new user to the file
+                FileWriter myWriter = new FileWriter(userProfilesFile);
                 myWriter.write(builder.toString());
                 myWriter.close();
-    		} catch (FileNotFoundException e) {
-    			e.printStackTrace();
-    		} catch (IOException e) {
-				e.printStackTrace();
-			}
-            if (simulationContext.getHomeLayout() != null){
-
-            List<RoomObject> lightsInRoom = new ArrayList<>();
-            if (simulationContext.getHomeLayout() != null) {
-                lightsInRoom = simulationContext.getHomeLayout().allLights(user.getHomeLocation());
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-            if (simulationContext.isAutoMode()) {
-                for (RoomObject light : lightsInRoom) {
-                    smartHomeCoreFunctionality.objectStateSwitcher(user.getHomeLocation(), light.getId().toString(), true);
+            if (simulationContext.getHomeLayout() != null) {
+
+                List<RoomObject> lightsInRoom = new ArrayList<>();
+                if (simulationContext.getHomeLayout() != null) {
+                    lightsInRoom = simulationContext.getHomeLayout().allLights(user.getHomeLocation());
                 }
-            }
-            if (simulationContext.getHomeLayout() != null) {
+                if (simulationContext.isAutoMode()) {
+                    for (RoomObject light : lightsInRoom) {
+                        smartHomeCoreFunctionality.objectStateSwitcher(user.getHomeLocation(), light.getId().toString(), true);
+                    }
+                }
+                if (simulationContext.getHomeLayout() != null) {
 
-                simulationContext.getHomeLayout().addUsersInHome(user.getHomeLocation());
-                simulationContext.notifyMonitors(user);
+                    simulationContext.getHomeLayout().addUsersInHome(user.getHomeLocation());
+                    simulationContext.notifyMonitors(user);
+                }
+                return true;
             }
-            return true;
         }
-        return false;
-    }
+            return false;
+        }
 
 
     /**
