@@ -77,7 +77,7 @@ public class SmartHomeCoreFunctionalityProxy {
                 return true;
             case GUEST:
             case CHILD:
-                if (user.getHomeLocation().equalsIgnoreCase(roomName) && (action.equals("door") || action.equals("window") || action.equals("light"))) {
+                if (user.getHomeLocation().equalsIgnoreCase(roomName) && ( action.equals("window") || action.equals("light"))) {
                     return true;
                 }
             default:
