@@ -95,9 +95,12 @@ const SimulationProfileCard = ({simulationConfig, fetchUserProfiles}) => {
           </Menu.Item>
         </Menu>
       )
-      return <Dropdown overlay={menu} trigger={['click']}>
-        <DownOutlined />
-      </Dropdown>
+      return (
+        <Dropdown
+          overlay={menu}
+          trigger={['click']}>
+          <DownOutlined />
+        </Dropdown>)
     },
   }]
 
@@ -120,10 +123,15 @@ const SimulationProfileCard = ({simulationConfig, fetchUserProfiles}) => {
       }}
       visible={isAddUserModalVisible}>
       <Form.Item label='Name'>
-        <Input value={addProfileFormData.name} onChange={(e) => setAddProfileFormData({name: e.target.value, role: addProfileFormData.role, homeLocation: addProfileFormData.homeLocation})} placeholder='enter a name' />
+        <Input
+          value={addProfileFormData.name}
+          onChange={(e) => setAddProfileFormData({name: e.target.value, role: addProfileFormData.role, homeLocation: addProfileFormData.homeLocation})}
+          placeholder='enter a name' />
       </Form.Item>
       <Form.Item label='Role'>
-        <Select value={addProfileFormData.role} onChange={(value) => setAddProfileFormData({name: addProfileFormData.name, role: value, homeLocation: addProfileFormData.homeLocation})}>
+        <Select
+          value={addProfileFormData.role}
+          onChange={(value) => setAddProfileFormData({name: addProfileFormData.name, role: value, homeLocation: addProfileFormData.homeLocation})}>
           <Select.Option value='PARENT'>Parent</Select.Option>
           <Select.Option value='CHILD'>Child</Select.Option>
           <Select.Option value='GUEST'>Guest</Select.Option>
@@ -213,7 +221,10 @@ const SimulationProfileCard = ({simulationConfig, fetchUserProfiles}) => {
         </Button>
       </Row>
       <Divider />
-      <Table pagination={false} dataSource={simulationUsers} columns={columns} />
+      <Table
+        pagination={false}
+        dataSource={simulationUsers}
+        columns={columns} />
     </Card>
   )
 }
