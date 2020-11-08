@@ -55,7 +55,7 @@ const SimulationProfileCard = ({addConsoleMessage, simulationConfig, fetchUserPr
 
   const alertUserAfterTime = (seconds) => {
     const milliseconds = seconds * 1000
-    const notification = '[Alert] Police is on their way.'
+    const notification = '[Alert] Police is notified.'
     setTimeout(() => {
       addConsoleMessage(notification)
       message.warning(notification)
@@ -63,7 +63,7 @@ const SimulationProfileCard = ({addConsoleMessage, simulationConfig, fetchUserPr
   }
 
   const awayModeNotification = (timeBeforeAuthorities) => {
-    const notification = `[Alert] Police will arrive in ${timeBeforeAuthorities} seconds.`
+    const notification = `[Alert] Police will be notified in ${timeBeforeAuthorities} seconds.`
     addConsoleMessage(notification)
     message.warning(notification)
     alertUserAfterTime(timeBeforeAuthorities)
