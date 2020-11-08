@@ -17,6 +17,7 @@ public class SmartHomeCoreFunctionalityController {
     @Autowired
     SmartHomeCoreFunctionalityService smartHomeCoreFunctionalityService;
     public SmartHomeSecurity smartHomeSecurity = SmartHomeSecurity.getInstance();
+    public SimulationContext simulationContext = SimulationContext.getInstance();
 
     /**
      * API block a window
@@ -28,7 +29,7 @@ public class SmartHomeCoreFunctionalityController {
     @ResponseStatus(value = HttpStatus.OK)
     public ResponseAPI blockWindow(@RequestParam("roomName") String roomName,@RequestParam("objectID") String objectID) {
         ResponseAPI response = new ResponseAPI();
-        if(smartHomeSecurity.getAwayModeConfig().isAwayMode()){
+        if(smartHomeSecurity.getAwayModeConfig().isAwayMode() && simulationContext.getCurrentSimulationUser() != simulationContext.getAwayModeUser()){
             response.success = false;
             response.awayMode = true;
             response.timeBeforeAuthorities = smartHomeSecurity.getAwayModeConfig().getTimeBeforeAuthorities();
@@ -56,7 +57,7 @@ public class SmartHomeCoreFunctionalityController {
     @ResponseStatus(value = HttpStatus.OK)
     public ResponseAPI unblockWindow(@RequestParam("roomName") String roomName,@RequestParam("objectID") String objectID) {
         ResponseAPI response = new ResponseAPI();
-        if(smartHomeSecurity.getAwayModeConfig().isAwayMode()){
+        if(smartHomeSecurity.getAwayModeConfig().isAwayMode() && simulationContext.getCurrentSimulationUser() != simulationContext.getAwayModeUser()){
             response.success = false;
             response.awayMode = true;
             response.timeBeforeAuthorities = smartHomeSecurity.getAwayModeConfig().getTimeBeforeAuthorities();
@@ -85,7 +86,7 @@ public class SmartHomeCoreFunctionalityController {
     @ResponseStatus(value = HttpStatus.OK)
     public ResponseAPI openWindow(@RequestParam("roomName") String roomName,@RequestParam("objectID") String objectID) {
         ResponseAPI response = new ResponseAPI();
-        if(smartHomeSecurity.getAwayModeConfig().isAwayMode()){
+        if(smartHomeSecurity.getAwayModeConfig().isAwayMode() && simulationContext.getCurrentSimulationUser() != simulationContext.getAwayModeUser()){
             response.success = false;
             response.awayMode = true;
             response.timeBeforeAuthorities = smartHomeSecurity.getAwayModeConfig().getTimeBeforeAuthorities();
@@ -114,7 +115,7 @@ public class SmartHomeCoreFunctionalityController {
     @ResponseStatus(value = HttpStatus.OK)
     public ResponseAPI closeWindow(@RequestParam("roomName") String roomName,@RequestParam("objectID") String objectID) {
         ResponseAPI response = new ResponseAPI();
-        if(smartHomeSecurity.getAwayModeConfig().isAwayMode()){
+        if(smartHomeSecurity.getAwayModeConfig().isAwayMode() && simulationContext.getCurrentSimulationUser() != simulationContext.getAwayModeUser()){
             response.success = false;
             response.awayMode = true;
             response.timeBeforeAuthorities = smartHomeSecurity.getAwayModeConfig().getTimeBeforeAuthorities();
@@ -142,7 +143,7 @@ public class SmartHomeCoreFunctionalityController {
     @ResponseStatus(value = HttpStatus.OK)
     public ResponseAPI turnOnLight(@RequestParam("roomName") String roomName,@RequestParam("objectID") String objectID) {
         ResponseAPI response = new ResponseAPI();
-        if(smartHomeSecurity.getAwayModeConfig().isAwayMode()){
+        if(smartHomeSecurity.getAwayModeConfig().isAwayMode() && simulationContext.getCurrentSimulationUser() != simulationContext.getAwayModeUser()){
             response.success = false;
             response.awayMode = true;
             response.timeBeforeAuthorities = smartHomeSecurity.getAwayModeConfig().getTimeBeforeAuthorities();
@@ -171,7 +172,7 @@ public class SmartHomeCoreFunctionalityController {
     @ResponseStatus(value = HttpStatus.OK)
     public ResponseAPI turnOffLight(@RequestParam("roomName") String roomName,@RequestParam("objectID") String objectID) {
         ResponseAPI response = new ResponseAPI();
-        if(smartHomeSecurity.getAwayModeConfig().isAwayMode()){
+        if(smartHomeSecurity.getAwayModeConfig().isAwayMode() && simulationContext.getCurrentSimulationUser() != simulationContext.getAwayModeUser()){
             response.success = false;
             response.awayMode = true;
             response.timeBeforeAuthorities = smartHomeSecurity.getAwayModeConfig().getTimeBeforeAuthorities();
@@ -199,7 +200,7 @@ public class SmartHomeCoreFunctionalityController {
     @ResponseStatus(value = HttpStatus.OK)
     public ResponseAPI openDoor(@RequestParam("roomName") String roomName,@RequestParam("objectID") String objectID) {
         ResponseAPI response = new ResponseAPI();
-        if(smartHomeSecurity.getAwayModeConfig().isAwayMode()){
+        if(smartHomeSecurity.getAwayModeConfig().isAwayMode() && simulationContext.getCurrentSimulationUser() != simulationContext.getAwayModeUser()){
             response.success = false;
             response.awayMode = true;
             response.timeBeforeAuthorities = smartHomeSecurity.getAwayModeConfig().getTimeBeforeAuthorities();
@@ -229,7 +230,7 @@ public class SmartHomeCoreFunctionalityController {
     @ResponseStatus(value = HttpStatus.OK)
     public ResponseAPI closeDoor(@RequestParam("roomName") String roomName,@RequestParam("objectID") String objectID) {
         ResponseAPI response = new ResponseAPI();
-        if(smartHomeSecurity.getAwayModeConfig().isAwayMode()){
+        if(smartHomeSecurity.getAwayModeConfig().isAwayMode() && simulationContext.getCurrentSimulationUser() != simulationContext.getAwayModeUser()){
             response.success = false;
             response.awayMode = true;
             response.timeBeforeAuthorities = smartHomeSecurity.getAwayModeConfig().getTimeBeforeAuthorities();
