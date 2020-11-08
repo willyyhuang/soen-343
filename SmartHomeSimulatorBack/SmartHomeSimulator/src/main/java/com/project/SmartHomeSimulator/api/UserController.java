@@ -1,6 +1,7 @@
 package com.project.SmartHomeSimulator.api;
 
 import com.project.SmartHomeSimulator.model.ResponseAPI;
+import com.project.SmartHomeSimulator.model.Role;
 import com.project.SmartHomeSimulator.model.User;
 import com.project.SmartHomeSimulator.module.SimulationContext;
 import com.project.SmartHomeSimulator.module.SmartHomeSecurity;
@@ -102,5 +103,4 @@ public class UserController {
         response.timeBeforeAuthorities = smartHomeSecurity.getAwayModeConfig().getTimeBeforeAuthorities();
         return response;
     }
-
 }

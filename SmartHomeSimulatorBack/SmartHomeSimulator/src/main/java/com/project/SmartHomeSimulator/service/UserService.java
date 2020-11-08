@@ -1,18 +1,25 @@
 package com.project.SmartHomeSimulator.service;
 
-import com.project.SmartHomeSimulator.module.SimulationContext;
-import com.project.SmartHomeSimulator.model.User;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
+
+import org.springframework.stereotype.Service;
+
+import com.project.SmartHomeSimulator.model.Role;
+import com.project.SmartHomeSimulator.model.User;
+import com.project.SmartHomeSimulator.module.SimulationContext;
 
 @Service("userService")
 public class UserService {
 
     private static SimulationContext simulationContext = SimulationContext.getInstance();
-
+    private final File userProfilesFile = new File("src\\main\\resources\\user_profiles.json.txt");
+    
     /**
      * adds a new user to the simulation context users list
      *
@@ -26,6 +33,26 @@ public class UserService {
                 simulationContext.setSimulationUsers(new ArrayList<User>());
             }
             simulationContext.getSimulationUsers().add(user);
+            // adding to user profiles file
+            
+            try {
+            	String jsonString = new Scanner(userProfilesFile).useDelimiter("\\Z").next();
+            	StringBuilder builder = new StringBuilder(jsonString);
+            	if (jsonString.length() <= 2) { // in case user profiles file is empty, we remove the "," separating elements
+            		builder.insert(jsonString.length() - 1, user.toString());
+            	} else {
+            		builder.insert(jsonString.length() - 1, "," + user.toString());
+            	}
+            	
+            	// writing the new user to the file
+            	FileWriter myWriter = new FileWriter(userProfilesFile);
+                myWriter.write(builder.toString());
+                myWriter.close();
+    		} catch (FileNotFoundException e) {
+    			e.printStackTrace();
+    		} catch (IOException e) {
+				e.printStackTrace();
+			}
             if (simulationContext.getHomeLayout() != null){
                 simulationContext.getHomeLayout().addUsersInHome(user.getHomeLocation());
                 simulationContext.notifyMonitors(user);
@@ -93,7 +120,7 @@ public class UserService {
      * @param name
      * @return - true if successful false if otherwise
      */
-    User findUserByName(String name) {
+    public User findUserByName(String name) {
         List<User> users = simulationContext.getSimulationUsers();
         if (users != null) {
             for (User user : users) {
