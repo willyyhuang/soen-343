@@ -35,6 +35,13 @@ const Dashboard = ({simulationConfig, consoleMessage, dispatch}) => {
     // eslint-disable-next-line
   }, [])
 
+  const getAwayModeDisableState = () => {
+    const {simulationUsers} = simulationConfig
+    const userInHouse = simulationUsers.filter((user) => user.homeLocation !== 'outside')
+    if (userInHouse.length > 0) return true
+    return false
+  }
+
   const simulationSwitchCard = (
     <Card>
       <Row>
@@ -57,9 +64,13 @@ const Dashboard = ({simulationConfig, consoleMessage, dispatch}) => {
       <Row className='row'>
         <Col>
           <Switch
+            disabled={getAwayModeDisableState()}
             className='item'
             checked={simulationConfig.awaymode}
-            onChange={(value) => setAwayMode(value) && fetchUserProfiles()} />
+            onChange={(value) => setAwayMode(value).then((response) => {
+              const {data} = response
+              addConsoleMessage(data.consoleMessage)
+            }) && fetchUserProfiles()} />
         </Col>
         <Col>
           <Typography.Text>Away Mode</Typography.Text>
