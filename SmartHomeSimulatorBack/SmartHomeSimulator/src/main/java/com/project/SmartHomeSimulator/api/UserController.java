@@ -1,7 +1,6 @@
 package com.project.SmartHomeSimulator.api;
 
 import com.project.SmartHomeSimulator.model.ResponseAPI;
-import com.project.SmartHomeSimulator.model.Role;
 import com.project.SmartHomeSimulator.model.User;
 import com.project.SmartHomeSimulator.module.SimulationContext;
 import com.project.SmartHomeSimulator.module.SmartHomeSecurity;
@@ -91,7 +90,7 @@ public class UserController {
         ResponseAPI response = new ResponseAPI();
         if(smartHomeSecurity.getAwayModeConfig().isAwayMode() && name.equals(simulationContext.getAwayModeUser().getName())){
             smartHomeSecurity.getAwayModeConfig().setAwayMode(false);
-            simulationContext.setAwaymode(false);
+            simulationContext.setAwayMode(false);
             simulationContext.setAwayModeUser(null);
         }
 

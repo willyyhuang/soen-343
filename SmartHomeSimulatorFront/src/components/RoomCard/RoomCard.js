@@ -1,39 +1,36 @@
+import {UserOutlined} from '@ant-design/icons'
 import {
-  Card, Divider, Row, Switch, Table, Typography,
+Card, Popover, Row, Typography,
 } from 'antd'
 import React from 'react'
-import {block, unblock} from '../../services'
+import {ObjectIcon} from '../index'
 
-const RoomCard = ({room, fetchUserProfiles}) => {
+const RoomCard = ({
+addConsoleMessage, users, room, fetchUserProfiles,
+}) => {
   const {name, objects} = room
-  const windows = objects.filter((item) => item.objectType === 'WINDOW')
-  const columns = [
-    {title: 'ID', dataIndex: 'id'},
-    {
-      title: 'Status',
-      render: (data) => (
-        <Switch checked={data.status} />
-      ),
-    },
-    {
-      title: 'Block Window',
-      render: (data) => {
-        const {id} = data
-        const payload = {id, name}
-        return (
-          <Switch onChange={(value) => (value ? block(payload) && fetchUserProfiles() : unblock(payload) && fetchUserProfiles())} checked={data.blocked} />
-        )
-      },
-    },
-  ]
 
   return (
-    <Card title={name}>
-      <Row justify='center'>
-        <Typography.Title level={5}>Windows</Typography.Title>
-        <Divider />
+    <Card
+      extra={users.map((user) => (
+        <Popover
+          placement='bottom'
+          content={<Typography.Text>{user.name}</Typography.Text>}>
+          <UserOutlined />
+        </Popover>
+      ))}
+      title={name}>
+      <Row>
+        {objects.length === 0
+          ? 'This room does not have any object'
+          : objects.map((item) => (
+            <ObjectIcon
+              addConsoleMessage={addConsoleMessage}
+              roomName={name}
+              object={item}
+              fetchUserProfiles={fetchUserProfiles} />
+            ))}
       </Row>
-      <Table columns={columns} dataSource={windows} pagination={false} />
     </Card>
   )
 }

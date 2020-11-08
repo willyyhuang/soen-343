@@ -1,13 +1,28 @@
 import {
-  Card, Col, Divider, Layout, Row, Switch, Typography,
+Button, Card, Col, Divider, Layout, Row, Switch, Typography,
 } from 'antd'
-import React, {useEffect} from 'react'
+import React, {useEffect, useState} from 'react'
 import {connect} from 'react-redux'
-import {RoomCard, SimulationParameterCard, SimulationProfileCard} from '../index'
+import {
+  SimulationParameterCard,
+  SimulationProfileCard,
+  SimulationFunctionalityCard,
+  OutputConsole,
+  EditAwayModeModal,
+} from '../index'
 import './Dashboard.css'
-import {getProfile, start, stop} from '../../services'
+import {
+getProfile, start, stop, setAutoMode, setAwayMode,
+} from '../../services'
 
-const Dashboard = ({simulationConfig, dispatch}) => {
+const Dashboard = ({simulationConfig, consoleMessage, dispatch}) => {
+  const {messages} = consoleMessage
+  const [speedRate, setSpeedRate] = useState(1)
+  const [editAwayModeModalVisible, setEditAwayModeModalVisible] = useState(false)
+
+  const addConsoleMessage = (message) => {
+    dispatch({type: 'ADD_CONSOLE_MESSAGE', payload: message})
+  }
   const fetchUserProfiles = () => {
     getProfile().then((response) => {
       const {data} = response
@@ -18,48 +33,108 @@ const Dashboard = ({simulationConfig, dispatch}) => {
   useEffect(() => {
     fetchUserProfiles()
     // eslint-disable-next-line
-}, [])
+  }, [])
+
+  const getAwayModeDisableState = () => {
+    const {simulationUsers} = simulationConfig
+    const userInHouse = simulationUsers.filter((user) => user.homeLocation !== 'outside')
+    if (userInHouse.length > 0) return true
+    return false
+  }
+
   const simulationSwitchCard = (
     <Card>
       <Row>
-        <Col span={8}>
+        <Switch
+          className='item'
+          checked={simulationConfig.simulationRunning}
+          onChange={(value) =>
+            (value
+              ? start() && fetchUserProfiles()
+              : stop() && fetchUserProfiles())} />
+        <Typography.Text>Simulation Mode</Typography.Text>
+      </Row>
+      <Row className='row'>
+        <Switch
+          className='item'
+          checked={simulationConfig.autoMode}
+          onChange={(value) => setAutoMode(value) && fetchUserProfiles()} />
+        <Typography.Text>Light Auto Mode</Typography.Text>
+      </Row>
+      <Row className='row'>
+        <Col>
           <Switch
+            disabled={getAwayModeDisableState()}
             className='item'
-            checked={simulationConfig.simulationRunning}
-            onChange={(value) => (value ? start() && fetchUserProfiles() : stop() && fetchUserProfiles())} />
-          <Typography.Text>Simulation Mode</Typography.Text>
+            checked={simulationConfig.awayMode}
+            onChange={(value) => setAwayMode(value).then((response) => {
+              const {data} = response
+              addConsoleMessage(data.consoleMessage)
+            }) && fetchUserProfiles()} />
         </Col>
+        <Col>
+          <Typography.Text>Away Mode</Typography.Text>
+        </Col>
+        {simulationConfig.awayMode
+          && <Col>
+            <Button className='button' onClick={() => setEditAwayModeModalVisible(true)}>Edit Parameters</Button>
+          </Col>}
       </Row>
     </Card>
   )
 
-  const {homeLayout, simulationRunning} = simulationConfig
   return (
     <Layout className='layout'>
-      <Layout.Header />
       <Layout.Content className='content'>
         <Row type='flex' align='top'>
-          <Col span={2} />
-          <Col span={8}>
-            <SimulationParameterCard simulationConfig={simulationConfig} fetchUserProfiles={fetchUserProfiles} />
+          {editAwayModeModalVisible && simulationConfig.homeLayout
+            && <EditAwayModeModal
+              visible={editAwayModeModalVisible}
+              simulationConfig={simulationConfig}
+              onClose={() => setEditAwayModeModalVisible(false)}
+              fetchUserProfiles={fetchUserProfiles} />}
+          <Col span={1} />
+          <Col span={6}>
+            <SimulationParameterCard
+              speedRate={speedRate}
+              setSpeedRate={setSpeedRate}
+              simulationConfig={simulationConfig}
+              fetchUserProfiles={fetchUserProfiles} />
             <Divider />
-            <SimulationProfileCard simulationConfig={simulationConfig} fetchUserProfiles={fetchUserProfiles} />
-            <Divider />
+            {simulationConfig.homeLayout && (
+              <>
+                <SimulationProfileCard
+                  simulationConfig={simulationConfig}
+                  fetchUserProfiles={fetchUserProfiles} />
+                <Divider />
+              </>
+            )}
             {simulationSwitchCard}
           </Col>
-          <Col span={2} />
-          <Col span={10}>
-            {simulationRunning && homeLayout && homeLayout.roomList.map((room) => <RoomCard key={room.name} room={room} fetchUserProfiles={fetchUserProfiles} />)}
+          <Col span={1} />
+          <Col span={15}>
+            {simulationConfig.simulationRunning
+              && simulationConfig.date
+              && simulationConfig.time && (
+                <SimulationFunctionalityCard
+                  addConsoleMessage={addConsoleMessage}
+                  speedRate={speedRate}
+                  simulationConfig={simulationConfig}
+                  fetchUserProfiles={fetchUserProfiles} />
+              )}
           </Col>
-          <Col span={2} />
         </Row>
       </Layout.Content>
+      <Layout.Footer style={{padding: 0}}>
+        <OutputConsole messages={messages} />
+      </Layout.Footer>
     </Layout>
   )
 }
 
 const mapStateToProps = (state) => ({
   simulationConfig: state.simulationConfig,
+  consoleMessage: state.consoleMessage,
 })
 
 Dashboard.displayName = 'Dashboard'

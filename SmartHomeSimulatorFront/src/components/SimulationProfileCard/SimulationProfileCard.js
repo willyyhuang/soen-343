@@ -1,10 +1,30 @@
 import React, {useState} from 'react'
 import {
-  Dropdown, Menu, Table, Modal, Row, Form, Input, Card, Button, Divider, Select,
+  Dropdown,
+  Menu,
+  Table,
+  Modal,
+  Row,
+  Form,
+  Input,
+  Card,
+  Button,
+  Divider,
+  Select,
+  Typography,
 } from 'antd'
-import {DownOutlined} from '@ant-design/icons'
 import {
-  addProfile, editProfile, deleteProfile, setCurrentProfile,
+  DownOutlined,
+  UserAddOutlined,
+  UserDeleteOutlined,
+  EditOutlined,
+  UserSwitchOutlined,
+} from '@ant-design/icons'
+import {
+  addProfile,
+  editProfile,
+  deleteProfile,
+  setCurrentProfile,
 } from '../../services'
 
 const ADD_PROFILE_DATA_INITIAL_STATE = {
@@ -21,54 +41,92 @@ const EDIT_PROFILE_DATA_INITIAL_STATE = {
 }
 
 const SimulationProfileCard = ({simulationConfig, fetchUserProfiles}) => {
-  const {simulationUsers, currentSimulationUser} = simulationConfig
-
-  const [addProfileFormData, setAddProfileFormData] = useState(ADD_PROFILE_DATA_INITIAL_STATE)
+  const {simulationUsers, currentSimulationUser, homeLayout} = simulationConfig
+  const {roomList} = homeLayout
+  const [addProfileFormData, setAddProfileFormData] = useState(
+    ADD_PROFILE_DATA_INITIAL_STATE,
+  )
   const [isAddUserModalVisible, setIsAddUserModalVisible] = useState(false)
-  const [editProfileFormData, setEditProfileFormData] = useState(EDIT_PROFILE_DATA_INITIAL_STATE)
+  const [editProfileFormData, setEditProfileFormData] = useState(
+    EDIT_PROFILE_DATA_INITIAL_STATE,
+  )
   const [isEditUserModalVisible, setIsEditUserModalVisible] = useState(false)
 
-  const columns = [{
-    title: 'Name',
-    dataIndex: 'name',
-  },
-  {
-    title: 'Role',
-    dataIndex: 'role',
-  },
-  {
-    title: 'Home Location',
-    dataIndex: 'homeLocation',
-  },
-  {
-    title: 'Actions',
-    render: (data) => {
-      const menu = (
-        <Menu onClick={(value) => {
-          if (value.key === 'editLocation') {
-            setEditProfileFormData({name: data.name, type: value.key})
-            setIsEditUserModalVisible(true)
-          } else if (value.key === 'editName') {
-            setEditProfileFormData({name: data.name, type: value.key})
-            setIsEditUserModalVisible(true)
-          } else if (value.key === 'delete') {
-            deleteProfile(data.name).then((response) => {
-              if (response.data) {
-                fetchUserProfiles()
-              }
-            })
-          }
-        }}>
-          <Menu.Item key='editLocation'>Edit Home Location</Menu.Item>
-          <Menu.Item key='editName'>Edit Name</Menu.Item>
-          <Menu.Item key='delete'>Delete</Menu.Item>
-        </Menu>
-      )
-      return <Dropdown overlay={menu} trigger={['click']}>
-        <DownOutlined />
-      </Dropdown>
+  const columns = [
+    {
+      title: 'Name',
+      dataIndex: 'name',
     },
-  }]
+    {
+      title: 'Role',
+      dataIndex: 'role',
+      render: (data) => {
+        let enumString
+        switch (data) {
+          case 'PARENT':
+            enumString = 'Parent'
+            break
+          case 'CHILD':
+            enumString = 'Child'
+            break
+          case 'GUEST':
+            enumString = 'Guest'
+            break
+          case 'STRANGER':
+            enumString = 'Stranger'
+            break
+          default:
+            enumString = null
+        }
+        return enumString
+      },
+    },
+    {
+      title: 'Home Location',
+      dataIndex: 'homeLocation',
+    },
+    {
+      title: 'Actions',
+      render: (data) => {
+        const menu = (
+          <Menu
+            onClick={(value) => {
+              if (value.key === 'editLocation') {
+                setEditProfileFormData({name: data.name, type: value.key})
+                setIsEditUserModalVisible(true)
+              } else if (value.key === 'editName') {
+                setEditProfileFormData({name: data.name, type: value.key})
+                setIsEditUserModalVisible(true)
+              } else if (value.key === 'delete') {
+                deleteProfile(data.name).then((response) => {
+                  if (response.data) {
+                    fetchUserProfiles()
+                  }
+                })
+              }
+            }}>
+            <Menu.Item key='editLocation'>
+              <EditOutlined />
+              Change Home Location
+            </Menu.Item>
+            <Menu.Item key='editName'>
+              <EditOutlined />
+              Edit Name
+            </Menu.Item>
+            <Menu.Item key='delete'>
+              <UserDeleteOutlined />
+              Delete
+            </Menu.Item>
+          </Menu>
+        )
+        return (
+          <Dropdown overlay={menu} trigger={['click']}>
+            <DownOutlined />
+          </Dropdown>
+        )
+      },
+    },
+  ]
 
   const addProfileModal = (
     <Modal
@@ -89,13 +147,46 @@ const SimulationProfileCard = ({simulationConfig, fetchUserProfiles}) => {
       }}
       visible={isAddUserModalVisible}>
       <Form.Item label='Name'>
-        <Input value={addProfileFormData.name} onChange={(e) => setAddProfileFormData({name: e.target.value, role: addProfileFormData.role, homeLocation: addProfileFormData.homeLocation})} placeholder='enter a name' />
+        <Input
+          value={addProfileFormData.name}
+          onChange={(e) =>
+            setAddProfileFormData({
+              name: e.target.value,
+              role: addProfileFormData.role,
+              homeLocation: addProfileFormData.homeLocation,
+            })}
+          placeholder='enter a name' />
       </Form.Item>
       <Form.Item label='Role'>
-        <Input value={addProfileFormData.role} onChange={(e) => setAddProfileFormData({name: addProfileFormData.name, role: e.target.value, homeLocation: addProfileFormData.homeLocation})} placeholder='enter a role' />
+        <Select
+          value={addProfileFormData.role}
+          onChange={(value) =>
+            setAddProfileFormData({
+              name: addProfileFormData.name,
+              role: value,
+              homeLocation: addProfileFormData.homeLocation,
+            })}>
+          <Select.Option value='PARENT'>Parent</Select.Option>
+          <Select.Option value='CHILD'>Child</Select.Option>
+          <Select.Option value='GUEST'>Guest</Select.Option>
+          <Select.Option value='STRANGER'>Stranger</Select.Option>
+        </Select>
       </Form.Item>
       <Form.Item label='Home Location'>
-        <Input value={addProfileFormData.homeLocation} onChange={(e) => setAddProfileFormData({name: addProfileFormData.name, role: addProfileFormData.role, homeLocation: e.target.value})} placeholder='enter a home location' />
+        <Select
+          value={addProfileFormData.homeLocation}
+          onChange={(value) =>
+            setAddProfileFormData({
+              name: addProfileFormData.name,
+              role: addProfileFormData.role,
+              homeLocation: value,
+            })}>
+          {roomList.length === 0
+            ? null
+            : roomList.map((room) => (
+              <Select.Option value={room.name}>{room.name}</Select.Option>
+              ))}
+        </Select>
       </Form.Item>
     </Modal>
   )
@@ -112,27 +203,41 @@ const SimulationProfileCard = ({simulationConfig, fetchUserProfiles}) => {
         setIsEditUserModalVisible(false)
         setEditProfileFormData(EDIT_PROFILE_DATA_INITIAL_STATE)
       }}
-      onCancel={() => setEditProfileFormData(EDIT_PROFILE_DATA_INITIAL_STATE)}
+      onCancel={() => {
+        setIsEditUserModalVisible(false)
+        setEditProfileFormData(EDIT_PROFILE_DATA_INITIAL_STATE)
+      }}
       visible={isEditUserModalVisible}>
-      {editProfileFormData.type === 'editLocation' ? <Form.Item label='Home Location'>
-        <Input
-          value={editProfileFormData.homeLocation}
-          onChange={(e) => setEditProfileFormData({
-            type: editProfileFormData.type,
-            name: editProfileFormData.name,
-            homeLocation: e.target.value,
-          })}
-          placeholder='select a room' />
-      </Form.Item> : <Form.Item label='New Name'>
-        <Input
-          value={editProfileFormData.newName}
-          onChange={(e) => setEditProfileFormData({
-            type: editProfileFormData.type,
-            name: editProfileFormData.name,
-            newName: e.target.value,
-          })}
-          placeholder='enter a new name' />
-      </Form.Item>}
+      {editProfileFormData.type === 'editLocation' ? (
+        <Form.Item label='Home Location'>
+          <Select
+            value={editProfileFormData.homeLocation}
+            onChange={(value) =>
+              setEditProfileFormData({
+                type: editProfileFormData.type,
+                name: editProfileFormData.name,
+                homeLocation: value,
+              })}>
+            {roomList.length === 0
+              ? null
+              : roomList.map((room) => (
+                <Select.Option value={room.name}>{room.name}</Select.Option>
+                ))}
+          </Select>
+        </Form.Item>
+      ) : (
+        <Form.Item label='New Name'>
+          <Input
+            value={editProfileFormData.newName}
+            onChange={(e) =>
+              setEditProfileFormData({
+                type: editProfileFormData.type,
+                name: editProfileFormData.name,
+                newName: e.target.value,
+              })}
+            placeholder='enter a new name' />
+        </Form.Item>
+      )}
     </Modal>
   )
 
@@ -148,21 +253,36 @@ const SimulationProfileCard = ({simulationConfig, fetchUserProfiles}) => {
         }}
         value={currentSimulationUser && currentSimulationUser.name}
         placeholder='No Profile Selected'>
-        {simulationUsers && simulationUsers.map((item) => <Select.Option key={item.name}>{item.name}</Select.Option>)}
+        {simulationUsers
+          && simulationUsers.map((item) => (
+            <Select.Option key={item.name}>{item.name}</Select.Option>
+          ))}
       </Select>
     </Form.Item>
   )
 
   return (
-    <Card title='Simulation Profiles'>
+    <Card
+      title={
+        <Typography.Text>
+          <UserSwitchOutlined style={{marginRight: 10}} />
+          Simulation Profiles
+        </Typography.Text>
+      }>
       {addProfileModal}
       {editProfileModal}
       {profileSelect}
       <Row>
-        <Button onClick={() => setIsAddUserModalVisible(true)}>Add Profile</Button>
+        <Button onClick={() => setIsAddUserModalVisible(true)}>
+          <UserAddOutlined />
+          Add Profile
+        </Button>
       </Row>
       <Divider />
-      <Table pagination={false} dataSource={simulationUsers} columns={columns} />
+      <Table
+        pagination={false}
+        dataSource={simulationUsers}
+        columns={columns} />
     </Card>
   )
 }
