@@ -107,6 +107,17 @@ export const awayMode = `${appsettings.baseApiUrl}/api/v1/simulation/awayMode`
 export const timeBeforeAuthority = `${appsettings.baseApiUrl}/api/v1/simulation/awayMode/timeBeforeAuthorities`
 export const awayModeLight = `${appsettings.baseApiUrl}/api/v1/simulation/awayMode/setLights`
 export const timeToKeepLightOn = `${appsettings.baseApiUrl}/api/v1/simulation/awayMode/setTimeToKeepLightsOn`
+export const awayModeLightStatus = `${appsettings.baseApiUrl}/api/v1/simulation/awayMode/turnOnOffLights`
+
+export async function setAwayModeLightStatus(payload) {
+  return axios({
+    method: 'PUT',
+    url: awayModeLightStatus,
+    params: {
+      status: payload,
+    },
+  })
+}
 
 export async function setLights(payload) {
   return axios({

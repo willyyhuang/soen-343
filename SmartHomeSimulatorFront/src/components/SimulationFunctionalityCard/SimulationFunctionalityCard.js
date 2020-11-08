@@ -6,7 +6,7 @@ import moment from 'moment'
 import Clock from 'react-clock'
 import {RoomCard} from '../index'
 import 'react-clock/dist/Clock.css'
-import {setSimulationDate, setSimulationTime} from '../../services'
+import {setSimulationDate, setSimulationTime, setAwayModeLightStatus} from '../../services'
 
 const SimulationFunctionalityCard = ({
   addConsoleMessage,
@@ -20,18 +20,48 @@ const SimulationFunctionalityCard = ({
     homeLayout,
     date,
     time,
+    awayMode,
+    startLightsOn,
+    endLightsOn,
   } = simulationConfig
+  const [autoLightOn, setAutoLightOn] = useState(false)
   const [currentTime, setCurrentTime] = useState(moment(date.concat(time)))
   const [secondsPassed, setSecondsPassed] = useState(0)
   const [value, setValue] = useState(
     new Date(currentTime.format('YYYY-MM-DD HH:mm:ss')),
   )
+  const startLightsOnMomentObj = moment(date.concat(`T${startLightsOn}`))
+  const endLightsOnMomentObj = moment(date.concat(`T${endLightsOn}`))
 
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentTime(currentTime.add(1, 'seconds'))
       setValue(new Date(currentTime.format('YYYY-MM-DD HH:mm:ss')))
       setSecondsPassed(secondsPassed + 1)
+      if (awayMode) {
+        if (currentTime.isBetween(startLightsOnMomentObj, endLightsOnMomentObj)) {
+          if (!autoLightOn) {
+            setAwayModeLightStatus(true).then((response) => {
+              const {data} = response
+              if (data) {
+                addConsoleMessage(data.consoleMessage)
+              }
+            })
+            setAutoLightOn(true)
+            fetchUserProfiles()
+          }
+        }
+        if (autoLightOn && !currentTime.isBetween(startLightsOnMomentObj, endLightsOnMomentObj)) {
+          setAwayModeLightStatus(false).then((response) => {
+            const {data} = response
+            if (data) {
+              addConsoleMessage(data.consoleMessage)
+            }
+          })
+          setAutoLightOn(false)
+          fetchUserProfiles()
+        }
+      }
     }, 1000 / speedRate)
     return () => {
       clearInterval(interval)
