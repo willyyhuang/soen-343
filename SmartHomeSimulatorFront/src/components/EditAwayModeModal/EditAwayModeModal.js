@@ -26,7 +26,7 @@ visible, onClose, simulationConfig, fetchUserProfiles,
     }
 
     return (
-      <Modal footer={null} visible={visible} onCancel={onClose}>
+      <Modal title='SHP Parameters' footer={null} visible={visible} onCancel={onClose}>
         <Form.Item label='Authority Alert Time (s)'>
           <InputNumber
             value={timeBeforeAuthoroties}

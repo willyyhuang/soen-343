@@ -74,7 +74,7 @@ const Dashboard = ({simulationConfig, consoleMessage, dispatch}) => {
             }) && fetchUserProfiles()} />
         </Col>
         <Col>
-          <Typography.Text>Away Mode</Typography.Text>
+          <Typography.Text>Away Mode (SHP)</Typography.Text>
         </Col>
         {simulationConfig.awayMode
           && <Col>

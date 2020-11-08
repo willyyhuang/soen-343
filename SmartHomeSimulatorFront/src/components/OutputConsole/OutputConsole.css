@@ -1,5 +1,5 @@
 .card {
-    max-height: 10vh;
+    max-height: 15vh;
     overflow-y: scroll;
     display: flex;
     flex-direction: column-reverse;
