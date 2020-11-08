@@ -52,6 +52,7 @@ const SimulationFunctionalityCard = ({
         ),
       )
       fetchUserProfiles()
+      // eslint-disable-next-line
     }, [])
   return (
     <Card title='Smart Home Core Functionality'>
