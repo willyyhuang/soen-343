@@ -15,7 +15,7 @@ import java.util.Objects;
 @JsonComponent
 public class HomeLayout {
     private List<Room> roomList;
-    private int usersInHome;
+    public static int usersInHome;
     public static int windowCount = 1;
     private static int doorCount = 1;
     private static int lightCount = 1;
