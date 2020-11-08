@@ -12,7 +12,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
@@ -103,9 +104,12 @@ public class SmartHomeSecurityServiceTest {
         Room room = homeLayout.getRoomList().get(0);
         RoomObject light = room.getObjects().get(0);
 
-        HashMap<String, String> lights = new HashMap<>();
-        lights.put("string", light.getId().toString());
-        boolean result = smartHomeSecurityService.setLightsToRemainOn(lights,"12:00 to 13:00");
+        List<String> lightIDs = new ArrayList<String>();
+        lightIDs.add(light.getId().toString());
+        boolean result = smartHomeSecurityService.setLightIDs(lightIDs);
+        assertEquals(result, true);
+
+        result = smartHomeSecurityService.setTimeToKeepLightsOn("12:00 to 13:00");
         assertEquals(result, true);
     }
 }

@@ -6,7 +6,7 @@ import com.project.SmartHomeSimulator.module.SimulationContext;
 import com.project.SmartHomeSimulator.module.SmartHomeSecurityProxy;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
+import java.util.List;
 
 @Service
 public class SmartHomeSecurityService {
@@ -59,14 +59,27 @@ public class SmartHomeSecurityService {
      * sets the lights that should stay on for a period of time
      * before turning them off after setting away mode on
      *
-     * @param lights- HasMap of room names and their corresponding lights IDs
+     * @param lightIDs- List of light IDs
+     * @return- boolean
+     */
+    public boolean setLightIDs(List<String> lightIDs) {
+        if (simulationContext.getCurrentSimulationUser() != null) {
+            this.currentSimulationUserRole = simulationContext.getCurrentSimulationUser().getRole();
+            return smartHomeSecurityProxy.setLightIDs(currentSimulationUserRole,lightIDs);
+        }
+        return false;
+    }
+
+    /**
+     * sets the time to keep the lights on when away mode is on
+     *
      * @param timeToKeepLightsOn- amount of time to wait before closing the lights
      * @return- boolean
      */
-    public boolean setLightsToRemainOn(HashMap<String, String> lights, String timeToKeepLightsOn) {
+    public boolean setTimeToKeepLightsOn(String timeToKeepLightsOn) {
         if (simulationContext.getCurrentSimulationUser() != null) {
             this.currentSimulationUserRole = simulationContext.getCurrentSimulationUser().getRole();
-            return smartHomeSecurityProxy.setLightsToRemainOn(currentSimulationUserRole, lights, timeToKeepLightsOn);
+            return smartHomeSecurityProxy.setTimeToKeepLightsOn(currentSimulationUserRole, timeToKeepLightsOn);
         }
         return false;
     }

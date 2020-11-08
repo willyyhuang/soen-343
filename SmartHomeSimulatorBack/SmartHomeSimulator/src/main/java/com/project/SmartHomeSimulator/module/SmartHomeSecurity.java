@@ -1,11 +1,14 @@
 package com.project.SmartHomeSimulator.module;
 
+import com.project.SmartHomeSimulator.model.HomeLayout;
 import com.project.SmartHomeSimulator.model.Room;
 import com.project.SmartHomeSimulator.model.User;
 import com.project.SmartHomeSimulator.model.roomObjects.Door;
+import com.project.SmartHomeSimulator.model.roomObjects.Light;
 import com.project.SmartHomeSimulator.model.roomObjects.RoomObject;
 import com.project.SmartHomeSimulator.model.roomObjects.Window;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Stream;
@@ -17,14 +20,14 @@ public class SmartHomeSecurity extends Module implements Monitor {
     public static SimulationContext simulationContext = SimulationContext.getInstance();
     private AwayModeConfig awayModeConfig;
     private boolean alertModeOn;
-    private HashMap<String, String> lights;
+    private List<String> lightIDs;
     private String timeToKeepLightsOn;
 
     //this class cannot be instantiated
     private SmartHomeSecurity() {
         this.setName("SmartHomeSecurity");
         this.awayModeConfig = new AwayModeConfig();
-        this.lights = new HashMap<String, String>();
+        this.lightIDs = new ArrayList<String>();
     }
 
     public static SmartHomeSecurity getInstance() {
@@ -91,30 +94,33 @@ public class SmartHomeSecurity extends Module implements Monitor {
         }
     }
 
-    public void setLightsToRemainOn(HashMap<String, String> lights, String timeToKeepLightsOn) {
-        this.lights = lights;
+    public void setLightIDs(List<String> lightIDs) {
+        this.lightIDs = lightIDs;
+    }
+
+    public void setTimeToKeepLightsOn(String timeToKeepLightsOn) {
         this.timeToKeepLightsOn = timeToKeepLightsOn;
     }
 
     public boolean turnOnOffLights(boolean status) {
         smartHomeCoreFunctionality = SmartHomeCoreFunctionality.getInstance();
-        this.lights.forEach((roomName, lightID) -> {
-                    if (smartHomeCoreFunctionality.objectStateSwitcher(roomName, lightID, status)) {
-                        logSuccess("Light", roomName, status ? "turned on" : "turned off", "SHP module");
-                    } else {
-                        logMessage("[Failed] Turning off lights in " + roomName + ", requested by SHP, failed.");
-                    }
+        HomeLayout homeLayout = SimulationContext.getInstance().getHomeLayout();
+        String roomName;
+        for(String lightID: this.lightIDs){
+            roomName = homeLayout.getRoomNameByObjectID(lightID);
+            if(roomName != null){
+                if (smartHomeCoreFunctionality.objectStateSwitcher(roomName, lightID, status)) {
+                    logSuccess("Light", roomName, status ? "turned on" : "turned off", "SHP module");
+                } else {
+                    logMessage("[Failed] Turning off lights in " + roomName + ", requested by SHP, failed.");
                 }
-        );
+            }
+        }
         return true;
     }
 
     public String getTimeToKeepLightsOn() {
         return timeToKeepLightsOn;
-    }
-
-    public void setTimeToKeepLightsOn(String timeToKeepLightsOn) {
-        this.timeToKeepLightsOn = timeToKeepLightsOn;
     }
 
     public boolean isAlertModeOn() {
