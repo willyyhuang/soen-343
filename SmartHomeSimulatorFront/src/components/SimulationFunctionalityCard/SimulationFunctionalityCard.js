@@ -6,6 +6,7 @@ import moment from 'moment'
 import Clock from 'react-clock'
 import {RoomCard} from '../index'
 import 'react-clock/dist/Clock.css'
+import {setSimulationDate, setSimulationTime} from '../../services'
 
 const SimulationFunctionalityCard = ({
   addConsoleMessage,
@@ -21,6 +22,7 @@ const SimulationFunctionalityCard = ({
     time,
   } = simulationConfig
   const [currentTime, setCurrentTime] = useState(moment(date.concat(time)))
+  const [secondsPassed, setSecondsPassed] = useState(0)
   const [value, setValue] = useState(
     new Date(currentTime.format('YYYY-MM-DD HH:mm:ss')),
   )
@@ -29,9 +31,22 @@ const SimulationFunctionalityCard = ({
     const interval = setInterval(() => {
       setCurrentTime(currentTime.add(1, 'seconds'))
       setValue(new Date(currentTime.format('YYYY-MM-DD HH:mm:ss')))
+      setSecondsPassed(secondsPassed + 1)
     }, 1000 / speedRate)
     return () => {
       clearInterval(interval)
+      currentTime.add(secondsPassed * speedRate, 'seconds')
+      const formattedDate = currentTime.format()
+      setSimulationDate(
+        formattedDate.substring(0, formattedDate.indexOf('T')),
+      )
+      setSimulationTime(
+        formattedDate.substring(
+          formattedDate.indexOf('T'),
+          formattedDate.length,
+        ),
+      )
+      fetchUserProfiles()
     }
     // eslint-disable-next-line
   }, [simulationConfig])
