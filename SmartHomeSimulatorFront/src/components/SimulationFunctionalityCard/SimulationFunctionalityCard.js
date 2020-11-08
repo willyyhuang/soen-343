@@ -45,10 +45,12 @@ const SimulationFunctionalityCard = ({
               const {data} = response
               if (data) {
                 addConsoleMessage(data.consoleMessage)
+                setTimeout(() => {
+                  setAutoLightOn(true)
+                  fetchUserProfiles()
+                }, 2000)
               }
             })
-            setAutoLightOn(true)
-            fetchUserProfiles()
           }
         }
         if (autoLightOn && !currentTime.isBetween(startLightsOnMomentObj, endLightsOnMomentObj)) {
@@ -56,10 +58,12 @@ const SimulationFunctionalityCard = ({
             const {data} = response
             if (data) {
               addConsoleMessage(data.consoleMessage)
+              setTimeout(() => {
+                setAutoLightOn(false)
+                fetchUserProfiles()
+              }, 2000)
             }
           })
-          setAutoLightOn(false)
-          fetchUserProfiles()
         }
       }
     }, 1000 / speedRate)
