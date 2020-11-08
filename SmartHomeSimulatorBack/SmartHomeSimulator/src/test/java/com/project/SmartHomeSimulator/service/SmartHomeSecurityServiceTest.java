@@ -67,10 +67,10 @@ public class SmartHomeSecurityServiceTest {
 
     /**
      * Time before calling authorities set test
-     * Use case ID = 8
+     * Use case ID = 4
      */
     @Test
-    public void setTimeBeforeAuthorities_8() throws JsonProcessingException {
+    public void setTimeBeforeAuthorities_4() throws JsonProcessingException {
         JSONObject jsonUser = new JSONObject();
         jsonUser.put("name", "testUser");
         jsonUser.put("role", "PARENT");
@@ -86,10 +86,10 @@ public class SmartHomeSecurityServiceTest {
 
     /**
      * light and time interval set for away mode
-     * Use case ID = 9
+     * Use case ID = 4
      */
     @Test
-    public void setTimeInterval_9() throws JsonProcessingException {
+    public void setTimeInterval_4() throws JsonProcessingException {
         JSONObject jsonUser = new JSONObject();
         jsonUser.put("name", "testUser");
         jsonUser.put("role", "PARENT");
