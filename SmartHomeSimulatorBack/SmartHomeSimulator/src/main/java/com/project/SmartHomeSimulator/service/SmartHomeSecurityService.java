@@ -21,7 +21,7 @@ public class SmartHomeSecurityService {
      * @return boolean
      */
     public boolean setAwayMode(boolean awayMode) {
-        if (simulationContext.getCurrentSimulationUser() != null) {
+        if (simulationContext.getCurrentSimulationUser() != null && simulationContext.isSimulationRunning()) {
             this.currentSimulationUserRole = simulationContext.getCurrentSimulationUser().getRole();
             if (awayMode) {
                 if (simulationContext.getHomeLayout() != null && simulationContext.getHomeLayout().isHomeEmpty()) {
@@ -81,7 +81,13 @@ public class SmartHomeSecurityService {
     public boolean setTimeToKeepLightsOn(String timeToKeepLightsOn) {
         if (simulationContext.getCurrentSimulationUser() != null) {
             this.currentSimulationUserRole = simulationContext.getCurrentSimulationUser().getRole();
-            return smartHomeSecurityProxy.setTimeToKeepLightsOn(currentSimulationUserRole, timeToKeepLightsOn);
+            boolean success = smartHomeSecurityProxy.setTimeToKeepLightsOn(currentSimulationUserRole, timeToKeepLightsOn);
+            if(success){
+                String[] split = timeToKeepLightsOn.split(" ");
+                simulationContext.setStartLightsOn(split[0]);
+                simulationContext.setEndLightsOn(split[2]);
+            }
+            return success;
         }
         return false;
     }

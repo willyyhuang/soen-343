@@ -1,0 +1,40 @@
+[Window] living room Window was close by SHP module's request.
+[Window] living room Window was close by SHP module's request.
+[Window] bedroom1 Window was close by SHP module's request.
+[Window] kitchen Window was close by SHP module's request.
+[Window] bedroom2 Window was close by SHP module's request.
+[Door] building entrance Door was lock by SHP module's request.
+[Door] garage Door was lock by SHP module's request.
+[Door] backyard Door was lock by SHP module's request.
+[Window] living room Window was close by SHP module's request.
+[Window] living room Window was close by SHP module's request.
+[Window] bedroom1 Window was close by SHP module's request.
+[Window] kitchen Window was close by SHP module's request.
+[Window] bedroom2 Window was close by SHP module's request.
+[Door] building entrance Door was lock by SHP module's request.
+[Door] garage Door was lock by SHP module's request.
+[Door] backyard Door was lock by SHP module's request.
+[Window] living room Window was close by SHP module's request.
+[Window] living room Window was close by SHP module's request.
+[Window] bedroom1 Window was close by SHP module's request.
+[Window] kitchen Window was close by SHP module's request.
+[Window] bedroom2 Window was close by SHP module's request.
+[Door] building entrance Door was lock by SHP module's request.
+[Door] garage Door was lock by SHP module's request.
+[Door] backyard Door was lock by SHP module's request.
+[Window] living room Window was close by SHP module's request.
+[Window] living room Window was close by SHP module's request.
+[Window] bedroom1 Window was close by SHP module's request.
+[Window] kitchen Window was close by SHP module's request.
+[Window] bedroom2 Window was close by SHP module's request.
+[Door] building entrance Door was lock by SHP module's request.
+[Door] garage Door was lock by SHP module's request.
+[Door] backyard Door was lock by SHP module's request.
+[Window] living room Window was close by SHP module's request.
+[Window] living room Window was close by SHP module's request.
+[Window] bedroom1 Window was close by SHP module's request.
+[Window] kitchen Window was close by SHP module's request.
+[Window] bedroom2 Window was close by SHP module's request.
+[Door] building entrance Door was lock by SHP module's request.
+[Door] garage Door was lock by SHP module's request.
+[Door] backyard Door was lock by SHP module's request.

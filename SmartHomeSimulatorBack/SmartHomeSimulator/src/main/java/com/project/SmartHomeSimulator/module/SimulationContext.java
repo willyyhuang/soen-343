@@ -27,6 +27,8 @@ public class SimulationContext {
 	private boolean autoMode = false;
 	private boolean awayMode = false;
 	private int timeBeforeAuthoroties = 0;
+	private String startLightsOn;
+	private String endLightsOn;
 	private HomeLayout homeLayout;
 	private List<Monitor> monitors;
 
@@ -34,6 +36,22 @@ public class SimulationContext {
 	private static int counter = 0;
 
 	public static SimulationContext simulationContext = null;
+
+	public String getEndLightsOn() {
+		return endLightsOn;
+	}
+
+	public void setEndLightsOn(String endLightsOn) {
+		this.endLightsOn = endLightsOn;
+	}
+
+	public String getStartLightsOn() {
+		return startLightsOn;
+	}
+
+	public void setStartLightsOn(String startLightsOn) {
+		this.startLightsOn = startLightsOn;
+	}
 
 	private SimulationContext() {
 		monitors = new ArrayList<Monitor>();
