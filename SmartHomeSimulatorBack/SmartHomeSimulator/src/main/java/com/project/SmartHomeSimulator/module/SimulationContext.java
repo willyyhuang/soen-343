@@ -1,11 +1,15 @@
 package com.project.SmartHomeSimulator.module;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.project.SmartHomeSimulator.model.HomeLayout;
 import com.project.SmartHomeSimulator.model.User;
-import org.springframework.stereotype.Component;
-
-import java.util.ArrayList;
-import java.util.List;
 
 
 /**
@@ -27,6 +31,8 @@ public class SimulationContext {
 	private HomeLayout homeLayout;
 	private List<Monitor> monitors;
 
+	private final File userProfilesJSON = new File("src\\main\\resources\\user_profiles.json.txt");
+	private static int counter = 0;
 
 	public static SimulationContext simulationContext = null;
 
@@ -117,7 +123,21 @@ public class SimulationContext {
 	}
 
 	public List<User> getSimulationUsers() {
+		counter++;
+		if (counter == 1) {
+			loadUserProfiles();
+		}
 		return simulationUsers;
+	}
+	
+	public void loadUserProfiles() {
+		ObjectMapper mapper = new ObjectMapper();
+		
+		try {
+			simulationUsers = mapper.readValue(userProfilesJSON, new TypeReference<List<User>>(){});
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void setSimulationUsers(List<User> simulationUsers) {
@@ -170,6 +190,4 @@ public class SimulationContext {
 				+ ", date=" + date + ", currentSimulationUser=" + currentSimulationUser + ", simulationUsers="
 				+ simulationUsers + ", homeLayout=" + homeLayout + ", simulationRunning=" + simulationRunning + "]";
 	}
-
-	
 }
