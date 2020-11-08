@@ -1,18 +1,37 @@
 import {
-  Button, Card, Upload, InputNumber, Form, TimePicker, DatePicker, Typography,
+  Button,
+  Card,
+  Upload,
+  InputNumber,
+  Form,
+  TimePicker,
+  DatePicker,
+  Typography,
 } from 'antd'
 import React, {useEffect, useState} from 'react'
 import moment from 'moment'
 import {SettingOutlined, HomeOutlined} from '@ant-design/icons'
 import {
-  setSimulationDate, setSimulationTime, setSimulationInsideTemp, setSimulationOutsideTemp, uploadLayout, stop,
+  setSimulationDate,
+  setSimulationTime,
+  setSimulationInsideTemp,
+  setSimulationOutsideTemp,
+  uploadLayout,
+  stop,
 } from '../../services'
 
 const SimulationParameterCard = ({
-  simulationConfig, fetchUserProfiles, setSpeedRate, speedRate,
+  simulationConfig,
+  fetchUserProfiles,
+  setSpeedRate,
+  speedRate,
 }) => {
   const {
-    insideTemp, outsideTemp, time, date, simulationRunning,
+    insideTemp,
+    outsideTemp,
+    time,
+    date,
+    simulationRunning,
   } = simulationConfig
   const PARAMETER_FORM_DATA_INITIAL_STATE = {
     insideTemp,
@@ -20,7 +39,9 @@ const SimulationParameterCard = ({
     time: time ? moment(date.concat(time)) : null,
     date: date ? moment(date) : null,
   }
-  const [parameterFormData, setParameterFormData] = useState(PARAMETER_FORM_DATA_INITIAL_STATE)
+  const [parameterFormData, setParameterFormData] = useState(
+    PARAMETER_FORM_DATA_INITIAL_STATE,
+  )
   const [speedRateFormData, setSpeedRateFormData] = useState(speedRate)
 
   useEffect(() => {
@@ -35,56 +56,80 @@ const SimulationParameterCard = ({
 
   return (
     <Card
-      extra={<Upload
-        customRequest={async (options) => {
-          const {file, onSuccess} = options
-          const reader = new FileReader()
-          let payload
-          reader.onloadend = (e) => {
-            payload = e.target.result
-            if (payload) {
-              uploadLayout(payload).then((response) => {
-                onSuccess(response.body)
-                fetchUserProfiles()
-              })
+      extra={
+        <Upload
+          customRequest={async (options) => {
+            const {file, onSuccess} = options
+            const reader = new FileReader()
+            let payload
+            reader.onloadend = (e) => {
+              payload = e.target.result
+              if (payload) {
+                uploadLayout(payload).then((response) => {
+                  onSuccess(response.body)
+                  fetchUserProfiles()
+                })
+              }
             }
-          }
-          reader.readAsText(file)
-        }}>
-        <Button>
-          <HomeOutlined />
-          Upload House Layout File
-        </Button>
-      </Upload>}
-      actions={[<Button onClick={() => {
-        if (parameterFormData.insideTemp !== PARAMETER_FORM_DATA_INITIAL_STATE.insideTemp) {
-          setSimulationInsideTemp(parameterFormData.insideTemp)
-        }
-        if (parameterFormData.outsideTemp !== PARAMETER_FORM_DATA_INITIAL_STATE.outsideTemp) {
-          setSimulationOutsideTemp(parameterFormData.outsideTemp)
-        }
-        if (parameterFormData.time !== PARAMETER_FORM_DATA_INITIAL_STATE.time) {
-          const formattedTime = parameterFormData.time.format()
-          setSimulationTime(formattedTime.substring(formattedTime.indexOf('T'), formattedTime.length))
-        }
-        if (parameterFormData.date !== PARAMETER_FORM_DATA_INITIAL_STATE.date) {
-          const formattedDate = parameterFormData.date.format()
-          setSimulationDate(formattedDate.substring(0, formattedDate.indexOf('T')))
-        }
-        if (speedRateFormData !== speedRate) {
-          setSpeedRate(speedRateFormData)
-        }
-        fetchUserProfiles()
-        if (simulationRunning) {
-          stop()
-        }
-      }}>
-        Save
-      </Button>]}
-      title={<Typography.Text>
-        <SettingOutlined style={{marginRight: 10}} />
-        Simulation Parameter
-      </Typography.Text>}>
+            reader.readAsText(file)
+          }}>
+          <Button>
+            <HomeOutlined />
+            Upload House Layout File
+          </Button>
+        </Upload>
+      }
+      actions={[
+        <Button
+          onClick={() => {
+            if (
+              parameterFormData.insideTemp
+              !== PARAMETER_FORM_DATA_INITIAL_STATE.insideTemp
+            ) {
+              setSimulationInsideTemp(parameterFormData.insideTemp)
+            }
+            if (
+              parameterFormData.outsideTemp
+              !== PARAMETER_FORM_DATA_INITIAL_STATE.outsideTemp
+            ) {
+              setSimulationOutsideTemp(parameterFormData.outsideTemp)
+            }
+            if (
+              parameterFormData.time !== PARAMETER_FORM_DATA_INITIAL_STATE.time
+            ) {
+              const formattedTime = parameterFormData.time.format()
+              setSimulationTime(
+                formattedTime.substring(
+                  formattedTime.indexOf('T'),
+                  formattedTime.length,
+                ),
+              )
+            }
+            if (
+              parameterFormData.date !== PARAMETER_FORM_DATA_INITIAL_STATE.date
+            ) {
+              const formattedDate = parameterFormData.date.format()
+              setSimulationDate(
+                formattedDate.substring(0, formattedDate.indexOf('T')),
+              )
+            }
+            if (speedRateFormData !== speedRate) {
+              setSpeedRate(speedRateFormData)
+            }
+            fetchUserProfiles()
+            if (simulationRunning) {
+              stop()
+            }
+          }}>
+          Save
+        </Button>,
+      ]}
+      title={
+        <Typography.Text>
+          <SettingOutlined style={{marginRight: 10}} />
+          Simulation Parameter
+        </Typography.Text>
+      }>
       <Form.Item label='Temperature Indoor (°C)'>
         <InputNumber
           onChange={(value) => {
@@ -99,22 +144,24 @@ const SimulationParameterCard = ({
       </Form.Item>
       <Form.Item label='Temperature Outdoor (°C)'>
         <InputNumber
-          onChange={(value) => setParameterFormData({
-            insideTemp: parameterFormData.insideTemp,
-            outsideTemp: value,
-            time: parameterFormData.time,
-            date: parameterFormData.date,
-          })}
+          onChange={(value) =>
+            setParameterFormData({
+              insideTemp: parameterFormData.insideTemp,
+              outsideTemp: value,
+              time: parameterFormData.time,
+              date: parameterFormData.date,
+            })}
           value={parameterFormData.outsideTemp} />
       </Form.Item>
       <Form.Item label='Date'>
         <DatePicker
-          onChange={(value) => setParameterFormData({
-            insideTemp: parameterFormData.insideTemp,
-            outsideTemp: parameterFormData.outsideTemp,
-            time: parameterFormData.time,
-            date: value,
-          })}
+          onChange={(value) =>
+            setParameterFormData({
+              insideTemp: parameterFormData.insideTemp,
+              outsideTemp: parameterFormData.outsideTemp,
+              time: parameterFormData.time,
+              date: value,
+            })}
           placeholder='enter a date'
           value={parameterFormData.date} />
       </Form.Item>

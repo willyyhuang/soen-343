@@ -1,7 +1,14 @@
 import React from 'react'
 import {Popover, Form, Switch} from 'antd'
 import {
-  block, unblock, turnOnLight, turnOffLight, openRoomWindow, closeRoomWindow, openRoomDoor, closeRoomDoor,
+  block,
+  unblock,
+  turnOnLight,
+  turnOffLight,
+  openRoomWindow,
+  closeRoomWindow,
+  openRoomDoor,
+  closeRoomDoor,
 } from '../../services'
 import './ObjectIcon.css'
 
@@ -20,15 +27,25 @@ const ObjectIcon = ({roomName, object, fetchUserProfiles}) => {
   switch (objectType) {
     case 'LIGHT':
       Icon = object.status ? LightIconOn : LightIconOff
-      Content = <Switch
-        onChange={(value) => (value ? turnOnLight(payload) && fetchUserProfiles() : turnOffLight(payload) && fetchUserProfiles())}
-        checked={object.status} />
+      Content = (
+        <Switch
+          onChange={(value) =>
+            (value
+              ? turnOnLight(payload) && fetchUserProfiles()
+              : turnOffLight(payload) && fetchUserProfiles())}
+          checked={object.status} />
+      )
       break
     case 'DOOR':
       Icon = object.status ? DoorOpened : DoorClosed
-      Content = <Switch
-        onChange={(value) => (value ? openRoomDoor(payload) && fetchUserProfiles() : closeRoomDoor(payload) && fetchUserProfiles())}
-        checked={object.status} />
+      Content = (
+        <Switch
+          onChange={(value) =>
+            (value
+              ? openRoomDoor(payload) && fetchUserProfiles()
+              : closeRoomDoor(payload) && fetchUserProfiles())}
+          checked={object.status} />
+      )
       break
     case 'WINDOW':
       Icon = object.status ? WindowOpened : WindowClosed
@@ -36,12 +53,18 @@ const ObjectIcon = ({roomName, object, fetchUserProfiles}) => {
         <>
           <Form.Item label='Block with object'>
             <Switch
-              onChange={(value) => (value ? block(payload) && fetchUserProfiles() : unblock(payload) && fetchUserProfiles())}
+              onChange={(value) =>
+                (value
+                  ? block(payload) && fetchUserProfiles()
+                  : unblock(payload) && fetchUserProfiles())}
               checked={object.blocked} />
           </Form.Item>
           <Form.Item label='Turn on/off'>
             <Switch
-              onChange={(value) => (value ? openRoomWindow(payload) && fetchUserProfiles() : closeRoomWindow(payload) && fetchUserProfiles())}
+              onChange={(value) =>
+                (value
+                  ? openRoomWindow(payload) && fetchUserProfiles()
+                  : closeRoomWindow(payload) && fetchUserProfiles())}
               disabled={object.blocked}
               checked={object.status} />
           </Form.Item>
@@ -52,10 +75,16 @@ const ObjectIcon = ({roomName, object, fetchUserProfiles}) => {
       Icon = null
   }
 
-  return Icon && (
-    <Popover content={Content} title={name} placement='bottom' trigger='click'>
-      <img alt='objectIcon' className='image' width={50} src={Icon} />
-    </Popover>
+  return (
+    Icon && (
+      <Popover
+        content={Content}
+        title={name}
+        placement='bottom'
+        trigger='click'>
+        <img alt='objectIcon' className='image' width={50} src={Icon} />
+      </Popover>
+    )
   )
 }
 

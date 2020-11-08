@@ -5,9 +5,10 @@ import {Provider} from 'react-redux'
 import Router from './Router'
 import rootReducer from './models'
 
-const store = createStore(rootReducer,
-  window.__REDUX_DEVTOOLS_EXTENSION__
-  && window.__REDUX_DEVTOOLS_EXTENSION__())
+const store = createStore(
+  rootReducer,
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
+)
 
 const App = () => (
   <Provider store={store}>
@@ -15,7 +16,4 @@ const App = () => (
   </Provider>
 )
 
-ReactDOM.render(
-  <App />,
-  document.getElementById('root'),
-)
+ReactDOM.render(<App />, document.getElementById('root'))

@@ -218,10 +218,16 @@ export async function addProfile(payload) {
 export async function editProfile(payload) {
   return axios({
     method: 'POST',
-    url: payload.type === 'editLocation' ? editLocation : editName.replace(':name', payload.name),
-    params: payload.type === 'editLocation' ? {homeLocation: payload.homeLocation, name: payload.name} : {
-      newName: payload.newName,
-    },
+    url:
+      payload.type === 'editLocation'
+        ? editLocation
+        : editName.replace(':name', payload.name),
+    params:
+      payload.type === 'editLocation'
+        ? {homeLocation: payload.homeLocation, name: payload.name}
+        : {
+            newName: payload.newName,
+          },
   })
 }
 

@@ -8,7 +8,10 @@ const Router = ({dispatch, simulationConfig}) => {
   useEffect(() => {
     const sessionConfig = sessionStorage.getItem('simulationConfig')
     if (sessionConfig) {
-      dispatch({type: 'SET_SIMULATION_CONFIG_STATE', payload: JSON.parse(sessionConfig)})
+      dispatch({
+        type: 'SET_SIMULATION_CONFIG_STATE',
+        payload: JSON.parse(sessionConfig),
+      })
     } else {
       dispatch({type: 'RESET_STATE'})
     } // eslint-disable-next-line
@@ -21,8 +24,7 @@ const Router = ({dispatch, simulationConfig}) => {
   return (
     <BrowserRouter>
       <Route path='/dashboard' component={Dashboard} />
-      <Route
-        path='/*'>
+      <Route path='/*'>
         <Redirect to='/dashboard' />
       </Route>
     </BrowserRouter>

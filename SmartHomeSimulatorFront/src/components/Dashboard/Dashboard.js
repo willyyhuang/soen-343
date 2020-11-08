@@ -1,12 +1,16 @@
 import {
-  Card, Col, Divider, Layout, Row, Switch, Typography,
+Card, Col, Divider, Layout, Row, Switch, Typography,
 } from 'antd'
 import React, {useEffect, useState} from 'react'
 import {connect} from 'react-redux'
-import {SimulationParameterCard, SimulationProfileCard, SimulationFunctionalityCard} from '../index'
+import {
+  SimulationParameterCard,
+  SimulationProfileCard,
+  SimulationFunctionalityCard,
+} from '../index'
 import './Dashboard.css'
 import {
-  getProfile, start, stop, setAutoMode, setAwayMode,
+getProfile, start, stop, setAutoMode, setAwayMode,
 } from '../../services'
 
 const Dashboard = ({simulationConfig, consoleMessage, dispatch}) => {
@@ -22,7 +26,7 @@ const Dashboard = ({simulationConfig, consoleMessage, dispatch}) => {
   useEffect(() => {
     fetchUserProfiles()
     // eslint-disable-next-line
-}, [])
+  }, [])
 
   const simulationSwitchCard = (
     <Card>
@@ -30,7 +34,10 @@ const Dashboard = ({simulationConfig, consoleMessage, dispatch}) => {
         <Switch
           className='item'
           checked={simulationConfig.simulationRunning}
-          onChange={(value) => (value ? start() && fetchUserProfiles() : stop() && fetchUserProfiles())} />
+          onChange={(value) =>
+            (value
+              ? start() && fetchUserProfiles()
+              : stop() && fetchUserProfiles())} />
         <Typography.Text>Simulation Mode</Typography.Text>
       </Row>
       <Row style={{marginTop: 5}}>
@@ -55,28 +62,44 @@ const Dashboard = ({simulationConfig, consoleMessage, dispatch}) => {
         <Row type='flex' align='top'>
           <Col span={1} />
           <Col span={6}>
-            <SimulationParameterCard speedRate={speedRate} setSpeedRate={setSpeedRate} simulationConfig={simulationConfig} fetchUserProfiles={fetchUserProfiles} />
+            <SimulationParameterCard
+              speedRate={speedRate}
+              setSpeedRate={setSpeedRate}
+              simulationConfig={simulationConfig}
+              fetchUserProfiles={fetchUserProfiles} />
             <Divider />
-            {simulationConfig.homeLayout && <>
-              <SimulationProfileCard simulationConfig={simulationConfig} fetchUserProfiles={fetchUserProfiles} />
-              <Divider />
-            </>}
+            {simulationConfig.homeLayout && (
+              <>
+                <SimulationProfileCard
+                  simulationConfig={simulationConfig}
+                  fetchUserProfiles={fetchUserProfiles} />
+                <Divider />
+              </>
+            )}
             {simulationSwitchCard}
           </Col>
           <Col span={1} />
           <Col span={15}>
-            {simulationConfig.simulationRunning && simulationConfig.date && simulationConfig.time
-              && <SimulationFunctionalityCard speedRate={speedRate} simulationConfig={simulationConfig} fetchUserProfiles={fetchUserProfiles} />}
+            {simulationConfig.simulationRunning
+              && simulationConfig.date
+              && simulationConfig.time && (
+                <SimulationFunctionalityCard
+                  speedRate={speedRate}
+                  simulationConfig={simulationConfig}
+                  fetchUserProfiles={fetchUserProfiles} />
+              )}
           </Col>
         </Row>
       </Layout.Content>
       <Layout.Footer style={{padding: 0}}>
         <Card title='Output Console'>
-          {messages.length > 0 ? messages.forEach((message) => (
-            <Row>
-              <Typography.Text>{message}</Typography.Text>
-            </Row>
-          )) : null}
+          {messages.length > 0
+            ? messages.forEach((message) => (
+              <Row>
+                <Typography.Text>{message}</Typography.Text>
+              </Row>
+              ))
+            : null}
         </Card>
       </Layout.Footer>
     </Layout>

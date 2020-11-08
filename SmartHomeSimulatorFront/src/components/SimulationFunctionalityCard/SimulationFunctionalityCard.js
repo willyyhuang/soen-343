@@ -1,27 +1,34 @@
 import React, {useState, useEffect} from 'react'
 import {
-  Card, Row, Col, Typography,
+Card, Row, Col, Typography,
 } from 'antd'
 import moment from 'moment'
 import Clock from 'react-clock'
 import {RoomCard} from '../index'
 import 'react-clock/dist/Clock.css'
 
-const SimulationFunctionalityCard = ({speedRate, simulationConfig, fetchUserProfiles}) => {
+const SimulationFunctionalityCard = ({
+  speedRate,
+  simulationConfig,
+  fetchUserProfiles,
+}) => {
   const {
-    simulationUsers, simulationRunning, homeLayout, date, time,
+    simulationUsers,
+    simulationRunning,
+    homeLayout,
+    date,
+    time,
   } = simulationConfig
   const [currentTime, setCurrentTime] = useState(moment(date.concat(time)))
-  const [value, setValue] = useState(new Date(currentTime.format('YYYY-MM-DD HH:mm:ss')))
+  const [value, setValue] = useState(
+    new Date(currentTime.format('YYYY-MM-DD HH:mm:ss')),
+  )
 
   useEffect(() => {
-    const interval = setInterval(
-      () => {
-        setCurrentTime(currentTime.add(1, 'seconds'))
-        setValue(new Date(currentTime.format('YYYY-MM-DD HH:mm:ss')))
-      },
-      1000 / speedRate,
-    )
+    const interval = setInterval(() => {
+      setCurrentTime(currentTime.add(1, 'seconds'))
+      setValue(new Date(currentTime.format('YYYY-MM-DD HH:mm:ss')))
+    }, 1000 / speedRate)
     return () => {
       clearInterval(interval)
     }
@@ -37,7 +44,9 @@ const SimulationFunctionalityCard = ({speedRate, simulationConfig, fetchUserProf
           </Row>
           <Row>
             <Typography.Text>
-              {`Simulation start time: ${moment(date.concat(time)).format('LLLL')}`}
+              {`Simulation start time: ${moment(date.concat(time)).format(
+                'LLLL',
+              )}`}
             </Typography.Text>
           </Row>
         </Col>
@@ -47,13 +56,22 @@ const SimulationFunctionalityCard = ({speedRate, simulationConfig, fetchUserProf
       </Row>
       <Row gutter={[16, 16]}>
         {simulationRunning
-          ? homeLayout && homeLayout.roomList.map((room) => {
-            const {name} = room
-            const users = simulationUsers.filter((user) => user.homeLocation === name)
-            return (<Col span={8}>
-              <RoomCard users={users} key={name} room={room} fetchUserProfiles={fetchUserProfiles} />
-            </Col>)
-          })
+          ? homeLayout
+            && homeLayout.roomList.map((room) => {
+              const {name} = room
+              const users = simulationUsers.filter(
+                (user) => user.homeLocation === name,
+              )
+              return (
+                <Col span={8}>
+                  <RoomCard
+                    users={users}
+                    key={name}
+                    room={room}
+                    fetchUserProfiles={fetchUserProfiles} />
+                </Col>
+              )
+            })
           : 'Simulation is off'}
       </Row>
     </Card>
