@@ -37,6 +37,7 @@ const Dashboard = ({simulationConfig, consoleMessage, dispatch}) => {
 
   const getAwayModeDisableState = () => {
     const {simulationUsers} = simulationConfig
+    if (!simulationUsers || simulationUsers.length === 0) return false
     const userInHouse = simulationUsers.filter((user) => user.homeLocation !== 'outside')
     if (userInHouse.length > 0) return true
     return false
@@ -61,7 +62,7 @@ const Dashboard = ({simulationConfig, consoleMessage, dispatch}) => {
           onChange={(value) => setAutoMode(value) && fetchUserProfiles()} />
         <Typography.Text>Light Auto Mode</Typography.Text>
       </Row>
-      <Row className='row'>
+      {simulationConfig.homeLayout && <Row className='row'>
         <Col>
           <Switch
             disabled={getAwayModeDisableState()}
@@ -79,7 +80,7 @@ const Dashboard = ({simulationConfig, consoleMessage, dispatch}) => {
           && <Col>
             <Button className='button' onClick={() => setEditAwayModeModalVisible(true)}>Edit Parameters</Button>
           </Col>}
-      </Row>
+      </Row>}
     </Card>
   )
 

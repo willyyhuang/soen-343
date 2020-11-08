@@ -112,9 +112,7 @@ export async function setLights(payload) {
   return axios({
     method: 'PUT',
     url: awayModeLight,
-    data: {
-      lightIDs: payload,
-    },
+    data: payload,
   })
 }
 
