@@ -30,7 +30,7 @@ public class SimulationContext {
 	private HomeLayout homeLayout;
 	private List<Monitor> monitors;
 
-	private final File userProfilesJSON = new File("src\\main\\resources\\user_profiles.json.txt");
+	private final File userProfilesJSON = new File("./src/main/resources/user_profiles.json.txt");
 	private static int counter = 0;
 
 	public static SimulationContext simulationContext = null;

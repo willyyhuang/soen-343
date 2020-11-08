@@ -27,7 +27,7 @@ public class UserService {
 
 
     private static SimulationContext simulationContext = SimulationContext.getInstance();
-    private final File userProfilesFile = new File("src\\main\\resources\\user_profiles.json.txt");
+    private final File userProfilesFile = new File("./src/main/resources/user_profiles.json.txt");
     private SmartHomeCoreFunctionality smartHomeCoreFunctionality = SmartHomeCoreFunctionality.getInstance();
     private SmartHomeSecurity smartHomeSecurity = SmartHomeSecurity.getInstance();
 

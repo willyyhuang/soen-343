@@ -26,6 +26,7 @@ public class SmartHomeSecurityService {
             if (awayMode) {
                 if (simulationContext.getHomeLayout() != null && simulationContext.getHomeLayout().isHomeEmpty()) {
                     if (smartHomeSecurityProxy.setAwayMode(currentSimulationUserRole, awayMode)) {
+                        simulationContext.setAwayMode(awayMode);
                         simulationContext.setAwayModeUser(simulationContext.getCurrentSimulationUser());
                         smartHomeSecurityProxy.closeWindows();
                         smartHomeSecurityProxy.closeDoors();
@@ -35,6 +36,7 @@ public class SmartHomeSecurityService {
             } else {
                 simulationContext.setAwayModeUser(null);
                 smartHomeSecurityProxy.setAwayMode(currentSimulationUserRole, awayMode);
+                simulationContext.setAwayMode(SmartHomeSecurity.getInstance().getAwayModeConfig().isAwayMode());
                 return true;
             }
         }
