@@ -12,8 +12,10 @@ visible, onClose, simulationConfig, fetchUserProfiles,
 
     const getLights = () => {
         const lights = []
+        // eslint-disable-next-line
         roomList.map((room) => {
         const {objects} = room
+        // eslint-disable-next-line
             objects.map((item) => {
                 if (item.objectType === 'LIGHT') {
                     lights.push(item)
