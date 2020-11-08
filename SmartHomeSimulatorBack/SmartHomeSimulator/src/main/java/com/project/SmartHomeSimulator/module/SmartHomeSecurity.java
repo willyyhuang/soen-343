@@ -79,7 +79,7 @@ public class SmartHomeSecurity extends Module implements Monitor {
                 roomObjects = room.getObjects();
                 for (RoomObject roomObject : roomObjects) {
                     if (roomObject instanceof Door) {
-                        success = smartHomeCoreFunctionality.objectStateSwitcher(room.getName(), roomObject.getId().toString(), true);
+                        success = smartHomeCoreFunctionality.objectStateSwitcher(room.getName(), roomObject.getId().toString(), false);
                         if (success) {
                             logSuccess("Door", room.getName(), "lock", "SHP module");
                         } else {

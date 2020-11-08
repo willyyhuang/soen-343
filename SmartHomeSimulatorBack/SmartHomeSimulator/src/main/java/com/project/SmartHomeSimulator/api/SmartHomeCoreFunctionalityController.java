@@ -1,5 +1,6 @@
 package com.project.SmartHomeSimulator.api;
 
+import com.project.SmartHomeSimulator.module.SimulationContext;
 import com.project.SmartHomeSimulator.module.SmartHomeCoreFunctionality;
 import com.project.SmartHomeSimulator.module.SmartHomeSecurity;
 import com.project.SmartHomeSimulator.model.ResponseAPI;
