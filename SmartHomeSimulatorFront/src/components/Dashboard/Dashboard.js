@@ -105,6 +105,7 @@ const Dashboard = ({simulationConfig, consoleMessage, dispatch}) => {
             {simulationConfig.homeLayout && (
               <>
                 <SimulationProfileCard
+                  addConsoleMessage={addConsoleMessage}
                   simulationConfig={simulationConfig}
                   fetchUserProfiles={fetchUserProfiles} />
                 <Divider />
