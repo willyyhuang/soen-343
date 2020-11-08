@@ -12,6 +12,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.HashMap;
+
 import static org.junit.Assert.assertEquals;
 
 @SpringBootTest
@@ -78,6 +80,32 @@ public class SmartHomeSecurityServiceTest {
         simulationContextService.setCurrentSimulationUser(user.getName());
 
         boolean result = smartHomeSecurityService.setTimeBeforeAuthorities(12);
+        assertEquals(result, true);
+    }
+
+    /**
+     * light and time interval set for away mode
+     * Use case ID = 9
+     */
+    @Test
+    public void setTimeInterval_9() throws JsonProcessingException {
+        JSONObject jsonUser = new JSONObject();
+        jsonUser.put("name", "testUser");
+        jsonUser.put("role", "PARENT");
+        jsonUser.put("homeLocation", "outside");
+        ObjectMapper objectMapper = new ObjectMapper();
+        User user = objectMapper.readValue(jsonUser.toString(), User.class);
+        userService.addUser(user);
+        simulationContextService.setCurrentSimulationUser(user.getName());
+
+        String homeLayoutFile = "{\"roomList\":\"[{\"name\":\"string\", \"objects\":[{\"objectType\": \"LIGHT\"}]}]\"}";
+        HomeLayout homeLayout = simulationContextService.loadLayout(homeLayoutFile);
+        Room room = homeLayout.getRoomList().get(0);
+        RoomObject light = room.getObjects().get(0);
+
+        HashMap<String, String> lights = new HashMap<>();
+        lights.put("string", light.getId().toString());
+        boolean result = smartHomeSecurityService.setLightsToRemainOn(lights,"12:00 to 13:00");
         assertEquals(result, true);
     }
 }
