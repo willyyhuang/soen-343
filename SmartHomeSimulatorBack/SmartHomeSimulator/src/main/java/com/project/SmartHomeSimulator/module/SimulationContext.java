@@ -3,7 +3,6 @@ package com.project.SmartHomeSimulator.module;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -26,7 +25,7 @@ public class SimulationContext {
 	private User awayModeUser;
 	private List<User> simulationUsers;
 	private boolean autoMode = false;
-	private boolean awaymode = false;
+	private boolean awayMode = false;
 	private int timeBeforeAuthoroties = 0;
 	private HomeLayout homeLayout;
 	private List<Monitor> monitors;
@@ -135,6 +134,11 @@ public class SimulationContext {
 		
 		try {
 			simulationUsers = mapper.readValue(userProfilesJSON, new TypeReference<List<User>>(){});
+			for (User user : simulationUsers){
+				if(!user.getHomeLocation().equalsIgnoreCase("outside")) {
+					HomeLayout.usersInHome++;
+				}
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -176,12 +180,12 @@ public class SimulationContext {
 		}
 	}
 
-	public boolean isAwaymode() {
-		return awaymode;
+	public boolean isAwayMode() {
+		return awayMode;
 	}
 
-	public void setAwaymode(boolean awaymode) {
-		this.awaymode = awaymode;
+	public void setAwayMode(boolean awayMode) {
+		this.awayMode = awayMode;
 	}
 
 	@Override
