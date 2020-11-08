@@ -180,7 +180,7 @@ public class SmartHomeCoreFunctionalityServiceTest {
     @Test
     public void pemrissionCheck_5() throws JsonProcessingException {
         JSONObject jsonUser = new JSONObject();
-        jsonUser.put("name", "testUser");
+        jsonUser.put("name", "testUser2");
         jsonUser.put("role", "CHILD");
         jsonUser.put("homeLocation", "outside");
         ObjectMapper objectMapper = new ObjectMapper();
