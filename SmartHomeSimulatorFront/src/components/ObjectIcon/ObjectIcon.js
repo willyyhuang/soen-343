@@ -115,7 +115,7 @@ addConsoleMessage, roomName, object, fetchUserProfiles,
                   }) && fetchUserProfiles())}
               checked={object.blocked} />
           </Form.Item>
-          <Form.Item label='Turn on/off'>
+          <Form.Item label='Open/Close'>
             <Switch
               onChange={(value) =>
                 (value
