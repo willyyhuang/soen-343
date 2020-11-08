@@ -3,4 +3,5 @@ com.project.SmartHomeSimulator.api
 com.project.SmartHomeSimulator.config
 com.project.SmartHomeSimulator.model
 com.project.SmartHomeSimulator.model.roomObjects
+com.project.SmartHomeSimulator.module
 com.project.SmartHomeSimulator.service
