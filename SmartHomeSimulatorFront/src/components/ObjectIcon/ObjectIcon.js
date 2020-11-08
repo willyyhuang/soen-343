@@ -1,5 +1,7 @@
 import React from 'react'
-import {Popover, Form, Switch} from 'antd'
+import {
+Popover, Form, Switch, message,
+} from 'antd'
 import {
   block,
   unblock,
@@ -24,7 +26,18 @@ addConsoleMessage, roomName, object, fetchUserProfiles,
 
   const alertUserAfterTime = (seconds) => {
     const milliseconds = seconds * 1000
-    setTimeout(() => { addConsoleMessage('[Alert] Police is on their way.') }, milliseconds)
+    const notification = '[Alert] Police is on their way.'
+    setTimeout(() => {
+      addConsoleMessage(notification)
+      message.warning(notification)
+    }, milliseconds)
+  }
+
+  const awayModeNotification = (timeBeforeAuthorities) => {
+    const notification = `[Alert] Police will arrive in ${timeBeforeAuthorities} seconds.`
+    addConsoleMessage(notification)
+    message.warning(notification)
+    alertUserAfterTime(timeBeforeAuthorities)
   }
 
   const {id, name, objectType} = object
@@ -42,16 +55,14 @@ addConsoleMessage, roomName, object, fetchUserProfiles,
                 const {data} = response
                 addConsoleMessage(data.consoleMessage)
                 if (data.awayMode) {
-                  addConsoleMessage(`[Alert] Police will arrive in ${data.timeBeforeAuthorities} seconds.`)
-                  alertUserAfterTime(data.timeBeforeAuthorities)
+                  awayModeNotification(data.timeBeforeAuthorities)
                 }
               }) && fetchUserProfiles()
               : turnOffLight(payload).then((response) => {
                 const {data} = response
                 addConsoleMessage(data.consoleMessage)
                 if (data.awayMode) {
-                  addConsoleMessage(`[Alert] Police will arrive in ${data.timeBeforeAuthorities} seconds.`)
-                  alertUserAfterTime(data.timeBeforeAuthorities)
+                  awayModeNotification(data.timeBeforeAuthorities)
                 }
               }) && fetchUserProfiles())}
           checked={object.status} />
@@ -67,16 +78,14 @@ addConsoleMessage, roomName, object, fetchUserProfiles,
                 const {data} = response
                 addConsoleMessage(data.consoleMessage)
                 if (data.awayMode) {
-                  addConsoleMessage(`[Alert] Police will arrive in ${data.timeBeforeAuthorities} seconds.`)
-                  alertUserAfterTime(data.timeBeforeAuthorities)
+                  awayModeNotification(data.timeBeforeAuthorities)
                 }
               }) && fetchUserProfiles()
               : closeRoomDoor(payload).then((response) => {
                 const {data} = response
                 addConsoleMessage(data.consoleMessage)
                 if (data.awayMode) {
-                  addConsoleMessage(`[Alert] Police will arrive in ${data.timeBeforeAuthorities} seconds.`)
-                  alertUserAfterTime(data.timeBeforeAuthorities)
+                  awayModeNotification(data.timeBeforeAuthorities)
                 }
               }) && fetchUserProfiles())}
           checked={object.status} />
@@ -94,16 +103,14 @@ addConsoleMessage, roomName, object, fetchUserProfiles,
                     const {data} = response
                     addConsoleMessage(data.consoleMessage)
                     if (data.awayMode) {
-                      addConsoleMessage(`[Alert] Police will arrive in ${data.timeBeforeAuthorities} seconds.`)
-                      alertUserAfterTime(data.timeBeforeAuthorities)
+                      awayModeNotification(data.timeBeforeAuthorities)
                     }
                   }) && fetchUserProfiles()
                   : unblock(payload).then((response) => {
                     const {data} = response
                     addConsoleMessage(data.consoleMessage)
                     if (data.awayMode) {
-                      addConsoleMessage(`[Alert] Police will arrive in ${data.timeBeforeAuthorities} seconds.`)
-                      alertUserAfterTime(data.timeBeforeAuthorities)
+                      awayModeNotification(data.timeBeforeAuthorities)
                     }
                   }) && fetchUserProfiles())}
               checked={object.blocked} />
@@ -116,16 +123,14 @@ addConsoleMessage, roomName, object, fetchUserProfiles,
                     const {data} = response
                     addConsoleMessage(data.consoleMessage)
                     if (data.awayMode) {
-                      addConsoleMessage(`[Alert] Police will arrive in ${data.timeBeforeAuthorities} seconds.`)
-                      alertUserAfterTime(data.timeBeforeAuthorities)
+                      awayModeNotification(data.timeBeforeAuthorities)
                     }
                   }) && fetchUserProfiles()
                   : closeRoomWindow(payload).then((response) => {
                     const {data} = response
                     addConsoleMessage(data.consoleMessage)
                     if (data.awayMode) {
-                      addConsoleMessage(`[Alert] Police will arrive in ${data.timeBeforeAuthorities} seconds.`)
-                      alertUserAfterTime(data.timeBeforeAuthorities)
+                      awayModeNotification(data.timeBeforeAuthorities)
                     }
                   }) && fetchUserProfiles())}
               disabled={object.blocked}
