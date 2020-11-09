@@ -1,4 +1,32 @@
-# Smart Home Simulator
+# Smart Home Simulator - Introduction
+
+### Description
+
+This is a repo for the SOEN343 project of a Smart Home Simulation. Using an MVC structure the goal is to build:
+* Smart Home Simulator (SHS)
+* House Layout/ Home Dashboard
+* Simulation Parameters
+* Smart Home Modules
+* Smart Home Core Functionality (SHC)
+* Smart Home Security Module (SHP)
+* Smart Heating Module (SHH)
+
+### Team Members
+
+* Wei Chen Huang
+* Jennifer El-Asmar
+* Karin Kazarian
+* Hoda Nourbakhsh
+	
+### Technology used & Programming langages
+
+* jdk 11 - Java
+* Spring Boot
+* Maven
+* React
+* Java Script - CSS
+	
+# Installation
 
 ### Installation for Front-End
 Smart Home Simulator uses React.js for user interface
