@@ -16,11 +16,6 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-import org.springframework.stereotype.Service;
-
-import com.project.SmartHomeSimulator.model.Role;
-import com.project.SmartHomeSimulator.model.User;
-import com.project.SmartHomeSimulator.module.SimulationContext;
 
 @Service("userService")
 public class UserService {
@@ -134,6 +129,7 @@ public class UserService {
         User user = findUserByName(name);
         simulationContext.notifyMonitors(user);
         ResponseAPI response = new ResponseAPI();
+        response.setDefaultValues();
 
         List<User> usersInOldLocation = new ArrayList<>();
         if (user != null) {
@@ -163,17 +159,11 @@ public class UserService {
                 simulationContext.getHomeLayout().removeUsersInHome(user.getHomeLocation());
             }
             response.success = true;
-            response.awayMode = smartHomeSecurity.getAwayModeConfig().isAwayMode();
-            response.timeBeforeAuthorities = smartHomeSecurity.getAwayModeConfig().getTimeBeforeAuthorities();
-            response.timeToKeepLightsOn = smartHomeSecurity.getTimeToKeepLightsOn();
             response.consoleMessage = smartHomeSecurity.getConsoleMessage();
             response.alertModeOn = smartHomeSecurity.isAlertModeOn();
             return response;
         }
         response.success = false;
-        response.awayMode = smartHomeSecurity.getAwayModeConfig().isAwayMode();
-        response.timeBeforeAuthorities = smartHomeSecurity.getAwayModeConfig().getTimeBeforeAuthorities();
-        response.timeToKeepLightsOn = smartHomeSecurity.getTimeToKeepLightsOn();
         response.consoleMessage = smartHomeSecurity.getConsoleMessage();
         response.alertModeOn = smartHomeSecurity.isAlertModeOn();
         return response;

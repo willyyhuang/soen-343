@@ -43,10 +43,8 @@ public class UserController {
     public ResponseAPI addUser(@RequestBody @Valid User user)
     {
         ResponseAPI response = new ResponseAPI();
+        response.setDefaultValues();
         response.success = userService.addUser(user);
-        response.awayMode = smartHomeSecurity.getAwayModeConfig().isAwayMode();
-        response.timeBeforeAuthorities = smartHomeSecurity.getAwayModeConfig().getTimeBeforeAuthorities();
-        response.timeToKeepLightsOn = smartHomeSecurity.getTimeToKeepLightsOn();
         response.consoleMessage = smartHomeSecurity.getConsoleMessage();
         response.alertModeOn = smartHomeSecurity.isAlertModeOn();
         return response;

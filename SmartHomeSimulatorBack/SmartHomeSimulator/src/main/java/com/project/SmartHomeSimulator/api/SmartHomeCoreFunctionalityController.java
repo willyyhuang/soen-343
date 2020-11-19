@@ -29,20 +29,15 @@ public class SmartHomeCoreFunctionalityController {
     @ResponseStatus(value = HttpStatus.OK)
     public ResponseAPI blockWindow(@RequestParam("roomName") String roomName,@RequestParam("objectID") String objectID) {
         ResponseAPI response = new ResponseAPI();
+        response.setDefaultValues();
         if(smartHomeSecurity.getAwayModeConfig().isAwayMode() && simulationContext.getCurrentSimulationUser() != simulationContext.getAwayModeUser()){
             response.success = false;
-            response.awayMode = true;
-            response.timeBeforeAuthorities = smartHomeSecurity.getAwayModeConfig().getTimeBeforeAuthorities();
-            response.timeToKeepLightsOn = smartHomeSecurity.getTimeToKeepLightsOn();
             SmartHomeCoreFunctionality.getInstance().logMessage("[Alert] Someone is trying to break in.");
             response.consoleMessage = SmartHomeCoreFunctionality.getInstance().getConsoleMessage();
             response.alertModeOn = true;
             return response;
         }
         response.success = smartHomeCoreFunctionalityService.blockUnblockWindow(roomName, objectID, true);
-        response.awayMode = false;
-        response.timeBeforeAuthorities = smartHomeSecurity.getAwayModeConfig().getTimeBeforeAuthorities();
-        response.timeToKeepLightsOn = smartHomeSecurity.getTimeToKeepLightsOn();
         response.consoleMessage = SmartHomeCoreFunctionality.getInstance().getConsoleMessage();
         response.alertModeOn = false;
         return response;
@@ -57,20 +52,15 @@ public class SmartHomeCoreFunctionalityController {
     @ResponseStatus(value = HttpStatus.OK)
     public ResponseAPI unblockWindow(@RequestParam("roomName") String roomName,@RequestParam("objectID") String objectID) {
         ResponseAPI response = new ResponseAPI();
+        response.setDefaultValues();
         if(smartHomeSecurity.getAwayModeConfig().isAwayMode() && simulationContext.getCurrentSimulationUser() != simulationContext.getAwayModeUser()){
             response.success = false;
-            response.awayMode = true;
-            response.timeBeforeAuthorities = smartHomeSecurity.getAwayModeConfig().getTimeBeforeAuthorities();
-            response.timeToKeepLightsOn = smartHomeSecurity.getTimeToKeepLightsOn();
             SmartHomeCoreFunctionality.getInstance().logMessage("[Alert] Someone is trying to break in.");
             response.consoleMessage = SmartHomeCoreFunctionality.getInstance().getConsoleMessage();
             response.alertModeOn = true;
             return response;
         }
         response.success = smartHomeCoreFunctionalityService.blockUnblockWindow(roomName, objectID, false);
-        response.awayMode = false;
-        response.timeBeforeAuthorities = smartHomeSecurity.getAwayModeConfig().getTimeBeforeAuthorities();
-        response.timeToKeepLightsOn = smartHomeSecurity.getTimeToKeepLightsOn();
         response.consoleMessage = SmartHomeCoreFunctionality.getInstance().getConsoleMessage();
         response.alertModeOn = false;
         return response;
@@ -86,20 +76,15 @@ public class SmartHomeCoreFunctionalityController {
     @ResponseStatus(value = HttpStatus.OK)
     public ResponseAPI openWindow(@RequestParam("roomName") String roomName,@RequestParam("objectID") String objectID) {
         ResponseAPI response = new ResponseAPI();
+        response.setDefaultValues();
         if(smartHomeSecurity.getAwayModeConfig().isAwayMode() && simulationContext.getCurrentSimulationUser() != simulationContext.getAwayModeUser()){
             response.success = false;
-            response.awayMode = true;
-            response.timeBeforeAuthorities = smartHomeSecurity.getAwayModeConfig().getTimeBeforeAuthorities();
-            response.timeToKeepLightsOn = smartHomeSecurity.getTimeToKeepLightsOn();
             SmartHomeCoreFunctionality.getInstance().logMessage("[Alert] Someone is trying to break in.");
             response.consoleMessage = SmartHomeCoreFunctionality.getInstance().getConsoleMessage();
             response.alertModeOn = true;
             return response;
         }
         response.success = smartHomeCoreFunctionalityService.openCloseWindow(roomName, objectID, true);
-        response.awayMode = false;
-        response.timeBeforeAuthorities = smartHomeSecurity.getAwayModeConfig().getTimeBeforeAuthorities();
-        response.timeToKeepLightsOn = smartHomeSecurity.getTimeToKeepLightsOn();
         response.consoleMessage = SmartHomeCoreFunctionality.getInstance().getConsoleMessage();
         response.alertModeOn = false;
         return response;
@@ -115,20 +100,15 @@ public class SmartHomeCoreFunctionalityController {
     @ResponseStatus(value = HttpStatus.OK)
     public ResponseAPI closeWindow(@RequestParam("roomName") String roomName,@RequestParam("objectID") String objectID) {
         ResponseAPI response = new ResponseAPI();
+        response.setDefaultValues();
         if(smartHomeSecurity.getAwayModeConfig().isAwayMode() && simulationContext.getCurrentSimulationUser() != simulationContext.getAwayModeUser()){
             response.success = false;
-            response.awayMode = true;
-            response.timeBeforeAuthorities = smartHomeSecurity.getAwayModeConfig().getTimeBeforeAuthorities();
-            response.timeToKeepLightsOn = smartHomeSecurity.getTimeToKeepLightsOn();
             SmartHomeCoreFunctionality.getInstance().logMessage("[Alert] Someone is trying to break in.");
             response.consoleMessage = SmartHomeCoreFunctionality.getInstance().getConsoleMessage();
             response.alertModeOn = true;
             return response;
         }
         response.success = smartHomeCoreFunctionalityService.openCloseWindow(roomName, objectID, false);
-        response.awayMode = false;
-        response.timeBeforeAuthorities = smartHomeSecurity.getAwayModeConfig().getTimeBeforeAuthorities();
-        response.timeToKeepLightsOn = smartHomeSecurity.getTimeToKeepLightsOn();
         response.consoleMessage = SmartHomeCoreFunctionality.getInstance().getConsoleMessage();
         response.alertModeOn = false;
         return response;
@@ -143,20 +123,15 @@ public class SmartHomeCoreFunctionalityController {
     @ResponseStatus(value = HttpStatus.OK)
     public ResponseAPI turnOnLight(@RequestParam("roomName") String roomName,@RequestParam("objectID") String objectID) {
         ResponseAPI response = new ResponseAPI();
+        response.setDefaultValues();
         if(smartHomeSecurity.getAwayModeConfig().isAwayMode() && simulationContext.getCurrentSimulationUser() != simulationContext.getAwayModeUser()){
             response.success = false;
-            response.awayMode = true;
-            response.timeBeforeAuthorities = smartHomeSecurity.getAwayModeConfig().getTimeBeforeAuthorities();
-            response.timeToKeepLightsOn = smartHomeSecurity.getTimeToKeepLightsOn();
             SmartHomeCoreFunctionality.getInstance().logMessage("[Alert] Someone is trying to break in.");
             response.consoleMessage = SmartHomeCoreFunctionality.getInstance().getConsoleMessage();
             response.alertModeOn = true;
             return response;
         }
         response.success = smartHomeCoreFunctionalityService.onOffLights(roomName, objectID, true);
-        response.awayMode = false;
-        response.timeBeforeAuthorities = smartHomeSecurity.getAwayModeConfig().getTimeBeforeAuthorities();
-        response.timeToKeepLightsOn = smartHomeSecurity.getTimeToKeepLightsOn();
         response.consoleMessage = SmartHomeCoreFunctionality.getInstance().getConsoleMessage();
         response.alertModeOn = false;
         return response;
@@ -172,20 +147,15 @@ public class SmartHomeCoreFunctionalityController {
     @ResponseStatus(value = HttpStatus.OK)
     public ResponseAPI turnOffLight(@RequestParam("roomName") String roomName,@RequestParam("objectID") String objectID) {
         ResponseAPI response = new ResponseAPI();
+        response.setDefaultValues();
         if(smartHomeSecurity.getAwayModeConfig().isAwayMode() && simulationContext.getCurrentSimulationUser() != simulationContext.getAwayModeUser()){
             response.success = false;
-            response.awayMode = true;
-            response.timeBeforeAuthorities = smartHomeSecurity.getAwayModeConfig().getTimeBeforeAuthorities();
-            response.timeToKeepLightsOn = smartHomeSecurity.getTimeToKeepLightsOn();
             SmartHomeCoreFunctionality.getInstance().logMessage("[Alert] Someone is trying to break in.");
             response.consoleMessage = SmartHomeCoreFunctionality.getInstance().getConsoleMessage();
             response.alertModeOn = true;
             return response;
         }
         response.success = smartHomeCoreFunctionalityService.onOffLights(roomName, objectID, false);
-        response.awayMode = false;
-        response.timeBeforeAuthorities = smartHomeSecurity.getAwayModeConfig().getTimeBeforeAuthorities();
-        response.timeToKeepLightsOn = smartHomeSecurity.getTimeToKeepLightsOn();
         response.consoleMessage = SmartHomeCoreFunctionality.getInstance().getConsoleMessage();
         response.alertModeOn = false;
         return response;
@@ -200,20 +170,15 @@ public class SmartHomeCoreFunctionalityController {
     @ResponseStatus(value = HttpStatus.OK)
     public ResponseAPI openDoor(@RequestParam("roomName") String roomName,@RequestParam("objectID") String objectID) {
         ResponseAPI response = new ResponseAPI();
+        response.setDefaultValues();
         if(smartHomeSecurity.getAwayModeConfig().isAwayMode() && simulationContext.getCurrentSimulationUser() != simulationContext.getAwayModeUser()){
             response.success = false;
-            response.awayMode = true;
-            response.timeBeforeAuthorities = smartHomeSecurity.getAwayModeConfig().getTimeBeforeAuthorities();
-            response.timeToKeepLightsOn = smartHomeSecurity.getTimeToKeepLightsOn();
             SmartHomeCoreFunctionality.getInstance().logMessage("[Alert] Someone is trying to break in.");
             response.consoleMessage = SmartHomeCoreFunctionality.getInstance().getConsoleMessage();
             response.alertModeOn = true;
             return response;
         }
         response.success = smartHomeCoreFunctionalityService.openCloseDoors(roomName, objectID, true);
-        response.awayMode = false;
-        response.timeBeforeAuthorities = smartHomeSecurity.getAwayModeConfig().getTimeBeforeAuthorities();
-        response.timeToKeepLightsOn = smartHomeSecurity.getTimeToKeepLightsOn();
         response.consoleMessage = SmartHomeCoreFunctionality.getInstance().getConsoleMessage();
         response.alertModeOn = false;
         return response;
@@ -230,20 +195,15 @@ public class SmartHomeCoreFunctionalityController {
     @ResponseStatus(value = HttpStatus.OK)
     public ResponseAPI closeDoor(@RequestParam("roomName") String roomName,@RequestParam("objectID") String objectID) {
         ResponseAPI response = new ResponseAPI();
+        response.setDefaultValues();
         if(smartHomeSecurity.getAwayModeConfig().isAwayMode() && simulationContext.getCurrentSimulationUser() != simulationContext.getAwayModeUser()){
             response.success = false;
-            response.awayMode = true;
-            response.timeBeforeAuthorities = smartHomeSecurity.getAwayModeConfig().getTimeBeforeAuthorities();
-            response.timeToKeepLightsOn = smartHomeSecurity.getTimeToKeepLightsOn();
             SmartHomeCoreFunctionality.getInstance().logMessage("[Alert] Someone is trying to break in.");
             response.consoleMessage = SmartHomeCoreFunctionality.getInstance().getConsoleMessage();
             response.alertModeOn = true;
             return response;
         }
         response.success = smartHomeCoreFunctionalityService.openCloseDoors(roomName, objectID, false);
-        response.awayMode = false;
-        response.timeBeforeAuthorities = smartHomeSecurity.getAwayModeConfig().getTimeBeforeAuthorities();
-        response.timeToKeepLightsOn = smartHomeSecurity.getTimeToKeepLightsOn();
         response.consoleMessage = SmartHomeCoreFunctionality.getInstance().getConsoleMessage();
         response.alertModeOn = false;
         return response;
