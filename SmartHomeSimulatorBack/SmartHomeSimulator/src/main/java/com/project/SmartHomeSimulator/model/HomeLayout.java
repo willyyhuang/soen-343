@@ -19,6 +19,8 @@ public class HomeLayout {
     public static int windowCount = 1;
     private static int doorCount = 1;
     private static int lightCount = 1;
+    private static int acCount = 1;
+    private static int heaterCount =1;
     /**
      * Gets a room by name
      *
@@ -88,6 +90,8 @@ public class HomeLayout {
         Window window;
         Door door;
         Light light;
+        AC ac;
+        Heater heater;
         if (rooms != null) {
             for (Room room : rooms) {
                 List<RoomObject> roomObjects = new ArrayList<>();
@@ -107,6 +111,16 @@ public class HomeLayout {
                         light = new Light(roomObject);
                         light.setName(room.getName() + " - Light" + lightCount++);
                         roomObjects.add(light);
+                    }
+                    else if (roomObject.getObjectType() == RoomObjectType.AC) {
+                        ac = new AC(roomObject);
+                        ac.setName(room.getName() + " - AC" + acCount++);
+                        roomObjects.add(ac);
+                    }
+                    else if (roomObject.getObjectType() == RoomObjectType.AC) {
+                        heater = new Heater(roomObject);
+                        heater.setName(room.getName() + " - Heater" + heaterCount++);
+                        roomObjects.add(heater);
                     }
                 }
                 room.setObjects(roomObjects);

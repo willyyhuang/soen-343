@@ -17,7 +17,51 @@ import java.util.UUID;
 public class Room {
     private String name;
     private List<RoomObject> roomObjects;
+    private String zone;
+    private boolean overridden = false;
+    private int tempMorning;
+    private int tempEvening;
+    private int tempNight;
 
+    public int getTempMorning() {
+        return tempMorning;
+    }
+
+    public void setTempMorning(int tempMorning) {
+        this.tempMorning = tempMorning;
+    }
+
+    public int getTempEvening() {
+        return tempEvening;
+    }
+
+    public void setTempEvening(int tempEvening) {
+        this.tempEvening = tempEvening;
+    }
+
+    public int getTempNight() {
+        return tempNight;
+    }
+
+    public void setTempNight(int tempNight) {
+        this.tempNight = tempNight;
+    }
+
+    public boolean isOverridden() {
+        return overridden;
+    }
+
+    public void setOverridden(boolean overridden) {
+        this.overridden = overridden;
+    }
+
+    public String getZone() {
+        return zone;
+    }
+
+    public void setZone(String zone) {
+        this.zone = zone;
+    }
 
     public String getName() {
         return name;

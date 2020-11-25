@@ -17,7 +17,6 @@ import com.project.SmartHomeSimulator.model.User;
 public class SimulationContext {
 
 	private boolean simulationRunning;
-	private int insideTemp;
 	private int outsideTemp;
 	private String time;
 	private String date;
@@ -31,6 +30,25 @@ public class SimulationContext {
 	private String endLightsOn;
 	private HomeLayout homeLayout;
 	private List<Monitor> monitors;
+	private String summerMonths;
+	private String winterMonths;
+
+
+	public void setWinterMonths(String winterMonths) {
+		this.winterMonths = winterMonths;
+	}
+
+	public void setSummerMonths(String summerMonths) {
+		this.summerMonths = summerMonths;
+	}
+
+	public String getSummerMonths() {
+		return summerMonths;
+	}
+
+	public String getWinterMonths() {
+		return winterMonths;
+	}
 
 	private final File userProfilesJSON = new File("./src/main/resources/user_profiles.json.txt");
 	private static int counter = 0;
@@ -97,14 +115,6 @@ public class SimulationContext {
 
 	public void setAwayModeUser(User awayModeUser) {
 		this.awayModeUser = awayModeUser;
-	}
-
-	public int getInsideTemp() {
-		return insideTemp;
-	}
-
-	public void setInsideTemp(int insideTemp) {
-		this.insideTemp = insideTemp;
 	}
 
 	public int getOutsideTemp() {
@@ -208,7 +218,7 @@ public class SimulationContext {
 
 	@Override
 	public String toString() {
-		return "SimulationContext [insideTemp=" + insideTemp + ", outsideTemp=" + outsideTemp + ", time=" + time
+		return "SimulationContext [ outsideTemp=" + outsideTemp + ", time=" + time
 				+ ", date=" + date + ", currentSimulationUser=" + currentSimulationUser + ", simulationUsers="
 				+ simulationUsers + ", homeLayout=" + homeLayout + ", simulationRunning=" + simulationRunning + "]";
 	}

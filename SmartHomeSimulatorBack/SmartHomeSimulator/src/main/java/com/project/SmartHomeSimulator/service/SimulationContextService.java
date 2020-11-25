@@ -36,15 +36,6 @@ public class SimulationContextService {
         return simulationContext;
     }
 
-    /**
-     * Set the inside temp
-     * @param insideTemp
-     * @return - true if successful false if otherwise
-     */
-    public boolean setInsideTemp(int insideTemp) {
-        simulationContext.setInsideTemp(insideTemp);
-        return true;
-    }
 
     /**
      * Set Outside Temp
