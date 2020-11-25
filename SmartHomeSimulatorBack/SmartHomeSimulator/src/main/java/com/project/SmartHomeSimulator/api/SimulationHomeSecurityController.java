@@ -23,10 +23,8 @@ public class SimulationHomeSecurityController {
     @PutMapping(value = "/awayMode")
     @ResponseStatus(value = HttpStatus.OK)
     public ResponseAPI startAwayMode(@RequestParam("awayMode") Boolean awayMode) {
+        responseAPI.setDefaultValues();
         responseAPI.success = smartHomeSecurityService.setAwayMode(awayMode);
-        responseAPI.awayMode = SmartHomeSecurity.getInstance().getAwayModeConfig().isAwayMode();
-        responseAPI.timeBeforeAuthorities = SmartHomeSecurity.getInstance().getAwayModeConfig().getTimeBeforeAuthorities();
-        responseAPI.timeToKeepLightsOn = SmartHomeSecurity.getInstance().getTimeToKeepLightsOn();
         responseAPI.consoleMessage = SmartHomeSecurity.getInstance().getConsoleMessage();
         responseAPI.alertModeOn = false;
         return responseAPI;
@@ -55,10 +53,8 @@ public class SimulationHomeSecurityController {
     @PutMapping(value = "/awayMode/turnOnOffLights")
     @ResponseStatus(value = HttpStatus.OK)
     public ResponseAPI turnOnOffLights(@RequestParam("status") Boolean status) {
-        responseAPI.awayMode = SmartHomeSecurity.getInstance().getAwayModeConfig().isAwayMode();
+        responseAPI.setDefaultValues();
         responseAPI.success = smartHomeSecurityService.turnOnOffLights(status);
-        responseAPI.timeBeforeAuthorities = SmartHomeSecurity.getInstance().getAwayModeConfig().getTimeBeforeAuthorities();
-        responseAPI.timeToKeepLightsOn = SmartHomeSecurity.getInstance().getTimeToKeepLightsOn();
         responseAPI.consoleMessage = SmartHomeSecurity.getInstance().getConsoleMessage();
         responseAPI.alertModeOn = false;
         return responseAPI;
