@@ -17,7 +17,7 @@ import com.project.SmartHomeSimulator.model.User;
 public class SimulationContext {
 
 	private boolean simulationRunning;
-	private int outsideTemp;
+	private int outsideTemp = 20;
 	private String time;
 	private String date;
 	private User currentSimulationUser;

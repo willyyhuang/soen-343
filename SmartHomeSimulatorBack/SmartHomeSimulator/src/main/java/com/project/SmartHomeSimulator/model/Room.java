@@ -19,32 +19,41 @@ public class Room {
     private List<RoomObject> roomObjects;
     private String zone;
     private boolean overridden = false;
-    private int tempMorning;
-    private int tempEvening;
-    private int tempNight;
+    private int currentTemp;
+    private int morningTemp;
+    private int eveningTemp;
+    private int nightTemp;
 
-    public int getTempMorning() {
-        return tempMorning;
+    public int getCurrentTemp() {
+        return currentTemp;
     }
 
-    public void setTempMorning(int tempMorning) {
-        this.tempMorning = tempMorning;
+    public void setCurrentTemp(int currentTemp) {
+        this.currentTemp = currentTemp;
     }
 
-    public int getTempEvening() {
-        return tempEvening;
+    public int getMorningTemp() {
+        return morningTemp;
     }
 
-    public void setTempEvening(int tempEvening) {
-        this.tempEvening = tempEvening;
+    public void setMorningTemp(int morningTemp) {
+        this.morningTemp = morningTemp;
     }
 
-    public int getTempNight() {
-        return tempNight;
+    public int getEveningTemp() {
+        return eveningTemp;
     }
 
-    public void setTempNight(int tempNight) {
-        this.tempNight = tempNight;
+    public void setEveningTemp(int eveningTemp) {
+        this.eveningTemp = eveningTemp;
+    }
+
+    public int getNightTemp() {
+        return nightTemp;
+    }
+
+    public void setNightTemp(int nightTemp) {
+        this.nightTemp = nightTemp;
     }
 
     public boolean isOverridden() {

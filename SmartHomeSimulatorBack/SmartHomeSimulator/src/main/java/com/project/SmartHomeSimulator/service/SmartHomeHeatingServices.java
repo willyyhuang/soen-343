@@ -1,20 +1,35 @@
 package com.project.SmartHomeSimulator.service;
 
+import com.project.SmartHomeSimulator.model.ResponseAPI;
+import com.project.SmartHomeSimulator.model.User;
 import com.project.SmartHomeSimulator.module.SimulationContext;
+import com.project.SmartHomeSimulator.module.SmartHomeCoreFunctionality;
+import com.project.SmartHomeSimulator.module.SmartHomeHeatingProxy;
+import com.project.SmartHomeSimulator.module.SmartHomeSecurity;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
+
+import java.util.List;
 
 @Service
 public class SmartHomeHeatingServices {
     private static SimulationContext simulationContext = SimulationContext.getInstance();
+    private SmartHomeHeatingProxy smartHomeHeatingProxy = SmartHomeHeatingProxy.getInstance();
 
     /**
-     * sets how much time should pass before alerting the authorities
-     *
-     * @param timeBeforeAuthorities - integer value of the time that needs to pass
-     * @return boolean true if setting timeBeforeAuthority was successful
+     * Add a zone
+     * @param morningTemp
+     * @param eveningTemp
+     * @param nightTemp
+     * @param zone
+     * @param roomNames
+     * @return
      */
-    public boolean setTimeBeforeAuthorities(int timeBeforeAuthorities) {
-
-        return false;
+    public boolean addZone(int morningTemp, int eveningTemp, int nightTemp, String zone, List<String> roomNames) {
+        User user = simulationContext.getCurrentSimulationUser();
+        return smartHomeHeatingProxy.addZone(user,morningTemp, eveningTemp, nightTemp, zone, roomNames);
     }
 }

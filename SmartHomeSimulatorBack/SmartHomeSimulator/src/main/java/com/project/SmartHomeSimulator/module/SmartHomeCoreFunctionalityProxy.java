@@ -19,13 +19,13 @@ public class SmartHomeCoreFunctionalityProxy {
         boolean success = false;
         if (verifyPermission(user, "window", roomName)) {
             success = smartHomeCoreFunctionality.objectStateSwitcher(roomName, windowID, state);
-            if (success) {
-                smartHomeCoreFunctionality.logSuccess("Window", roomName, state ? "opened" : "closed", user.getName());
-            } else {
-                smartHomeCoreFunctionality.logFail("Window", roomName, (state ? "opening" : "closing"), user.getName());
+        }
+        if (success) {
+            smartHomeCoreFunctionality.logSuccess("Window", roomName, state ? "opened" : "closed", user.getName());
+        } else {
+            smartHomeCoreFunctionality.logFail("Window", roomName, (state ? "opening" : "closing"), user.getName());
 
-                smartHomeCoreFunctionality.logMessage("[Failed] " + (state ? "opening" : "closing") + " window in " + roomName + ", requested by " + user.getName() + ", failed");
-            }
+            smartHomeCoreFunctionality.logMessage("[Failed] " + (state ? "opening" : "closing") + " window in " + roomName + ", requested by " + user.getName() + ", failed");
         }
         return success;
     }
@@ -34,11 +34,11 @@ public class SmartHomeCoreFunctionalityProxy {
         boolean success = false;
         if (verifyPermission(user, "window", roomName)) {
             success = smartHomeCoreFunctionality.blockUnblockWindow(roomName, windowID, state);
-            if (success) {
-                smartHomeCoreFunctionality.logSuccess("Window", roomName, state ? "blocked" : "unblocked", user.getName());
-            } else {
-                smartHomeCoreFunctionality.logFail("window", roomName, state ? "Blocking" : "Unblocking", user.getName());
-            }
+        }
+        if (success) {
+            smartHomeCoreFunctionality.logSuccess("Window", roomName, state ? "blocked" : "unblocked", user.getName());
+        } else {
+            smartHomeCoreFunctionality.logFail("window", roomName, state ? "Blocking" : "Unblocking", user.getName());
         }
         return success;
     }
@@ -48,11 +48,11 @@ public class SmartHomeCoreFunctionalityProxy {
         boolean success = false;
         if (verifyPermission(user, "light", roomName)) {
             success = smartHomeCoreFunctionality.objectStateSwitcher(roomName, lightID, state);
-            if (success) {
-                smartHomeCoreFunctionality.logSuccess("Light", roomName, state ? "turned on" : "turned off", user.getName());
-            } else {
-                smartHomeCoreFunctionality.logFail("light", roomName, (state ? "turning on" : "turning off"), user.getName());
-            }
+        }
+        if (success) {
+            smartHomeCoreFunctionality.logSuccess("Light", roomName, state ? "turned on" : "turned off", user.getName());
+        } else {
+            smartHomeCoreFunctionality.logFail("light", roomName, (state ? "turning on" : "turning off"), user.getName());
         }
         return success;
     }
@@ -61,11 +61,11 @@ public class SmartHomeCoreFunctionalityProxy {
         boolean success = false;
         if (verifyPermission(user, "door", roomName)) {
             success = smartHomeCoreFunctionality.objectStateSwitcher(roomName, doorID, state);
-            if (success) {
-                smartHomeCoreFunctionality.logSuccess("Door", roomName, state ? "opened" : "closed", user.getName());
-            } else {
-                smartHomeCoreFunctionality.logFail("Door", roomName, (state ? "opening" : "closing"), user.getName());
-            }
+        }
+        if (success) {
+            smartHomeCoreFunctionality.logSuccess("Door", roomName, state ? "opened" : "closed", user.getName());
+        } else {
+            smartHomeCoreFunctionality.logFail("Door", roomName, (state ? "opening" : "closing"), user.getName());
         }
         return success;
     }
