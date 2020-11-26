@@ -56,7 +56,7 @@ public class SmartHomeHeatingController {
      */
     @PostMapping(value = "/changeTempRoom")
     @ResponseStatus(value = HttpStatus.OK)
-    public ResponseAPI changeTemperature(@RequestParam("roomName") String roomName, @RequestParam("newTemp") int newTemp) {
+    public ResponseAPI changeTemperature(@RequestParam("roomName") String roomName, @RequestParam("newTemp") int newTemp, @RequestParam("currentTemp") int currentTemp) {
         ResponseAPI response = new ResponseAPI();
         response.setDefaultValues();
         if(smartHomeSecurity.getAwayModeConfig().isAwayMode() && simulationContext.getCurrentSimulationUser() != simulationContext.getAwayModeUser()){
@@ -66,7 +66,7 @@ public class SmartHomeHeatingController {
             response.alertModeOn = true;
             return response;
         }
-        response.success = smartHomeHeatingServices.changeTemperature(roomName, newTemp);
+        response.success = smartHomeHeatingServices.changeTemperature(roomName, newTemp, currentTemp);
         response.consoleMessage = smartHomeHeating.getConsoleMessage();
         response.alertModeOn = false;
         return response;

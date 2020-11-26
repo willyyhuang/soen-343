@@ -33,8 +33,8 @@ public class SmartHomeHeatingServices {
      * @param newTemp
      * @return
      */
-    public boolean changeTemperature(String roomName, int newTemp){
+    public boolean changeTemperature(String roomName, int newTemp, int currentTemp){
         User user = simulationContext.getCurrentSimulationUser();
-        return smartHomeHeatingProxy.changeTemperature(user, roomName, newTemp);
+        return smartHomeHeatingProxy.changeTemperature(user, roomName, newTemp, currentTemp);
     }
 }

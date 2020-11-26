@@ -63,9 +63,9 @@ public class SmartHomeHeating extends Module{
      * @param newTemp
      * @return
      */
-    public boolean changeTemperature(String roomName, int newTemp){
+    public boolean changeTemperature(String roomName, int newTemp, int currentTemp){
         Room room = simulationContext.getHomeLayout().getRoomByName(roomName);
-        switchStates(room,room.getCurrentTemp(),newTemp);
+        switchStates(room,currentTemp,newTemp);
         room.setCurrentTemp(newTemp);
         room.setOverridden(true);
         return true;
@@ -110,6 +110,12 @@ public class SmartHomeHeating extends Module{
 
     }
 
+    /**
+     * Switches AC and Heater state depending on the current temp and the desired temp
+     * @param room
+     * @param currentTemp
+     * @param desiredTemp
+     */
     public void switchStates(Room room, int currentTemp, int desiredTemp){
         Heater heater = (Heater) room.getRoomObjectByType(RoomObjectType.HEATER);
         AC ac = (AC) room.getRoomObjectByType(RoomObjectType.AC);
