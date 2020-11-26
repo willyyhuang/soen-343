@@ -96,4 +96,28 @@ public class SmartHomeHeatingController {
         response.alertModeOn = false;
         return response;
     }
+
+    /**
+     * Set winter months
+     * @param months
+     * @return
+     */
+    @PostMapping(value = "/setWinterMonths")
+    @ResponseStatus(value = HttpStatus.OK)
+    public boolean setWinterMonths(@RequestParam("months") String months){
+        simulationContext.setWinterMonths(months);
+        return true;
+    }
+
+    /**
+     * Set Summer months
+     * @param months
+     * @return
+     */
+    @PostMapping(value = "/setSummerMonths")
+    @ResponseStatus(value = HttpStatus.OK)
+    public boolean setSummerMonths(@RequestParam("months") String months){
+        simulationContext.setSummerMonths(months);
+        return true;
+    }
 }
