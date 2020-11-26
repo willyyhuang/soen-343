@@ -2,7 +2,6 @@ package com.project.SmartHomeSimulator.model.roomObjects;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.boot.jackson.JsonComponent;
-
 import java.util.UUID;
 
 /**

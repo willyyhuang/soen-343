@@ -4,7 +4,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.project.SmartHomeSimulator.model.roomObjects.*;
 import org.springframework.boot.jackson.JsonComponent;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;

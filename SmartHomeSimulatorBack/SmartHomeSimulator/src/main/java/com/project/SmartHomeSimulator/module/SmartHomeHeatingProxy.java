@@ -2,9 +2,11 @@ package com.project.SmartHomeSimulator.module;
 
 import com.project.SmartHomeSimulator.model.Role;
 import com.project.SmartHomeSimulator.model.User;
-
 import java.util.List;
 
+/**
+ * Proxy for the heating class, verifies permissions
+ */
 public class SmartHomeHeatingProxy {
     public static SmartHomeHeatingProxy smartHomeHeatingProxy = null;
     public SmartHomeHeating smartHomeHeating = SmartHomeHeating.getInstance();
@@ -43,6 +45,13 @@ public class SmartHomeHeatingProxy {
         return success;
     }
 
+    /**
+     * Override a room temperature
+     * @param user
+     * @param roomName
+     * @param newTemp
+     * @return
+     */
     public boolean changeTemperature(User user, String roomName,int newTemp){
         boolean success = false;
         if(verifyPermission(user,"temp", null)){
@@ -57,6 +66,14 @@ public class SmartHomeHeatingProxy {
         }
         return success;
     }
+
+    /**
+     * verify the permissions of each user Type
+     * @param user
+     * @param action
+     * @param roomName
+     * @return
+     */
     public boolean verifyPermission(User user, String action, String roomName) {
         Role role = user.getRole();
         switch (role) {

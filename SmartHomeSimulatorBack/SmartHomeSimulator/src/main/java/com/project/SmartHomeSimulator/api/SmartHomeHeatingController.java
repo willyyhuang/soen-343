@@ -71,6 +71,4 @@ public class SmartHomeHeatingController {
         response.alertModeOn = false;
         return response;
     }
-
-    
 }

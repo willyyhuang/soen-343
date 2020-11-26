@@ -1,6 +1,5 @@
 package com.project.SmartHomeSimulator.service;
 
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;

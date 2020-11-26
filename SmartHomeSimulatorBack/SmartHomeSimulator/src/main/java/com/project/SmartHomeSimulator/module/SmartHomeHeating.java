@@ -1,11 +1,10 @@
 package com.project.SmartHomeSimulator.module;
 
-import com.project.SmartHomeSimulator.api.SmartHomeHeatingController;
 import com.project.SmartHomeSimulator.model.Room;
 import com.project.SmartHomeSimulator.model.roomObjects.*;
 
 import java.util.List;
-import java.util.UUID;
+
 
 public class SmartHomeHeating extends Module{
 

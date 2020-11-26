@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.project.SmartHomeSimulator.model.roomObjects.RoomObject;
 import com.project.SmartHomeSimulator.model.roomObjects.RoomObjectType;
 import org.springframework.boot.jackson.JsonComponent;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;

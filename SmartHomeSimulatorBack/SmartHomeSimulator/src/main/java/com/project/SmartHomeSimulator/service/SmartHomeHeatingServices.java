@@ -1,16 +1,10 @@
 package com.project.SmartHomeSimulator.service;
 
-import com.project.SmartHomeSimulator.model.ResponseAPI;
 import com.project.SmartHomeSimulator.model.User;
 import com.project.SmartHomeSimulator.module.SimulationContext;
-import com.project.SmartHomeSimulator.module.SmartHomeCoreFunctionality;
 import com.project.SmartHomeSimulator.module.SmartHomeHeatingProxy;
-import com.project.SmartHomeSimulator.module.SmartHomeSecurity;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseStatus;
+
 
 import java.util.List;
 
