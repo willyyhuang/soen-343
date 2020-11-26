@@ -22,28 +22,63 @@ public class SmartHomeHeating extends Module{
         return smartHomeHeating;
     }
 
-    public boolean addZone(int morningTemp, int eveningTemp, int nightTemp, String zone, List<String> roomNames){
+    /**
+     * Add a zone with assigned rooms and temperatures - initial temperature of a room is outside temperature
+     * @param morningTemp
+     * @param eveningTemp
+     * @param nightTemp
+     * @param zone
+     * @param roomNames
+     * @return
+     */
+    public boolean addZone(int currentTemp, int morningTemp, int eveningTemp, int nightTemp, String zone, List<String> roomNames){
+        String time = getTime();
+        int switchTemp = 0;
+        if(time.equals("morning") && morningTemp != 0 ){
+            switchTemp = morningTemp;
+        }
+        else if(time.equals("evening") && eveningTemp != 0 ){
+            switchTemp = eveningTemp;
+        }
+        else if (time.equals("night") && nightTemp != 0){
+            switchTemp = nightTemp;
+        }
         for (String roomName : roomNames){
             Room room = simulationContext.getHomeLayout().getRoomByName(roomName);
             room.setZone(zone);
-            room.setCurrentTemp(simulationContext.getOutsideTemp());
+            room.setCurrentTemp(currentTemp);
             room.setMorningTemp(morningTemp);
             room.setEveningTemp(eveningTemp);
             room.setNightTemp(nightTemp);
+            room.setOverridden(false);
+            if (switchTemp != 0){
+                switchStates(room,currentTemp,switchTemp);
+            }
         }
         return true;
     }
+
+    /**
+     * Change room temperature and turn on or off ac or heater depending on the new temperature
+     * @param roomName
+     * @param newTemp
+     * @return
+     */
+    public boolean changeTemperature(String roomName, int newTemp){
+        Room room = simulationContext.getHomeLayout().getRoomByName(roomName);
+        switchStates(room,room.getCurrentTemp(),newTemp);
+        room.setCurrentTemp(newTemp);
+        room.setOverridden(true);
+        return true;
+    }
+
     /**
      * changes the sate of the room object passed to it
-     * @param roomName
-     * @param id
+     * @param roomObject
      * @param state - block or turn on = true and unblock or turn off = false - replace the state of the object
      * @return  - true if successful false if otherwise
      */
-    public boolean objectStateSwitcher(String roomName, String id, boolean state) {
-        Room room = simulationContext.getHomeLayout().getRoomByName(roomName);
-        UUID objectID = UUID.fromString(id);
-        RoomObject roomObject = room.getRoomObjectByID(objectID);
+    public boolean objectStateSwitcher(RoomObject roomObject, boolean state) {
         if (roomObject instanceof Heater) {
             Heater heater = (Heater) roomObject;
             heater.setStatus(state);
@@ -55,5 +90,37 @@ public class SmartHomeHeating extends Module{
             return true;
         }
         return false;
+    }
+
+    public String getTime(){
+        String[] timeSplit = simulationContext.getTime().split(":");
+        String time = timeSplit[0].substring(1);
+        if(time.charAt(0) == '0'){
+            time = time.substring(1);
+        }
+        int timeInt = Integer.parseInt(time);
+        if (0 <= timeInt || timeInt < 12){
+            return "morning";
+        }
+        else if (12 <= timeInt || timeInt < 18){
+            return " evening";
+        }
+        else{
+            return "night";
+        }
+
+    }
+
+    public void switchStates(Room room, int currentTemp, int desiredTemp){
+        Heater heater = (Heater) room.getRoomObjectByType(RoomObjectType.HEATER);
+        AC ac = (AC) room.getRoomObjectByType(RoomObjectType.AC);
+        if (currentTemp <= desiredTemp){
+            objectStateSwitcher(heater, true);
+            objectStateSwitcher(ac, false);
+        }
+        else{
+            objectStateSwitcher(heater, false);
+            objectStateSwitcher(ac, true);
+        }
     }
 }

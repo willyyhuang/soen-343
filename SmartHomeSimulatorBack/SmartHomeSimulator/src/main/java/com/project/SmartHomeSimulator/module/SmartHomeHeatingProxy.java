@@ -16,19 +16,45 @@ public class SmartHomeHeatingProxy {
         return smartHomeHeatingProxy;
     }
 
-    public boolean addZone(User user, int morningTemp, int eveningTemp, int nightTemp, String zone, List<String> roomNames){
+    /**
+     * Add a zone, verify permissions first
+     * @param user
+     * @param currentTemp
+     * @param morningTemp
+     * @param eveningTemp
+     * @param nightTemp
+     * @param zone
+     * @param roomNames
+     * @return
+     */
+    public boolean addZone(User user, int currentTemp, int morningTemp, int eveningTemp, int nightTemp, String zone, List<String> roomNames){
         boolean success = false;
         if(verifyPermission(user,"zone", null)){
-           success =  smartHomeHeating.addZone(morningTemp, eveningTemp, nightTemp, zone, roomNames);
+           success =  smartHomeHeating.addZone(currentTemp,morningTemp, eveningTemp, nightTemp, zone, roomNames);
         }
         if (success) {
-            smartHomeHeating.logSuccess("Zone", zone, "created", user.getName());
+            smartHomeHeating.logSuccess("Zone ", zone, " created", user.getName());
         } else {
-            smartHomeHeating.logFail("Zone", zone, "created", user.getName());
+            smartHomeHeating.logFail("Zone ", zone, " created", user.getName());
 
             smartHomeHeating.logMessage("[Failed] " + "Creating" + " zone " + zone + ", requested by " + user.getName() + ", failed");
         }
 
+        return success;
+    }
+
+    public boolean changeTemperature(User user, String roomName,int newTemp){
+        boolean success = false;
+        if(verifyPermission(user,"temp", null)){
+            success = smartHomeHeating.changeTemperature(roomName, newTemp);
+        }
+        if (success) {
+            smartHomeHeating.logSuccess("Temperature in room ", roomName, " changed", user.getName());
+        } else {
+            smartHomeHeating.logFail("Temperature in room ", roomName, " changed", user.getName());
+
+            smartHomeHeating.logMessage("[Failed] " + "Change in temperature in " + "room " + roomName + ", requested by " + user.getName() + ", failed");
+        }
         return success;
     }
     public boolean verifyPermission(User user, String action, String roomName) {

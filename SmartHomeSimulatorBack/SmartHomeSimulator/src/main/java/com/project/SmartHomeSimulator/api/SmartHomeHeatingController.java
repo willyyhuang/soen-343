@@ -6,7 +6,6 @@ import com.project.SmartHomeSimulator.service.SmartHomeHeatingServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 /**
@@ -33,7 +32,7 @@ public class SmartHomeHeatingController {
      */
     @PostMapping(value = "/createZone")
     @ResponseStatus(value = HttpStatus.OK)
-    public ResponseAPI addZone(@RequestParam("morningTemp") int morningTemp, @RequestParam("eveningTemp") int eveningTemp, @RequestParam("nightTemp") int nightTemp, @RequestParam("zoneName") String zone, @RequestBody List<String> roomNames) {
+    public ResponseAPI addZone(@RequestParam("currentTemp") int currentTemp, @RequestParam("morningTemp") int morningTemp, @RequestParam("eveningTemp") int eveningTemp, @RequestParam("nightTemp") int nightTemp, @RequestParam("zoneName") String zone, @RequestBody List<String> roomNames) {
         ResponseAPI response = new ResponseAPI();
         response.setDefaultValues();
         if(smartHomeSecurity.getAwayModeConfig().isAwayMode() && simulationContext.getCurrentSimulationUser() != simulationContext.getAwayModeUser()){
@@ -43,10 +42,35 @@ public class SmartHomeHeatingController {
             response.alertModeOn = true;
             return response;
         }
-        response.success = smartHomeHeatingServices.addZone(morningTemp, eveningTemp, nightTemp, zone, roomNames);
+        response.success = smartHomeHeatingServices.addZone(currentTemp, morningTemp, eveningTemp, nightTemp, zone, roomNames);
         response.consoleMessage = smartHomeHeating.getConsoleMessage();
         response.alertModeOn = false;
         return response;
     }
 
+    /**
+     * change room temperature - override
+     * @param roomName
+     * @param newTemp
+     * @return
+     */
+    @PostMapping(value = "/changeTempRoom")
+    @ResponseStatus(value = HttpStatus.OK)
+    public ResponseAPI changeTemperature(@RequestParam("roomName") String roomName, @RequestParam("newTemp") int newTemp) {
+        ResponseAPI response = new ResponseAPI();
+        response.setDefaultValues();
+        if(smartHomeSecurity.getAwayModeConfig().isAwayMode() && simulationContext.getCurrentSimulationUser() != simulationContext.getAwayModeUser()){
+            response.success = false;
+            smartHomeHeating.logMessage("[Alert] Someone is trying to change home settings.");
+            response.consoleMessage = smartHomeHeating.getConsoleMessage();
+            response.alertModeOn = true;
+            return response;
+        }
+        response.success = smartHomeHeatingServices.changeTemperature(roomName, newTemp);
+        response.consoleMessage = smartHomeHeating.getConsoleMessage();
+        response.alertModeOn = false;
+        return response;
+    }
+
+    
 }
