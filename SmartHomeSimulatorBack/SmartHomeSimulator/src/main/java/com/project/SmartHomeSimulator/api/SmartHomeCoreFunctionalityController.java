@@ -32,7 +32,7 @@ public class SmartHomeCoreFunctionalityController {
         response.setDefaultValues();
         if(smartHomeSecurity.getAwayModeConfig().isAwayMode() && simulationContext.getCurrentSimulationUser() != simulationContext.getAwayModeUser()){
             response.success = false;
-            SmartHomeCoreFunctionality.getInstance().logMessage("[Alert] Someone is trying to break in.");
+            SmartHomeCoreFunctionality.getInstance().logMessage("[Alert] Someone is trying to break in!");
             response.consoleMessage = SmartHomeCoreFunctionality.getInstance().getConsoleMessage();
             response.alertModeOn = true;
             return response;
@@ -55,7 +55,7 @@ public class SmartHomeCoreFunctionalityController {
         response.setDefaultValues();
         if(smartHomeSecurity.getAwayModeConfig().isAwayMode() && simulationContext.getCurrentSimulationUser() != simulationContext.getAwayModeUser()){
             response.success = false;
-            SmartHomeCoreFunctionality.getInstance().logMessage("[Alert] Someone is trying to break in.");
+            SmartHomeCoreFunctionality.getInstance().logMessage("[Alert] Someone is trying to break in!");
             response.consoleMessage = SmartHomeCoreFunctionality.getInstance().getConsoleMessage();
             response.alertModeOn = true;
             return response;
@@ -79,7 +79,7 @@ public class SmartHomeCoreFunctionalityController {
         response.setDefaultValues();
         if(smartHomeSecurity.getAwayModeConfig().isAwayMode() && simulationContext.getCurrentSimulationUser() != simulationContext.getAwayModeUser()){
             response.success = false;
-            SmartHomeCoreFunctionality.getInstance().logMessage("[Alert] Someone is trying to break in.");
+            SmartHomeCoreFunctionality.getInstance().logMessage("[Alert] Someone is trying to break in!");
             response.consoleMessage = SmartHomeCoreFunctionality.getInstance().getConsoleMessage();
             response.alertModeOn = true;
             return response;
@@ -103,7 +103,7 @@ public class SmartHomeCoreFunctionalityController {
         response.setDefaultValues();
         if(smartHomeSecurity.getAwayModeConfig().isAwayMode() && simulationContext.getCurrentSimulationUser() != simulationContext.getAwayModeUser()){
             response.success = false;
-            SmartHomeCoreFunctionality.getInstance().logMessage("[Alert] Someone is trying to break in.");
+            SmartHomeCoreFunctionality.getInstance().logMessage("[Alert] Someone is trying to break in!");
             response.consoleMessage = SmartHomeCoreFunctionality.getInstance().getConsoleMessage();
             response.alertModeOn = true;
             return response;
@@ -126,7 +126,7 @@ public class SmartHomeCoreFunctionalityController {
         response.setDefaultValues();
         if(smartHomeSecurity.getAwayModeConfig().isAwayMode() && simulationContext.getCurrentSimulationUser() != simulationContext.getAwayModeUser()){
             response.success = false;
-            SmartHomeCoreFunctionality.getInstance().logMessage("[Alert] Someone is trying to break in.");
+            SmartHomeCoreFunctionality.getInstance().logMessage("[Alert] Someone is trying to break in!");
             response.consoleMessage = SmartHomeCoreFunctionality.getInstance().getConsoleMessage();
             response.alertModeOn = true;
             return response;
@@ -150,7 +150,7 @@ public class SmartHomeCoreFunctionalityController {
         response.setDefaultValues();
         if(smartHomeSecurity.getAwayModeConfig().isAwayMode() && simulationContext.getCurrentSimulationUser() != simulationContext.getAwayModeUser()){
             response.success = false;
-            SmartHomeCoreFunctionality.getInstance().logMessage("[Alert] Someone is trying to break in.");
+            SmartHomeCoreFunctionality.getInstance().logMessage("[Alert] Someone is trying to break in!");
             response.consoleMessage = SmartHomeCoreFunctionality.getInstance().getConsoleMessage();
             response.alertModeOn = true;
             return response;
@@ -173,7 +173,7 @@ public class SmartHomeCoreFunctionalityController {
         response.setDefaultValues();
         if(smartHomeSecurity.getAwayModeConfig().isAwayMode() && simulationContext.getCurrentSimulationUser() != simulationContext.getAwayModeUser()){
             response.success = false;
-            SmartHomeCoreFunctionality.getInstance().logMessage("[Alert] Someone is trying to break in.");
+            SmartHomeCoreFunctionality.getInstance().logMessage("[Alert] Someone is trying to break in!");
             response.consoleMessage = SmartHomeCoreFunctionality.getInstance().getConsoleMessage();
             response.alertModeOn = true;
             return response;
@@ -198,7 +198,7 @@ public class SmartHomeCoreFunctionalityController {
         response.setDefaultValues();
         if(smartHomeSecurity.getAwayModeConfig().isAwayMode() && simulationContext.getCurrentSimulationUser() != simulationContext.getAwayModeUser()){
             response.success = false;
-            SmartHomeCoreFunctionality.getInstance().logMessage("[Alert] Someone is trying to break in.");
+            SmartHomeCoreFunctionality.getInstance().logMessage("[Alert] Someone is trying to break in!");
             response.consoleMessage = SmartHomeCoreFunctionality.getInstance().getConsoleMessage();
             response.alertModeOn = true;
             return response;

@@ -3,6 +3,7 @@ package com.project.SmartHomeSimulator.module;
 import com.project.SmartHomeSimulator.model.Room;
 import com.project.SmartHomeSimulator.model.roomObjects.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -72,6 +73,21 @@ public class SmartHomeHeating extends Module{
     }
 
     /**
+     * Change temperature of a zone when reaching a period in a day
+     * @param rooms
+     * @param currentTemp
+     * @param newTemp
+     * @return
+     */
+    public boolean changeZoneTemp(ArrayList<Room> rooms, int currentTemp, int newTemp){
+        for (Room room : rooms){
+            switchStates(room,currentTemp,newTemp);
+            room.setCurrentTemp(newTemp);
+            room.setOverridden(false);
+        }
+        return true;
+    }
+    /**
      * changes the sate of the room object passed to it
      * @param roomObject
      * @param state - block or turn on = true and unblock or turn off = false - replace the state of the object
@@ -91,6 +107,10 @@ public class SmartHomeHeating extends Module{
         return false;
     }
 
+    /**
+     * Get the current time of the simulation to adapt the AC and heater states
+     * @return either morning, evening or night
+     */
     public String getTime(){
         String[] timeSplit = simulationContext.getTime().split(":");
         String time = timeSplit[0].substring(1);
@@ -107,7 +127,6 @@ public class SmartHomeHeating extends Module{
         else{
             return "night";
         }
-
     }
 
     /**

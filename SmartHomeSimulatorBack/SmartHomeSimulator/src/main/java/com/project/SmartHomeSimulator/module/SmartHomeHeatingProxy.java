@@ -1,7 +1,10 @@
 package com.project.SmartHomeSimulator.module;
 
 import com.project.SmartHomeSimulator.model.Role;
+import com.project.SmartHomeSimulator.model.Room;
 import com.project.SmartHomeSimulator.model.User;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -67,6 +70,19 @@ public class SmartHomeHeatingProxy {
         return success;
     }
 
+    /**
+     * Change temperature of a zone when reaching a period in a day
+     * @param rooms
+     * @param currentTemp
+     * @param newTemp
+     * @return
+     */
+    public boolean changeZoneTemp(ArrayList<Room> rooms, int currentTemp, int newTemp){
+        if (rooms.isEmpty()){
+            return false;
+        }
+        return smartHomeHeating.changeZoneTemp(rooms, currentTemp, newTemp);
+    }
     /**
      * verify the permissions of each user Type
      * @param user

@@ -36,6 +36,21 @@ public class HomeLayout {
     }
 
     /**
+     * Gets all rooms in a zone
+     * @param zone
+     * @return
+     */
+    public ArrayList<Room> getRoomsInZone(String zone) {
+        ArrayList<Room> rooms = new ArrayList<>();
+        for (Room room : this.roomList) {
+            if (room.getZone().equals(zone)) {
+                rooms.add(room);
+            }
+        }
+        return rooms;
+    }
+
+    /**
      * Gets a room by object Id
      *
      * @param objectID

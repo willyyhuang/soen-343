@@ -37,7 +37,7 @@ public class SmartHomeHeatingController {
         response.setDefaultValues();
         if(smartHomeSecurity.getAwayModeConfig().isAwayMode() && simulationContext.getCurrentSimulationUser() != simulationContext.getAwayModeUser()){
             response.success = false;
-            smartHomeHeating.logMessage("[Alert] Someone is trying to change home settings.");
+            smartHomeHeating.logMessage("[Alert] Someone is trying to change home settings while you are away!");
             response.consoleMessage = smartHomeHeating.getConsoleMessage();
             response.alertModeOn = true;
             return response;
@@ -61,12 +61,37 @@ public class SmartHomeHeatingController {
         response.setDefaultValues();
         if(smartHomeSecurity.getAwayModeConfig().isAwayMode() && simulationContext.getCurrentSimulationUser() != simulationContext.getAwayModeUser()){
             response.success = false;
-            smartHomeHeating.logMessage("[Alert] Someone is trying to change home settings.");
+            smartHomeHeating.logMessage("[Alert] Someone is trying to change home settings while you are away!");
             response.consoleMessage = smartHomeHeating.getConsoleMessage();
             response.alertModeOn = true;
             return response;
         }
         response.success = smartHomeHeatingServices.changeTemperature(roomName, newTemp, currentTemp);
+        response.consoleMessage = smartHomeHeating.getConsoleMessage();
+        response.alertModeOn = false;
+        return response;
+    }
+
+    /**
+     * Change temperature of a zone when reaching a period in a day
+     * @param zoneName
+     * @param newTemp - either morning evening or night
+     * @param currentTemp
+     * @return
+     */
+    @PostMapping(value = "/changeZoneTemp")
+    @ResponseStatus(value = HttpStatus.OK)
+    public ResponseAPI changeZoneTemp(@RequestParam("zoneName") String zoneName, @RequestParam("newTemp") int newTemp, @RequestParam("currentTemp") int currentTemp) {
+        ResponseAPI response = new ResponseAPI();
+        response.setDefaultValues();
+        if(smartHomeSecurity.getAwayModeConfig().isAwayMode() && simulationContext.getCurrentSimulationUser() != simulationContext.getAwayModeUser()){
+            response.success = false;
+            smartHomeHeating.logMessage("[Alert] Someone is trying to change home settings while you are away!");
+            response.consoleMessage = smartHomeHeating.getConsoleMessage();
+            response.alertModeOn = true;
+            return response;
+        }
+        response.success = smartHomeHeatingServices.changeZoneTemp(zoneName, currentTemp, newTemp);
         response.consoleMessage = smartHomeHeating.getConsoleMessage();
         response.alertModeOn = false;
         return response;
