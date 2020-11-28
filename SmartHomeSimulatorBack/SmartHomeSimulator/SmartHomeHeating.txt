@@ -1,0 +1,3 @@
+[Zone ] Zone1 Zone  was  created by Jenn's request.
+[Temperature in room ] bedroom1 Temperature in room  was  changed by Jenn's request.
+[Zone ] Zone2 Zone  was  created by Jenn's request.

@@ -6,7 +6,7 @@ import com.project.SmartHomeSimulator.model.User;
 import com.project.SmartHomeSimulator.model.Zone;
 
 import java.util.ArrayList;
-import java.util.List;
+
 
 /**
  * Proxy for the heating class, verifies permissions
@@ -34,9 +34,9 @@ public class SmartHomeHeatingProxy {
            success =  smartHomeHeating.addZone(zone);
         }
         if (success) {
-            smartHomeHeating.logSuccess("Zone ", zone.getName(), " created", user.getName());
+            smartHomeHeating.logSuccess(zone.getName(),"Zone",  "created", user.getName());
         } else {
-            smartHomeHeating.logFail("Zone ", zone.getName(), " created", user.getName());
+            smartHomeHeating.logFail(zone.getName(),"Zone",  "created", user.getName());
 
             smartHomeHeating.logMessage("[Failed] " + "Creating" + " zone " + zone.getName() + ", requested by " + user.getName() + ", failed");
         }
@@ -57,11 +57,11 @@ public class SmartHomeHeatingProxy {
             success = smartHomeHeating.changeRoomTemp(roomName, newTemp);
         }
         if (success) {
-            smartHomeHeating.logSuccess("Temperature in room ", roomName, " changed", user.getName());
+            smartHomeHeating.logSuccess(roomName,"Temperature in room",  "changed", user.getName());
         } else {
-            smartHomeHeating.logFail("Temperature in room ", roomName, " changed", user.getName());
+            smartHomeHeating.logFail(roomName,"Temperature in room",  "changed", user.getName());
 
-            smartHomeHeating.logMessage("[Failed] " + "Change in temperature in " + "room " + roomName + ", requested by " + user.getName() + ", failed");
+            smartHomeHeating.logMessage("[Failed] " + "Change in temperature in " + "room" + roomName + ", requested by " + user.getName() + ", failed");
         }
         return success;
     }
@@ -78,6 +78,7 @@ public class SmartHomeHeatingProxy {
         }
         return smartHomeHeating.changeZoneTemp(rooms, period);
     }
+
     /**
      * verify the permissions of each user Type
      * @param user

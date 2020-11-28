@@ -43,8 +43,10 @@ public class HomeLayout {
     public ArrayList<Room> getRoomsInZone(String zone) {
         ArrayList<Room> rooms = new ArrayList<>();
         for (Room room : this.roomList) {
-            if (room.getZone().equals(zone)) {
-                rooms.add(room);
+            if(room.getZone() != null) {
+                if (room.getZone().equals(zone)) {
+                    rooms.add(room);
+                }
             }
         }
         return rooms;
@@ -131,7 +133,7 @@ public class HomeLayout {
                         ac.setName(room.getName() + " - AC" + acCount++);
                         roomObjects.add(ac);
                     }
-                    else if (roomObject.getObjectType() == RoomObjectType.AC) {
+                    else if (roomObject.getObjectType() == RoomObjectType.HEATER) {
                         heater = new Heater(roomObject);
                         heater.setName(room.getName() + " - Heater" + heaterCount++);
                         roomObjects.add(heater);
