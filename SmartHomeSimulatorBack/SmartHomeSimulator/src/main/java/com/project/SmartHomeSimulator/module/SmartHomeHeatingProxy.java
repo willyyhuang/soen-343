@@ -3,6 +3,7 @@ package com.project.SmartHomeSimulator.module;
 import com.project.SmartHomeSimulator.model.Role;
 import com.project.SmartHomeSimulator.model.Room;
 import com.project.SmartHomeSimulator.model.User;
+import com.project.SmartHomeSimulator.model.Zone;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,25 +25,20 @@ public class SmartHomeHeatingProxy {
     /**
      * Add a zone, verify permissions first
      * @param user
-     * @param currentTemp
-     * @param morningTemp
-     * @param eveningTemp
-     * @param nightTemp
      * @param zone
-     * @param roomNames
      * @return
      */
-    public boolean addZone(User user, int currentTemp, int morningTemp, int eveningTemp, int nightTemp, String zone, List<String> roomNames){
+    public boolean addZone(User user, Zone zone){
         boolean success = false;
         if(verifyPermission(user,"zone", null)){
-           success =  smartHomeHeating.addZone(currentTemp,morningTemp, eveningTemp, nightTemp, zone, roomNames);
+           success =  smartHomeHeating.addZone(zone);
         }
         if (success) {
-            smartHomeHeating.logSuccess("Zone ", zone, " created", user.getName());
+            smartHomeHeating.logSuccess("Zone ", zone.getName(), " created", user.getName());
         } else {
-            smartHomeHeating.logFail("Zone ", zone, " created", user.getName());
+            smartHomeHeating.logFail("Zone ", zone.getName(), " created", user.getName());
 
-            smartHomeHeating.logMessage("[Failed] " + "Creating" + " zone " + zone + ", requested by " + user.getName() + ", failed");
+            smartHomeHeating.logMessage("[Failed] " + "Creating" + " zone " + zone.getName() + ", requested by " + user.getName() + ", failed");
         }
 
         return success;
@@ -55,10 +51,10 @@ public class SmartHomeHeatingProxy {
      * @param newTemp
      * @return
      */
-    public boolean changeTemperature(User user, String roomName,int newTemp, int currentTemp){
+    public boolean changeRoomTemp(User user, String roomName,int newTemp){
         boolean success = false;
         if(verifyPermission(user,"temp", null)){
-            success = smartHomeHeating.changeTemperature(roomName, newTemp, currentTemp);
+            success = smartHomeHeating.changeRoomTemp(roomName, newTemp);
         }
         if (success) {
             smartHomeHeating.logSuccess("Temperature in room ", roomName, " changed", user.getName());
@@ -73,15 +69,14 @@ public class SmartHomeHeatingProxy {
     /**
      * Change temperature of a zone when reaching a period in a day
      * @param rooms
-     * @param currentTemp
-     * @param newTemp
+     * @param period
      * @return
      */
-    public boolean changeZoneTemp(ArrayList<Room> rooms, int currentTemp, int newTemp){
+    public boolean changeZoneTemp(ArrayList<Room> rooms, int period){
         if (rooms.isEmpty()){
             return false;
         }
-        return smartHomeHeating.changeZoneTemp(rooms, currentTemp, newTemp);
+        return smartHomeHeating.changeZoneTemp(rooms, period);
     }
     /**
      * verify the permissions of each user Type

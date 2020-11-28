@@ -1,6 +1,7 @@
 package com.project.SmartHomeSimulator.module;
 
 import com.project.SmartHomeSimulator.model.Room;
+import com.project.SmartHomeSimulator.model.Zone;
 import com.project.SmartHomeSimulator.model.roomObjects.*;
 
 import java.util.ArrayList;
@@ -24,36 +25,21 @@ public class SmartHomeHeating extends Module{
 
     /**
      * Add a zone with assigned rooms and temperatures - initial temperature of a room is outside temperature
-     * @param morningTemp
-     * @param eveningTemp
-     * @param nightTemp
      * @param zone
-     * @param roomNames
      * @return
      */
-    public boolean addZone(int currentTemp, int morningTemp, int eveningTemp, int nightTemp, String zone, List<String> roomNames){
-        String time = getTime();
-        int switchTemp = 0;
-        if(time.equals("morning") && morningTemp != 0 ){
-            switchTemp = morningTemp;
-        }
-        else if(time.equals("evening") && eveningTemp != 0 ){
-            switchTemp = eveningTemp;
-        }
-        else if (time.equals("night") && nightTemp != 0){
-            switchTemp = nightTemp;
-        }
-        for (String roomName : roomNames){
+    public boolean addZone(Zone zone){
+        for (String roomName : zone.getRoomsInZone()){
             Room room = simulationContext.getHomeLayout().getRoomByName(roomName);
-            room.setZone(zone);
-            room.setCurrentTemp(currentTemp);
-            room.setMorningTemp(morningTemp);
-            room.setEveningTemp(eveningTemp);
-            room.setNightTemp(nightTemp);
+            room.setZone(zone.getName());
+            room.setCurrentTemp(zone.getCurrentTemp());
+            room.setPeriod1(zone.getPeriod1());
+            room.setPeriod1Temp(zone.getPeriod1Temp());
+            room.setPeriod2(zone.getPeriod2());
+            room.setPeriod2Temp(zone.getPeriod2Temp());
+            room.setPeriod3(zone.getPeriod3());
+            room.setPeriod3Temp(zone.getPeriod3Temp());
             room.setOverridden(false);
-            if (switchTemp != 0){
-                switchStates(room,currentTemp,switchTemp);
-            }
         }
         return true;
     }
@@ -64,9 +50,9 @@ public class SmartHomeHeating extends Module{
      * @param newTemp
      * @return
      */
-    public boolean changeTemperature(String roomName, int newTemp, int currentTemp){
+    public boolean changeRoomTemp(String roomName, int newTemp){
         Room room = simulationContext.getHomeLayout().getRoomByName(roomName);
-        switchStates(room,currentTemp,newTemp);
+        switchStates(room,room.getCurrentTemp(),newTemp);
         room.setCurrentTemp(newTemp);
         room.setOverridden(true);
         return true;
@@ -75,13 +61,13 @@ public class SmartHomeHeating extends Module{
     /**
      * Change temperature of a zone when reaching a period in a day
      * @param rooms
-     * @param currentTemp
-     * @param newTemp
+     * @param period
      * @return
      */
-    public boolean changeZoneTemp(ArrayList<Room> rooms, int currentTemp, int newTemp){
+    public boolean changeZoneTemp(ArrayList<Room> rooms, int period){
+        int newTemp = getPeriodTemp(rooms.get(0), period);
         for (Room room : rooms){
-            switchStates(room,currentTemp,newTemp);
+            switchStates(room,room.getCurrentTemp(),newTemp);
             room.setCurrentTemp(newTemp);
             room.setOverridden(false);
         }
@@ -108,28 +94,6 @@ public class SmartHomeHeating extends Module{
     }
 
     /**
-     * Get the current time of the simulation to adapt the AC and heater states
-     * @return either morning, evening or night
-     */
-    public String getTime(){
-        String[] timeSplit = simulationContext.getTime().split(":");
-        String time = timeSplit[0].substring(1);
-        if(time.charAt(0) == '0'){
-            time = time.substring(1);
-        }
-        int timeInt = Integer.parseInt(time);
-        if (0 <= timeInt || timeInt < 12){
-            return "morning";
-        }
-        else if (12 <= timeInt || timeInt < 18){
-            return " evening";
-        }
-        else{
-            return "night";
-        }
-    }
-
-    /**
      * Switches AC and Heater state depending on the current temp and the desired temp
      * @param room
      * @param currentTemp
@@ -146,5 +110,23 @@ public class SmartHomeHeating extends Module{
             objectStateSwitcher(heater, false);
             objectStateSwitcher(ac, true);
         }
+    }
+
+    /**
+     * Get the temp for that period
+     * @param room
+     * @param period
+     * @return
+     */
+    public int getPeriodTemp(Room room, int period){
+        switch(period){
+            case 1:
+                return room.getPeriod1Temp();
+            case 2:
+                return room.getPeriod2Temp();
+            case 3:
+                return room.getPeriod3Temp();
+        }
+        return 0;
     }
 }

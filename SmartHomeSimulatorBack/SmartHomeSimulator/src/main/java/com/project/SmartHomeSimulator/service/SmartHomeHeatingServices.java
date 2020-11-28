@@ -2,6 +2,7 @@ package com.project.SmartHomeSimulator.service;
 
 import com.project.SmartHomeSimulator.model.Room;
 import com.project.SmartHomeSimulator.model.User;
+import com.project.SmartHomeSimulator.model.Zone;
 import com.project.SmartHomeSimulator.module.SimulationContext;
 import com.project.SmartHomeSimulator.module.SmartHomeHeatingProxy;
 import org.springframework.stereotype.Service;
@@ -17,16 +18,12 @@ public class SmartHomeHeatingServices {
 
     /**
      * Add a zone
-     * @param morningTemp
-     * @param eveningTemp
-     * @param nightTemp
      * @param zone
-     * @param roomNames
      * @return
      */
-    public boolean addZone(int currentTemp, int morningTemp, int eveningTemp, int nightTemp, String zone, List<String> roomNames) {
+    public boolean addZone(Zone zone) {
         User user = simulationContext.getCurrentSimulationUser();
-        return smartHomeHeatingProxy.addZone(user, currentTemp,morningTemp, eveningTemp, nightTemp, zone, roomNames);
+        return smartHomeHeatingProxy.addZone(user, zone);
     }
 
     /**
@@ -35,22 +32,21 @@ public class SmartHomeHeatingServices {
      * @param newTemp
      * @return
      */
-    public boolean changeTemperature(String roomName, int newTemp, int currentTemp){
+    public boolean changeRoomTemp(String roomName, int newTemp){
         User user = simulationContext.getCurrentSimulationUser();
-        return smartHomeHeatingProxy.changeTemperature(user, roomName, newTemp, currentTemp);
+        return smartHomeHeatingProxy.changeRoomTemp(user, roomName, newTemp);
     }
 
     /**
      * Change temperature of a zone when reaching a period in a day
      * @param zoneName
-     * @param currentTemp
-     * @param newTemp
+     * @param period
      * @return
      */
-    public boolean changeZoneTemp(String zoneName, int currentTemp, int newTemp){
-        if (newTemp != 0) {
+    public boolean changeZoneTemp(String zoneName, int period){
+        if (period != 0) {
             ArrayList<Room> rooms = simulationContext.getHomeLayout().getRoomsInZone(zoneName);
-            return smartHomeHeatingProxy.changeZoneTemp(rooms, currentTemp, newTemp);
+            return smartHomeHeatingProxy.changeZoneTemp(rooms, period);
         }
         return true;
     }

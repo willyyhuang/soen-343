@@ -1,12 +1,14 @@
 package com.project.SmartHomeSimulator.api;
 
 import com.project.SmartHomeSimulator.model.ResponseAPI;
+import com.project.SmartHomeSimulator.model.Zone;
 import com.project.SmartHomeSimulator.module.*;
 import com.project.SmartHomeSimulator.service.SmartHomeHeatingServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import java.util.List;
+
+import javax.validation.Valid;
 
 /**
  * API controller for everything related to the heating process
@@ -22,17 +24,13 @@ public class SmartHomeHeatingController {
     public SmartHomeHeating smartHomeHeating = SmartHomeHeating.getInstance();
 
     /**
-     * Add a zone
-     * @param morningTemp
-     * @param eveningTemp
-     * @param nightTemp
+     * Add zone api
      * @param zone
-     * @param roomNames
      * @return
      */
     @PostMapping(value = "/createZone")
     @ResponseStatus(value = HttpStatus.OK)
-    public ResponseAPI addZone(@RequestParam("currentTemp") int currentTemp, @RequestParam("morningTemp") int morningTemp, @RequestParam("eveningTemp") int eveningTemp, @RequestParam("nightTemp") int nightTemp, @RequestParam("zoneName") String zone, @RequestBody List<String> roomNames) {
+    public ResponseAPI addZone(@RequestBody @Valid Zone zone) {
         ResponseAPI response = new ResponseAPI();
         response.setDefaultValues();
         if(smartHomeSecurity.getAwayModeConfig().isAwayMode() && simulationContext.getCurrentSimulationUser() != simulationContext.getAwayModeUser()){
@@ -42,7 +40,7 @@ public class SmartHomeHeatingController {
             response.alertModeOn = true;
             return response;
         }
-        response.success = smartHomeHeatingServices.addZone(currentTemp, morningTemp, eveningTemp, nightTemp, zone, roomNames);
+        response.success = smartHomeHeatingServices.addZone(zone);
         response.consoleMessage = smartHomeHeating.getConsoleMessage();
         response.alertModeOn = false;
         return response;
@@ -54,9 +52,9 @@ public class SmartHomeHeatingController {
      * @param newTemp
      * @return
      */
-    @PostMapping(value = "/changeTempRoom")
+    @PostMapping(value = "/changeRoomTemp")
     @ResponseStatus(value = HttpStatus.OK)
-    public ResponseAPI changeTemperature(@RequestParam("roomName") String roomName, @RequestParam("newTemp") int newTemp, @RequestParam("currentTemp") int currentTemp) {
+    public ResponseAPI changeRoomTemp(@RequestParam("roomName") String roomName, @RequestParam("newTemp") int newTemp) {
         ResponseAPI response = new ResponseAPI();
         response.setDefaultValues();
         if(smartHomeSecurity.getAwayModeConfig().isAwayMode() && simulationContext.getCurrentSimulationUser() != simulationContext.getAwayModeUser()){
@@ -66,7 +64,7 @@ public class SmartHomeHeatingController {
             response.alertModeOn = true;
             return response;
         }
-        response.success = smartHomeHeatingServices.changeTemperature(roomName, newTemp, currentTemp);
+        response.success = smartHomeHeatingServices.changeRoomTemp(roomName, newTemp);
         response.consoleMessage = smartHomeHeating.getConsoleMessage();
         response.alertModeOn = false;
         return response;
@@ -75,13 +73,12 @@ public class SmartHomeHeatingController {
     /**
      * Change temperature of a zone when reaching a period in a day
      * @param zoneName
-     * @param newTemp - either morning evening or night
-     * @param currentTemp
+     * @param period - either morning evening or night
      * @return
      */
     @PostMapping(value = "/changeZoneTemp")
     @ResponseStatus(value = HttpStatus.OK)
-    public ResponseAPI changeZoneTemp(@RequestParam("zoneName") String zoneName, @RequestParam("newTemp") int newTemp, @RequestParam("currentTemp") int currentTemp) {
+    public ResponseAPI changeZoneTemp(@RequestParam("zoneName") String zoneName, @RequestParam("period") int period) {
         ResponseAPI response = new ResponseAPI();
         response.setDefaultValues();
         if(smartHomeSecurity.getAwayModeConfig().isAwayMode() && simulationContext.getCurrentSimulationUser() != simulationContext.getAwayModeUser()){
@@ -91,7 +88,7 @@ public class SmartHomeHeatingController {
             response.alertModeOn = true;
             return response;
         }
-        response.success = smartHomeHeatingServices.changeZoneTemp(zoneName, currentTemp, newTemp);
+        response.success = smartHomeHeatingServices.changeZoneTemp(zoneName, period);
         response.consoleMessage = smartHomeHeating.getConsoleMessage();
         response.alertModeOn = false;
         return response;

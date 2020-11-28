@@ -19,9 +19,60 @@ public class Room {
     private String zone;
     private boolean overridden = false;
     private int currentTemp;
-    private int morningTemp;
-    private int eveningTemp;
-    private int nightTemp;
+    private String period1;
+    private int period1Temp;
+    private String period2;
+    private int period2Temp;
+    private String period3;
+    private int period3Temp;
+
+    public String getPeriod1() {
+        return period1;
+    }
+
+    public void setPeriod1(String period1) {
+        this.period1 = period1;
+    }
+
+    public int getPeriod1Temp() {
+        return period1Temp;
+    }
+
+    public void setPeriod1Temp(int period1Temp) {
+        this.period1Temp = period1Temp;
+    }
+
+    public String getPeriod2() {
+        return period2;
+    }
+
+    public void setPeriod2(String period2) {
+        this.period2 = period2;
+    }
+
+    public int getPeriod2Temp() {
+        return period2Temp;
+    }
+
+    public void setPeriod2Temp(int period2Temp) {
+        this.period2Temp = period2Temp;
+    }
+
+    public String getPeriod3() {
+        return period3;
+    }
+
+    public void setPeriod3(String period3) {
+        this.period3 = period3;
+    }
+
+    public int getPeriod3Temp() {
+        return period3Temp;
+    }
+
+    public void setPeriod3Temp(int period3Temp) {
+        this.period3Temp = period3Temp;
+    }
 
     public int getCurrentTemp() {
         return currentTemp;
@@ -29,30 +80,6 @@ public class Room {
 
     public void setCurrentTemp(int currentTemp) {
         this.currentTemp = currentTemp;
-    }
-
-    public int getMorningTemp() {
-        return morningTemp;
-    }
-
-    public void setMorningTemp(int morningTemp) {
-        this.morningTemp = morningTemp;
-    }
-
-    public int getEveningTemp() {
-        return eveningTemp;
-    }
-
-    public void setEveningTemp(int eveningTemp) {
-        this.eveningTemp = eveningTemp;
-    }
-
-    public int getNightTemp() {
-        return nightTemp;
-    }
-
-    public void setNightTemp(int nightTemp) {
-        this.nightTemp = nightTemp;
     }
 
     public boolean isOverridden() {
