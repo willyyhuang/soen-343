@@ -72,11 +72,19 @@ public class SmartHomeHeatingProxy {
      * @param period
      * @return
      */
-    public boolean changeZoneTemp(ArrayList<Room> rooms, int period){
-        if (rooms.isEmpty()){
-            return false;
+    public boolean changeZoneTemp(String zoneName,ArrayList<Room> rooms, int period){
+        boolean success = false;
+        if (!rooms.isEmpty()){
+            success = smartHomeHeating.changeZoneTemp(rooms, period);
         }
-        return smartHomeHeating.changeZoneTemp(rooms, period);
+        if (success) {
+            smartHomeHeating.logSuccess(zoneName,"Temperature in zone",  "changed", "SHH");
+        } else {
+            smartHomeHeating.logFail(zoneName,"Temperature in zone",  "changed", "SHH");
+
+            smartHomeHeating.logMessage("[Failed] " + "Change in temperature in " + "room" + zoneName + ", requested by " + "SHH" + ", failed");
+        }
+        return success;
     }
 
     /**

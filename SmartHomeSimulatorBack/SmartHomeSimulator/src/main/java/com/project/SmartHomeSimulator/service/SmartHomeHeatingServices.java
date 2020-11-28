@@ -46,7 +46,7 @@ public class SmartHomeHeatingServices {
     public boolean changeZoneTemp(String zoneName, int period){
         if (period != 0) {
             ArrayList<Room> rooms = simulationContext.getHomeLayout().getRoomsInZone(zoneName);
-            return smartHomeHeatingProxy.changeZoneTemp(rooms, period);
+            return smartHomeHeatingProxy.changeZoneTemp(zoneName, rooms, period);
         }
         return true;
     }
