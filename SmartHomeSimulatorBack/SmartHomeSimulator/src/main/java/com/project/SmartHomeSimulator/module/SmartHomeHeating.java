@@ -5,9 +5,10 @@ import com.project.SmartHomeSimulator.model.Zone;
 import com.project.SmartHomeSimulator.model.roomObjects.*;
 
 import java.util.ArrayList;
-import java.util.List;
 
-
+/**
+ * Module about heating the house
+ */
 public class SmartHomeHeating extends Module{
 
     private static SmartHomeHeating smartHomeHeating = null;
