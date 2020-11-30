@@ -2,7 +2,6 @@ package com.project.SmartHomeSimulator.service;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.project.SmartHomeSimulator.model.HomeLayout;
@@ -36,15 +35,6 @@ public class SimulationContextService {
         return simulationContext;
     }
 
-    /**
-     * Set the inside temp
-     * @param insideTemp
-     * @return - true if successful false if otherwise
-     */
-    public boolean setInsideTemp(int insideTemp) {
-        simulationContext.setInsideTemp(insideTemp);
-        return true;
-    }
 
     /**
      * Set Outside Temp

@@ -1,14 +1,7 @@
 package com.project.SmartHomeSimulator.model;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-
 import org.springframework.boot.jackson.JsonComponent;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.project.SmartHomeSimulator.module.SimulationContext;
 
 /**
  * User class is used to hold information pertaining the users in the simulation

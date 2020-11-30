@@ -58,17 +58,6 @@ public class SimulationContextController {
     }
 
     /**
-     * API set Inside temp
-     * @param insideTemp
-     * @return - true if successful false if otherwise
-     */
-    @PostMapping(value = "/setInsideTemp")
-    @ResponseStatus(value = HttpStatus.OK)
-    public boolean setInsideTemp(@RequestParam("insideTemp") int insideTemp) {
-       return simulationContextService.setInsideTemp(insideTemp);
-    }
-
-    /**
      * API set outside temp
      * @param outsideTemp
      * @return - true if successful false if otherwise

@@ -4,7 +4,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.project.SmartHomeSimulator.model.roomObjects.*;
 import org.springframework.boot.jackson.JsonComponent;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -19,6 +18,8 @@ public class HomeLayout {
     public static int windowCount = 1;
     private static int doorCount = 1;
     private static int lightCount = 1;
+    private static int acCount = 1;
+    private static int heaterCount =1;
     /**
      * Gets a room by name
      *
@@ -32,6 +33,23 @@ public class HomeLayout {
             }
         }
         return null;
+    }
+
+    /**
+     * Gets all rooms in a zone
+     * @param zone
+     * @return
+     */
+    public ArrayList<Room> getRoomsInZone(String zone) {
+        ArrayList<Room> rooms = new ArrayList<>();
+        for (Room room : this.roomList) {
+            if(room.getZone() != null) {
+                if (room.getZone().equals(zone)) {
+                    rooms.add(room);
+                }
+            }
+        }
+        return rooms;
     }
 
     /**
@@ -88,6 +106,8 @@ public class HomeLayout {
         Window window;
         Door door;
         Light light;
+        AC ac;
+        Heater heater;
         if (rooms != null) {
             for (Room room : rooms) {
                 List<RoomObject> roomObjects = new ArrayList<>();
@@ -107,6 +127,16 @@ public class HomeLayout {
                         light = new Light(roomObject);
                         light.setName(room.getName() + " - Light" + lightCount++);
                         roomObjects.add(light);
+                    }
+                    else if (roomObject.getObjectType() == RoomObjectType.AC) {
+                        ac = new AC(roomObject);
+                        ac.setName(room.getName() + " - AC" + acCount++);
+                        roomObjects.add(ac);
+                    }
+                    else if (roomObject.getObjectType() == RoomObjectType.HEATER) {
+                        heater = new Heater(roomObject);
+                        heater.setName(room.getName() + " - Heater" + heaterCount++);
+                        roomObjects.add(heater);
                     }
                 }
                 room.setObjects(roomObjects);

@@ -58,12 +58,6 @@ public class SimulationContextServiceTest {
     }
     
     @Test
-    public void setInsideTemp() {
-    	boolean result = simulationContextService.setInsideTemp(20);
-    	assertEquals(result, true);
-    }
-    
-    @Test
     public void setOutsideTemp(){
         boolean result = simulationContextService.setOutsideTemp(12);
         assertEquals(result,true);
