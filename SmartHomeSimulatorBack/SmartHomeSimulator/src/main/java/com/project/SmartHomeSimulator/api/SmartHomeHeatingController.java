@@ -187,8 +187,12 @@ public class SmartHomeHeatingController {
      */
     @PostMapping(value = "/alertTempThreshold")
     @ResponseStatus(value = HttpStatus.OK)
-    public boolean alertTempThreshold() {
-        smartHomeHeating.logMessage("There is something unusual with the temperature of your home.");
-        return true;
+    public ResponseAPI alertTempThreshold() {
+        ResponseAPI response = new ResponseAPI();
+        response.setDefaultValues();
+        response.success = smartHomeHeating.logMessage("There is something unusual with the temperature of your home.");
+        response.consoleMessage = smartHomeHeating.getConsoleMessage();
+        response.alertModeOn = false;
+        return response;
     }
 }

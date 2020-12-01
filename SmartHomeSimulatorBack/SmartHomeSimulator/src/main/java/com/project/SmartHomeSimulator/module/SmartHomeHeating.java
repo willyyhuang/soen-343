@@ -152,7 +152,7 @@ public class SmartHomeHeating extends Module implements AwayModeMonitor, Monitor
         String roomName = homeLayout.getRoomNameByObjectID(windowId);
         if (roomName != null) {
             if (SmartHomeCoreFunctionality.getInstance().objectStateSwitcher(roomName, windowId, state)) {
-                logSuccess("Window", roomName, state ? "opening" : "closing", "SHH module");
+                logSuccess("Window", roomName, state ? "opened" : "closed", "SHH module");
                 return true;
             } else {
                 String windowName = homeLayout.getRoomByName(roomName).getRoomObjectByID(UUID.fromString(windowId)).getName();

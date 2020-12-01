@@ -35,10 +35,10 @@ public class SimulationContext {
 	private int summerTemp;
 	private int winterTemp;
 	private final File userProfilesJSON = new File("./src/main/resources/user_profiles.json.txt");
-	private static int counter = 0;
 	private int tempThreshold;
 
 	private SimulationContext() {
+		loadUserProfiles();
 		monitors = new ArrayList<Monitor>();
 		this.monitors.add(SmartHomeSecurity.getInstance());
 		this.monitors.add(SmartHomeHeating.getInstance());
@@ -176,10 +176,6 @@ public class SimulationContext {
 	}
 
 	public List<User> getSimulationUsers() {
-		counter++;
-		if (counter == 1) {
-			loadUserProfiles();
-		}
 		return simulationUsers;
 	}
 	
