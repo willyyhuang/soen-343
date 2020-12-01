@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import javax.validation.constraints.AssertTrue;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,11 +38,9 @@ public class SmartHomeHeatingSerciveTest {
         simulationContextService.setCurrentSimulationUser("name");
 
         String homeLayoutFile = "{\"roomList\":\"[{\"name\":\"bedroom\", \"objects\":[{\"objectType\": \"AC\"}, {\"objectType\": \"HEATER\"}]}, {\"name\":\"building entrance\", \"objects\":[{\"objectType\": \"AC\"}, {\"objectType\": \"HEATER\"}]}, {\"name\":\"garage\", \"objects\":[{\"objectType\": \"AC\"}, {\"objectType\": \"HEATER\"}]}]\"}";
-        HomeLayout homeLayout = simulationContextService.loadLayout(homeLayoutFile);
-
-
-
+        simulationContextService.loadLayout(homeLayoutFile);
     }
+
     @Test
     public void addZoneTest_(){
         setup();
