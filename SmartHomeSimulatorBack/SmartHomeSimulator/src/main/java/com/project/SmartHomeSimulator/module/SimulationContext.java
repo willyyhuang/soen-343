@@ -32,7 +32,24 @@ public class SimulationContext {
 	private List<Monitor> monitors;
 	private String summerMonths;
 	private String winterMonths;
+	private int summerTemp;
+	private int winterTemp;
 
+	public int getSummerTemp() {
+		return summerTemp;
+	}
+
+	public void setSummerTemp(int summerTemp) {
+		this.summerTemp = summerTemp;
+	}
+
+	public int getWinterTemp() {
+		return winterTemp;
+	}
+
+	public void setWinterTemp(int winterTemp) {
+		this.winterTemp = winterTemp;
+	}
 
 	public void setWinterMonths(String winterMonths) {
 		this.winterMonths = winterMonths;

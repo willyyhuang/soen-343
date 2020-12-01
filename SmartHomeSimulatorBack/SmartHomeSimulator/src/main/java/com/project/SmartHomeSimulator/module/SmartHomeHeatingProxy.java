@@ -53,15 +53,13 @@ public class SmartHomeHeatingProxy {
      */
     public boolean changeRoomTemp(User user, String roomName,int newTemp){
         boolean success = false;
-        if(verifyPermission(user,"temp", null)){
+        if(verifyPermission(user,"temp", roomName)){
             success = smartHomeHeating.changeRoomTemp(roomName, newTemp);
         }
         if (success) {
             smartHomeHeating.logSuccess(roomName,"Temperature in room",  "changed", user.getName());
         } else {
             smartHomeHeating.logFail(roomName,"Temperature in room",  "changed", user.getName());
-
-            smartHomeHeating.logMessage("[Failed] " + "Change in temperature in " + "room" + roomName + ", requested by " + user.getName() + ", failed");
         }
         return success;
     }
