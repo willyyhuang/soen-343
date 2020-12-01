@@ -33,6 +33,7 @@ public class SmartHomeHeating extends Module{
         for (String roomName : zone.getRoomsInZone()){
             Room room = simulationContext.getHomeLayout().getRoomByName(roomName);
             room.setZone(zone.getName());
+            switchStates(room, simulationContext.getOutsideTemp(), zone.getCurrentTemp());
             room.setCurrentTemp(zone.getCurrentTemp());
             room.setPeriod1(zone.getPeriod1());
             room.setPeriod1Temp(zone.getPeriod1Temp());

@@ -117,4 +117,48 @@ public class SmartHomeHeatingController {
         simulationContext.setSummerMonths(months);
         return true;
     }
+
+    /**
+     * Turn on AC
+     * @param roomName
+     * @return
+     */
+    @PostMapping(value="/turnOnAc")
+    @ResponseStatus(value = HttpStatus.OK)
+    public boolean turnOnAc(@RequestParam("roomName") String roomName){
+        return smartHomeHeatingServices.changeACStatus(roomName, true);
+    }
+
+    /**
+     * Turn off AC
+     * @param roomName
+     * @return
+     */
+    @PostMapping(value="/turnOffAc")
+    @ResponseStatus(value = HttpStatus.OK)
+    public boolean turnOffAc(@RequestParam("roomName") String roomName){
+        return smartHomeHeatingServices.changeACStatus(roomName, false);
+    }
+
+    /**
+     * Turn on heater
+     * @param roomName
+     * @return
+     */
+    @PostMapping(value="/turnOnHeater")
+    @ResponseStatus(value = HttpStatus.OK)
+    public boolean turnOnHeater(@RequestParam("roomName") String roomName){
+        return smartHomeHeatingServices.changeHeaterStatus(roomName, true);
+    }
+
+    /**
+     * Turn off heater
+     * @param roomName
+     * @return
+     */
+    @PostMapping(value="/turnOffHeater")
+    @ResponseStatus(value = HttpStatus.OK)
+    public boolean turnOffHeater(@RequestParam("roomName") String roomName){
+        return smartHomeHeatingServices.changeHeaterStatus(roomName, false);
+    }
 }

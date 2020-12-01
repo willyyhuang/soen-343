@@ -3,13 +3,13 @@ package com.project.SmartHomeSimulator.service;
 import com.project.SmartHomeSimulator.model.Room;
 import com.project.SmartHomeSimulator.model.User;
 import com.project.SmartHomeSimulator.model.Zone;
+import com.project.SmartHomeSimulator.model.roomObjects.RoomObjectType;
 import com.project.SmartHomeSimulator.module.SimulationContext;
 import com.project.SmartHomeSimulator.module.SmartHomeHeatingProxy;
 import org.springframework.stereotype.Service;
 
-
 import java.util.ArrayList;
-import java.util.List;
+
 
 @Service
 public class SmartHomeHeatingServices {
@@ -49,5 +49,35 @@ public class SmartHomeHeatingServices {
             return smartHomeHeatingProxy.changeZoneTemp(zoneName, rooms, period);
         }
         return true;
+    }
+
+    /**
+     * Change AC status when temperature is reached
+     * @param roomName
+     * @param status
+     * @return
+     */
+    public boolean changeACStatus(String roomName, boolean status ){
+        Room room = simulationContext.getHomeLayout().getRoomByName(roomName);
+        if (room != null){
+            room.getRoomObjectByType(RoomObjectType.AC).setStatus(status);
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * change heater status when temperature is reached
+     * @param roomName
+     * @param status
+     * @return
+     */
+    public boolean changeHeaterStatus(String roomName, boolean status ){
+        Room room = simulationContext.getHomeLayout().getRoomByName(roomName);
+        if (room != null){
+            room.getRoomObjectByType(RoomObjectType.HEATER).setStatus(status);
+            return true;
+        }
+        return false;
     }
 }
