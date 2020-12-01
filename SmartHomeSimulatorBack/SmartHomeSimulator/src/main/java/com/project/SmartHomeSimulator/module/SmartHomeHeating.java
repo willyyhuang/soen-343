@@ -112,6 +112,10 @@ public class SmartHomeHeating extends Module{
             objectStateSwitcher(heater, false);
             objectStateSwitcher(ac, true);
         }
+        else{
+            objectStateSwitcher(heater, false);
+            objectStateSwitcher(ac, false);
+        }
     }
 
     /**
