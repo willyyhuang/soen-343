@@ -104,11 +104,11 @@ public class SmartHomeHeating extends Module{
     public void switchStates(Room room, int currentTemp, int desiredTemp){
         Heater heater = (Heater) room.getRoomObjectByType(RoomObjectType.HEATER);
         AC ac = (AC) room.getRoomObjectByType(RoomObjectType.AC);
-        if (currentTemp <= desiredTemp){
+        if (currentTemp < desiredTemp){
             objectStateSwitcher(heater, true);
             objectStateSwitcher(ac, false);
         }
-        else{
+        else if(currentTemp > desiredTemp) {
             objectStateSwitcher(heater, false);
             objectStateSwitcher(ac, true);
         }
