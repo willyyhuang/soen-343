@@ -34,6 +34,22 @@ public class SimulationContext {
 	private String winterMonths;
 	private int summerTemp;
 	private int winterTemp;
+	private final File userProfilesJSON = new File("./src/main/resources/user_profiles.json.txt");
+	private static int counter = 0;
+	private int tempThreshold;
+
+	private SimulationContext() {
+		monitors = new ArrayList<Monitor>();
+		this.monitors.add(SmartHomeSecurity.getInstance());
+		this.monitors.add(SmartHomeHeating.getInstance());
+	}
+
+	public static SimulationContext getInstance(){
+		if (simulationContext == null){
+			simulationContext = new SimulationContext();
+		}
+		return simulationContext;
+	}
 
 	public int getSummerTemp() {
 		return summerTemp;
@@ -67,9 +83,6 @@ public class SimulationContext {
 		return winterMonths;
 	}
 
-	private final File userProfilesJSON = new File("./src/main/resources/user_profiles.json.txt");
-	private static int counter = 0;
-
 	public static SimulationContext simulationContext = null;
 
 	public String getEndLightsOn() {
@@ -88,20 +101,16 @@ public class SimulationContext {
 		this.startLightsOn = startLightsOn;
 	}
 
-	private SimulationContext() {
-		monitors = new ArrayList<Monitor>();
-		this.monitors.add(SmartHomeSecurity.getInstance());
-	}
-
-	public static SimulationContext getInstance(){
-		if (simulationContext == null){
-			simulationContext = new SimulationContext();
-		}
-		return simulationContext;
-	}
-
 	public int getTimeBeforeAuthoroties() {
 		return timeBeforeAuthoroties;
+	}
+
+	public int getTempThreshold() {
+		return tempThreshold;
+	}
+
+	public void setTempThreshold(int tempThreshold) {
+		this.tempThreshold = tempThreshold;
 	}
 
 	public void setTimeBeforeAuthoroties(int timeBeforeAuthoroties) {
