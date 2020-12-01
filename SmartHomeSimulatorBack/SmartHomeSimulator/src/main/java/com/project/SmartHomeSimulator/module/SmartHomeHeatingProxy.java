@@ -53,7 +53,7 @@ public class SmartHomeHeatingProxy {
      */
     public boolean changeRoomTemp(User user, String roomName,int newTemp){
         boolean success = false;
-        if(verifyPermission(user,"temp", null)){
+        if(verifyPermission(user,"temp", roomName)){
             success = smartHomeHeating.changeRoomTemp(roomName, newTemp);
         }
         if (success) {

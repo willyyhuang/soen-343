@@ -32,7 +32,9 @@ public class SmartHomeSecurityServiceTest {
 
     @Autowired
     private UserService userService;
+
     private static SimulationContext simulationContext = SimulationContext.getInstance();
+
     /**
      * set away mode
      * Use case ID = 7
@@ -47,6 +49,7 @@ public class SmartHomeSecurityServiceTest {
         User user = objectMapper.readValue(jsonUser.toString(), User.class);
         userService.addUser(user);
         simulationContextService.setCurrentSimulationUser(user.getName());
+        simulationContextService.startSimulation();
 
         String homeLayoutFile = "{\"roomList\":\"[{\"name\":\"backyard\", \"objects\":[{\"objectType\": \"DOOR\"}, {\"objectType\": \"WINDOW\"}]}, {\"name\":\"building entrance\", \"objects\":[{\"objectType\": \"DOOR\"}, {\"objectType\": \"WINDOW\"}]}, {\"name\":\"garage\", \"objects\":[{\"objectType\": \"DOOR\"}, {\"objectType\": \"WINDOW\"}]}]\"}";
         HomeLayout homeLayout = simulationContextService.loadLayout(homeLayoutFile);
@@ -57,6 +60,11 @@ public class SmartHomeSecurityServiceTest {
         //on
         smartHomeCoreFunctionalityService.openCloseDoors(room.getName(),door.getId().toString(),true);
         smartHomeCoreFunctionalityService.openCloseWindow(room.getName(),window.getId().toString(),true);
+
+        List<User> users= simulationContext.getSimulationUsers();
+        for(User userInHome : users){
+            userService.editHomeLocation(userInHome.getName(), "outside");
+        }
 
         boolean result = smartHomeSecurityService.setAwayMode(true);
         assertEquals(result,true);
