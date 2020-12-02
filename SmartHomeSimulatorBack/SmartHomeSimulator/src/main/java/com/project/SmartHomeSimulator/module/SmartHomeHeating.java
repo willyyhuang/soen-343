@@ -17,7 +17,7 @@ public class SmartHomeHeating extends Module implements AwayModeMonitor, Monitor
 
     private static SmartHomeHeating smartHomeHeating = null;
     private boolean awayMode = false;
-    private boolean isSummer= false;
+    private boolean isSummer = false;
 
     private SmartHomeHeating() {
         setName("SmartHomeHeating");
@@ -31,7 +31,8 @@ public class SmartHomeHeating extends Module implements AwayModeMonitor, Monitor
     }
 
     /**
-     * Add a zone with assigned rooms and temperatures - initial temperature of a room is outside temperature
+     * Add a zone with assigned rooms and temperatures - initial temperature of a
+     * room is outside temperature
      *
      * @param zone
      * @return
@@ -40,6 +41,7 @@ public class SmartHomeHeating extends Module implements AwayModeMonitor, Monitor
         for (String roomName : zone.getRoomsInZone()) {
             Room room = SimulationContext.getInstance().getHomeLayout().getRoomByName(roomName);
             room.setZone(zone.getName());
+            switchStates(room, SimulationContext.getInstance().getOutsideTemp(), zone.getCurrentTemp());
             room.setCurrentTemp(zone.getCurrentTemp());
             room.setPeriod1(zone.getPeriod1());
             room.setPeriod1Temp(zone.getPeriod1Temp());
@@ -53,7 +55,8 @@ public class SmartHomeHeating extends Module implements AwayModeMonitor, Monitor
     }
 
     /**
-     * Change room temperature and turn on or off ac or heater depending on the new temperature
+     * Change room temperature and turn on or off ac or heater depending on the new
+     * temperature
      *
      * @param roomName
      * @param newTemp
@@ -86,7 +89,6 @@ public class SmartHomeHeating extends Module implements AwayModeMonitor, Monitor
 
     /**
      * changes the sate of the room object passed to it
-     *
      * @param roomObject
      * @param state      - block or turn on = true and unblock or turn off = false - replace the state of the object
      * @return - true if successful false if otherwise
@@ -105,7 +107,8 @@ public class SmartHomeHeating extends Module implements AwayModeMonitor, Monitor
     }
 
     /**
-     * Switches AC and Heater state depending on the current temp and the desired temp
+     * Switches AC and Heater state depending on the current temp and the desired
+     * temp
      *
      * @param room
      * @param currentTemp
@@ -114,12 +117,21 @@ public class SmartHomeHeating extends Module implements AwayModeMonitor, Monitor
     public void switchStates(Room room, int currentTemp, int desiredTemp) {
         Heater heater = (Heater) room.getRoomObjectByType(RoomObjectType.HEATER);
         AC ac = (AC) room.getRoomObjectByType(RoomObjectType.AC);
-        if (currentTemp <= desiredTemp) {
+
+        if (currentTemp < desiredTemp) {
             objectStateSwitcher(heater, true);
             objectStateSwitcher(ac, false);
+        } else if (currentTemp > desiredTemp) {
+            if (currentTemp <= desiredTemp) {
+                objectStateSwitcher(heater, true);
+                objectStateSwitcher(ac, false);
+            } else {
+                objectStateSwitcher(heater, false);
+                objectStateSwitcher(ac, true);
+            }
         } else {
             objectStateSwitcher(heater, false);
-            objectStateSwitcher(ac, true);
+            objectStateSwitcher(ac, false);
         }
     }
 
@@ -148,14 +160,15 @@ public class SmartHomeHeating extends Module implements AwayModeMonitor, Monitor
      * @param state
      */
     public boolean openCloseWindows(String windowId, boolean state) {
-        HomeLayout homeLayout= SimulationContext.getInstance().getHomeLayout();
+        HomeLayout homeLayout = SimulationContext.getInstance().getHomeLayout();
         String roomName = homeLayout.getRoomNameByObjectID(windowId);
         if (roomName != null) {
             if (SmartHomeCoreFunctionality.getInstance().objectStateSwitcher(roomName, windowId, state)) {
                 logSuccess("Window", roomName, state ? "opened" : "closed", "SHH module");
                 return true;
             } else {
-                String windowName = homeLayout.getRoomByName(roomName).getRoomObjectByID(UUID.fromString(windowId)).getName();
+                String windowName = homeLayout.getRoomByName(roomName).getRoomObjectByID(UUID.fromString(windowId))
+                        .getName();
                 logFail(windowName, roomName, state ? "opening" : "closing", "SHH module");
                 return false;
             }
@@ -163,23 +176,25 @@ public class SmartHomeHeating extends Module implements AwayModeMonitor, Monitor
         return false;
     }
 
-
     @Override
     public void updateAwayModeMonitor(boolean awayMode) {
         this.awayMode = awayMode;
         adjustRoomTemperatures();
     }
 
-    public void adjustRoomTemperatures(){
+    /**
+     * Adjust rooms temperature when on away mode if its winter or summer
+     */
+    public void adjustRoomTemperatures() {
         List<Room> rooms = SimulationContext.getInstance().getHomeLayout().getRoomList();
         int newTemp;
-        if (isSummer){
+        if (isSummer) {
             newTemp = SimulationContext.getInstance().getSummerTemp();
-        }else {
+        } else {
             newTemp = SimulationContext.getInstance().getWinterTemp();
         }
-        for(Room room : rooms){
-            switchStates(room, room.getCurrentTemp(), newTemp );
+        for (Room room : rooms) {
+            switchStates(room, room.getCurrentTemp(), newTemp);
             room.setCurrentTemp(newTemp);
             room.setOverridden(false);
         }
@@ -187,7 +202,7 @@ public class SmartHomeHeating extends Module implements AwayModeMonitor, Monitor
 
     @Override
     public void update(String awayModeUser, User user) {
-        //todo
+        // todo
     }
 
     public boolean isAwayMode() {

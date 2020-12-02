@@ -14,11 +14,13 @@ import javax.validation.Valid;
  * API controller for everything related to the heating process
  */
 @RestController
-@CrossOrigin(origins = {"*"})
+@CrossOrigin(origins = { "*" })
 @RequestMapping("api/v1/simulation")
 public class SmartHomeHeatingController {
+    
     @Autowired
     SmartHomeHeatingService smartHomeHeatingService;
+    
     private SmartHomeSecurity smartHomeSecurity = SmartHomeSecurity.getInstance();
     public SimulationContext simulationContext = SimulationContext.getInstance();
     public SmartHomeHeating smartHomeHeating = SmartHomeHeating.getInstance();
@@ -34,7 +36,8 @@ public class SmartHomeHeatingController {
     public ResponseAPI addZone(@RequestBody @Valid Zone zone) {
         ResponseAPI response = new ResponseAPI();
         response.setDefaultValues();
-        if (smartHomeSecurity.getAwayModeConfig().isAwayMode() && simulationContext.getCurrentSimulationUser() != simulationContext.getAwayModeUser()) {
+        if (smartHomeSecurity.getAwayModeConfig().isAwayMode()
+                && simulationContext.getCurrentSimulationUser() != simulationContext.getAwayModeUser()) {
             response.success = false;
             smartHomeHeating.logMessage("[Alert] Someone is trying to change home settings while you are away!");
             response.consoleMessage = smartHomeHeating.getConsoleMessage();
@@ -59,7 +62,8 @@ public class SmartHomeHeatingController {
     public ResponseAPI changeRoomTemp(@RequestParam("roomName") String roomName, @RequestParam("newTemp") int newTemp) {
         ResponseAPI response = new ResponseAPI();
         response.setDefaultValues();
-        if (smartHomeSecurity.getAwayModeConfig().isAwayMode() && simulationContext.getCurrentSimulationUser() != simulationContext.getAwayModeUser()) {
+        if (smartHomeSecurity.getAwayModeConfig().isAwayMode()
+                && simulationContext.getCurrentSimulationUser() != simulationContext.getAwayModeUser()) {
             response.success = false;
             smartHomeHeating.logMessage("[Alert] Someone is trying to change home settings while you are away!");
             response.consoleMessage = smartHomeHeating.getConsoleMessage();
@@ -84,7 +88,8 @@ public class SmartHomeHeatingController {
     public ResponseAPI changeZoneTemp(@RequestParam("zoneName") String zoneName, @RequestParam("period") int period) {
         ResponseAPI response = new ResponseAPI();
         response.setDefaultValues();
-        if (smartHomeSecurity.getAwayModeConfig().isAwayMode() && simulationContext.getCurrentSimulationUser() != simulationContext.getAwayModeUser()) {
+        if (smartHomeSecurity.getAwayModeConfig().isAwayMode()
+                && simulationContext.getCurrentSimulationUser() != simulationContext.getAwayModeUser()) {
             response.success = false;
             smartHomeHeating.logMessage("[Alert] Someone is trying to change home settings while you are away!");
             response.consoleMessage = smartHomeHeating.getConsoleMessage();
@@ -124,6 +129,51 @@ public class SmartHomeHeatingController {
     }
 
     /**
+     * Turn on AC 
+     * @param roomName
+     * @return
+     */
+    @PostMapping(value="/turnOnAc")
+    @ResponseStatus(value = HttpStatus.OK)
+    public boolean turnOnAc(@RequestParam("roomName") String roomName){
+        return smartHomeHeatingService.changeACStatus(roomName, true) ;
+    }
+
+    /**
+     * Turn off AC
+     * @param roomName
+     * 
+     * @return
+     */
+    @PostMapping(value="/turnOffAc")
+    @ResponseStatus(value = HttpStatus.OK)
+    public boolean turnOffAc(@RequestParam("roomName") String roomName){
+        return smartHomeHeatingService.changeACStatus(roomName, false) ;
+    }
+
+    /**
+     * Turn on heater
+     * @param roomName
+     * 
+     * @return
+     */
+    @PostMapping(value="/turnOnHeater")
+    @ResponseStatus(value = HttpStatus.OK)
+    public boolean turnOnHeater(@RequestParam("roomName") String roomName){
+        return smartHomeHeatingService.changeHeaterStatus(roomName, true) ;
+    }
+
+    /**
+     * Turn off heater
+     * @param roomName
+     * @return
+     */
+    @PostMapping(value="/turnOffHeater")
+    @ResponseStatus(value = HttpStatus.OK)
+    public boolean turnOffHeater(@RequestParam("roomName") String roomName) {
+        return smartHomeHeatingService.changeHeaterStatus(roomName, false);
+    }
+    /**
      * Set Summer temperature
      *
      * @param temperature
@@ -160,10 +210,12 @@ public class SmartHomeHeatingController {
     @ResponseStatus(value = HttpStatus.OK)
     public ResponseAPI openCloseWindow(@RequestParam("windowId") String windowId, @RequestParam("state") boolean state) {
         ResponseAPI response = new ResponseAPI();
+            
         response.setDefaultValues();
         response.success = smartHomeHeatingService.openCloseWindow(windowId, state);
         response.consoleMessage = SmartHomeCoreFunctionality.getInstance().getConsoleMessage() + smartHomeHeating.getConsoleMessage();
         response.alertModeOn = false;
+                
         return response;
     }
 
