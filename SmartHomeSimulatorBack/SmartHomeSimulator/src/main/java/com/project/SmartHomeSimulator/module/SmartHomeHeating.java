@@ -41,7 +41,7 @@ public class SmartHomeHeating extends Module implements AwayModeMonitor, Monitor
         for (String roomName : zone.getRoomsInZone()) {
             Room room = SimulationContext.getInstance().getHomeLayout().getRoomByName(roomName);
             room.setZone(zone.getName());
-            switchStates(room, simulationContext.getOutsideTemp(), zone.getCurrentTemp());
+            switchStates(room, SimulationContext.getInstance().getOutsideTemp(), zone.getCurrentTemp());
             room.setCurrentTemp(zone.getCurrentTemp());
             room.setPeriod1(zone.getPeriod1());
             room.setPeriod1Temp(zone.getPeriod1Temp());

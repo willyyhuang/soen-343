@@ -17,8 +17,10 @@ import javax.validation.Valid;
 @CrossOrigin(origins = { "*" })
 @RequestMapping("api/v1/simulation")
 public class SmartHomeHeatingController {
+    
     @Autowired
     SmartHomeHeatingService smartHomeHeatingService;
+    
     private SmartHomeSecurity smartHomeSecurity = SmartHomeSecurity.getInstance();
     public SimulationContext simulationContext = SimulationContext.getInstance();
     public SmartHomeHeating smartHomeHeating = SmartHomeHeating.getInstance();
@@ -127,14 +129,14 @@ public class SmartHomeHeatingController {
     }
 
     /**
-     *      * Turn  @param roomName
-     * 
+     * Turn on AC 
+     * @param roomName
      * @return
      */
     @PostMapping(value="/turnOnAc")
-    @ResponseStatus(va l ue = HttpStatus.OK)
+    @ResponseStatus(value = HttpStatus.OK)
     public boolean turnOnAc(@RequestParam("roomName") String roomName){
-        return smartHomeHeatingServices.changeACStatus(roomName, true) ;
+        return smartHomeHeatingService.changeACStatus(roomName, true) ;
     }
 
     /**
@@ -144,9 +146,9 @@ public class SmartHomeHeatingController {
      * @return
      */
     @PostMapping(value="/turnOffAc")
-    @ResponseStatus(va l ue = HttpStatus.OK)
+    @ResponseStatus(value = HttpStatus.OK)
     public boolean turnOffAc(@RequestParam("roomName") String roomName){
-        return smartHomeHeatingServices.changeACStatus(roomName, false) ;
+        return smartHomeHeatingService.changeACStatus(roomName, false) ;
     }
 
     /**
@@ -156,9 +158,9 @@ public class SmartHomeHeatingController {
      * @return
      */
     @PostMapping(value="/turnOnHeater")
-    @ResponseStatus(va l ue = HttpStatus.OK)
+    @ResponseStatus(value = HttpStatus.OK)
     public boolean turnOnHeater(@RequestParam("roomName") String roomName){
-        return smartHomeHeatingServices.changeHeaterStatus(roomName, true) ;
+        return smartHomeHeatingService.changeHeaterStatus(roomName, true) ;
     }
 
     /**
@@ -168,16 +170,16 @@ public class SmartHomeHeatingController {
      */
     @PostMapping(value="/turnOffHeater")
     @ResponseStatus(value = HttpStatus.OK)
-    public boolean turnOffHeater(@RequestParam("roomName") String roomName){
-        return smartHomeHeatingServices.changeHeaterStatus(roomName, false);
-
+    public boolean turnOffHeater(@RequestParam("roomName") String roomName) {
+        return smartHomeHeatingService.changeHeaterStatus(roomName, false);
+    }
+    /**
      * Set Summer temperature
      *
      * @param temperature
      * @return
      */
-    @Po
-
+    @PostMapping(value = "/setSummerTemperature")
     @ResponseStatus(value = HttpStatus.OK)
     public boolean setSummerTemperature(@RequestParam("temperature") int temperature) {
         simulationContext.setSummerTemp(temperature);

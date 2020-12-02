@@ -75,17 +75,17 @@ public class SmartHomeHeatingService {
      * @param status
      * @return
      */
-    public boolean changeHeaterStatus(String roomName, boolean status ){
+    public boolean changeHeaterStatus(String roomName, boolean status ) {
         Room room = simulationContext.getHomeLayout().getRoomByName(roomName);
-        if (room != null){
+        if (room != null) {
             room.getRoomObjectByType(RoomObjectType.HEATER).setStatus(status);
             return true;
         }
         return false;
+    }
 
     /**
      * Open or close window
-     *
      * @param windowId
      * @param state
      * @return
