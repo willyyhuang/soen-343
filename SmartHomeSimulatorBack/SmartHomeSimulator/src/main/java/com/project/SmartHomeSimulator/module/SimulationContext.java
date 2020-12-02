@@ -32,7 +32,40 @@ public class SimulationContext {
 	private List<Monitor> monitors;
 	private String summerMonths;
 	private String winterMonths;
+	private int summerTemp;
+	private int winterTemp;
+	private final File userProfilesJSON = new File("./src/main/resources/user_profiles.json.txt");
+	private int tempThreshold;
 
+	private SimulationContext() {
+		loadUserProfiles();
+		monitors = new ArrayList<Monitor>();
+		this.monitors.add(SmartHomeSecurity.getInstance());
+		this.monitors.add(SmartHomeHeating.getInstance());
+	}
+
+	public static SimulationContext getInstance(){
+		if (simulationContext == null){
+			simulationContext = new SimulationContext();
+		}
+		return simulationContext;
+	}
+
+	public int getSummerTemp() {
+		return summerTemp;
+	}
+
+	public void setSummerTemp(int summerTemp) {
+		this.summerTemp = summerTemp;
+	}
+
+	public int getWinterTemp() {
+		return winterTemp;
+	}
+
+	public void setWinterTemp(int winterTemp) {
+		this.winterTemp = winterTemp;
+	}
 
 	public void setWinterMonths(String winterMonths) {
 		this.winterMonths = winterMonths;
@@ -49,9 +82,6 @@ public class SimulationContext {
 	public String getWinterMonths() {
 		return winterMonths;
 	}
-
-	private final File userProfilesJSON = new File("./src/main/resources/user_profiles.json.txt");
-	private static int counter = 0;
 
 	public static SimulationContext simulationContext = null;
 
@@ -71,20 +101,16 @@ public class SimulationContext {
 		this.startLightsOn = startLightsOn;
 	}
 
-	private SimulationContext() {
-		monitors = new ArrayList<Monitor>();
-		this.monitors.add(SmartHomeSecurity.getInstance());
-	}
-
-	public static SimulationContext getInstance(){
-		if (simulationContext == null){
-			simulationContext = new SimulationContext();
-		}
-		return simulationContext;
-	}
-
 	public int getTimeBeforeAuthoroties() {
 		return timeBeforeAuthoroties;
+	}
+
+	public int getTempThreshold() {
+		return tempThreshold;
+	}
+
+	public void setTempThreshold(int tempThreshold) {
+		this.tempThreshold = tempThreshold;
 	}
 
 	public void setTimeBeforeAuthoroties(int timeBeforeAuthoroties) {
@@ -150,10 +176,6 @@ public class SimulationContext {
 	}
 
 	public List<User> getSimulationUsers() {
-		counter++;
-		if (counter == 1) {
-			loadUserProfiles();
-		}
 		return simulationUsers;
 	}
 	

@@ -24,8 +24,6 @@ public class SmartHomeCoreFunctionalityProxy {
             smartHomeCoreFunctionality.logSuccess("Window", roomName, state ? "opened" : "closed", user.getName());
         } else {
             smartHomeCoreFunctionality.logFail("Window", roomName, (state ? "opening" : "closing"), user.getName());
-
-            smartHomeCoreFunctionality.logMessage("[Failed] " + (state ? "opening" : "closing") + " window in " + roomName + ", requested by " + user.getName() + ", failed");
         }
         return success;
     }
