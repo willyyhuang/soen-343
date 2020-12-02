@@ -15,7 +15,7 @@ public class SmartHomeSecurity extends Module implements Monitor {
 
     private static SmartHomeSecurity instance;
     private static SmartHomeCoreFunctionality smartHomeCoreFunctionality;
-    public static SimulationContext simulationContext = SimulationContext.getInstance();
+    public static SimulationContext simulationContext;
     private AwayModeConfig awayModeConfig;
     private boolean alertModeOn;
     private List<String> lightIDs;

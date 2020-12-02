@@ -44,3 +44,9 @@
 [Door] backyard Door was lock by SHP module's request.
 [Door] building entrance Door was lock by SHP module's request.
 [Door] garage Door was lock by SHP module's request.
+[Window] backyard Window was close by SHP module's request.
+[Window] building entrance Window was close by SHP module's request.
+[Window] garage Window was close by SHP module's request.
+[Door] backyard Door was lock by SHP module's request.
+[Door] building entrance Door was lock by SHP module's request.
+[Door] garage Door was lock by SHP module's request.

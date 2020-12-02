@@ -18,7 +18,7 @@ import static org.junit.Assert.assertTrue;
 public class SmartHomeHeatingSerciveTest {
 
     @Autowired
-    SmartHomeHeatingServices smartHomeHeatingServices = new SmartHomeHeatingServices();
+    SmartHomeHeatingService smartHomeHeatingService = new SmartHomeHeatingService();
 
     @Autowired
     SimulationContextService simulationContextService;
@@ -54,7 +54,7 @@ public class SmartHomeHeatingSerciveTest {
         zone.setPeriod1Temp(20);
         zone.setRoomsInZone(namesRoom);
 
-        boolean result = smartHomeHeatingServices.addZone(zone);
+        boolean result = smartHomeHeatingService.addZone(zone);
         assertTrue(result);
 
     }
@@ -63,7 +63,7 @@ public class SmartHomeHeatingSerciveTest {
     public void changeRoomTempTest_(){
         setup();
         addZoneTest_();
-        boolean result = smartHomeHeatingServices.changeRoomTemp("bedroom",25);
+        boolean result = smartHomeHeatingService.changeRoomTemp("bedroom",25);
         assertTrue(result);
 
         assertTrue(simulationContext.getHomeLayout().getRoomByName("bedroom").isOverridden());
@@ -74,7 +74,7 @@ public class SmartHomeHeatingSerciveTest {
         setup();
         addZoneTest_();
         changeRoomTempTest_();
-        boolean result = smartHomeHeatingServices.changeZoneTemp("zone",1);
+        boolean result = smartHomeHeatingService.changeZoneTemp("zone",1);
         assertTrue(result);
 
         Room bedroom = simulationContext.getHomeLayout().getRoomByName("bedroom");

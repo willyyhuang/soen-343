@@ -9,3 +9,10 @@
 [zone] Zone zone was created by name's request.
 [zone] Zone zone was created by name's request.
 [bedroom] Temperature in room bedroom was changed by name's request.
+[zone] Zone zone was created by name's request.
+[zone] Zone zone was created by name's request.
+[bedroom] Temperature in room bedroom was changed by name's request.
+[zone] Temperature in zone zone was changed by SHH's request.
+[zone] Zone zone was created by name's request.
+[zone] Zone zone was created by name's request.
+[bedroom] Temperature in room bedroom was changed by name's request.
