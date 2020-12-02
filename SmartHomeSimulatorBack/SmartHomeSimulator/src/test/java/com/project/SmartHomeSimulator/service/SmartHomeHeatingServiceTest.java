@@ -63,6 +63,10 @@ public class SmartHomeHeatingServiceTest {
 
     }
 
+    /**
+     * Override a room temp test
+     * Use-Case ID = 10
+     */
     @Test
     public void changeRoomTempTest_10(){
         setup();
@@ -73,6 +77,11 @@ public class SmartHomeHeatingServiceTest {
         assertTrue(simulationContext.getHomeLayout().getRoomByName("bedroom").isOverridden());
     }
 
+    /**
+     * Change a zone temp when a period is reacheed
+     * ID = 11
+     * Sub-Function
+     */
     @Test
     public void changeZoneTemp_11(){
         setup();
