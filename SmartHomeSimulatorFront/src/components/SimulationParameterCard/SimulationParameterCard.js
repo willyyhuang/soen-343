@@ -7,6 +7,7 @@ import {
   TimePicker,
   DatePicker,
   Typography,
+  Input,
 } from 'antd'
 import React, {useEffect, useState} from 'react'
 import moment from 'moment'
@@ -65,15 +66,6 @@ const SimulationParameterCard = ({
     })
     // eslint-disable-next-line
   }, [simulationConfig])
-
-  const getDisabledDate = (current) => {
-    const start = moment().startOf('year')
-    const end = moment().endOf('year')
-    if (current.isBetween(start, end)) {
-      return false
-    }
-    return true
-  }
 
   return (
     <Card
@@ -215,13 +207,11 @@ const SimulationParameterCard = ({
           value={parameterFormData.time} />
       </Form.Item>
       <Form.Item label='Summer Months'>
-        <DatePicker.RangePicker
-          picker='month'
-          disabledDate={getDisabledDate}
+        <Input
           value={parameterFormData.summerMonths}
-          onChange={(value) =>
+          onChange={(e) =>
             setParameterFormData({
-          summerMonths: value,
+          summerMonths: e.target.value,
           summerTemp: parameterFormData.summerTemp,
           winterMonths: parameterFormData.winterMonths,
           winterTemp: parameterFormData.winterTemp,
@@ -231,14 +221,12 @@ const SimulationParameterCard = ({
         })} />
       </Form.Item>
       <Form.Item label='Winter Months'>
-        <DatePicker.RangePicker
-          picker='month'
-          disabledDate={getDisabledDate}
+        <Input
           value={parameterFormData.winterMonths}
-          onChange={(value) => setParameterFormData({
+          onChange={(e) => setParameterFormData({
           summerMonths: parameterFormData.summerMonths,
           summerTemp: parameterFormData.summerTemp,
-          winterMonths: value,
+          winterMonths: e.target.value,
           winterTemp: parameterFormData.winterTemp,
           outsideTemp: parameterFormData.outsideTemp,
           time: parameterFormData.time,
