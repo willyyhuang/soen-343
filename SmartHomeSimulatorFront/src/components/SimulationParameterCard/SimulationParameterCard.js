@@ -14,10 +14,13 @@ import {SettingOutlined, HomeOutlined} from '@ant-design/icons'
 import {
   setSimulationDate,
   setSimulationTime,
-  setSimulationInsideTemp,
   setSimulationOutsideTemp,
   uploadLayout,
   stop,
+  setSummerMonths,
+  setSummerTemp,
+  setWinterMonths,
+  setWinterTemp,
 } from '../../services'
 
 const SimulationParameterCard = ({
@@ -27,17 +30,23 @@ const SimulationParameterCard = ({
   speedRate,
 }) => {
   const {
-    insideTemp,
     outsideTemp,
     time,
     date,
     simulationRunning,
+    summerMonths,
+    winterMonths,
+    summerTemp,
+    winterTemp,
   } = simulationConfig
   const PARAMETER_FORM_DATA_INITIAL_STATE = {
-    insideTemp,
     outsideTemp,
     time: time ? moment(date.concat(time)) : null,
     date: date ? moment(date) : null,
+    summerMonths,
+    winterMonths,
+    summerTemp,
+    winterTemp,
   }
   const [parameterFormData, setParameterFormData] = useState(
     PARAMETER_FORM_DATA_INITIAL_STATE,
@@ -46,13 +55,25 @@ const SimulationParameterCard = ({
 
   useEffect(() => {
     setParameterFormData({
-      insideTemp,
       outsideTemp,
       time: time ? moment(date.concat(time)) : null,
       date: date ? moment(date) : null,
+      summerMonths,
+      winterMonths,
+      summerTemp,
+      winterTemp,
     })
     // eslint-disable-next-line
   }, [simulationConfig])
+
+  const getDisabledDate = (current) => {
+    const start = moment().startOf('year')
+    const end = moment().endOf('year')
+    if (current.isBetween(start, end)) {
+      return false
+    }
+    return true
+  }
 
   return (
     <Card
@@ -83,12 +104,6 @@ const SimulationParameterCard = ({
         <Button
           onClick={() => {
             if (
-              parameterFormData.insideTemp
-              !== PARAMETER_FORM_DATA_INITIAL_STATE.insideTemp
-            ) {
-              setSimulationInsideTemp(parameterFormData.insideTemp)
-            }
-            if (
               parameterFormData.outsideTemp
               !== PARAMETER_FORM_DATA_INITIAL_STATE.outsideTemp
             ) {
@@ -116,6 +131,30 @@ const SimulationParameterCard = ({
             if (speedRateFormData !== speedRate) {
               setSpeedRate(speedRateFormData)
             }
+            if (
+              parameterFormData.summerMonths
+              !== PARAMETER_FORM_DATA_INITIAL_STATE.summerMonths
+            ) {
+              setSummerMonths(parameterFormData.summerMonths)
+            }
+            if (
+              parameterFormData.winterMonths
+              !== PARAMETER_FORM_DATA_INITIAL_STATE.winterMonths
+            ) {
+              setWinterMonths(parameterFormData.winterMonths)
+            }
+            if (
+              parameterFormData.summerTemp
+              !== PARAMETER_FORM_DATA_INITIAL_STATE.summerTemp
+            ) {
+              setSummerTemp(parameterFormData.summerTemp)
+            }
+            if (
+              parameterFormData.winterTemp
+              !== PARAMETER_FORM_DATA_INITIAL_STATE.winterTemp
+            ) {
+              setWinterTemp(parameterFormData.winterTemp)
+            }
             fetchUserProfiles()
             if (simulationRunning) {
               stop()
@@ -130,23 +169,14 @@ const SimulationParameterCard = ({
           Simulation Parameter
         </Typography.Text>
       }>
-      <Form.Item label='Temperature Indoor (°C)'>
-        <InputNumber
-          onChange={(value) => {
-            setParameterFormData({
-              insideTemp: value,
-              outsideTemp: parameterFormData.outsideTemp,
-              time: parameterFormData.time,
-              date: parameterFormData.date,
-            })
-          }}
-          value={parameterFormData.insideTemp} />
-      </Form.Item>
       <Form.Item label='Temperature Outdoor (°C)'>
         <InputNumber
           onChange={(value) =>
             setParameterFormData({
-              insideTemp: parameterFormData.insideTemp,
+              summerMonths: parameterFormData.summerMonths,
+              summerTemp: parameterFormData.summerTemp,
+              winterMonths: parameterFormData.winterMonths,
+              winterTemp: parameterFormData.winterTemp,
               outsideTemp: value,
               time: parameterFormData.time,
               date: parameterFormData.date,
@@ -157,7 +187,10 @@ const SimulationParameterCard = ({
         <DatePicker
           onChange={(value) =>
             setParameterFormData({
-              insideTemp: parameterFormData.insideTemp,
+              summerMonths: parameterFormData.summerMonths,
+              summerTemp: parameterFormData.summerTemp,
+              winterMonths: parameterFormData.winterMonths,
+              winterTemp: parameterFormData.winterTemp,
               outsideTemp: parameterFormData.outsideTemp,
               time: parameterFormData.time,
               date: value,
@@ -169,7 +202,10 @@ const SimulationParameterCard = ({
         <TimePicker
           onChange={(value) => {
             setParameterFormData({
-              insideTemp: parameterFormData.insideTemp,
+              summerMonths: parameterFormData.summerMonths,
+              summerTemp: parameterFormData.summerTemp,
+              winterMonths: parameterFormData.winterMonths,
+              winterTemp: parameterFormData.winterTemp,
               outsideTemp: parameterFormData.outsideTemp,
               time: value,
               date: parameterFormData.date,
@@ -177,6 +213,63 @@ const SimulationParameterCard = ({
           }}
           placeholder='enter a time'
           value={parameterFormData.time} />
+      </Form.Item>
+      <Form.Item label='Summer Months'>
+        <DatePicker.RangePicker
+          picker='month'
+          disabledDate={getDisabledDate}
+          value={parameterFormData.summerMonths}
+          onChange={(value) =>
+            setParameterFormData({
+          summerMonths: value,
+          summerTemp: parameterFormData.summerTemp,
+          winterMonths: parameterFormData.winterMonths,
+          winterTemp: parameterFormData.winterTemp,
+          outsideTemp: parameterFormData.outsideTemp,
+          time: parameterFormData.time,
+          date: parameterFormData.date,
+        })} />
+      </Form.Item>
+      <Form.Item label='Winter Months'>
+        <DatePicker.RangePicker
+          picker='month'
+          disabledDate={getDisabledDate}
+          value={parameterFormData.winterMonths}
+          onChange={(value) => setParameterFormData({
+          summerMonths: parameterFormData.summerMonths,
+          summerTemp: parameterFormData.summerTemp,
+          winterMonths: value,
+          winterTemp: parameterFormData.winterTemp,
+          outsideTemp: parameterFormData.outsideTemp,
+          time: parameterFormData.time,
+          date: parameterFormData.date,
+        })} />
+      </Form.Item>
+      <Form.Item label='Summer Temperature (°C)'>
+        <InputNumber
+          value={parameterFormData.summerTemp}
+          onChange={(value) => setParameterFormData({
+          summerMonths: parameterFormData.summerMonths,
+          summerTemp: value,
+          winterMonths: parameterFormData.winterMonths,
+          winterTemp: parameterFormData.winterTemp,
+          outsideTemp: parameterFormData.outsideTemp,
+          time: parameterFormData.time,
+          date: parameterFormData.date,
+        })} />
+      </Form.Item>
+      <Form.Item label='Winter Temperature (°C)'>
+        <InputNumber
+          value={parameterFormData.winterTemp}
+          onChange={(value) => setParameterFormData({
+          summerMonths: parameterFormData.summerMonths,
+          summerTemp: parameterFormData.summerTemp,
+          winterMonths: parameterFormData.winterMonths,
+          winterTemp: value,
+          outsideTemp: parameterFormData.outsideTemp,
+          time: parameterFormData.time,
+          date: parameterFormData.date,
+        })} />
       </Form.Item>
       <Form.Item label='Speed Rate'>
         <InputNumber

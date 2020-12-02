@@ -184,9 +184,12 @@ export async function stop() {
 // Simulation Parameter
 export const setDate = `${appsettings.baseApiUrl}/api/v1/simulation/setDate`
 export const setTime = `${appsettings.baseApiUrl}/api/v1/simulation/setTime`
-export const setInsideTemp = `${appsettings.baseApiUrl}/api/v1/simulation/setInsideTemp`
 export const setOutsideTemp = `${appsettings.baseApiUrl}/api/v1/simulation/setOutsideTemp`
 export const loadLayout = `${appsettings.baseApiUrl}/api/v1/simulation/loadLayout`
+export const summerMonths = `${appsettings.baseApiUrl}/api/v1/simulation/setSummerMonths`
+export const summerTemp = `${appsettings.baseApiUrl}/api/v1/simulation/setSummerTemperature`
+export const winterMonths = `${appsettings.baseApiUrl}/api/v1/simulation/setWinterMonths`
+export const winterTemp = `${appsettings.baseApiUrl}/api/v1/simulation/setWinterTemperature`
 
 export async function setSimulationDate(payload) {
   return axios({
@@ -204,14 +207,6 @@ export async function setSimulationTime(payload) {
   })
 }
 
-export async function setSimulationInsideTemp(payload) {
-  return axios({
-    method: 'POST',
-    url: setInsideTemp,
-    params: {insideTemp: payload},
-  })
-}
-
 export async function setSimulationOutsideTemp(payload) {
   return axios({
     method: 'POST',
@@ -225,6 +220,38 @@ export async function uploadLayout(payload) {
     method: 'POST',
     url: loadLayout,
     data: {roomList: payload},
+  })
+}
+
+export async function setSummerMonths(payload) {
+  return axios({
+    method: 'POST',
+    url: summerMonths,
+    params: {months: payload},
+  })
+}
+
+export async function setSummerTemp(payload) {
+  return axios({
+    method: 'POST',
+    url: summerTemp,
+    params: {temperature: payload},
+  })
+}
+
+export async function setWinterMonths(payload) {
+  return axios({
+    method: 'POST',
+    url: winterMonths,
+    params: {months: payload},
+  })
+}
+
+export async function setWinterTemp(payload) {
+  return axios({
+    method: 'POST',
+    url: winterTemp,
+    params: {temperature: payload},
   })
 }
 
