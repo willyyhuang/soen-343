@@ -9,21 +9,21 @@ public abstract class Module {
     private String name;
     private String consoleMessage ="";
 
-    public void logSuccess(String roomObjectName, String roomName, String action, String actor){
+    public boolean logSuccess(String roomObjectName, String roomName, String action, String actor){
         String message = createSuccessfulLogMessage(roomObjectName,roomName,action,actor);
         this.consoleMessage += message + " ";
-        logToFile(this.name, message);
+        return logToFile(this.name, message);
     }
 
-    public void logFail(String roomObjectName, String roomName, String action, String actor){
+    public boolean logFail(String roomObjectName, String roomName, String action, String actor){
         String message = createUnsuccessfulLogMessage(roomObjectName,roomName,action,actor);
         this.consoleMessage += message + " ";
-        logToFile(this.name, message);
+        return logToFile(this.name, message);
     }
 
-    public void logMessage(String message){
+    public boolean logMessage(String message){
         this.consoleMessage += message + " ";
-        logToFile(this.name, message);
+        return logToFile(this.name, message);
     }
 
     private boolean logToFile(String fileName, String message){

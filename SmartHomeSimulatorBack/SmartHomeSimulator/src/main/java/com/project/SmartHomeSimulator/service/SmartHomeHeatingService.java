@@ -10,14 +10,14 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 
-
 @Service
-public class SmartHomeHeatingServices {
+public class SmartHomeHeatingService {
     private static SimulationContext simulationContext = SimulationContext.getInstance();
     private SmartHomeHeatingProxy smartHomeHeatingProxy = SmartHomeHeatingProxy.getInstance();
 
     /**
      * Add a zone
+     *
      * @param zone
      * @return
      */
@@ -28,22 +28,24 @@ public class SmartHomeHeatingServices {
 
     /**
      * change temperature of a room, override
+     *
      * @param roomName
      * @param newTemp
      * @return
      */
-    public boolean changeRoomTemp(String roomName, int newTemp){
+    public boolean changeRoomTemp(String roomName, int newTemp) {
         User user = simulationContext.getCurrentSimulationUser();
         return smartHomeHeatingProxy.changeRoomTemp(user, roomName, newTemp);
     }
 
     /**
      * Change temperature of a zone when reaching a period in a day
+     *
      * @param zoneName
      * @param period
      * @return
      */
-    public boolean changeZoneTemp(String zoneName, int period){
+    public boolean changeZoneTemp(String zoneName, int period) {
         if (period != 0) {
             ArrayList<Room> rooms = simulationContext.getHomeLayout().getRoomsInZone(zoneName);
             return smartHomeHeatingProxy.changeZoneTemp(zoneName, rooms, period);
@@ -53,13 +55,14 @@ public class SmartHomeHeatingServices {
 
     /**
      * Change AC status when temperature is reached
+     * 
      * @param roomName
      * @param status
      * @return
      */
-    public boolean changeACStatus(String roomName, boolean status ){
+    public boolean changeACStatus(String roomName, boolean status) {
         Room room = simulationContext.getHomeLayout().getRoomByName(roomName);
-        if (room != null){
+        if (room != null) {
             room.getRoomObjectByType(RoomObjectType.AC).setStatus(status);
             return true;
         }
@@ -79,5 +82,22 @@ public class SmartHomeHeatingServices {
             return true;
         }
         return false;
+
+    /**
+     * Open or close window
+     *
+     * @param windowId
+     * @param state
+     * @return
+     */
+    public boolean openCloseWindow(String windowId, boolean state) {
+        return smartHomeHeatingProxy.openCloseWindows(windowId, state);
+    }
+
+    /**
+     * set season
+     */
+    public void setSeason(boolean isSummer) {
+        smartHomeHeatingProxy.setSeason(isSummer);
     }
 }

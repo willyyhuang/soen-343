@@ -1,5 +1,6 @@
 package com.project.SmartHomeSimulator.module;
 
+import com.project.SmartHomeSimulator.Exceptions.BlockedWindowsException;
 import com.project.SmartHomeSimulator.model.Room;
 import com.project.SmartHomeSimulator.model.roomObjects.Door;
 import com.project.SmartHomeSimulator.model.roomObjects.Light;
@@ -51,8 +52,16 @@ public class SmartHomeCoreFunctionality extends Module{
         RoomObject roomObject = room.getRoomObjectByID(objectID);
         if (roomObject instanceof Window) {
             Window window = (Window) roomObject;
-            window.setStatus(state);
-            return true;
+            try {
+                if (window.isBlocked()){
+                    throw new BlockedWindowsException(window.getName()+" is blocked");
+                }
+                window.setStatus(state);
+                return true;
+            }catch (BlockedWindowsException e){
+                logMessage(window.getName() +" is Blocked");
+                return false;
+            }
         }
         else if (roomObject instanceof Light){
             Light light = (Light) roomObject;
