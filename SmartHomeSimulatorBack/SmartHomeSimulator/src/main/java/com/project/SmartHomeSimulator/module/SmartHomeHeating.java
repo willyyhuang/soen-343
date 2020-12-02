@@ -89,10 +89,8 @@ public class SmartHomeHeating extends Module implements AwayModeMonitor, Monitor
 
     /**
      * changes the sate of the room object passed to it
-     *
      * @param roomObject
-     * @param state      - block or turn on = true and unblock or turn off = false -
-     *                   replace the state of the object
+     * @param state      - block or turn on = true and unblock or turn off = false - replace the state of the object
      * @return - true if successful false if otherwise
      */
     public boolean objectStateSwitcher(RoomObject roomObject, boolean state) {
@@ -184,6 +182,9 @@ public class SmartHomeHeating extends Module implements AwayModeMonitor, Monitor
         adjustRoomTemperatures();
     }
 
+    /**
+     * Adjust rooms temperature when on away mode if its winter or summer
+     */
     public void adjustRoomTemperatures() {
         List<Room> rooms = SimulationContext.getInstance().getHomeLayout().getRoomList();
         int newTemp;
