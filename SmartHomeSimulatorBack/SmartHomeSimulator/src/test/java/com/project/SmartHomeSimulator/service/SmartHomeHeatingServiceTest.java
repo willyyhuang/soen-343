@@ -15,7 +15,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 @SpringBootTest
-public class SmartHomeHeatingSerciveTest {
+public class SmartHomeHeatingServiceTest {
 
     @Autowired
     SmartHomeHeatingService smartHomeHeatingService = new SmartHomeHeatingService();
@@ -41,8 +41,12 @@ public class SmartHomeHeatingSerciveTest {
         simulationContextService.loadLayout(homeLayoutFile);
     }
 
+    /**
+     * Adding a zone test
+     * Use case ID = 8
+     */
     @Test
-    public void addZoneTest_(){
+    public void addZoneTest_8(){
         setup();
         Zone zone = new Zone();
         zone.setName("zone");
@@ -60,9 +64,9 @@ public class SmartHomeHeatingSerciveTest {
     }
 
     @Test
-    public void changeRoomTempTest_(){
+    public void changeRoomTempTest_10(){
         setup();
-        addZoneTest_();
+        addZoneTest_8();
         boolean result = smartHomeHeatingService.changeRoomTemp("bedroom",25);
         assertTrue(result);
 
@@ -70,10 +74,10 @@ public class SmartHomeHeatingSerciveTest {
     }
 
     @Test
-    public void changeZoneTemp_(){
+    public void changeZoneTemp_11(){
         setup();
-        addZoneTest_();
-        changeRoomTempTest_();
+        addZoneTest_8();
+        changeRoomTempTest_10();
         boolean result = smartHomeHeatingService.changeZoneTemp("zone",1);
         assertTrue(result);
 
