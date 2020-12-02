@@ -195,4 +195,15 @@ public class SmartHomeHeatingController {
         response.alertModeOn = false;
         return response;
     }
+
+    /**
+     * update the season
+     *
+     * @return
+     */
+    @PostMapping(value = "/setSeason")
+    @ResponseStatus(value = HttpStatus.OK)
+    public void setSeason(@RequestParam("isSummer") boolean isSummer) {
+        smartHomeHeatingService.setSeason(isSummer);
+    }
 }

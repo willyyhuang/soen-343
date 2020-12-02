@@ -16,8 +16,8 @@ import java.util.UUID;
 public class SmartHomeHeating extends Module implements AwayModeMonitor, Monitor {
 
     private static SmartHomeHeating smartHomeHeating = null;
-
     private boolean awayMode = false;
+    private boolean isSummer= false;
 
     private SmartHomeHeating() {
         setName("SmartHomeHeating");
@@ -163,6 +163,33 @@ public class SmartHomeHeating extends Module implements AwayModeMonitor, Monitor
         return false;
     }
 
+
+    @Override
+    public void updateAwayModeMonitor(boolean awayMode) {
+        this.awayMode = awayMode;
+        adjustRoomTemperatures();
+    }
+
+    public void adjustRoomTemperatures(){
+        List<Room> rooms = SimulationContext.getInstance().getHomeLayout().getRoomList();
+        int newTemp;
+        if (isSummer){
+            newTemp = SimulationContext.getInstance().getSummerTemp();
+        }else {
+            newTemp = SimulationContext.getInstance().getWinterTemp();
+        }
+        for(Room room : rooms){
+            switchStates(room, room.getCurrentTemp(), newTemp );
+            room.setCurrentTemp(newTemp);
+            room.setOverridden(false);
+        }
+    }
+
+    @Override
+    public void update(String awayModeUser, User user) {
+        //todo
+    }
+
     public boolean isAwayMode() {
         return awayMode;
     }
@@ -171,13 +198,11 @@ public class SmartHomeHeating extends Module implements AwayModeMonitor, Monitor
         this.awayMode = awayMode;
     }
 
-    @Override
-    public void updateAwayModeMonitor(boolean awayMode) {
-        this.awayMode = awayMode;
+    public boolean isSummer() {
+        return isSummer;
     }
 
-    @Override
-    public void update(String awayModeUser, User user) {
-        //todo
+    public void setSummer(boolean summer) {
+        isSummer = summer;
     }
 }

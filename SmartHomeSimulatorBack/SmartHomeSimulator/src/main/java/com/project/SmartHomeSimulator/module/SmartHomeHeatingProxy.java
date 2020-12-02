@@ -125,4 +125,13 @@ public class SmartHomeHeatingProxy {
                 return false;
         }
     }
+
+    /**
+     * set season
+     *
+     * @param isSummer
+     */
+    public void setSeason(boolean isSummer){
+        smartHomeHeating.setSummer(isSummer);
+    }
 }

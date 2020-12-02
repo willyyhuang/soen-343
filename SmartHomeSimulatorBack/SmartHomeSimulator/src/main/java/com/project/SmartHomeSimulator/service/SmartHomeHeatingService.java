@@ -62,6 +62,13 @@ public class SmartHomeHeatingService {
      * @return
      */
     public boolean openCloseWindow(String windowId, boolean state) {
-       return smartHomeHeatingProxy.openCloseWindows(windowId, state);
+        return smartHomeHeatingProxy.openCloseWindows(windowId, state);
+    }
+
+    /**
+     * set season
+     */
+    public void setSeason(boolean isSummer) {
+        smartHomeHeatingProxy.setSeason(isSummer);
     }
 }
