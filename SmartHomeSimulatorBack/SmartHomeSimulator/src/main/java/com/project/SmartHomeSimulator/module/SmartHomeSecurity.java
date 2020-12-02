@@ -20,12 +20,14 @@ public class SmartHomeSecurity extends Module implements Monitor {
     private boolean alertModeOn;
     private List<String> lightIDs;
     private String timeToKeepLightsOn;
+    private List<AwayModeMonitor> awayModeMonitors;
 
     //this class cannot be instantiated
     private SmartHomeSecurity() {
         this.setName("SmartHomeSecurity");
         this.awayModeConfig = new AwayModeConfig();
         this.lightIDs = new ArrayList<String>();
+        this.awayModeMonitors = new ArrayList<>();
     }
 
     public static SmartHomeSecurity getInstance() {
@@ -48,6 +50,12 @@ public class SmartHomeSecurity extends Module implements Monitor {
 
     }
 
+    public void notifyAwayModeMonitors(boolean awayMode) {
+        for (AwayModeMonitor monitor : this.awayModeMonitors) {
+            monitor.updateAwayModeMonitor(awayMode);
+        }
+    }
+
     public void closWindows() {
         smartHomeCoreFunctionality = SmartHomeCoreFunctionality.getInstance();
         simulationContext = SimulationContext.getInstance();
@@ -62,7 +70,7 @@ public class SmartHomeSecurity extends Module implements Monitor {
                     if (success) {
                         logSuccess("Window", room.getName(), "close", "SHP module");
                     } else {
-                        logMessage("[Failed] closing window in room " + room.getName() + ", requested by SHP, failed");
+                        logFail(roomObject.getName(),room.getName(),"closing","SHP module");
                     }
                 }
             }
@@ -137,4 +145,8 @@ public class SmartHomeSecurity extends Module implements Monitor {
         this.awayModeConfig = awayModeConfig;
     }
 
+    public void setAwayMode(boolean awayMode){
+        this.awayModeConfig.setAwayMode(awayMode);
+        notifyAwayModeMonitors(awayMode);
+    }
 }

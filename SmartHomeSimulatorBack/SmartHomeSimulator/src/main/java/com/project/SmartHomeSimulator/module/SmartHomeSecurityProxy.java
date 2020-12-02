@@ -13,7 +13,7 @@ public class SmartHomeSecurityProxy {
 
     public boolean setAwayMode(Role role, boolean awayMode) {
         if (verifyPermission(role)) {
-            smartHomeSecurity.getAwayModeConfig().setAwayMode(awayMode);
+            smartHomeSecurity.setAwayMode(awayMode);
             return true;
         }
         return false;

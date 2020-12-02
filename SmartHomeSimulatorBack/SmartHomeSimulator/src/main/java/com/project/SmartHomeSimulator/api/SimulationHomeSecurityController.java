@@ -2,6 +2,7 @@ package com.project.SmartHomeSimulator.api;
 
 import com.project.SmartHomeSimulator.model.ResponseAPI;
 import com.project.SmartHomeSimulator.module.SimulationContext;
+import com.project.SmartHomeSimulator.module.SmartHomeCoreFunctionality;
 import com.project.SmartHomeSimulator.module.SmartHomeSecurity;
 import com.project.SmartHomeSimulator.service.SmartHomeSecurityService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,7 +56,7 @@ public class SimulationHomeSecurityController {
     public ResponseAPI turnOnOffLights(@RequestParam("status") Boolean status) {
         responseAPI.setDefaultValues();
         responseAPI.success = smartHomeSecurityService.turnOnOffLights(status);
-        responseAPI.consoleMessage = SmartHomeSecurity.getInstance().getConsoleMessage();
+        responseAPI.consoleMessage = SmartHomeCoreFunctionality.getInstance().getConsoleMessage()+ SmartHomeSecurity.getInstance().getConsoleMessage();
         responseAPI.alertModeOn = false;
         return responseAPI;
     }
