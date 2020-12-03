@@ -33,3 +33,8 @@ build/
 .vscode/
 
 src/**/application.properties
+
+### log files ###
+SmartHomeCoreFunctionality.txt
+SmartHomeHeating.txt
+SmartHomeSecurity.txt

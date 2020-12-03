@@ -1,3 +1,18 @@
 [Zone ] Zone1 Zone  was  created by Jenn's request.
 [Temperature in room ] bedroom1 Temperature in room  was  changed by Jenn's request.
 [Zone ] Zone2 Zone  was  created by Jenn's request.
+[zone] Zone zone was created by name's request.
+[zone] Zone zone was created by name's request.
+[zone] Zone zone was created by name's request.
+[bedroom] Temperature in room bedroom was changed by name's request.
+[zone] Temperature in zone zone was changed by SHH's request.
+[zone] Zone zone was created by name's request.
+[zone] Zone zone was created by name's request.
+[bedroom] Temperature in room bedroom was changed by name's request.
+[zone] Zone zone was created by name's request.
+[zone] Zone zone was created by name's request.
+[bedroom] Temperature in room bedroom was changed by name's request.
+[zone] Temperature in zone zone was changed by SHH's request.
+[zone] Zone zone was created by name's request.
+[zone] Zone zone was created by name's request.
+[bedroom] Temperature in room bedroom was changed by name's request.

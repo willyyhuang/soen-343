@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class SmartHomeCoreFunctionalityService {
 
-    private static SimulationContext simulationContext = SimulationContext.getInstance();
+    private SimulationContext simulationContext = SimulationContext.getInstance();
 
     public SmartHomeCoreFunctionalityProxy smartHomeCoreFunctionalityProxy = SmartHomeCoreFunctionalityProxy.getInstance();
     public SmartHomeCoreFunctionality smartHomeCoreFunctionality = SmartHomeCoreFunctionality.getInstance();

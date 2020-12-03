@@ -1,13 +1,12 @@
 package com.project.SmartHomeSimulator.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.project.SmartHomeSimulator.model.HomeLayout;
+import com.project.SmartHomeSimulator.model.Role;
 import com.project.SmartHomeSimulator.model.Room;
 import com.project.SmartHomeSimulator.model.User;
 import com.project.SmartHomeSimulator.model.roomObjects.RoomObject;
 import com.project.SmartHomeSimulator.module.SimulationContext;
-import net.minidev.json.JSONObject;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -20,33 +19,39 @@ import static org.junit.Assert.assertEquals;
 @SpringBootTest
 public class SmartHomeSecurityServiceTest {
 
+    @Autowired
+    SimulationContextService simulationContextService = new SimulationContextService();
 
     @Autowired
-    SimulationContextService simulationContextService;
+    SmartHomeCoreFunctionalityService smartHomeCoreFunctionalityService = new SmartHomeCoreFunctionalityService();
 
     @Autowired
-    SmartHomeCoreFunctionalityService smartHomeCoreFunctionalityService;
+    SmartHomeSecurityService smartHomeSecurityService = new SmartHomeSecurityService();
 
     @Autowired
-    SmartHomeSecurityService smartHomeSecurityService;
+    private UserService userService = new UserService();
 
-    @Autowired
-    private UserService userService;
-    private static SimulationContext simulationContext = SimulationContext.getInstance();
+    private void setup() {
+        userService = new UserService();
+        User user = new User();
+        user.setRole(Role.PARENT);
+        user.setName("testUser");
+        user.setHomeLocation("outside");
+        userService.addUser(user);
+        simulationContextService.setCurrentSimulationUser("name");
+
+        String homeLayoutFile = "{\"roomList\":\"[{\"name\":\"bedroom\", \"objects\":[{\"objectType\": \"AC\"}, {\"objectType\": \"HEATER\"}]}, {\"name\":\"building entrance\", \"objects\":[{\"objectType\": \"AC\"}, {\"objectType\": \"HEATER\"}]}, {\"name\":\"garage\", \"objects\":[{\"objectType\": \"AC\"}, {\"objectType\": \"HEATER\"}]}]\"}";
+        simulationContextService.loadLayout(homeLayoutFile);
+        simulationContextService.startSimulation();
+    }
+
     /**
      * set away mode
      * Use case ID = 7
      */
     @Test
     public void awayMode_7() throws JsonProcessingException {
-        JSONObject jsonUser = new JSONObject();
-        jsonUser.put("name", "testUser");
-        jsonUser.put("role", "PARENT");
-        jsonUser.put("homeLocation", "outside");
-        ObjectMapper objectMapper = new ObjectMapper();
-        User user = objectMapper.readValue(jsonUser.toString(), User.class);
-        userService.addUser(user);
-        simulationContextService.setCurrentSimulationUser(user.getName());
+        setup();
 
         String homeLayoutFile = "{\"roomList\":\"[{\"name\":\"backyard\", \"objects\":[{\"objectType\": \"DOOR\"}, {\"objectType\": \"WINDOW\"}]}, {\"name\":\"building entrance\", \"objects\":[{\"objectType\": \"DOOR\"}, {\"objectType\": \"WINDOW\"}]}, {\"name\":\"garage\", \"objects\":[{\"objectType\": \"DOOR\"}, {\"objectType\": \"WINDOW\"}]}]\"}";
         HomeLayout homeLayout = simulationContextService.loadLayout(homeLayoutFile);
@@ -55,14 +60,19 @@ public class SmartHomeSecurityServiceTest {
         RoomObject window = room.getObjects().get(1);
 
         //on
-        smartHomeCoreFunctionalityService.openCloseDoors(room.getName(),door.getId().toString(),true);
-        smartHomeCoreFunctionalityService.openCloseWindow(room.getName(),window.getId().toString(),true);
+        smartHomeCoreFunctionalityService.openCloseDoors(room.getName(), door.getId().toString(), true);
+        smartHomeCoreFunctionalityService.openCloseWindow(room.getName(), window.getId().toString(), true);
+
+        List<User> users= SimulationContext.getInstance().getSimulationUsers();
+        for(User userInHome : users){
+            userService.editHomeLocation(userInHome.getName(), "outside");
+        }
 
         boolean result = smartHomeSecurityService.setAwayMode(true);
-        assertEquals(result,true);
+        assertEquals(true, result);
 
-        assertEquals(window.isStatus(), false);
-        assertEquals(door.isStatus(), false);
+        assertEquals(false, window.isStatus());
+        assertEquals(false, door.isStatus());
     }
 
     /**
@@ -71,17 +81,10 @@ public class SmartHomeSecurityServiceTest {
      */
     @Test
     public void setTimeBeforeAuthorities_4() throws JsonProcessingException {
-        JSONObject jsonUser = new JSONObject();
-        jsonUser.put("name", "testUser");
-        jsonUser.put("role", "PARENT");
-        jsonUser.put("homeLocation", "outside");
-        ObjectMapper objectMapper = new ObjectMapper();
-        User user = objectMapper.readValue(jsonUser.toString(), User.class);
-        userService.addUser(user);
-        simulationContextService.setCurrentSimulationUser(user.getName());
+        setup();
 
         boolean result = smartHomeSecurityService.setTimeBeforeAuthorities(12);
-        assertEquals(result, true);
+        assertEquals(true, result);
     }
 
     /**
@@ -90,14 +93,7 @@ public class SmartHomeSecurityServiceTest {
      */
     @Test
     public void setTimeInterval_4() throws JsonProcessingException {
-        JSONObject jsonUser = new JSONObject();
-        jsonUser.put("name", "testUser");
-        jsonUser.put("role", "PARENT");
-        jsonUser.put("homeLocation", "outside");
-        ObjectMapper objectMapper = new ObjectMapper();
-        User user = objectMapper.readValue(jsonUser.toString(), User.class);
-        userService.addUser(user);
-        simulationContextService.setCurrentSimulationUser(user.getName());
+        setup();
 
         String homeLayoutFile = "{\"roomList\":\"[{\"name\":\"string\", \"objects\":[{\"objectType\": \"LIGHT\"}]}]\"}";
         HomeLayout homeLayout = simulationContextService.loadLayout(homeLayoutFile);
@@ -107,9 +103,9 @@ public class SmartHomeSecurityServiceTest {
         List<String> lightIDs = new ArrayList<String>();
         lightIDs.add(light.getId().toString());
         boolean result = smartHomeSecurityService.setLightIDs(lightIDs);
-        assertEquals(result, true);
+        assertEquals(true, result);
 
         result = smartHomeSecurityService.setTimeToKeepLightsOn("12:00 to 13:00");
-        assertEquals(result, true);
+        assertEquals(true, result);
     }
 }
