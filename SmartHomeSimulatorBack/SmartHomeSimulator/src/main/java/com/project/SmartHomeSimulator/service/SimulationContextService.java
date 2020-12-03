@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @Service
 public class SimulationContextService {
 
-    private static SimulationContext simulationContext = SimulationContext.getInstance();
+    private SimulationContext simulationContext = SimulationContext.getInstance();
 
     /**
      * Start the simulation

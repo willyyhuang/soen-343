@@ -16,6 +16,7 @@ import com.project.SmartHomeSimulator.model.User;
  */
 public class SimulationContext {
 
+	public static SimulationContext simulationContext = null;
 	private boolean simulationRunning;
 	private int outsideTemp;
 	private String time;
@@ -82,8 +83,6 @@ public class SimulationContext {
 	public String getWinterMonths() {
 		return winterMonths;
 	}
-
-	public static SimulationContext simulationContext = null;
 
 	public String getEndLightsOn() {
 		return endLightsOn;

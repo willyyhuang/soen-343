@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 @Service
 public class SmartHomeHeatingService {
-    private static SimulationContext simulationContext = SimulationContext.getInstance();
+    private SimulationContext simulationContext = SimulationContext.getInstance();
     private SmartHomeHeatingProxy smartHomeHeatingProxy = SmartHomeHeatingProxy.getInstance();
 
     /**

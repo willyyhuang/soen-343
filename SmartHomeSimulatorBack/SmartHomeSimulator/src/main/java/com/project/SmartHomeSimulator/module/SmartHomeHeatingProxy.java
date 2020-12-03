@@ -7,7 +7,6 @@ import com.project.SmartHomeSimulator.model.Zones.Zone;
 
 import java.util.ArrayList;
 
-
 /**
  * Proxy for the heating class, verifies permissions
  */
@@ -39,7 +38,8 @@ public class SmartHomeHeatingProxy {
         } else {
             smartHomeHeating.logFail(zone.getName(), "Zone", "created", user.getName());
 
-            smartHomeHeating.logMessage("[Failed] " + "Creating" + " zone " + zone.getName() + ", requested by " + user.getName() + ", failed");
+            smartHomeHeating.logMessage("[Failed] " + "Creating" + " zone " + zone.getName() + ", requested by "
+                    + user.getName() + ", failed");
         }
 
         return success;
@@ -81,7 +81,8 @@ public class SmartHomeHeatingProxy {
         if (success) {
             smartHomeHeating.logSuccess(zoneName, "Temperature in zone", "changed", "SHH");
         } else {
-            smartHomeHeating.logMessage("[Failed] " + "Change in temperature in " + "room" + zoneName + ", requested by " + "SHH" + ", failed");
+            smartHomeHeating.logMessage("[Failed] " + "Change in temperature in " + "room" + zoneName
+                    + ", requested by " + "SHH" + ", failed");
         }
         return success;
     }
@@ -131,7 +132,7 @@ public class SmartHomeHeatingProxy {
      *
      * @param isSummer
      */
-    public void setSeason(boolean isSummer){
+    public void setSeason(boolean isSummer) {
         smartHomeHeating.setSummer(isSummer);
     }
 }

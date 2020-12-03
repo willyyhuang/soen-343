@@ -16,16 +16,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-@Service("userService")
+@Service
 public class UserService {
 
-
-    private static SimulationContext simulationContext = SimulationContext.getInstance();
+    private SimulationContext simulationContext = SimulationContext.getInstance();
     private final File userProfilesFile = new File("./src/main/resources/user_profiles.json.txt");
     private SmartHomeCoreFunctionality smartHomeCoreFunctionality = SmartHomeCoreFunctionality.getInstance();
     private SmartHomeSecurity smartHomeSecurity = SmartHomeSecurity.getInstance();
-
-
     /**
      * adds a new user to the simulation context users list
      *

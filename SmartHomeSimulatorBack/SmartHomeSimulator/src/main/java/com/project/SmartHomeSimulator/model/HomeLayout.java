@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.project.SmartHomeSimulator.model.roomObjects.*;
 import org.springframework.boot.jackson.JsonComponent;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -14,13 +15,14 @@ import java.util.Objects;
 @JsonComponent
 public class HomeLayout {
     private List<Room> roomList;
-    public static int usersInHome;
+    public static int usersInHome = 0;
     public static int windowCount = 1;
     private static int doorCount = 1;
     private static int lightCount = 1;
     private static int acCount = 1;
-    private static int heaterCount =1;
+    private static int heaterCount = 1;
     public static int roomsNotInZone;
+
     /**
      * Gets a room by name
      *
@@ -38,13 +40,14 @@ public class HomeLayout {
 
     /**
      * Gets all rooms in a zone
+     *
      * @param zone
      * @return
      */
     public ArrayList<Room> getRoomsInZone(String zone) {
         ArrayList<Room> rooms = new ArrayList<>();
         for (Room room : this.roomList) {
-            if(room.getZone() != null) {
+            if (room.getZone() != null) {
                 if (room.getZone().equals(zone)) {
                     rooms.add(room);
                 }
@@ -78,7 +81,8 @@ public class HomeLayout {
      */
     public HomeLayout readHomeLayout(String homeLayoutFile) {
         homeLayoutFile = homeLayoutFile.replace("\\", "");
-        homeLayoutFile = homeLayoutFile.substring(0, 12) + homeLayoutFile.substring(13, homeLayoutFile.length() - 2) + "}";
+        homeLayoutFile = homeLayoutFile.substring(0, 12) + homeLayoutFile.substring(13, homeLayoutFile.length() - 2)
+                + "}";
         ObjectMapper objectMapper = new ObjectMapper();
         try {
             HomeLayout homeLayout = objectMapper.readValue(homeLayoutFile, HomeLayout.class);
@@ -119,23 +123,19 @@ public class HomeLayout {
                         window = new Window(roomObject);
                         window.setName(room.getName() + "-Window" + windowCount++);
                         roomObjects.add(window);
-                    }
-                    else if (roomObject.getObjectType() == RoomObjectType.DOOR) {
+                    } else if (roomObject.getObjectType() == RoomObjectType.DOOR) {
                         door = new Door(roomObject);
                         door.setName(room.getName() + " - Door" + doorCount++);
                         roomObjects.add(door);
-                    }
-                    else if (roomObject.getObjectType() == RoomObjectType.LIGHT) {
+                    } else if (roomObject.getObjectType() == RoomObjectType.LIGHT) {
                         light = new Light(roomObject);
                         light.setName(room.getName() + " - Light" + lightCount++);
                         roomObjects.add(light);
-                    }
-                    else if (roomObject.getObjectType() == RoomObjectType.AC) {
+                    } else if (roomObject.getObjectType() == RoomObjectType.AC) {
                         ac = new AC(roomObject);
                         ac.setName(room.getName() + " - AC" + acCount++);
                         roomObjects.add(ac);
-                    }
-                    else if (roomObject.getObjectType() == RoomObjectType.HEATER) {
+                    } else if (roomObject.getObjectType() == RoomObjectType.HEATER) {
                         heater = new Heater(roomObject);
                         heater.setName(room.getName() + " - Heater" + heaterCount++);
                         roomObjects.add(heater);
@@ -148,9 +148,9 @@ public class HomeLayout {
         return null;
     }
 
-    public List<RoomObject> allLights(String roomName){
+    public List<RoomObject> allLights(String roomName) {
         Room room = getRoomByName(roomName);
-        if(room == null){
+        if (room == null) {
             List<RoomObject> list = new ArrayList<>();
             return list;
         }
@@ -170,7 +170,7 @@ public class HomeLayout {
     }
 
     public void addUsersInHome(String homeLocation) {
-        if (!homeLocation.equals("outside")){
+        if (!homeLocation.equals("outside")) {
             this.usersInHome++;
         }
     }
@@ -183,9 +183,7 @@ public class HomeLayout {
 
     @Override
     public String toString() {
-        return "HomeLayout{" +
-                "roomList=" + roomList +
-                '}';
+        return "HomeLayout{" + "roomList=" + roomList + '}';
     }
 
     @Override
