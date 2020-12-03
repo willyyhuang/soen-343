@@ -11,8 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 @SpringBootTest
 public class SmartHomeHeatingServiceTest {
@@ -78,7 +77,7 @@ public class SmartHomeHeatingServiceTest {
     }
 
     /**
-     * Change a zone temp when a period is reacheed
+     * Change a zone temp when a period is reached
      * ID = 11
      * Sub-Function
      */
@@ -98,5 +97,18 @@ public class SmartHomeHeatingServiceTest {
         assertTrue(acBedroom.isStatus());
         assertTrue(heaterGarage.isStatus());
         assertFalse(heaterBedroom.isStatus());
+    }
+
+    /**
+     * Set temperature threshold
+     * ID = 12
+     * User-level
+     */
+    @Test
+    public void setThreshold_12() {
+        setup();
+        simulationContext.setTempThreshold(0);
+        int result = simulationContext.getTempThreshold();
+        assertEquals(0, result);
     }
 }
