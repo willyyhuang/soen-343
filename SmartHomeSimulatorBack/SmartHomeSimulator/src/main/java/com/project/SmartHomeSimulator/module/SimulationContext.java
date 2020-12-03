@@ -188,6 +188,7 @@ public class SimulationContext {
 				if(!user.getHomeLocation().equalsIgnoreCase("outside")) {
 					HomeLayout.usersInHome++;
 				}
+				homeLayout.getRoomByName(user.getHomeLocation()).incrementUsersInRoom();
 			}
 		} catch (IOException e) {
 			e.printStackTrace();

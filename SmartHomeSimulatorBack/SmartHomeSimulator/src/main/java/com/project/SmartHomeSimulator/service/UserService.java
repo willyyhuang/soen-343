@@ -72,8 +72,8 @@ public class UserService {
                     }
                 }
                 if (simulationContext.getHomeLayout() != null) {
-
                     simulationContext.getHomeLayout().addUsersInHome(user.getHomeLocation());
+                    simulationContext.getHomeLayout().getRoomByName(user.getHomeLocation()).incrementUsersInRoom();
                     simulationContext.notifyMonitors(user);
                 }
                 return true;
@@ -95,6 +95,7 @@ public class UserService {
             simulationContext.getSimulationUsers().remove(toBeRemovedUser);
             if (simulationContext.getHomeLayout() != null) {
                 simulationContext.getHomeLayout().removeUsersInHome(toBeRemovedUser.getHomeLocation());
+                simulationContext.getHomeLayout().getRoomByName(toBeRemovedUser.getHomeLocation()).decrementUsersInRoom();
             }
             return true;
         }
@@ -102,7 +103,7 @@ public class UserService {
     }
 
     /**
-     * returns false if user was not found and true if successfully deleted
+     * returns false if user was not found and true if successfully edited
      *
      * @param name
      * @param newName
@@ -144,7 +145,9 @@ public class UserService {
             }
         }
         if (user != null && !user.getHomeLocation().equalsIgnoreCase(homeLocation)) {
+            simulationContext.getHomeLayout().getRoomByName(user.getHomeLocation()).decrementUsersInRoom();
             user.setHomeLocation(homeLocation);
+            simulationContext.getHomeLayout().getRoomByName(user.getHomeLocation()).incrementUsersInRoom();
             if (simulationContext.getHomeLayout() != null) {
                 lightsInRoom = simulationContext.getHomeLayout().allLights(user.getHomeLocation());
             }
