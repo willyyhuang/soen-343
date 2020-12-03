@@ -1,6 +1,7 @@
 package com.project.SmartHomeSimulator.service;
 
 import com.project.SmartHomeSimulator.model.*;
+import com.project.SmartHomeSimulator.model.Zones.Zone;
 import com.project.SmartHomeSimulator.model.roomObjects.RoomObject;
 import com.project.SmartHomeSimulator.model.roomObjects.RoomObjectType;
 import com.project.SmartHomeSimulator.module.SimulationContext;
@@ -52,7 +53,8 @@ public class SmartHomeHeatingServiceTest {
         List<String> namesRoom = new ArrayList<>();
         namesRoom.add("bedroom");
         namesRoom.add("garage");
-        zone.setCurrentTemp(15);
+        zone.setEmptyTemp(15);
+        zone.setNonEmptyTemp(20);
         zone.setPeriod1("10:00");
         zone.setPeriod1Temp(20);
         zone.setRoomsInZone(namesRoom);
