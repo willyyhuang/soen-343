@@ -28,7 +28,7 @@ public class SmartHomeHeatingServiceTest {
 
     private static SimulationContext simulationContext = SimulationContext.getInstance();
 
-    private void setup(){
+    private void setup() {
         userService = new UserService();
         User user = new User();
         user.setRole(Role.PARENT);
@@ -46,7 +46,7 @@ public class SmartHomeHeatingServiceTest {
      * Use case ID = 8
      */
     @Test
-    public void addZoneTest_8(){
+    public void addZoneTest_8() {
         setup();
         Zone zone = new Zone();
         zone.setName("zone");
@@ -68,10 +68,10 @@ public class SmartHomeHeatingServiceTest {
      * Use-Case ID = 10
      */
     @Test
-    public void changeRoomTempTest_10(){
+    public void changeRoomTempTest_10() {
         setup();
         addZoneTest_8();
-        boolean result = smartHomeHeatingService.changeRoomTemp("bedroom",25);
+        boolean result = smartHomeHeatingService.changeRoomTemp("bedroom", 25);
         assertTrue(result);
 
         assertTrue(simulationContext.getHomeLayout().getRoomByName("bedroom").isOverridden());
@@ -83,11 +83,11 @@ public class SmartHomeHeatingServiceTest {
      * Sub-Function
      */
     @Test
-    public void changeZoneTemp_11(){
+    public void changeZoneTemp_11() {
         setup();
         addZoneTest_8();
         changeRoomTempTest_10();
-        boolean result = smartHomeHeatingService.changeZoneTemp("zone",1);
+        boolean result = smartHomeHeatingService.changeZoneTemp("zone", 1);
         assertTrue(result);
 
         Room bedroom = simulationContext.getHomeLayout().getRoomByName("bedroom");

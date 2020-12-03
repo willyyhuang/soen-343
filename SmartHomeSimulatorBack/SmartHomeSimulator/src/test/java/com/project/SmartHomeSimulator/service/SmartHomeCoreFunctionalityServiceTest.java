@@ -1,14 +1,12 @@
 package com.project.SmartHomeSimulator.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.project.SmartHomeSimulator.model.HomeLayout;
 import com.project.SmartHomeSimulator.model.Role;
 import com.project.SmartHomeSimulator.model.Room;
 import com.project.SmartHomeSimulator.model.User;
 import com.project.SmartHomeSimulator.model.roomObjects.RoomObject;
 import com.project.SmartHomeSimulator.module.SimulationContext;
-import net.minidev.json.JSONObject;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -28,7 +26,7 @@ public class SmartHomeCoreFunctionalityServiceTest {
     private UserService userService;
     private SimulationContext simulationContext = SimulationContext.getInstance();
 
-    private void setup(){
+    private void setup() {
         userService = new UserService();
         User user = new User();
         user.setRole(Role.PARENT);
@@ -53,12 +51,12 @@ public class SmartHomeCoreFunctionalityServiceTest {
         RoomObject window = room.getObjects().get(0);
 
         //unblock
-        boolean result = smartHomeCoreFunctionalityService.blockUnblockWindow(room.getName(),window.getId().toString(),false);
-        assertEquals(result,true);
+        boolean result = smartHomeCoreFunctionalityService.blockUnblockWindow(room.getName(), window.getId().toString(), false);
+        assertEquals(true, result);
 
         //block
-        result = smartHomeCoreFunctionalityService.blockUnblockWindow(room.getName(),window.getId().toString(),true);
-        assertEquals(result,true);
+        result = smartHomeCoreFunctionalityService.blockUnblockWindow(room.getName(), window.getId().toString(), true);
+        assertEquals(true, result);
     }
 
     /**
@@ -75,12 +73,12 @@ public class SmartHomeCoreFunctionalityServiceTest {
         RoomObject window = room.getObjects().get(0);
 
         //unblock
-        boolean result = smartHomeCoreFunctionalityService.openCloseWindow(room.getName(),window.getId().toString(),false);
-        assertEquals(result,true);
+        boolean result = smartHomeCoreFunctionalityService.openCloseWindow(room.getName(), window.getId().toString(), false);
+        assertEquals(true, result);
 
         //block
-        result = smartHomeCoreFunctionalityService.openCloseWindow(room.getName(),window.getId().toString(),true);
-        assertEquals(result,true);
+        result = smartHomeCoreFunctionalityService.openCloseWindow(room.getName(), window.getId().toString(), true);
+        assertEquals(true, result);
     }
 
     /**
@@ -97,12 +95,12 @@ public class SmartHomeCoreFunctionalityServiceTest {
         RoomObject door = room.getObjects().get(0);
 
         //unblock
-        boolean result = smartHomeCoreFunctionalityService.openCloseDoors(room.getName(),door.getId().toString(),false);
-        assertEquals(result,true);
+        boolean result = smartHomeCoreFunctionalityService.openCloseDoors(room.getName(), door.getId().toString(), false);
+        assertEquals(true, result);
 
         //block
-        result = smartHomeCoreFunctionalityService.openCloseDoors(room.getName(),door.getId().toString(),true);
-        assertEquals(result,true);
+        result = smartHomeCoreFunctionalityService.openCloseDoors(room.getName(), door.getId().toString(), true);
+        assertEquals(true, result);
     }
 
     /**
@@ -119,12 +117,12 @@ public class SmartHomeCoreFunctionalityServiceTest {
         RoomObject light = room.getObjects().get(0);
 
         //on
-        boolean result = smartHomeCoreFunctionalityService.onOffLights(room.getName(),light.getId().toString(),true);
-        assertEquals(result,true);
+        boolean result = smartHomeCoreFunctionalityService.onOffLights(room.getName(), light.getId().toString(), true);
+        assertEquals(true, result);
 
         //off
-        result = smartHomeCoreFunctionalityService.onOffLights(room.getName(),light.getId().toString(),false);
-        assertEquals(result,true);
+        result = smartHomeCoreFunctionalityService.onOffLights(room.getName(), light.getId().toString(), false);
+        assertEquals(true, result);
     }
 
 
@@ -143,8 +141,8 @@ public class SmartHomeCoreFunctionalityServiceTest {
         RoomObject light = room.getObjects().get(0);
 
         simulationContextService.setAutoMode(true);
-        userService.editHomeLocation(simulationContext.getCurrentSimulationUser().getName(),"string");
-        assertEquals(light.isStatus(),true);
+        userService.editHomeLocation(simulationContext.getCurrentSimulationUser().getName(), "string");
+        assertEquals(true, light.isStatus());
 
     }
 
@@ -164,11 +162,11 @@ public class SmartHomeCoreFunctionalityServiceTest {
         RoomObject window = room.getObjects().get(1);
 
 
-        boolean result = smartHomeCoreFunctionalityService.openCloseDoors(room.getName(),door.getId().toString(),true);
-        assertEquals(result,false);
+        boolean result = smartHomeCoreFunctionalityService.openCloseDoors(room.getName(), door.getId().toString(), true);
+        assertEquals(false, result);
 
 
-        result = smartHomeCoreFunctionalityService.onOffLights(room.getName(),window.getId().toString(),false);
-        assertEquals(result,true);
+        result = smartHomeCoreFunctionalityService.onOffLights(room.getName(), window.getId().toString(), false);
+        assertEquals(true, result);
     }
 }

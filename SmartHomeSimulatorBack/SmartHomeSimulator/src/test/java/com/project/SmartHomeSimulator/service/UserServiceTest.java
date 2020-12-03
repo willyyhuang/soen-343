@@ -1,10 +1,8 @@
 package com.project.SmartHomeSimulator.service;
 
 import com.project.SmartHomeSimulator.model.Role;
-import com.project.SmartHomeSimulator.module.SimulationContext;
 import com.project.SmartHomeSimulator.model.User;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -23,8 +21,7 @@ public class UserServiceTest {
     private SimulationContextService simulationContextService = new SimulationContextService();
     private User user;
 
-    public void setup()
-    {
+    public void setup() {
         user = new User();
         user.setRole(Role.PARENT);
         user.setName("name");
@@ -35,8 +32,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void addUser(){
-
+    public void addUser() {
         setup();
         Random r = new Random();
         int num = r.nextInt(10000000);
@@ -51,34 +47,34 @@ public class UserServiceTest {
 
         result = userService.addUser(testUser);
         //unsuccessful to add a user, must return false
-        Assert.assertFalse (result);
+        Assert.assertFalse(result);
     }
 
     @Test
-    public void removeUser(){
+    public void removeUser() {
         setup();
 
         //successfully removing a user, must return true
-        Assert.assertTrue (userService.removeUser(user.getName()));
+        Assert.assertTrue(userService.removeUser(user.getName()));
     }
 
     @Test
-    public void editUser(){
+    public void editUser() {
         setup();
 
         //successfully edit a user's name, must return true
-        Assert.assertTrue (userService.editUser(user.getName(), "testName"));
+        Assert.assertTrue(userService.editUser(user.getName(), "testName"));
 
         //unsuccessful to edit a user's name, must return false
-        Assert.assertFalse (userService.editUser("randomName", "testName"));
+        Assert.assertFalse(userService.editUser("randomName", "testName"));
     }
 
     @Test
-    public void editHomeLocation(){
+    public void editHomeLocation() {
         setup();
 
         //successfully edit a user's home location, must return true
-        Assert.assertTrue (userService.editHomeLocation(user.getName(), "bedroom").success);
+        Assert.assertTrue(userService.editHomeLocation(user.getName(), "bedroom").success);
 
     }
 }

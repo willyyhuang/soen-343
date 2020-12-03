@@ -1,14 +1,12 @@
 package com.project.SmartHomeSimulator.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.project.SmartHomeSimulator.model.HomeLayout;
 import com.project.SmartHomeSimulator.model.Role;
 import com.project.SmartHomeSimulator.model.Room;
 import com.project.SmartHomeSimulator.model.User;
 import com.project.SmartHomeSimulator.model.roomObjects.RoomObject;
 import com.project.SmartHomeSimulator.module.SimulationContext;
-import net.minidev.json.JSONObject;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -36,7 +34,7 @@ public class SmartHomeSecurityServiceTest {
 
     private static SimulationContext simulationContext = SimulationContext.getInstance();
 
-    private void setup(){
+    private void setup() {
         userService = new UserService();
         User user = new User();
         user.setRole(Role.PARENT);
@@ -49,6 +47,7 @@ public class SmartHomeSecurityServiceTest {
         simulationContextService.loadLayout(homeLayoutFile);
         simulationContextService.startSimulation();
     }
+
     /**
      * set away mode
      * Use case ID = 7
@@ -64,19 +63,19 @@ public class SmartHomeSecurityServiceTest {
         RoomObject window = room.getObjects().get(1);
 
         //on
-        smartHomeCoreFunctionalityService.openCloseDoors(room.getName(),door.getId().toString(),true);
-        smartHomeCoreFunctionalityService.openCloseWindow(room.getName(),window.getId().toString(),true);
+        smartHomeCoreFunctionalityService.openCloseDoors(room.getName(), door.getId().toString(), true);
+        smartHomeCoreFunctionalityService.openCloseWindow(room.getName(), window.getId().toString(), true);
 
-        List<User> users= simulationContext.getSimulationUsers();
-        for(User userInHome : users){
+        List<User> users = simulationContext.getSimulationUsers();
+        for (User userInHome : users) {
             userService.editHomeLocation(userInHome.getName(), "outside");
         }
 
         boolean result = smartHomeSecurityService.setAwayMode(true);
-        assertEquals(result,true);
+        assertEquals(true, result);
 
-        assertEquals(window.isStatus(), false);
-        assertEquals(door.isStatus(), false);
+        assertEquals(false, window.isStatus());
+        assertEquals(false, door.isStatus());
     }
 
     /**
@@ -88,7 +87,7 @@ public class SmartHomeSecurityServiceTest {
         setup();
 
         boolean result = smartHomeSecurityService.setTimeBeforeAuthorities(12);
-        assertEquals(result, true);
+        assertEquals(true, result);
     }
 
     /**
@@ -107,9 +106,9 @@ public class SmartHomeSecurityServiceTest {
         List<String> lightIDs = new ArrayList<String>();
         lightIDs.add(light.getId().toString());
         boolean result = smartHomeSecurityService.setLightIDs(lightIDs);
-        assertEquals(result, true);
+        assertEquals(true, result);
 
         result = smartHomeSecurityService.setTimeToKeepLightsOn("12:00 to 13:00");
-        assertEquals(result, true);
+        assertEquals(true, result);
     }
 }
