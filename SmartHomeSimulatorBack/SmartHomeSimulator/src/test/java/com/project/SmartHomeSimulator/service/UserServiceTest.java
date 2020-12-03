@@ -1,11 +1,10 @@
 package com.project.SmartHomeSimulator.service;
 
 import com.project.SmartHomeSimulator.model.Role;
-import com.project.SmartHomeSimulator.module.SimulationContext;
 import com.project.SmartHomeSimulator.model.User;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -18,17 +17,21 @@ import java.util.Random;
 public class UserServiceTest {
 
     @Autowired
-    private UserService userService = new UserService();
+    UserService userService = new UserService();
+
     @Autowired
-    private SimulationContextService simulationContextService = new SimulationContextService();
+    SimulationContextService simulationContextService = new SimulationContextService();
+
     private User user;
 
     public void setup()
     {
+        Random r = new Random();
+        int num = r.nextInt(10000000);
         user = new User();
         user.setRole(Role.PARENT);
-        user.setName("name");
-        user.setHomeLocation("homeLocation");
+        user.setName("testUserName" + num);
+        user.setHomeLocation("bedroom");
         userService.addUser(user);
         String homeLayoutFile = "{\"roomList\":\"[{\"name\":\"bedroom\", \"objects\":[{\"objectType\": \"AC\"}, {\"objectType\": \"HEATER\"}]}, {\"name\":\"building entrance\", \"objects\":[{\"objectType\": \"AC\"}, {\"objectType\": \"HEATER\"}]}, {\"name\":\"garage\", \"objects\":[{\"objectType\": \"AC\"}, {\"objectType\": \"HEATER\"}]}]\"}";
         simulationContextService.loadLayout(homeLayoutFile);
@@ -78,7 +81,7 @@ public class UserServiceTest {
         setup();
 
         //successfully edit a user's home location, must return true
-        Assert.assertTrue (userService.editHomeLocation(user.getName(), "bedroom").success);
+        Assert.assertTrue (userService.editHomeLocation(user.getName(), "kitchen").success);
 
     }
 }

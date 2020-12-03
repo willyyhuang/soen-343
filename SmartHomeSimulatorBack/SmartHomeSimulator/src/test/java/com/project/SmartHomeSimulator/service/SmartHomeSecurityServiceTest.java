@@ -8,7 +8,6 @@ import com.project.SmartHomeSimulator.model.Room;
 import com.project.SmartHomeSimulator.model.User;
 import com.project.SmartHomeSimulator.model.roomObjects.RoomObject;
 import com.project.SmartHomeSimulator.module.SimulationContext;
-import net.minidev.json.JSONObject;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -21,20 +20,17 @@ import static org.junit.Assert.assertEquals;
 @SpringBootTest
 public class SmartHomeSecurityServiceTest {
 
+    @Autowired
+    SimulationContextService simulationContextService = new SimulationContextService();
 
     @Autowired
-    SimulationContextService simulationContextService;
+    SmartHomeCoreFunctionalityService smartHomeCoreFunctionalityService = new SmartHomeCoreFunctionalityService();
 
     @Autowired
-    SmartHomeCoreFunctionalityService smartHomeCoreFunctionalityService;
+    SmartHomeSecurityService smartHomeSecurityService = new SmartHomeSecurityService();
 
     @Autowired
-    SmartHomeSecurityService smartHomeSecurityService;
-
-    @Autowired
-    private UserService userService;
-
-    private static SimulationContext simulationContext = SimulationContext.getInstance();
+    private UserService userService = new UserService();
 
     private void setup(){
         userService = new UserService();
@@ -67,7 +63,7 @@ public class SmartHomeSecurityServiceTest {
         smartHomeCoreFunctionalityService.openCloseDoors(room.getName(),door.getId().toString(),true);
         smartHomeCoreFunctionalityService.openCloseWindow(room.getName(),window.getId().toString(),true);
 
-        List<User> users= simulationContext.getSimulationUsers();
+        List<User> users= SimulationContext.getInstance().getSimulationUsers();
         for(User userInHome : users){
             userService.editHomeLocation(userInHome.getName(), "outside");
         }
