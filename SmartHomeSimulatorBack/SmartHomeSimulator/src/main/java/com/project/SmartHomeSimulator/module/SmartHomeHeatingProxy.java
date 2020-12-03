@@ -3,7 +3,7 @@ package com.project.SmartHomeSimulator.module;
 import com.project.SmartHomeSimulator.model.Role;
 import com.project.SmartHomeSimulator.model.Room;
 import com.project.SmartHomeSimulator.model.User;
-import com.project.SmartHomeSimulator.model.Zone;
+import com.project.SmartHomeSimulator.model.Zones.Zone;
 
 import java.util.ArrayList;
 

@@ -20,6 +20,7 @@ public class HomeLayout {
     private static int lightCount = 1;
     private static int acCount = 1;
     private static int heaterCount =1;
+    public static int roomsNotInZone;
     /**
      * Gets a room by name
      *
@@ -88,6 +89,7 @@ public class HomeLayout {
             outside.setObjects(objects);
             rooms.add(outside);
             homeLayout.setRoomList(rooms);
+            roomsNotInZone = rooms.size() - 2;
             return homeLayout;
         } catch (JsonProcessingException e) {
             e.printStackTrace();

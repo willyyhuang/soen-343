@@ -1,9 +1,9 @@
 package com.project.SmartHomeSimulator.module;
 
-import com.project.SmartHomeSimulator.model.HomeLayout;
-import com.project.SmartHomeSimulator.model.Room;
-import com.project.SmartHomeSimulator.model.User;
-import com.project.SmartHomeSimulator.model.Zone;
+import com.project.SmartHomeSimulator.model.*;
+import com.project.SmartHomeSimulator.model.Zones.CompleteZones;
+import com.project.SmartHomeSimulator.model.Zones.Zone;
+import com.project.SmartHomeSimulator.model.Zones.ZoneObject;
 import com.project.SmartHomeSimulator.model.roomObjects.*;
 
 import java.util.ArrayList;
@@ -38,7 +38,11 @@ public class SmartHomeHeating extends Module implements AwayModeMonitor, Monitor
      * @return
      */
     public boolean addZone(Zone zone) {
+        ZoneObject zoneObject = new ZoneObject();
         for (String roomName : zone.getRoomsInZone()) {
+            if(roomName.equalsIgnoreCase("backyard") || roomName.equalsIgnoreCase("outside")){
+                break;
+            }
             int desiredTemp = zone.getEmptyTemp();
             Room room = SimulationContext.getInstance().getHomeLayout().getRoomByName(roomName);
             if (room.getUsersInRoom() > 0){
@@ -56,7 +60,11 @@ public class SmartHomeHeating extends Module implements AwayModeMonitor, Monitor
             room.setPeriod3(zone.getPeriod3());
             room.setPeriod3Temp(zone.getPeriod3Temp());
             room.setOverridden(false);
+            HomeLayout.usersInHome--;
+            zoneObject.getRooms().add(roomName);
         }
+        zoneObject.setZoneName(zone.getName());
+        CompleteZones.zones.add(zoneObject);
         return true;
     }
 

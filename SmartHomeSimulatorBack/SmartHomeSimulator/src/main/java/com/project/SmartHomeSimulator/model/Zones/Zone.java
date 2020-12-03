@@ -1,4 +1,4 @@
-package com.project.SmartHomeSimulator.model;
+package com.project.SmartHomeSimulator.model.Zones;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.boot.jackson.JsonComponent;

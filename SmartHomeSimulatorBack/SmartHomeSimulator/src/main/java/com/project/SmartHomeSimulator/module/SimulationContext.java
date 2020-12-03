@@ -185,10 +185,7 @@ public class SimulationContext {
 		try {
 			simulationUsers = mapper.readValue(userProfilesJSON, new TypeReference<List<User>>(){});
 			for (User user : simulationUsers){
-				if(!user.getHomeLocation().equalsIgnoreCase("outside")) {
-					HomeLayout.usersInHome++;
-				}
-				homeLayout.getRoomByName(user.getHomeLocation()).incrementUsersInRoom();
+				user.setHomeLocation("outside");
 			}
 		} catch (IOException e) {
 			e.printStackTrace();

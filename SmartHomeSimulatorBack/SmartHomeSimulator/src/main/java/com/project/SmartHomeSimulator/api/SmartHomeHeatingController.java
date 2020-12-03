@@ -1,7 +1,9 @@
 package com.project.SmartHomeSimulator.api;
 
-import com.project.SmartHomeSimulator.model.ResponseAPI;
-import com.project.SmartHomeSimulator.model.Zone;
+import com.project.SmartHomeSimulator.model.*;
+import com.project.SmartHomeSimulator.model.Zones.CompleteZones;
+import com.project.SmartHomeSimulator.model.Zones.Zone;
+import com.project.SmartHomeSimulator.model.Zones.ZoneObject;
 import com.project.SmartHomeSimulator.module.*;
 import com.project.SmartHomeSimulator.service.SmartHomeHeatingService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 /**
  * API controller for everything related to the heating process
@@ -257,5 +260,11 @@ public class SmartHomeHeatingController {
     @ResponseStatus(value = HttpStatus.OK)
     public void setSeason(@RequestParam("isSummer") boolean isSummer) {
         smartHomeHeatingService.setSeason(isSummer);
+    }
+
+    @GetMapping(value = "/getAllZones")
+    @ResponseStatus(value = HttpStatus.OK)
+    public List<ZoneObject> getAllZones(){
+        return CompleteZones.zones;
     }
 }

@@ -2,7 +2,7 @@ package com.project.SmartHomeSimulator.service;
 
 import com.project.SmartHomeSimulator.model.Room;
 import com.project.SmartHomeSimulator.model.User;
-import com.project.SmartHomeSimulator.model.Zone;
+import com.project.SmartHomeSimulator.model.Zones.Zone;
 import com.project.SmartHomeSimulator.model.roomObjects.RoomObjectType;
 import com.project.SmartHomeSimulator.module.SimulationContext;
 import com.project.SmartHomeSimulator.module.SmartHomeHeatingProxy;
