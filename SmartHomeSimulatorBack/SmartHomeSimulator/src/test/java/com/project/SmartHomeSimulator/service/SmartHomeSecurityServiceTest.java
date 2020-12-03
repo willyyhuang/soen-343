@@ -19,20 +19,17 @@ import static org.junit.Assert.assertEquals;
 @SpringBootTest
 public class SmartHomeSecurityServiceTest {
 
+    @Autowired
+    SimulationContextService simulationContextService = new SimulationContextService();
 
     @Autowired
-    SimulationContextService simulationContextService;
+    SmartHomeCoreFunctionalityService smartHomeCoreFunctionalityService = new SmartHomeCoreFunctionalityService();
 
     @Autowired
-    SmartHomeCoreFunctionalityService smartHomeCoreFunctionalityService;
+    SmartHomeSecurityService smartHomeSecurityService = new SmartHomeSecurityService();
 
     @Autowired
-    SmartHomeSecurityService smartHomeSecurityService;
-
-    @Autowired
-    private UserService userService;
-
-    private static SimulationContext simulationContext = SimulationContext.getInstance();
+    private UserService userService = new UserService();
 
     private void setup() {
         userService = new UserService();
@@ -66,8 +63,8 @@ public class SmartHomeSecurityServiceTest {
         smartHomeCoreFunctionalityService.openCloseDoors(room.getName(), door.getId().toString(), true);
         smartHomeCoreFunctionalityService.openCloseWindow(room.getName(), window.getId().toString(), true);
 
-        List<User> users = simulationContext.getSimulationUsers();
-        for (User userInHome : users) {
+        List<User> users= SimulationContext.getInstance().getSimulationUsers();
+        for(User userInHome : users){
             userService.editHomeLocation(userInHome.getName(), "outside");
         }
 

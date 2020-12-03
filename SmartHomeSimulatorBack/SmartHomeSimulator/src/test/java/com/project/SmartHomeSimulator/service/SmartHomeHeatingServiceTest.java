@@ -26,7 +26,7 @@ public class SmartHomeHeatingServiceTest {
     @Autowired
     private UserService userService;
 
-    private static SimulationContext simulationContext = SimulationContext.getInstance();
+    private SimulationContext simulationContext = SimulationContext.getInstance();
 
     private void setup() {
         userService = new UserService();
