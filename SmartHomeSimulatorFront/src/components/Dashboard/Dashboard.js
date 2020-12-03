@@ -9,6 +9,7 @@ import {
   SimulationFunctionalityCard,
   OutputConsole,
   EditAwayModeModal,
+  SmartHomeHeatingCard,
 } from '../index'
 import './Dashboard.css'
 import {
@@ -105,6 +106,11 @@ const Dashboard = ({simulationConfig, consoleMessage, dispatch}) => {
             {simulationConfig.homeLayout && (
               <>
                 <SimulationProfileCard
+                  addConsoleMessage={addConsoleMessage}
+                  simulationConfig={simulationConfig}
+                  fetchUserProfiles={fetchUserProfiles} />
+                <Divider />
+                <SmartHomeHeatingCard
                   addConsoleMessage={addConsoleMessage}
                   simulationConfig={simulationConfig}
                   fetchUserProfiles={fetchUserProfiles} />
