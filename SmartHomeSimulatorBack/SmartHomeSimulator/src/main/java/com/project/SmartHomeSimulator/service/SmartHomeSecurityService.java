@@ -11,7 +11,7 @@ import java.util.List;
 @Service
 public class SmartHomeSecurityService {
     private SmartHomeSecurityProxy smartHomeSecurityProxy = new SmartHomeSecurityProxy(SmartHomeSecurity.getInstance());
-    private static SimulationContext simulationContext = SimulationContext.getInstance();
+    private SimulationContext simulationContext = SimulationContext.getInstance();
     private Role currentSimulationUserRole;
 
     /**
