@@ -43,16 +43,14 @@ public class SmartHomeHeating extends Module implements AwayModeMonitor, Monitor
             if(roomName.equalsIgnoreCase("backyard") || roomName.equalsIgnoreCase("outside")){
                 break;
             }
-            int desiredTemp = zone.getEmptyTemp();
+            int desiredTemp = SimulationContext.getInstance().getEmptyRoomTemp();
             Room room = SimulationContext.getInstance().getHomeLayout().getRoomByName(roomName);
             if (room.getUsersInRoom() > 0){
-                desiredTemp = zone.getNonEmptyTemp();
+                desiredTemp = zone.getDesiredTemp();
             }
             room.setZone(zone.getName());
             switchStates(room, SimulationContext.getInstance().getOutsideTemp(), desiredTemp);
-            room.setCurrentTemp(desiredTemp);
-            room.setEmptyTemp(zone.getEmptyTemp());
-            room.setNonEmptyTemp(zone.getNonEmptyTemp());
+            room.setDesiredTemp(zone.getDesiredTemp());
             room.setPeriod1(zone.getPeriod1());
             room.setPeriod1Temp(zone.getPeriod1Temp());
             room.setPeriod2(zone.getPeriod2());
@@ -79,7 +77,6 @@ public class SmartHomeHeating extends Module implements AwayModeMonitor, Monitor
     public boolean changeRoomTemp(String roomName, int newTemp) {
         Room room = SimulationContext.getInstance().getHomeLayout().getRoomByName(roomName);
         switchStates(room, room.getCurrentTemp(), newTemp);
-        room.setCurrentTemp(newTemp);
         room.setOverridden(true);
         return true;
     }
@@ -95,7 +92,6 @@ public class SmartHomeHeating extends Module implements AwayModeMonitor, Monitor
         int newTemp = getPeriodTemp(rooms.get(0), period);
         for (Room room : rooms) {
             switchStates(room, room.getCurrentTemp(), newTemp);
-            room.setCurrentTemp(newTemp);
             room.setOverridden(false);
         }
         return true;
@@ -209,7 +205,6 @@ public class SmartHomeHeating extends Module implements AwayModeMonitor, Monitor
         }
         for (Room room : rooms) {
             switchStates(room, room.getCurrentTemp(), newTemp);
-            room.setCurrentTemp(newTemp);
             room.setOverridden(false);
         }
     }

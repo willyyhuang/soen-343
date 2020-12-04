@@ -19,6 +19,7 @@ public class SimulationContext {
 	public static SimulationContext simulationContext = null;
 	private boolean simulationRunning;
 	private int outsideTemp;
+	private int emptyRoomTemp;
 	private String time;
 	private String date;
 	private User currentSimulationUser;
@@ -50,6 +51,14 @@ public class SimulationContext {
 			simulationContext = new SimulationContext();
 		}
 		return simulationContext;
+	}
+
+	public int getEmptyRoomTemp() {
+		return emptyRoomTemp;
+	}
+
+	public void setEmptyRoomTemp(int emptyRoomTemp) {
+		this.emptyRoomTemp = emptyRoomTemp;
 	}
 
 	public int getSummerTemp() {
@@ -116,16 +125,6 @@ public class SimulationContext {
 		this.timeBeforeAuthoroties = timeBeforeAuthoroties;
 	}
 
-	public List<User> getAllUsersInLocation(String room){
-		List<User> usersInRoom = new ArrayList<>();
-		for (User user : this.simulationUsers){
-			if(user.getHomeLocation().equalsIgnoreCase(room)){
-				usersInRoom.add(user);
-			}
-		}
-		return usersInRoom;
-	}
-
 	public boolean isAutoMode() {
 		return autoMode;
 	}
@@ -177,19 +176,6 @@ public class SimulationContext {
 	public List<User> getSimulationUsers() {
 		return simulationUsers;
 	}
-	
-	public void loadUserProfiles() {
-		ObjectMapper mapper = new ObjectMapper();
-		
-		try {
-			simulationUsers = mapper.readValue(userProfilesJSON, new TypeReference<List<User>>(){});
-			for (User user : simulationUsers){
-				user.setHomeLocation("outside");
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
 
 	public void setSimulationUsers(List<User> simulationUsers) {
 		this.simulationUsers = simulationUsers;
@@ -219,20 +205,43 @@ public class SimulationContext {
 		this.monitors.remove(monitor);
 	}
 
-	public void notifyMonitors(User user){
-		if (awayModeUser != null) {
-			for (Monitor monitor : this.monitors) {
-				monitor.update(awayModeUser.getName(), user);
-			}
-		}
-	}
-
 	public boolean isAwayMode() {
 		return awayMode;
 	}
 
 	public void setAwayMode(boolean awayMode) {
 		this.awayMode = awayMode;
+	}
+
+	public List<User> getAllUsersInLocation(String room){
+		List<User> usersInRoom = new ArrayList<>();
+		for (User user : this.simulationUsers){
+			if(user.getHomeLocation().equalsIgnoreCase(room)){
+				usersInRoom.add(user);
+			}
+		}
+		return usersInRoom;
+	}
+	
+	public void loadUserProfiles() {
+		ObjectMapper mapper = new ObjectMapper();
+		
+		try {
+			simulationUsers = mapper.readValue(userProfilesJSON, new TypeReference<List<User>>(){});
+			for (User user : simulationUsers){
+				user.setHomeLocation("outside");
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void notifyMonitors(User user){
+		if (awayModeUser != null) {
+			for (Monitor monitor : this.monitors) {
+				monitor.update(awayModeUser.getName(), user);
+			}
+		}
 	}
 
 	@Override

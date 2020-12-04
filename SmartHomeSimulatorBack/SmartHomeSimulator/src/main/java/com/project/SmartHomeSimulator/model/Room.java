@@ -19,8 +19,7 @@ public class Room {
     private String zone;
     private boolean overridden = false;
     private int currentTemp;
-    private int nonEmptyTemp;
-    private int emptyTemp;
+    private int desiredTemp;
     private String period1;
     private int period1Temp;
     private String period2;
@@ -28,6 +27,14 @@ public class Room {
     private String period3;
     private int period3Temp;
     private int usersInRoom;
+
+    public int getDesiredTemp() {
+        return desiredTemp;
+    }
+
+    public void setDesiredTemp(int desiredTemp) {
+        this.desiredTemp = desiredTemp;
+    }
 
     public String getPeriod1() {
         return period1;
@@ -75,22 +82,6 @@ public class Room {
 
     public void setPeriod3Temp(int period3Temp) {
         this.period3Temp = period3Temp;
-    }
-
-    public int getNonEmptyTemp() {
-        return nonEmptyTemp;
-    }
-
-    public void setNonEmptyTemp(int nonEmptyTemp) {
-        this.nonEmptyTemp = nonEmptyTemp;
-    }
-
-    public int getEmptyTemp() {
-        return emptyTemp;
-    }
-
-    public void setEmptyTemp(int emptyTemp) {
-        this.emptyTemp = emptyTemp;
     }
 
     public boolean isOverridden() {

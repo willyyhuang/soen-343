@@ -100,4 +100,19 @@ public class SmartHomeHeatingService {
     public void setSeason(boolean isSummer) {
         smartHomeHeatingProxy.setSeason(isSummer);
     }
+
+    /**
+     * Set currentTemp of a room
+     * @param roomName
+     * @param currentTemp
+     * @return
+     */
+    public boolean setCurrentTemp(String roomName, int currentTemp){
+        Room room = simulationContext.getHomeLayout().getRoomByName(roomName);
+        if (room != null){
+            room.setCurrentTemp(currentTemp);
+            return true;
+        }
+        return false;
+    }
 }

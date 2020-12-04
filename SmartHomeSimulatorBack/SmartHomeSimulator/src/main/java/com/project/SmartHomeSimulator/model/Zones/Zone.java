@@ -10,8 +10,7 @@ import java.util.List;
 public class Zone {
     private String name;
     private List<String> roomsInZone;
-    private int nonEmptyTemp;
-    private int emptyTemp;
+    private int desiredTemp;
     private String period1;
     private int period1Temp;
     private String period2;
@@ -31,20 +30,12 @@ public class Zone {
         return roomsInZone;
     }
 
-    public int getNonEmptyTemp() {
-        return nonEmptyTemp;
+    public int getDesiredTemp() {
+        return desiredTemp;
     }
 
-    public void setNonEmptyTemp(int nonEmptyTemp) {
-        this.nonEmptyTemp = nonEmptyTemp;
-    }
-
-    public int getEmptyTemp() {
-        return emptyTemp;
-    }
-
-    public void setEmptyTemp(int emptyTemp) {
-        this.emptyTemp = emptyTemp;
+    public void setDesiredTemp(int desiredTemp) {
+        this.desiredTemp = desiredTemp;
     }
 
     public void setRoomsInZone(List<String> roomsInZone) {

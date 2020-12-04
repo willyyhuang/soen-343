@@ -262,9 +262,24 @@ public class SmartHomeHeatingController {
         smartHomeHeatingService.setSeason(isSummer);
     }
 
+    /**
+     * Gets all the zones with the rooms inside
+     * @return
+     */
     @GetMapping(value = "/getAllZones")
     @ResponseStatus(value = HttpStatus.OK)
     public List<ZoneObject> getAllZones(){
         return CompleteZones.zones;
+    }
+
+    /**
+     * Set the currentTemp of a room
+     * @param roomName
+     * @param currentTemp
+     */
+    @PostMapping(value = "/setCurrentTemp")
+    @ResponseStatus(value = HttpStatus.OK)
+    public boolean setCurrentTemp(@RequestParam("roomName") String roomName, @RequestParam("currentTemp") int currentTemp) {
+        return smartHomeHeatingService.setCurrentTemp(roomName,currentTemp);
     }
 }
