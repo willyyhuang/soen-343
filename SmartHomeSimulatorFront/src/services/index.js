@@ -305,3 +305,15 @@ export async function deleteProfile(payload) {
     url: removeSimulationProfile.replace(':name', payload),
   })
 }
+
+// Smart Home Heating
+
+export const zone = `${appsettings.baseApiUrl}/api/v1/simulation/createZone`
+
+export async function createZone(payload) {
+  return axios({
+    url: zone,
+    method: 'POST',
+    data: payload,
+  })
+}
