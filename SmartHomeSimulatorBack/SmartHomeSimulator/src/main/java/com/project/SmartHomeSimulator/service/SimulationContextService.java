@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import com.project.SmartHomeSimulator.model.HomeLayout;
 import com.project.SmartHomeSimulator.module.SimulationContext;
 import com.project.SmartHomeSimulator.model.User;
-import org.springframework.web.bind.annotation.ResponseStatus;
 
 @Service
 public class SimulationContextService {
@@ -44,11 +43,11 @@ public class SimulationContextService {
 
     /**
      * Set Outside Temp
-     * @param outsideTemp
+     * @param outdoorTemp
      * @return  - true if successful false if otherwise
      */
-    public boolean setOutsideTemp(double outsideTemp) {
-        simulationContext.setOutsideTemp(outsideTemp);
+    public boolean setOutdoorTemp(double outdoorTemp) {
+        simulationContext.setOutdoorTemp(outdoorTemp);
         return true;
     }
 

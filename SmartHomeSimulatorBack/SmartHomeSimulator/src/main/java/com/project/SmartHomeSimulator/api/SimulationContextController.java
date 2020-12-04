@@ -59,14 +59,14 @@ public class SimulationContextController {
     }
 
     /**
-     * API set outside temp
-     * @param outsideTemp
+     * API set outdoor temp
+     * @param outdoorTemp
      * @return - true if successful false if otherwise
      */
     @PostMapping(value = "/setOutsideTemp")
     @ResponseStatus(value = HttpStatus.OK)
-    public boolean setOutsideTemp(@RequestParam("outsideTemp") double outsideTemp) {
-       return simulationContextService.setOutsideTemp(outsideTemp);
+    public boolean setOutdoorTemp(@RequestParam("outdoorTemp") double outdoorTemp) {
+       return simulationContextService.setOutdoorTemp(outdoorTemp);
     }
 
     /**

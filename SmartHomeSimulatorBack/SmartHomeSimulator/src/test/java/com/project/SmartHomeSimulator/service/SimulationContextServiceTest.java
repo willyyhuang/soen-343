@@ -57,8 +57,8 @@ public class SimulationContextServiceTest {
     }
 
     @Test
-    public void setOutsideTemp() {
-        boolean result = simulationContextService.setOutsideTemp(12);
+    public void setOutdoorTemp() {
+        boolean result = simulationContextService.setOutdoorTemp(12);
         assertEquals(true, result);
     }
 
