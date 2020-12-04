@@ -3,7 +3,7 @@ package com.project.SmartHomeSimulator.module;
 import com.project.SmartHomeSimulator.model.Role;
 import com.project.SmartHomeSimulator.model.Room;
 import com.project.SmartHomeSimulator.model.User;
-import com.project.SmartHomeSimulator.model.Zone;
+import com.project.SmartHomeSimulator.model.Zones.Zone;
 
 import java.util.ArrayList;
 
@@ -53,7 +53,7 @@ public class SmartHomeHeatingProxy {
      * @param newTemp
      * @return
      */
-    public boolean changeRoomTemp(User user, String roomName, int newTemp) {
+    public boolean changeRoomTemp(User user, String roomName, double newTemp) {
         boolean success = false;
         if (verifyPermission(user, "temp", roomName)) {
             success = smartHomeHeating.changeRoomTemp(roomName, newTemp);

@@ -18,13 +18,23 @@ public class Room {
     private List<RoomObject> roomObjects;
     private String zone;
     private boolean overridden = false;
-    private int currentTemp;
+    private double currentTemp;
+    private double desiredTemp;
     private String period1;
     private int period1Temp;
     private String period2;
     private int period2Temp;
     private String period3;
     private int period3Temp;
+    private int usersInRoom;
+
+    public double getDesiredTemp() {
+        return desiredTemp;
+    }
+
+    public void setDesiredTemp(double desiredTemp) {
+        this.desiredTemp = desiredTemp;
+    }
 
     public String getPeriod1() {
         return period1;
@@ -74,14 +84,6 @@ public class Room {
         this.period3Temp = period3Temp;
     }
 
-    public int getCurrentTemp() {
-        return currentTemp;
-    }
-
-    public void setCurrentTemp(int currentTemp) {
-        this.currentTemp = currentTemp;
-    }
-
     public boolean isOverridden() {
         return overridden;
     }
@@ -112,6 +114,25 @@ public class Room {
 
     public void setObjects(List<RoomObject> roomObjects) {
         this.roomObjects = roomObjects;
+    }
+
+    public void incrementUsersInRoom(){
+        usersInRoom++;
+    }
+    public void decrementUsersInRoom(){
+        usersInRoom--;
+    }
+
+    public int getUsersInRoom() {
+        return usersInRoom;
+    }
+
+    public double getCurrentTemp() {
+        return currentTemp;
+    }
+
+    public void setCurrentTemp(double currentTemp) {
+        this.currentTemp = currentTemp;
     }
 
     /**

@@ -2,11 +2,13 @@ package com.project.SmartHomeSimulator.service;
 
 import java.util.List;
 
+import com.project.SmartHomeSimulator.model.ResponseParameters;
 import org.springframework.stereotype.Service;
 
 import com.project.SmartHomeSimulator.model.HomeLayout;
 import com.project.SmartHomeSimulator.module.SimulationContext;
 import com.project.SmartHomeSimulator.model.User;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 @Service
 public class SimulationContextService {
@@ -16,8 +18,12 @@ public class SimulationContextService {
     /**
      * Start the simulation
      */
-    public void startSimulation() {
-        simulationContext.setSimulationRunning(true);
+    public ResponseParameters startSimulation() {
+        ResponseParameters response = verifyParameters();
+        if(response.allowed) {
+            simulationContext.setSimulationRunning(true);
+        }
+        return response;
     }
 
     /**
@@ -41,7 +47,7 @@ public class SimulationContextService {
      * @param outsideTemp
      * @return  - true if successful false if otherwise
      */
-    public boolean setOutsideTemp(int outsideTemp) {
+    public boolean setOutsideTemp(double outsideTemp) {
         simulationContext.setOutsideTemp(outsideTemp);
         return true;
     }
@@ -102,6 +108,31 @@ public class SimulationContextService {
     public boolean setAutoMode(boolean autoMode) {
         simulationContext.setAutoMode(autoMode);
         return true;
+    }
+
+    public ResponseParameters verifyParameters(){
+        ResponseParameters response = new ResponseParameters();
+        response.setAllowed(true);
+        response.setConsoleMessage("[Success] The simulation started!");
+        if (HomeLayout.roomsNotInZone != 0){
+            response.setAllowed(false);
+            response.setConsoleMessage("[Failed] All rooms should be in zones before starting the simulation.");
+        }
+        if (simulationContext.getTime() == null || simulationContext.getDate() == null)
+        {
+            response.setAllowed(false);
+            response.setConsoleMessage("[Failed] Date and Time should be set in simulation parameters before starting the simulation.");
+        }
+        if(simulationContext.getCurrentSimulationUser() == null){
+            response.setAllowed(false);
+            response.setConsoleMessage("[Failed] A current profile should be chosen before starting the simulation.");
+        }
+        if(simulationContext.getHomeLayout() == null){
+            response.setAllowed(false);
+            response.setConsoleMessage("[Failed] A home layout should be uploaded before starting the simulation.");
+        }
+
+        return response;
     }
 
 }

@@ -1,6 +1,7 @@
 package com.project.SmartHomeSimulator.api;
 
 import com.project.SmartHomeSimulator.model.HomeLayout;
+import com.project.SmartHomeSimulator.model.ResponseParameters;
 import com.project.SmartHomeSimulator.module.SimulationContext;
 import com.project.SmartHomeSimulator.service.SimulationContextService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +24,8 @@ public class SimulationContextController {
      */
     @PostMapping(value = "/start")
     @ResponseStatus(value = HttpStatus.OK)
-    public void startSimulation() {
-        simulationContextService.startSimulation();
+    public ResponseParameters startSimulation() {
+        return simulationContextService.startSimulation();
     }
 
     /**
@@ -64,7 +65,7 @@ public class SimulationContextController {
      */
     @PostMapping(value = "/setOutsideTemp")
     @ResponseStatus(value = HttpStatus.OK)
-    public boolean setOutsideTemp(@RequestParam("outsideTemp") int outsideTemp) {
+    public boolean setOutsideTemp(@RequestParam("outsideTemp") double outsideTemp) {
        return simulationContextService.setOutsideTemp(outsideTemp);
     }
 
@@ -111,5 +112,4 @@ public class SimulationContextController {
     public boolean setAutomode(@RequestParam("autoMode") boolean autoMode) {
         return simulationContextService.setAutoMode(autoMode);
     }
-
 }
