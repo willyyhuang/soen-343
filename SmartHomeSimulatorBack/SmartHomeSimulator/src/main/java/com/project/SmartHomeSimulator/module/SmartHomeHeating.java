@@ -212,6 +212,10 @@ public class SmartHomeHeating extends Module implements AwayModeMonitor, Monitor
     @Override
     public void update(String awayModeUser, User user) {
         // todo
+        // change state of the tempreature in the old room
+        // change state of the tempreature in the new room
+        //
+        //switchStates();
     }
 
     public boolean isAwayMode() {

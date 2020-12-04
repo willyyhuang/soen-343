@@ -124,7 +124,6 @@ public class UserService {
      */
     public ResponseAPI editHomeLocation(String name, String homeLocation) {
         User user = findUserByName(name);
-        simulationContext.notifyMonitors(user);
         ResponseAPI response = new ResponseAPI();
         response.setDefaultValues();
 
@@ -144,6 +143,7 @@ public class UserService {
         if (user != null && !user.getHomeLocation().equalsIgnoreCase(homeLocation)) {
             simulationContext.getHomeLayout().getRoomByName(user.getHomeLocation()).decrementUsersInRoom();
             user.setHomeLocation(homeLocation);
+            simulationContext.notifyMonitors(user);
             simulationContext.getHomeLayout().getRoomByName(user.getHomeLocation()).incrementUsersInRoom();
             if (simulationContext.getHomeLayout() != null) {
                 lightsInRoom = simulationContext.getHomeLayout().allLights(user.getHomeLocation());
