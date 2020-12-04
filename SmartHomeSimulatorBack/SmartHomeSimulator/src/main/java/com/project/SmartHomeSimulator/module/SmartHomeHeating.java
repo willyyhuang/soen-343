@@ -60,6 +60,7 @@ public class SmartHomeHeating extends Module implements AwayModeMonitor, Monitor
             room.setOverridden(false);
             HomeLayout.usersInHome--;
             zoneObject.getRooms().add(roomName);
+            HomeLayout.roomsNotInZone--;
         }
         zoneObject.setZoneName(zone.getName());
         CompleteZones.zones.add(zoneObject);
