@@ -16,7 +16,9 @@ import {
 getProfile, start, stop, setAutoMode, setAwayMode,
 } from '../../services'
 
-const Dashboard = ({simulationConfig, consoleMessage, dispatch}) => {
+const Dashboard = ({
+simulationConfig, consoleMessage, zone, dispatch,
+}) => {
   const {messages} = consoleMessage
   const [speedRate, setSpeedRate] = useState(1)
   const [editAwayModeModalVisible, setEditAwayModeModalVisible] = useState(false)
@@ -29,6 +31,10 @@ const Dashboard = ({simulationConfig, consoleMessage, dispatch}) => {
       const {data} = response
       dispatch({type: 'SET_SIMULATION_CONFIG_STATE', payload: data})
     })
+  }
+
+  const setZone = (data) => {
+    dispatch({type: 'SET_ZONE', payload: data})
   }
 
   useEffect(() => {
@@ -113,7 +119,8 @@ const Dashboard = ({simulationConfig, consoleMessage, dispatch}) => {
                 <SmartHomeHeatingCard
                   addConsoleMessage={addConsoleMessage}
                   simulationConfig={simulationConfig}
-                  fetchUserProfiles={fetchUserProfiles} />
+                  setZone={setZone}
+                  zone={zone} />
                 <Divider />
               </>
             )}
@@ -143,6 +150,7 @@ const Dashboard = ({simulationConfig, consoleMessage, dispatch}) => {
 const mapStateToProps = (state) => ({
   simulationConfig: state.simulationConfig,
   consoleMessage: state.consoleMessage,
+  zone: state.zone,
 })
 
 Dashboard.displayName = 'Dashboard'

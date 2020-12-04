@@ -1,31 +1,60 @@
 import {
-Button, Card, Form, Input, InputNumber, Modal, Select, Typography,
+Button, Card, Form, Input, InputNumber, Modal, Row, Select, Tooltip, Typography,
 } from 'antd'
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import {FireOutlined} from '@ant-design/icons'
-import {createZone} from '../../services'
+import {createZone, fetchZone} from '../../services'
 
 const SmartHomeHeatingCard = ({
     simulationConfig,
+    addConsoleMessage,
+    zone,
+    setZone,
 }) => {
     const {homeLayout} = simulationConfig
     const {roomList} = homeLayout
     const [isSetZoneModalVisible, setIsSetZoneModalVisible] = useState(false)
-    const [name, setName] = useState()
-    const [desiredTemp, setDesiredTemp] = useState()
-    const [period1, setPeriod1] = useState()
-    const [period1Temp, setPeriod1Temp] = useState()
-    const [period2, setPeriod2] = useState()
-    const [period2Temp, setPeriod2Temp] = useState()
-    const [period3, setPeriod3] = useState()
-    const [period3Temp, setPeriod3Temp] = useState()
-    const [roomsInZone, setRoomsInZone] = useState()
+    const [name, setName] = useState(null)
+    const [desiredTemp, setDesiredTemp] = useState(null)
+    const [period1, setPeriod1] = useState(null)
+    const [period1Temp, setPeriod1Temp] = useState(null)
+    const [period2, setPeriod2] = useState(null)
+    const [period2Temp, setPeriod2Temp] = useState(null)
+    const [period3, setPeriod3] = useState(null)
+    const [period3Temp, setPeriod3Temp] = useState(null)
+    const [roomsInZone, setRoomsInZone] = useState(null)
+
+    const fetchZoneData = () => {
+      fetchZone().then((zoneResponse) => {
+        setZone(zoneResponse.data)
+      })
+    }
+
+    useEffect(() => {
+      fetchZoneData()
+      // eslint-disable-next-line
+    }, [])
+
+    const resetFormData = () => {
+      setName(null)
+      setDesiredTemp(null)
+      setPeriod1(null)
+      setPeriod2(null)
+      setPeriod3(null)
+      setPeriod1Temp(null)
+      setPeriod2Temp(null)
+      setPeriod3Temp(null)
+      setRoomsInZone([])
+    }
 
     const setZoneModal = (
       <Modal
         title='Add Zone'
         visible={isSetZoneModalVisible}
-        onCancel={() => setIsSetZoneModalVisible(false)}
+        onCancel={() => {
+          setIsSetZoneModalVisible(false)
+          resetFormData()
+        }}
         onOk={() => {
           const createZonePayload = {
             name,
@@ -38,7 +67,15 @@ const SmartHomeHeatingCard = ({
             period3Temp,
             roomsInZone,
           }
-          createZone(createZonePayload)
+          createZone(createZonePayload).then((response) => {
+            const {data} = response
+            if (data.success) {
+              fetchZoneData()
+              addConsoleMessage(data.consoleMessage)
+            }
+          })
+          resetFormData()
+          setIsSetZoneModalVisible(false)
         }}>
         <Form.Item label='Zone Name'>
           <Input placeholder='Enter a zone name' onChange={(e) => setName(e.target.value)} />
@@ -80,8 +117,17 @@ const SmartHomeHeatingCard = ({
         <FireOutlined style={{marginRight: 10}} />
         Smart Home Heating
       </Typography.Text>}>
-      {setZoneModal}
       <Button onClick={() => setIsSetZoneModalVisible(true)}>Add Zone</Button>
+      {setZoneModal}
+      <Row style={{marginTop: 5}}>
+        {zone.length > 0 && zone.map((info) => (
+          <Tooltip title={info.rooms} placement='bottom' trigger='hover'>
+            <Button>
+              {info.zoneName}
+            </Button>
+          </Tooltip>
+        ))}
+      </Row>
     </Card>
 }
 

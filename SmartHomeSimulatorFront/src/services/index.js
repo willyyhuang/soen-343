@@ -309,11 +309,19 @@ export async function deleteProfile(payload) {
 // Smart Home Heating
 
 export const zone = `${appsettings.baseApiUrl}/api/v1/simulation/createZone`
+export const getZone = `${appsettings.baseApiUrl}/api/v1/simulation/getAllZones`
 
 export async function createZone(payload) {
   return axios({
     url: zone,
     method: 'POST',
     data: payload,
+  })
+}
+
+export async function fetchZone() {
+  return axios({
+    url: getZone,
+    method: 'GET',
   })
 }
