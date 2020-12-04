@@ -21,6 +21,7 @@ public class HomeLayout {
     private static int lightCount = 1;
     private static int acCount = 1;
     private static int heaterCount = 1;
+    public static int roomsNotInZone;
 
     /**
      * Gets a room by name
@@ -80,7 +81,8 @@ public class HomeLayout {
      */
     public HomeLayout readHomeLayout(String homeLayoutFile) {
         homeLayoutFile = homeLayoutFile.replace("\\", "");
-        homeLayoutFile = homeLayoutFile.substring(0, 12) + homeLayoutFile.substring(13, homeLayoutFile.length() - 2) + "}";
+        homeLayoutFile = homeLayoutFile.substring(0, 12) + homeLayoutFile.substring(13, homeLayoutFile.length() - 2)
+                + "}";
         ObjectMapper objectMapper = new ObjectMapper();
         try {
             HomeLayout homeLayout = objectMapper.readValue(homeLayoutFile, HomeLayout.class);
@@ -91,6 +93,7 @@ public class HomeLayout {
             outside.setObjects(objects);
             rooms.add(outside);
             homeLayout.setRoomList(rooms);
+            roomsNotInZone = rooms.size() - 2;
             return homeLayout;
         } catch (JsonProcessingException e) {
             e.printStackTrace();
@@ -180,9 +183,7 @@ public class HomeLayout {
 
     @Override
     public String toString() {
-        return "HomeLayout{" +
-                "roomList=" + roomList +
-                '}';
+        return "HomeLayout{" + "roomList=" + roomList + '}';
     }
 
     @Override

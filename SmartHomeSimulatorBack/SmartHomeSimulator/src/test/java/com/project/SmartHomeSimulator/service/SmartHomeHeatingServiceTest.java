@@ -1,6 +1,7 @@
 package com.project.SmartHomeSimulator.service;
 
 import com.project.SmartHomeSimulator.model.*;
+import com.project.SmartHomeSimulator.model.Zones.Zone;
 import com.project.SmartHomeSimulator.model.roomObjects.RoomObject;
 import com.project.SmartHomeSimulator.model.roomObjects.RoomObjectType;
 import com.project.SmartHomeSimulator.module.SimulationContext;
@@ -52,10 +53,11 @@ public class SmartHomeHeatingServiceTest {
         List<String> namesRoom = new ArrayList<>();
         namesRoom.add("bedroom");
         namesRoom.add("garage");
-        zone.setCurrentTemp(15);
+        zone.setDesiredTemp(15);
         zone.setPeriod1("10:00");
         zone.setPeriod1Temp(20);
         zone.setRoomsInZone(namesRoom);
+        smartHomeHeatingService.setCurrentTemp("garage",15);
 
         boolean result = smartHomeHeatingService.addZone(zone);
         assertTrue(result);
@@ -71,6 +73,7 @@ public class SmartHomeHeatingServiceTest {
         setup();
         addZoneTest_8();
         boolean result = smartHomeHeatingService.changeRoomTemp("bedroom", 25);
+        smartHomeHeatingService.setCurrentTemp("bedroom",25);
         assertTrue(result);
 
         assertTrue(simulationContext.getHomeLayout().getRoomByName("bedroom").isOverridden());
@@ -108,7 +111,7 @@ public class SmartHomeHeatingServiceTest {
     public void setThreshold_12() {
         setup();
         simulationContext.setTempThreshold(0);
-        int result = simulationContext.getTempThreshold();
-        assertEquals(0, result);
+        double result = simulationContext.getTempThreshold();
+        assertEquals(0, result,0);
     }
 }

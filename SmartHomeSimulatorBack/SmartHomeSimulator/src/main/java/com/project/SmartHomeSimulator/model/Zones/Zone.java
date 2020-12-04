@@ -1,4 +1,4 @@
-package com.project.SmartHomeSimulator.model;
+package com.project.SmartHomeSimulator.model.Zones;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.boot.jackson.JsonComponent;
@@ -10,7 +10,7 @@ import java.util.List;
 public class Zone {
     private String name;
     private List<String> roomsInZone;
-    private int currentTemp;
+    private double desiredTemp;
     private String period1;
     private int period1Temp;
     private String period2;
@@ -30,16 +30,16 @@ public class Zone {
         return roomsInZone;
     }
 
+    public double getDesiredTemp() {
+        return desiredTemp;
+    }
+
+    public void setDesiredTemp(double desiredTemp) {
+        this.desiredTemp = desiredTemp;
+    }
+
     public void setRoomsInZone(List<String> roomsInZone) {
         this.roomsInZone = roomsInZone;
-    }
-
-    public int getCurrentTemp() {
-        return currentTemp;
-    }
-
-    public void setCurrentTemp(int currentTemp) {
-        this.currentTemp = currentTemp;
     }
 
     public String getPeriod1() {

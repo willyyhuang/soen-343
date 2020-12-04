@@ -1,7 +1,9 @@
 package com.project.SmartHomeSimulator.api;
 
-import com.project.SmartHomeSimulator.model.ResponseAPI;
-import com.project.SmartHomeSimulator.model.Zone;
+import com.project.SmartHomeSimulator.model.*;
+import com.project.SmartHomeSimulator.model.Zones.CompleteZones;
+import com.project.SmartHomeSimulator.model.Zones.Zone;
+import com.project.SmartHomeSimulator.model.Zones.ZoneObject;
 import com.project.SmartHomeSimulator.module.*;
 import com.project.SmartHomeSimulator.service.SmartHomeHeatingService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 /**
  * API controller for everything related to the heating process
@@ -59,7 +62,7 @@ public class SmartHomeHeatingController {
      */
     @PostMapping(value = "/changeRoomTemp")
     @ResponseStatus(value = HttpStatus.OK)
-    public ResponseAPI changeRoomTemp(@RequestParam("roomName") String roomName, @RequestParam("newTemp") int newTemp) {
+    public ResponseAPI changeRoomTemp(@RequestParam("roomName") String roomName, @RequestParam("newTemp") double newTemp) {
         ResponseAPI response = new ResponseAPI();
         response.setDefaultValues();
         if (smartHomeSecurity.getAwayModeConfig().isAwayMode()
@@ -181,7 +184,7 @@ public class SmartHomeHeatingController {
      */
     @PostMapping(value = "/setSummerTemperature")
     @ResponseStatus(value = HttpStatus.OK)
-    public boolean setSummerTemperature(@RequestParam("temperature") int temperature) {
+    public boolean setSummerTemperature(@RequestParam("temperature") double temperature) {
         simulationContext.setSummerTemp(temperature);
         return true;
     }
@@ -194,7 +197,7 @@ public class SmartHomeHeatingController {
      */
     @PostMapping(value = "/setWinterTemperature")
     @ResponseStatus(value = HttpStatus.OK)
-    public boolean setWinterTemperature(@RequestParam("temperature") int temperature) {
+    public boolean setWinterTemperature(@RequestParam("temperature") double temperature) {
         simulationContext.setWinterTemp(temperature);
         return true;
     }
@@ -227,7 +230,7 @@ public class SmartHomeHeatingController {
      */
     @PostMapping(value = "/setTempThreshold")
     @ResponseStatus(value = HttpStatus.OK)
-    public boolean setTempThreshold(@RequestParam("tempThreshold") int tempThreshold) {
+    public boolean setTempThreshold(@RequestParam("tempThreshold") double tempThreshold) {
         simulationContext.setTempThreshold(tempThreshold);
         return true;
     }
@@ -257,5 +260,26 @@ public class SmartHomeHeatingController {
     @ResponseStatus(value = HttpStatus.OK)
     public void setSeason(@RequestParam("isSummer") boolean isSummer) {
         smartHomeHeatingService.setSeason(isSummer);
+    }
+
+    /**
+     * Gets all the zones with the rooms inside
+     * @return
+     */
+    @GetMapping(value = "/getAllZones")
+    @ResponseStatus(value = HttpStatus.OK)
+    public List<ZoneObject> getAllZones(){
+        return CompleteZones.zones;
+    }
+
+    /**
+     * Set the currentTemp of a room
+     * @param roomName
+     * @param currentTemp
+     */
+    @PostMapping(value = "/setCurrentTemp")
+    @ResponseStatus(value = HttpStatus.OK)
+    public boolean setCurrentTemp(@RequestParam("roomName") String roomName, @RequestParam("currentTemp") double currentTemp) {
+        return smartHomeHeatingService.setCurrentTemp(roomName,currentTemp);
     }
 }

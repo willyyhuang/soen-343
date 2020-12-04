@@ -2,7 +2,7 @@ package com.project.SmartHomeSimulator.service;
 
 import com.project.SmartHomeSimulator.model.Room;
 import com.project.SmartHomeSimulator.model.User;
-import com.project.SmartHomeSimulator.model.Zone;
+import com.project.SmartHomeSimulator.model.Zones.Zone;
 import com.project.SmartHomeSimulator.model.roomObjects.RoomObjectType;
 import com.project.SmartHomeSimulator.module.SimulationContext;
 import com.project.SmartHomeSimulator.module.SmartHomeHeatingProxy;
@@ -33,7 +33,7 @@ public class SmartHomeHeatingService {
      * @param newTemp
      * @return
      */
-    public boolean changeRoomTemp(String roomName, int newTemp) {
+    public boolean changeRoomTemp(String roomName, double newTemp) {
         User user = simulationContext.getCurrentSimulationUser();
         return smartHomeHeatingProxy.changeRoomTemp(user, roomName, newTemp);
     }
@@ -99,5 +99,20 @@ public class SmartHomeHeatingService {
      */
     public void setSeason(boolean isSummer) {
         smartHomeHeatingProxy.setSeason(isSummer);
+    }
+
+    /**
+     * Set currentTemp of a room
+     * @param roomName
+     * @param currentTemp
+     * @return
+     */
+    public boolean setCurrentTemp(String roomName, double currentTemp){
+        Room room = simulationContext.getHomeLayout().getRoomByName(roomName);
+        if (room != null){
+            room.setCurrentTemp(currentTemp);
+            return true;
+        }
+        return false;
     }
 }
