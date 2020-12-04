@@ -30,11 +30,6 @@ const SmartHomeHeatingCard = ({
       })
     }
 
-    useEffect(() => {
-      fetchZoneData()
-      // eslint-disable-next-line
-    }, [])
-
     const resetFormData = () => {
       setName(null)
       setDesiredTemp(null)
@@ -46,6 +41,12 @@ const SmartHomeHeatingCard = ({
       setPeriod3Temp(null)
       setRoomsInZone([])
     }
+
+    useEffect(() => {
+      fetchZoneData()
+      resetFormData()
+      // eslint-disable-next-line
+    }, [])
 
     const setZoneModal = (
       <Modal
@@ -78,31 +79,31 @@ const SmartHomeHeatingCard = ({
           setIsSetZoneModalVisible(false)
         }}>
         <Form.Item label='Zone Name'>
-          <Input placeholder='Enter a zone name' onChange={(e) => setName(e.target.value)} />
+          <Input value={name} placeholder='Enter a zone name' onChange={(e) => setName(e.target.value)} />
         </Form.Item>
         <Form.Item label='Desired Room Temperature'>
-          <InputNumber onChange={(value) => setDesiredTemp(value)} />
+          <InputNumber value={desiredTemp} onChange={(value) => setDesiredTemp(value)} />
         </Form.Item>
         <Form.Item label='Period 1'>
-          <Input placeholder='e.g: 09:00' onChange={(e) => setPeriod1(e.target.value)} />
+          <Input value={period1} placeholder='e.g: 09:00' onChange={(e) => setPeriod1(e.target.value)} />
         </Form.Item>
         <Form.Item label='Period 1 Temperature'>
-          <InputNumber onChange={(value) => setPeriod1Temp(value)} />
+          <InputNumber value={period1Temp} onChange={(value) => setPeriod1Temp(value)} />
         </Form.Item>
         <Form.Item label='Period 2'>
-          <Input placeholder='e.g: 14:00' onChange={(e) => setPeriod2(e.target.value)} />
+          <Input value={period2} placeholder='e.g: 14:00' onChange={(e) => setPeriod2(e.target.value)} />
         </Form.Item>
         <Form.Item label='Period 2 Temperature'>
-          <InputNumber onChange={(value) => setPeriod2Temp(value)} />
+          <InputNumber value={period2Temp} onChange={(value) => setPeriod2Temp(value)} />
         </Form.Item>
         <Form.Item label='Period 3'>
-          <Input placeholder='e.g: 18:00' onChange={(e) => setPeriod3(e.target.value)} />
+          <Input value={period3} placeholder='e.g: 18:00' onChange={(e) => setPeriod3(e.target.value)} />
         </Form.Item>
         <Form.Item label='Period 3 Temperature'>
-          <InputNumber onChange={(value) => setPeriod3Temp(value)} />
+          <InputNumber value={period3Temp} onChange={(value) => setPeriod3Temp(value)} />
         </Form.Item>
         <Form.Item label='Rooms in Zone'>
-          <Select onChange={(value) => setRoomsInZone(value)} mode='multiple'>
+          <Select value={roomsInZone} onChange={(value) => setRoomsInZone(value)} mode='multiple'>
             {roomList.length === 0
             ? null
             : roomList.map((room) => (

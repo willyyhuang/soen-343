@@ -58,7 +58,12 @@ simulationConfig, consoleMessage, zone, dispatch,
           checked={simulationConfig.simulationRunning}
           onChange={(value) =>
             (value
-              ? start() && fetchUserProfiles()
+              ? start().then((response) => {
+                const {data} = response
+                if (!data.allowed) {
+                  addConsoleMessage(data.consoleMessage)
+                }
+              }) && fetchUserProfiles()
               : stop() && fetchUserProfiles())} />
         <Typography.Text>Simulation Mode</Typography.Text>
       </Row>
