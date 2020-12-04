@@ -65,7 +65,7 @@ public class SimulationContextController {
      */
     @PostMapping(value = "/setOutsideTemp")
     @ResponseStatus(value = HttpStatus.OK)
-    public boolean setOutsideTemp(@RequestParam("outsideTemp") int outsideTemp) {
+    public boolean setOutsideTemp(@RequestParam("outsideTemp") double outsideTemp) {
        return simulationContextService.setOutsideTemp(outsideTemp);
     }
 

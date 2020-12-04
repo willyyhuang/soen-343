@@ -18,8 +18,8 @@ public class Room {
     private List<RoomObject> roomObjects;
     private String zone;
     private boolean overridden = false;
-    private int currentTemp;
-    private int desiredTemp;
+    private double currentTemp;
+    private double desiredTemp;
     private String period1;
     private int period1Temp;
     private String period2;
@@ -28,11 +28,11 @@ public class Room {
     private int period3Temp;
     private int usersInRoom;
 
-    public int getDesiredTemp() {
+    public double getDesiredTemp() {
         return desiredTemp;
     }
 
-    public void setDesiredTemp(int desiredTemp) {
+    public void setDesiredTemp(double desiredTemp) {
         this.desiredTemp = desiredTemp;
     }
 
@@ -127,11 +127,11 @@ public class Room {
         return usersInRoom;
     }
 
-    public int getCurrentTemp() {
+    public double getCurrentTemp() {
         return currentTemp;
     }
 
-    public void setCurrentTemp(int currentTemp) {
+    public void setCurrentTemp(double currentTemp) {
         this.currentTemp = currentTemp;
     }
 

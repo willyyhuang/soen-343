@@ -10,7 +10,7 @@ import java.util.List;
 public class Zone {
     private String name;
     private List<String> roomsInZone;
-    private int desiredTemp;
+    private double desiredTemp;
     private String period1;
     private int period1Temp;
     private String period2;
@@ -30,11 +30,11 @@ public class Zone {
         return roomsInZone;
     }
 
-    public int getDesiredTemp() {
+    public double getDesiredTemp() {
         return desiredTemp;
     }
 
-    public void setDesiredTemp(int desiredTemp) {
+    public void setDesiredTemp(double desiredTemp) {
         this.desiredTemp = desiredTemp;
     }
 

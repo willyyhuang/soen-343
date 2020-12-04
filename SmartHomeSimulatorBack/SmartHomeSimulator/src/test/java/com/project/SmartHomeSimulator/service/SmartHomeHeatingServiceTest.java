@@ -53,11 +53,11 @@ public class SmartHomeHeatingServiceTest {
         List<String> namesRoom = new ArrayList<>();
         namesRoom.add("bedroom");
         namesRoom.add("garage");
-        zone.setEmptyTemp(15);
-        zone.setNonEmptyTemp(20);
+        zone.setDesiredTemp(15);
         zone.setPeriod1("10:00");
         zone.setPeriod1Temp(20);
         zone.setRoomsInZone(namesRoom);
+        smartHomeHeatingService.setCurrentTemp("garage",15);
 
         boolean result = smartHomeHeatingService.addZone(zone);
         assertTrue(result);
@@ -73,6 +73,7 @@ public class SmartHomeHeatingServiceTest {
         setup();
         addZoneTest_8();
         boolean result = smartHomeHeatingService.changeRoomTemp("bedroom", 25);
+        smartHomeHeatingService.setCurrentTemp("bedroom",25);
         assertTrue(result);
 
         assertTrue(simulationContext.getHomeLayout().getRoomByName("bedroom").isOverridden());
@@ -110,7 +111,7 @@ public class SmartHomeHeatingServiceTest {
     public void setThreshold_12() {
         setup();
         simulationContext.setTempThreshold(0);
-        int result = simulationContext.getTempThreshold();
-        assertEquals(0, result);
+        double result = simulationContext.getTempThreshold();
+        assertEquals(0, result,0);
     }
 }

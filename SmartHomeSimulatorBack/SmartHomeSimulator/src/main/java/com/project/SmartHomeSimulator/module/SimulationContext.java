@@ -18,8 +18,8 @@ public class SimulationContext {
 
 	public static SimulationContext simulationContext = null;
 	private boolean simulationRunning;
-	private int outsideTemp;
-	private int emptyRoomTemp;
+	private double outsideTemp;
+	private double emptyRoomTemp;
 	private String time;
 	private String date;
 	private User currentSimulationUser;
@@ -34,10 +34,10 @@ public class SimulationContext {
 	private List<Monitor> monitors;
 	private String summerMonths;
 	private String winterMonths;
-	private int summerTemp;
-	private int winterTemp;
+	private double summerTemp;
+	private double winterTemp;
 	private final File userProfilesJSON = new File("./src/main/resources/user_profiles.json.txt");
-	private int tempThreshold;
+	private double tempThreshold;
 
 	private SimulationContext() {
 		loadUserProfiles();
@@ -53,27 +53,27 @@ public class SimulationContext {
 		return simulationContext;
 	}
 
-	public int getEmptyRoomTemp() {
+	public double getEmptyRoomTemp() {
 		return emptyRoomTemp;
 	}
 
-	public void setEmptyRoomTemp(int emptyRoomTemp) {
+	public void setEmptyRoomTemp(double emptyRoomTemp) {
 		this.emptyRoomTemp = emptyRoomTemp;
 	}
 
-	public int getSummerTemp() {
+	public double getSummerTemp() {
 		return summerTemp;
 	}
 
-	public void setSummerTemp(int summerTemp) {
+	public void setSummerTemp(double summerTemp) {
 		this.summerTemp = summerTemp;
 	}
 
-	public int getWinterTemp() {
+	public double getWinterTemp() {
 		return winterTemp;
 	}
 
-	public void setWinterTemp(int winterTemp) {
+	public void setWinterTemp(double winterTemp) {
 		this.winterTemp = winterTemp;
 	}
 
@@ -113,11 +113,11 @@ public class SimulationContext {
 		return timeBeforeAuthoroties;
 	}
 
-	public int getTempThreshold() {
+	public double getTempThreshold() {
 		return tempThreshold;
 	}
 
-	public void setTempThreshold(int tempThreshold) {
+	public void setTempThreshold(double tempThreshold) {
 		this.tempThreshold = tempThreshold;
 	}
 
@@ -141,11 +141,11 @@ public class SimulationContext {
 		this.awayModeUser = awayModeUser;
 	}
 
-	public int getOutsideTemp() {
+	public double getOutsideTemp() {
 		return outsideTemp;
 	}
 
-	public void setOutsideTemp(int outsideTemp) {
+	public void setOutsideTemp(double outsideTemp) {
 		this.outsideTemp = outsideTemp;
 	}
 

@@ -62,7 +62,7 @@ public class SmartHomeHeatingController {
      */
     @PostMapping(value = "/changeRoomTemp")
     @ResponseStatus(value = HttpStatus.OK)
-    public ResponseAPI changeRoomTemp(@RequestParam("roomName") String roomName, @RequestParam("newTemp") int newTemp) {
+    public ResponseAPI changeRoomTemp(@RequestParam("roomName") String roomName, @RequestParam("newTemp") double newTemp) {
         ResponseAPI response = new ResponseAPI();
         response.setDefaultValues();
         if (smartHomeSecurity.getAwayModeConfig().isAwayMode()
@@ -184,7 +184,7 @@ public class SmartHomeHeatingController {
      */
     @PostMapping(value = "/setSummerTemperature")
     @ResponseStatus(value = HttpStatus.OK)
-    public boolean setSummerTemperature(@RequestParam("temperature") int temperature) {
+    public boolean setSummerTemperature(@RequestParam("temperature") double temperature) {
         simulationContext.setSummerTemp(temperature);
         return true;
     }
@@ -197,7 +197,7 @@ public class SmartHomeHeatingController {
      */
     @PostMapping(value = "/setWinterTemperature")
     @ResponseStatus(value = HttpStatus.OK)
-    public boolean setWinterTemperature(@RequestParam("temperature") int temperature) {
+    public boolean setWinterTemperature(@RequestParam("temperature") double temperature) {
         simulationContext.setWinterTemp(temperature);
         return true;
     }
@@ -230,7 +230,7 @@ public class SmartHomeHeatingController {
      */
     @PostMapping(value = "/setTempThreshold")
     @ResponseStatus(value = HttpStatus.OK)
-    public boolean setTempThreshold(@RequestParam("tempThreshold") int tempThreshold) {
+    public boolean setTempThreshold(@RequestParam("tempThreshold") double tempThreshold) {
         simulationContext.setTempThreshold(tempThreshold);
         return true;
     }
@@ -279,7 +279,7 @@ public class SmartHomeHeatingController {
      */
     @PostMapping(value = "/setCurrentTemp")
     @ResponseStatus(value = HttpStatus.OK)
-    public boolean setCurrentTemp(@RequestParam("roomName") String roomName, @RequestParam("currentTemp") int currentTemp) {
+    public boolean setCurrentTemp(@RequestParam("roomName") String roomName, @RequestParam("currentTemp") double currentTemp) {
         return smartHomeHeatingService.setCurrentTemp(roomName,currentTemp);
     }
 }
