@@ -190,6 +190,15 @@ export const summerMonths = `${appsettings.baseApiUrl}/api/v1/simulation/setSumm
 export const summerTemp = `${appsettings.baseApiUrl}/api/v1/simulation/setSummerTemperature`
 export const winterMonths = `${appsettings.baseApiUrl}/api/v1/simulation/setWinterMonths`
 export const winterTemp = `${appsettings.baseApiUrl}/api/v1/simulation/setWinterTemperature`
+export const season = `${appsettings.baseApiUrl}/api/v1/simulation/setSeason`
+
+export async function setSeason(payload) {
+  return axios({
+    method: 'POST',
+    url: season,
+    params: {isSummer: payload},
+  })
+}
 
 export async function setSimulationDate(payload) {
   return axios({

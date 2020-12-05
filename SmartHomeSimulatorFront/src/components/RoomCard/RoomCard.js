@@ -50,8 +50,8 @@ currentTemp, zone, name, objects, overridden,
       ))}
       title={<Typography.Text>
         {name}
-        {zone && <Tag style={{marginLeft: 5}}>{zone}</Tag>}
-        {overridden && <Tag style={{marginLeft: 5}}>Overridden</Tag>}
+        {zone && <Tag color='lime' style={{marginLeft: 5}}>{zone}</Tag>}
+        {overridden && <Tag color='red' style={{marginLeft: 5}}>Overridden</Tag>}
       </Typography.Text>}>
       {overrideTempModal}
       <Row>

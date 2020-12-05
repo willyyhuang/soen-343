@@ -22,7 +22,6 @@ simulationConfig, consoleMessage, zone, dispatch,
   const {messages} = consoleMessage
   const [speedRate, setSpeedRate] = useState(1)
   const [editAwayModeModalVisible, setEditAwayModeModalVisible] = useState(false)
-
   const addConsoleMessage = (message) => {
     dispatch({type: 'ADD_CONSOLE_MESSAGE', payload: message})
   }

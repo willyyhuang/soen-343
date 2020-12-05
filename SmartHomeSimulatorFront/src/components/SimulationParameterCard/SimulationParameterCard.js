@@ -22,6 +22,7 @@ import {
   setSummerTemp,
   setWinterMonths,
   setWinterTemp,
+  setSeason,
 } from '../../services'
 
 const SimulationParameterCard = ({
@@ -66,6 +67,23 @@ const SimulationParameterCard = ({
     })
     // eslint-disable-next-line
   }, [simulationConfig])
+
+  useEffect(() => {
+    if (summerMonths) {
+      const startMonth = parseInt(summerMonths.substring(0, summerMonths.indexOf('-')), 10) - 1
+      const endMonth = parseInt(summerMonths.substring(summerMonths.indexOf('-') + 1, summerMonths.length), 10) - 1
+      if (moment(date.concat(time)).get('month') >= startMonth && moment(date.concat(time)).get('month') < endMonth) {
+        setSeason(true)
+      }
+    }
+    if (winterMonths) {
+      const startMonth = winterMonths.substring(0, winterMonths.indexOf('-')) - 1
+      const endMonth = winterMonths.substring(winterMonths.indexOf('-') + 1, winterMonths.length) - 1 + 11
+      if (moment(date.concat(time)).get('month') >= startMonth && moment(date.concat(time)).get('month') < endMonth) {
+        setSeason(false)
+      }
+    }
+  }, [date, time, winterMonths, summerMonths])
 
   return (
     <Card
@@ -208,6 +226,7 @@ const SimulationParameterCard = ({
       </Form.Item>
       <Form.Item label='Summer Months'>
         <Input
+          placeholder='e.g. 6-8'
           value={parameterFormData.summerMonths}
           onChange={(e) =>
             setParameterFormData({
@@ -222,6 +241,7 @@ const SimulationParameterCard = ({
       </Form.Item>
       <Form.Item label='Winter Months'>
         <Input
+          placeholder='e.g. 11-3'
           value={parameterFormData.winterMonths}
           onChange={(e) => setParameterFormData({
           summerMonths: parameterFormData.summerMonths,
@@ -271,5 +291,4 @@ const SimulationParameterCard = ({
   )
 }
 
-SimulationParameterCard.displayName = 'SimulationParameterCard'
 export default SimulationParameterCard
