@@ -115,4 +115,9 @@ public class SmartHomeHeatingService {
         }
         return false;
     }
+
+    public boolean setEmptyRoomTemp(double emptyRoomTemp){
+        simulationContext.setEmptyRoomTemp(emptyRoomTemp);
+        return true;
+    }
 }

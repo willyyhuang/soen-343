@@ -282,4 +282,15 @@ public class SmartHomeHeatingController {
     public boolean setCurrentTemp(@RequestParam("roomName") String roomName, @RequestParam("currentTemp") double currentTemp) {
         return smartHomeHeatingService.setCurrentTemp(roomName,currentTemp);
     }
+
+    /**
+     * set empty room temperature
+     * @param emptyRoomTemp
+     * @return
+     */
+    @PostMapping(value = "/setEmptyRoomTemp")
+    @ResponseStatus(value = HttpStatus.OK)
+    public boolean setCurrentTemp(@RequestParam("emptyRoomTemp") double emptyRoomTemp) {
+        return smartHomeHeatingService.setEmptyRoomTemp(emptyRoomTemp);
+    }
 }

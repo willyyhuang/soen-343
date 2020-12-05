@@ -80,6 +80,7 @@ public class SmartHomeHeating extends Module implements AwayModeMonitor, Monitor
     public boolean changeRoomTemp(String roomName, double newTemp) {
         Room room = SimulationContext.getInstance().getHomeLayout().getRoomByName(roomName);
         switchStates(room, room.getCurrentTemp(), newTemp);
+        room.setCurrentTemp(newTemp);
         room.setOverridden(true);
         return true;
     }
