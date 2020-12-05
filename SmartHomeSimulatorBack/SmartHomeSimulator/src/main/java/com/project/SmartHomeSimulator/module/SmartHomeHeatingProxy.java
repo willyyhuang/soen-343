@@ -102,6 +102,15 @@ public class SmartHomeHeatingProxy {
     }
 
     /**
+     * Update AC and Heater state
+     * @param roomName
+     * @return
+     */
+    public boolean updateRoomStatus(String roomName){
+        return smartHomeHeating.updateRoomStates(roomName);
+    }
+
+    /**
      * verify the permissions of each user Type
      *
      * @param user

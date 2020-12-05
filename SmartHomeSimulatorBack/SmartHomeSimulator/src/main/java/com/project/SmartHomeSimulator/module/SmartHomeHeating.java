@@ -70,7 +70,7 @@ public class SmartHomeHeating extends Module implements AwayModeMonitor, Monitor
     }
 
     /**
-     * Change room temperature and turn on or off ac or heater depending on the new
+     * Override room temperature and turn on or off ac or heater depending on the new
      * temperature
      *
      * @param roomName
@@ -82,6 +82,19 @@ public class SmartHomeHeating extends Module implements AwayModeMonitor, Monitor
         switchStates(room, room.getCurrentTemp(), newTemp);
         room.setDesiredTemp(newTemp);
         room.setOverridden(true);
+        return true;
+    }
+
+    /**
+     * Change room temperature and turn on or off ac or heater depending on the new
+     * temperature
+     *
+     * @param roomName
+     * @return
+     */
+    public boolean updateRoomStates(String roomName) {
+        Room room = SimulationContext.getInstance().getHomeLayout().getRoomByName(roomName);
+        switchStates(room, room.getCurrentTemp(), room.getDesiredTemp());
         return true;
     }
 

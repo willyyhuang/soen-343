@@ -111,13 +111,20 @@ public class SmartHomeHeatingService {
         Room room = simulationContext.getHomeLayout().getRoomByName(roomName);
         if (room != null){
             room.setCurrentTemp(currentTemp);
+            smartHomeHeatingProxy.updateRoomStatus(roomName);
             return true;
         }
         return false;
     }
 
+    /**
+     *
+     * @param emptyRoomTemp
+     * @return
+     */
     public boolean setEmptyRoomTemp(double emptyRoomTemp){
         simulationContext.setEmptyRoomTemp(emptyRoomTemp);
         return true;
     }
+
 }
