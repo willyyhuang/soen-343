@@ -23,6 +23,7 @@ const SimulationFunctionalityCard = ({
     awayMode,
     startLightsOn,
     endLightsOn,
+    outsideTemp,
   } = simulationConfig
   const [autoLightOn, setAutoLightOn] = useState(false)
   const [currentTime, setCurrentTime] = useState(moment(date.concat(time)))
@@ -118,6 +119,8 @@ const SimulationFunctionalityCard = ({
               return (
                 <Col span={8}>
                   <RoomCard
+                    outsideTemp={outsideTemp}
+                    speedRate={speedRate}
                     users={users}
                     key={name}
                     room={room}

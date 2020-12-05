@@ -2,22 +2,59 @@ import {UserOutlined} from '@ant-design/icons'
 import {
 Button, Card, Form, InputNumber, Popover, Modal, Row, Tag, Typography,
 } from 'antd'
-import React, {useState} from 'react'
+import _ from 'lodash'
+import React, {useEffect, useState} from 'react'
 import {ObjectIcon} from '../index'
-import {overrideRoomTemp} from '../../services'
+import {overrideRoomTemp, setCurrentTemp} from '../../services'
 
 const RoomCard = ({
   addConsoleMessage,
   users,
   room,
   fetchUserProfiles,
+  speedRate,
+  outsideTemp,
 }) => {
   const {
-currentTemp, zone, name, objects, overridden,
-} = room
+    desiredTemp, currentTemp, zone, name, objects, overridden,
+  } = room
+  const [currentTemperature, setCurrentTemperature] = useState(currentTemp)
   const [isCurrentTempDisplayed, setIsCurrentTempDisplayed] = useState(false)
   const [isOverrideModalVisible, setIsOverrideModalVisible] = useState(false)
   const [newRoomTemp, setNewRoomTemp] = useState()
+  const heaterObject = objects.filter((item) => item.objectType === 'HEATER')
+  const acObject = objects.filter((item) => item.objectType === 'AC')
+  // Temperature
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (acObject.length === 1 && heaterObject.length === 1) {
+        if (heaterObject[0].status === false && acObject[0].status === false) {
+          if (_.round(currentTemperature, 1) > outsideTemp) {
+            setCurrentTemperature(_.round(currentTemperature, 2) - 0.05)
+          }
+          if (_.round(currentTemperature, 1) < outsideTemp) {
+            setCurrentTemperature(_.round(currentTemperature, 2) + 0.05)
+          }
+        }
+        if (acObject[0].status && _.round(currentTemperature, 2) > desiredTemp) {
+          setCurrentTemperature(_.round(currentTemperature, 2) - 0.1)
+        }
+        if (heaterObject[0].status && _.round(currentTemperature, 1) < desiredTemp) {
+          setCurrentTemperature(_.round(currentTemperature, 2) + 0.1)
+        }
+        if (_.round(currentTemperature, 2) === desiredTemp && (heaterObject[0].status || acObject[0].status)) {
+          setCurrentTemp({
+            roomName: name,
+            currentTemp: _.round(currentTemperature, 2),
+          })
+          fetchUserProfiles()
+        }
+      }
+    }, 1000 / speedRate)
+    return () => {
+      clearInterval(interval)
+    }
+  }, [currentTemperature])
 
   const overrideTempModal = (
     <Modal
@@ -38,7 +75,7 @@ currentTemp, zone, name, objects, overridden,
         setIsOverrideModalVisible(false)
       }}>
       <Form.Item label='New Temperature'>
-        <InputNumber onChange={(value) => setNewRoomTemp(value)} value={newRoomTemp} />
+        <InputNumber precision={1} step={0.1} onChange={(value) => setNewRoomTemp(value)} value={newRoomTemp} />
       </Form.Item>
     </Modal>
   )
@@ -60,7 +97,7 @@ currentTemp, zone, name, objects, overridden,
       <Row>
         {isCurrentTempDisplayed
           ? <Typography.Text onClick={() => setIsCurrentTempDisplayed(false)}>
-            {`Current Temperature: ${currentTemp}`}
+            {`Current Temperature: ${_.round(currentTemperature, 2)}`}
           </Typography.Text>
         : <Button style={{marginBottom: 5}} type='link' onClick={() => setIsCurrentTempDisplayed(true)}>Display Temperature</Button>}
       </Row>
