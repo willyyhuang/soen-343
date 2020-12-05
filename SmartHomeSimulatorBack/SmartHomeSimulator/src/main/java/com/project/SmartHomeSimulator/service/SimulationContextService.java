@@ -43,11 +43,11 @@ public class SimulationContextService {
 
     /**
      * Set Outside Temp
-     * @param outdoorTemp
+     * @param outsideTemp
      * @return  - true if successful false if otherwise
      */
-    public boolean setOutdoorTemp(double outdoorTemp) {
-        simulationContext.setOutdoorTemp(outdoorTemp);
+    public boolean setOutsideTemp(double outsideTemp) {
+        simulationContext.setOutsideTemp(outsideTemp);
         return true;
     }
 

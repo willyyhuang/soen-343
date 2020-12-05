@@ -18,7 +18,7 @@ public class SimulationContext {
 
 	public static SimulationContext simulationContext = null;
 	private boolean simulationRunning;
-	private double outdoorTemp;
+	private double outsideTemp;
 	private double emptyRoomTemp;
 	private String time;
 	private String date;
@@ -141,12 +141,12 @@ public class SimulationContext {
 		this.awayModeUser = awayModeUser;
 	}
 
-	public double getOutdoorTemp() {
-		return outdoorTemp;
+	public double getOutsideTemp() {
+		return outsideTemp;
 	}
 
-	public void setOutdoorTemp(double outdoorTemp) {
-		this.outdoorTemp = outdoorTemp;
+	public void setOutsideTemp(double outsideTemp) {
+		this.outsideTemp = outsideTemp;
 	}
 
 	public String getTime() {
@@ -246,7 +246,7 @@ public class SimulationContext {
 
 	@Override
 	public String toString() {
-		return "SimulationContext [ outsideTemp=" + outdoorTemp + ", time=" + time
+		return "SimulationContext [ outsideTemp=" + outsideTemp + ", time=" + time
 				+ ", date=" + date + ", currentSimulationUser=" + currentSimulationUser + ", simulationUsers="
 				+ simulationUsers + ", homeLayout=" + homeLayout + ", simulationRunning=" + simulationRunning + "]";
 	}
