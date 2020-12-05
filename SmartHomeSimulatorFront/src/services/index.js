@@ -310,6 +310,7 @@ export async function deleteProfile(payload) {
 
 export const zone = `${appsettings.baseApiUrl}/api/v1/simulation/createZone`
 export const getZone = `${appsettings.baseApiUrl}/api/v1/simulation/getAllZones`
+export const overrideTemp = `${appsettings.baseApiUrl}/api/v1/simulation/changeRoomTemp`
 
 export async function createZone(payload) {
   return axios({
@@ -323,5 +324,13 @@ export async function fetchZone() {
   return axios({
     url: getZone,
     method: 'GET',
+  })
+}
+
+export async function overrideRoomTemp(payload) {
+  return axios({
+    url: overrideTemp,
+    method: 'POST',
+    params: payload,
   })
 }

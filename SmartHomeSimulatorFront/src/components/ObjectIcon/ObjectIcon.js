@@ -23,6 +23,10 @@ addConsoleMessage, roomName, object, fetchUserProfiles,
   const DoorOpened = 'https://image.flaticon.com/icons/png/512/59/59802.png'
   const WindowOpened = 'https://img.icons8.com/ios/452/open-window.png'
   const WindowClosed = 'https://icons.iconarchive.com/icons/iconsmind/outline/512/Window-icon.png'
+  const ACOn = 'https://i.imgur.com/eANFHBB.png'
+  const ACOff = 'https://i.imgur.com/2jGVfN0.png'
+  const HeaterOn = 'https://i.imgur.com/oTeONVB.png'
+  const HeaterOff = 'https://i.imgur.com/OeGtwdx.png'
 
   const alertUserAfterTime = (seconds) => {
     const milliseconds = seconds * 1000
@@ -45,6 +49,14 @@ addConsoleMessage, roomName, object, fetchUserProfiles,
   let Icon
   let Content
   switch (objectType) {
+    case 'AC':
+      Icon = object.status ? ACOn : ACOff
+      Content = 'This object is not controllable'
+      break
+    case 'HEATER':
+      Icon = object.status ? HeaterOn : HeaterOff
+      Content = 'This object is not controllable'
+      break
     case 'LIGHT':
       Icon = object.status ? LightIconOn : LightIconOff
       Content = (
