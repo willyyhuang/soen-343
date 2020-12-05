@@ -59,7 +59,7 @@ public class SimulationContextController {
     }
 
     /**
-     * API set outside temp
+     * API set outdoor temp
      * @param outsideTemp
      * @return - true if successful false if otherwise
      */

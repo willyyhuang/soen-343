@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import com.project.SmartHomeSimulator.model.HomeLayout;
 import com.project.SmartHomeSimulator.module.SimulationContext;
 import com.project.SmartHomeSimulator.model.User;
-import org.springframework.web.bind.annotation.ResponseStatus;
 
 @Service
 public class SimulationContextService {
