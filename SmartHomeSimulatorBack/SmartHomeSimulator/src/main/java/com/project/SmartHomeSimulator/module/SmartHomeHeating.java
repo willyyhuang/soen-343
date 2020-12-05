@@ -146,18 +146,12 @@ public class SmartHomeHeating extends Module implements AwayModeMonitor, Monitor
     public void switchStates(Room room, double currentTemp, double desiredTemp) {
         Heater heater = (Heater) room.getRoomObjectByType(RoomObjectType.HEATER);
         AC ac = (AC) room.getRoomObjectByType(RoomObjectType.AC);
-
         if (currentTemp < desiredTemp) {
             objectStateSwitcher(heater, true);
             objectStateSwitcher(ac, false);
         } else if (currentTemp > desiredTemp) {
-            if (currentTemp <= desiredTemp) {
-                objectStateSwitcher(heater, true);
-                objectStateSwitcher(ac, false);
-            } else {
-                objectStateSwitcher(heater, false);
-                objectStateSwitcher(ac, true);
-            }
+            objectStateSwitcher(heater, false);
+            objectStateSwitcher(ac, true);
         } else {
             objectStateSwitcher(heater, false);
             objectStateSwitcher(ac, false);
