@@ -25,6 +25,7 @@ public class SimulationContextServiceTest {
     @Autowired
     private UserService userService;
 
+
     /**
      * load a house layout test
      */
@@ -40,13 +41,13 @@ public class SimulationContextServiceTest {
     }
 
     /**
-     * Set Outside temperature test
+     * Star simulation in a wrong time
      */
     @Test
     public void startSimulation() {
         simulationContextService.startSimulation();
         boolean result = simulationContextService.getSimulationContext().isSimulationRunning();
-        assertEquals(true, result);
+        assertEquals(false, result);
     }
 
     @Test
