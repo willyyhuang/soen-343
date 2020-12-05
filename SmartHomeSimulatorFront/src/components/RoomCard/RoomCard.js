@@ -7,15 +7,18 @@ import {ObjectIcon} from '../index'
 import {overrideRoomTemp} from '../../services'
 
 const RoomCard = ({
-addConsoleMessage, users, room, fetchUserProfiles,
+  addConsoleMessage,
+  users,
+  room,
+  fetchUserProfiles,
 }) => {
   const {
 currentTemp, zone, name, objects, overridden,
 } = room
-
   const [isCurrentTempDisplayed, setIsCurrentTempDisplayed] = useState(false)
   const [isOverrideModalVisible, setIsOverrideModalVisible] = useState(false)
   const [newRoomTemp, setNewRoomTemp] = useState()
+
   const overrideTempModal = (
     <Modal
       visible={isOverrideModalVisible}

@@ -15,7 +15,10 @@ import {
 import './ObjectIcon.css'
 
 const ObjectIcon = ({
-addConsoleMessage, roomName, object, fetchUserProfiles,
+  addConsoleMessage,
+  roomName,
+  object,
+  fetchUserProfiles,
 }) => {
   const LightIconOff = 'https://img.icons8.com/ios/452/light-on.png'
   const LightIconOn = 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a3/Light_bulb_%28yellow%29_icon.svg/1024px-Light_bulb_%28yellow%29_icon.svg.png'
@@ -45,6 +48,7 @@ addConsoleMessage, roomName, object, fetchUserProfiles,
   }
 
   const {id, name, objectType} = object
+
   const payload = {id, name: roomName}
   let Icon
   let Content

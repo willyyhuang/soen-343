@@ -1,6 +1,7 @@
 import {
   Button,
   Card,
+  Divider,
   Upload,
   InputNumber,
   Form,
@@ -181,6 +182,8 @@ const SimulationParameterCard = ({
       }>
       <Form.Item label='Temperature Outdoor (°C)'>
         <InputNumber
+          step={0.1}
+          precision={1}
           onChange={(value) =>
             setParameterFormData({
               summerMonths: parameterFormData.summerMonths,
@@ -224,6 +227,8 @@ const SimulationParameterCard = ({
           placeholder='enter a time'
           value={parameterFormData.time} />
       </Form.Item>
+      <Divider />
+      <Typography.Title level={5}>SHH Parameter</Typography.Title>
       <Form.Item label='Summer Months'>
         <Input
           placeholder='e.g. 6-8'
@@ -255,6 +260,8 @@ const SimulationParameterCard = ({
       </Form.Item>
       <Form.Item label='Summer Temperature (°C)'>
         <InputNumber
+          step={0.1}
+          precision={1}
           value={parameterFormData.summerTemp}
           onChange={(value) => setParameterFormData({
           summerMonths: parameterFormData.summerMonths,
@@ -268,6 +275,8 @@ const SimulationParameterCard = ({
       </Form.Item>
       <Form.Item label='Winter Temperature (°C)'>
         <InputNumber
+          step={0.1}
+          precision={1}
           value={parameterFormData.winterTemp}
           onChange={(value) => setParameterFormData({
           summerMonths: parameterFormData.summerMonths,
@@ -279,9 +288,11 @@ const SimulationParameterCard = ({
           date: parameterFormData.date,
         })} />
       </Form.Item>
+      <Divider />
       <Form.Item label='Speed Rate'>
         <InputNumber
           step={0.1}
+          precision={1}
           min={0}
           max={5}
           onChange={(value) => setSpeedRateFormData(value)}
