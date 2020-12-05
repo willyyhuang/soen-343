@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.project.SmartHomeSimulator.model.roomObjects.RoomObject;
 import com.project.SmartHomeSimulator.model.roomObjects.RoomObjectType;
 import org.springframework.boot.jackson.JsonComponent;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -116,11 +117,16 @@ public class Room {
         this.roomObjects = roomObjects;
     }
 
-    public void incrementUsersInRoom(){
+    public void incrementUsersInRoom() {
         usersInRoom++;
     }
-    public void decrementUsersInRoom(){
+
+    public void decrementUsersInRoom() {
         usersInRoom--;
+    }
+
+    public boolean roomEmpty() {
+        return usersInRoom == 0;
     }
 
     public int getUsersInRoom() {
@@ -137,11 +143,12 @@ public class Room {
 
     /**
      * Gets a room object by id
+     *
      * @param deviceID
      * @return room object
      */
-    public RoomObject getRoomObjectByID(UUID deviceID){
-        if (this.getObjects() != null){
+    public RoomObject getRoomObjectByID(UUID deviceID) {
+        if (this.getObjects() != null) {
             for (RoomObject roomObject : this.getObjects()) {
                 if (roomObject.getId().compareTo(deviceID) == 0) {
                     return roomObject;
@@ -153,11 +160,12 @@ public class Room {
 
     /**
      * Gets a room object by type
+     *
      * @param type
      * @return room object
      */
-    public RoomObject getRoomObjectByType( RoomObjectType type){
-        if (this.getObjects() != null){
+    public RoomObject getRoomObjectByType(RoomObjectType type) {
+        if (this.getObjects() != null) {
             for (RoomObject roomObject : this.getObjects()) {
                 if (roomObject.getObjectType() == type) {
                     return roomObject;
@@ -167,10 +175,10 @@ public class Room {
         return null;
     }
 
-    public List<RoomObject> allLights(){
+    public List<RoomObject> allLights() {
         List<RoomObject> lights = new ArrayList<>();
-        for(RoomObject object : this.getObjects()){
-            if(object.getObjectType() == RoomObjectType.LIGHT){
+        for (RoomObject object : this.getObjects()) {
+            if (object.getObjectType() == RoomObjectType.LIGHT) {
                 lights.add(object);
             }
         }

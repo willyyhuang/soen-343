@@ -43,6 +43,7 @@ public class SimulationContext {
 		loadUserProfiles();
 		monitors = new ArrayList<Monitor>();
 		this.monitors.add(SmartHomeSecurity.getInstance());
+		SmartHomeHeating.getInstance().cloneSimulationUsers(simulationUsers);
 		this.monitors.add(SmartHomeHeating.getInstance());
 	}
 
