@@ -25,6 +25,7 @@ public class SimulationContextServiceTest {
     @Autowired
     private UserService userService;
 
+
     /**
      * load a house layout test
      */
@@ -40,13 +41,13 @@ public class SimulationContextServiceTest {
     }
 
     /**
-     * Set Outside temperature test
+     * Star simulation in a wrong time
      */
     @Test
     public void startSimulation() {
         simulationContextService.startSimulation();
         boolean result = simulationContextService.getSimulationContext().isSimulationRunning();
-        assertEquals(true, result);
+        assertEquals(false, result);
     }
 
     @Test
@@ -90,8 +91,10 @@ public class SimulationContextServiceTest {
         JSONObject jsonUser = new JSONObject();
         jsonUser.put("name", "testUser");
         jsonUser.put("role", "PARENT");
-        jsonUser.put("homeLocation", "bedroom");
+        jsonUser.put("homeLocation", "string");
         ObjectMapper objectMapper = new ObjectMapper();
+        String homeLayoutFile = "{\"roomList\":\"[{\"name\":\"string\", \"objects\":[{\"objectType\": \"WINDOW\"}]}]\"}";
+        HomeLayout homeLayout = simulationContextService.loadLayout(homeLayoutFile);
         User user = objectMapper.readValue(jsonUser.toString(), User.class);
         userService.addUser(user);
         boolean result = simulationContextService.setCurrentSimulationUser("testUser");

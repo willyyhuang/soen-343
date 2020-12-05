@@ -18,6 +18,7 @@ public class SmartHomeHeating extends Module implements AwayModeMonitor, Monitor
     private static SmartHomeHeating smartHomeHeating = null;
     private boolean awayMode = false;
     private boolean isSummer = false;
+    private List<User> simulationUsers = new ArrayList<>();
 
     private SmartHomeHeating() {
         setName("SmartHomeHeating");
@@ -40,12 +41,12 @@ public class SmartHomeHeating extends Module implements AwayModeMonitor, Monitor
     public boolean addZone(Zone zone) {
         ZoneObject zoneObject = new ZoneObject();
         for (String roomName : zone.getRoomsInZone()) {
-            if(roomName.equalsIgnoreCase("backyard") || roomName.equalsIgnoreCase("outside")){
+            if (roomName.equalsIgnoreCase("backyard") || roomName.equalsIgnoreCase("outside")) {
                 break;
             }
             double desiredTemp = SimulationContext.getInstance().getEmptyRoomTemp();
             Room room = SimulationContext.getInstance().getHomeLayout().getRoomByName(roomName);
-            if (room.getUsersInRoom() > 0){
+            if (room.getUsersInRoom() > 0) {
                 desiredTemp = zone.getDesiredTemp();
             }
             room.setZone(zone.getName());
@@ -101,6 +102,7 @@ public class SmartHomeHeating extends Module implements AwayModeMonitor, Monitor
 
     /**
      * changes the sate of the room object passed to it
+     *
      * @param roomObject
      * @param state      - block or turn on = true and unblock or turn off = false - replace the state of the object
      * @return - true if successful false if otherwise
@@ -191,13 +193,15 @@ public class SmartHomeHeating extends Module implements AwayModeMonitor, Monitor
     @Override
     public void updateAwayModeMonitor(boolean awayMode) {
         this.awayMode = awayMode;
-        adjustRoomTemperatures();
+        if (awayMode){
+            setAwayModeTemp();
+        }
     }
 
     /**
      * Adjust rooms temperature when on away mode if its winter or summer
      */
-    public void adjustRoomTemperatures() {
+    private void setAwayModeTemp() {
         List<Room> rooms = SimulationContext.getInstance().getHomeLayout().getRoomList();
         double newTemp;
         if (isSummer) {
@@ -213,8 +217,50 @@ public class SmartHomeHeating extends Module implements AwayModeMonitor, Monitor
 
     @Override
     public void update(String awayModeUser, User user) {
-        // todo
+        if (user != null) {
+            User oldUserObject = findUserByName(user.getName());
+            if (oldUserObject != null){
+                Room oldRoom = SimulationContext.getInstance().getHomeLayout().getRoomByName(oldUserObject.getHomeLocation());
+                if (!oldRoom.getName().equals(user.getHomeLocation())){
+                    if (oldRoom.roomEmpty()){
+                        switchStates(oldRoom, oldRoom.getCurrentTemp(), SimulationContext.getInstance().getEmptyRoomTemp());
+                    }
+                    Room room = SimulationContext.getInstance().getHomeLayout().getRoomByName(user.getHomeLocation());
+                    switchStates(room, room.getCurrentTemp(), room.getDesiredTemp());
+                }
+            }
+        }
+        cloneSimulationUsers(SimulationContext.getInstance().getSimulationUsers());
     }
+
+    /**
+     * finds user by name and returns it
+     *
+     * @param name
+     * @return - true if successful false if otherwise
+     */
+    public User findUserByName(String name) {
+        for (User user : simulationUsers) {
+            if (user.getName().equals(name)) {
+                return user;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * clones the users list and saves it in the simulationUsers field
+     *
+     * @param users
+     */
+    public void cloneSimulationUsers(List<User> users) {
+        if (users != null) {
+            for (User user : users) {
+                simulationUsers.add(user.clone());
+            }
+        }
+    }
+
 
     public boolean isAwayMode() {
         return awayMode;

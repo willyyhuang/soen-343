@@ -56,6 +56,14 @@ public class SmartHomeSecurity extends Module implements Monitor {
         }
     }
 
+    public void addAwayModeMonitor(AwayModeMonitor awayModeMonitor){
+        this.awayModeMonitors.add(awayModeMonitor);
+    }
+
+    public void removeAwayModeMonitor(AwayModeMonitor awayModeMonitor){
+        this.awayModeMonitors.remove(awayModeMonitor);
+    }
+
     public void closWindows() {
         smartHomeCoreFunctionality = SmartHomeCoreFunctionality.getInstance();
         simulationContext = SimulationContext.getInstance();

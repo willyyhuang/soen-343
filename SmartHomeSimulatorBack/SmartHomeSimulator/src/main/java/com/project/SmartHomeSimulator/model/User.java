@@ -8,49 +8,60 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
  */
 @JsonComponent
 @JsonIgnoreProperties
-public class User {
-	private String name;
-	private Role role;
-	private String homeLocation;
+public class User implements Cloneable{
+    private String name;
+    private Role role;
+    private String homeLocation;
 
-	public String getName() {
-		return name;
-	}
-	
-	public User() {
-		
-	}
+    public String getName() {
+        return name;
+    }
 
-	public User(String name, Role role, String homeLocation) {
-		this.name = name;
-		this.role = role;
-		this.homeLocation = homeLocation;
-	}
+    public User() {
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    }
 
-	public Role getRole() {
-		return role;
-	}
+    public User(String name, Role role, String homeLocation) {
+        this.name = name;
+        this.role = role;
+        this.homeLocation = homeLocation;
+    }
 
-	public void setRole(Role role) {
-		this.role = role;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public String getHomeLocation() {
-		return homeLocation;
-	}
+    public Role getRole() {
+        return role;
+    }
 
-	public void setHomeLocation(String homeLocation) {
-		this.homeLocation = homeLocation;
-	}
+    public void setRole(Role role) {
+        this.role = role;
+    }
 
-	@Override
-	public String toString() {
-		return "{\"name\": " + '"' + name + "\", " + "\"role\": " + '"' + role + "\", "
-				+ "\"homeLocation\": " + '"' + homeLocation + '"' + "}";
-	}
-	
+    public String getHomeLocation() {
+        return homeLocation;
+    }
+
+    public void setHomeLocation(String homeLocation) {
+        this.homeLocation = homeLocation;
+    }
+
+    @Override
+    public String toString() {
+        return "{\"name\": " + '"' + name + "\", " + "\"role\": " + '"' + role + "\", "
+                + "\"homeLocation\": " + '"' + homeLocation + '"' + "}";
+    }
+
+    @Override
+    public User clone() {
+        User user = null;
+        try {
+            user = (User) super.clone();
+        } catch (CloneNotSupportedException e) {
+            user = new User(
+                    this.getName(), this.getRole(), this.getHomeLocation());
+        }
+        return user;
+    }
 }

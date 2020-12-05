@@ -38,10 +38,13 @@ public class SmartHomeSecurityServiceTest {
         user.setName("testUser");
         user.setHomeLocation("outside");
         userService.addUser(user);
-        simulationContextService.setCurrentSimulationUser("name");
+        simulationContextService.setCurrentSimulationUser("testUser");
 
         String homeLayoutFile = "{\"roomList\":\"[{\"name\":\"bedroom\", \"objects\":[{\"objectType\": \"AC\"}, {\"objectType\": \"HEATER\"}]}, {\"name\":\"building entrance\", \"objects\":[{\"objectType\": \"AC\"}, {\"objectType\": \"HEATER\"}]}, {\"name\":\"garage\", \"objects\":[{\"objectType\": \"AC\"}, {\"objectType\": \"HEATER\"}]}]\"}";
         simulationContextService.loadLayout(homeLayoutFile);
+        simulationContextService.setDate("10/10/10");
+        simulationContextService.setTime("10:00");
+        HomeLayout.roomsNotInZone = 0;
         simulationContextService.startSimulation();
     }
 
@@ -50,7 +53,7 @@ public class SmartHomeSecurityServiceTest {
      * Use case ID = 7
      */
     @Test
-    public void awayMode_7() throws JsonProcessingException {
+    public void awayMode_7() {
         setup();
 
         String homeLayoutFile = "{\"roomList\":\"[{\"name\":\"backyard\", \"objects\":[{\"objectType\": \"DOOR\"}, {\"objectType\": \"WINDOW\"}]}, {\"name\":\"building entrance\", \"objects\":[{\"objectType\": \"DOOR\"}, {\"objectType\": \"WINDOW\"}]}, {\"name\":\"garage\", \"objects\":[{\"objectType\": \"DOOR\"}, {\"objectType\": \"WINDOW\"}]}]\"}";
