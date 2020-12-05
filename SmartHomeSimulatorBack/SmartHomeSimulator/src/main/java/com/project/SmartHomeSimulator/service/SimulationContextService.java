@@ -113,7 +113,7 @@ public class SimulationContextService {
         ResponseParameters response = new ResponseParameters();
         response.setAllowed(true);
         response.setConsoleMessage("[Success] The simulation started!");
-        if (HomeLayout.roomsNotInZone != 0){
+        if (HomeLayout.roomsNotInZone > 0){
             response.setAllowed(false);
             response.setConsoleMessage("[Failed] All rooms should be in zones before starting the simulation.");
         }

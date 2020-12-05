@@ -21,6 +21,7 @@ public class Room {
     private boolean overridden = false;
     private double currentTemp;
     private double desiredTemp;
+    private double zoneDesiredTemp;
     private String period1;
     private int period1Temp;
     private String period2;
@@ -28,6 +29,14 @@ public class Room {
     private String period3;
     private int period3Temp;
     private int usersInRoom;
+
+    public double getZoneDesiredTemp() {
+        return zoneDesiredTemp;
+    }
+
+    public void setZoneDesiredTemp(double zoneDesiredTemp) {
+        this.zoneDesiredTemp = zoneDesiredTemp;
+    }
 
     public double getDesiredTemp() {
         return desiredTemp;
