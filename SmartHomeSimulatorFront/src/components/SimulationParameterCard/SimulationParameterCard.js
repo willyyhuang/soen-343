@@ -87,7 +87,10 @@ const SimulationParameterCard = ({
     }
     if (winterMonths && date && time) {
       const startMonth = winterMonths.substring(0, winterMonths.indexOf('-')) - 1
-      const endMonth = winterMonths.substring(winterMonths.indexOf('-') + 1, winterMonths.length) - 1 + 11
+      let endMonth = winterMonths.substring(winterMonths.indexOf('-') + 1, winterMonths.length) - 1
+      if (startMonth > endMonth) {
+        endMonth += 11
+      }
       if (moment(date.concat(time)).get('month') >= startMonth && moment(date.concat(time)).get('month') < endMonth) {
         setSeason(false)
       }
