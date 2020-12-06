@@ -129,6 +129,7 @@ public class SmartHomeHeatingService {
         for (Room room : rooms){
             if (room.getUsersInRoom() == 0){
                 room.setDesiredTemp(emptyRoomTemp);
+                smartHomeHeatingProxy.updateRoomStatus(room.getName());
             }
         }
         return true;
