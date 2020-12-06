@@ -1,5 +1,6 @@
 package com.project.SmartHomeSimulator.module;
 
+import com.project.SmartHomeSimulator.model.ResponseParameters;
 import com.project.SmartHomeSimulator.model.Role;
 import com.project.SmartHomeSimulator.model.Room;
 import com.project.SmartHomeSimulator.model.User;
@@ -79,17 +80,18 @@ public class SmartHomeHeatingProxy {
      * @return
      */
     public boolean changeZoneTemp(String zoneName, ArrayList<Room> rooms, int period) {
-        boolean success = false;
+        ResponseParameters response = new ResponseParameters();
+        response.setAllowed(false);
         if (!rooms.isEmpty()) {
-            success = smartHomeHeating.changeZoneTemp(rooms, period);
+           response = smartHomeHeating.changeZoneTemp(rooms, period);
         }
-        if (success) {
-            smartHomeHeating.logSuccess(zoneName, "Temperature in zone", "changed", "SHH");
+        if (response.isAllowed()) {
+            smartHomeHeating.logMessage("[Success] Temperature in zone" + zoneName + "changed by SHH. \n" + response.getConsoleMessage());
         } else {
             smartHomeHeating.logMessage("[Failed] " + "Change in temperature in " + "room" + zoneName
-                    + ", requested by " + "SHH" + ", failed");
+                    + ", requested by " + "SHH" + ", failed\n");
         }
-        return success;
+        return response.isAllowed();
     }
 
     /**

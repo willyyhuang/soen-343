@@ -4,6 +4,14 @@ public class ResponseParameters {
     public boolean allowed;
     public String consoleMessage;
 
+    public boolean isAllowed() {
+        return allowed;
+    }
+
+    public String getConsoleMessage() {
+        return consoleMessage;
+    }
+
     public void setAllowed(boolean allowed) {
         this.allowed = allowed;
     }
