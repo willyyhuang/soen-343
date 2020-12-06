@@ -1,12 +1,14 @@
 import {
   Button,
   Card,
+  Divider,
   Upload,
   InputNumber,
   Form,
   TimePicker,
   DatePicker,
   Typography,
+  Input,
 } from 'antd'
 import React, {useEffect, useState} from 'react'
 import moment from 'moment'
@@ -14,10 +16,16 @@ import {SettingOutlined, HomeOutlined} from '@ant-design/icons'
 import {
   setSimulationDate,
   setSimulationTime,
-  setSimulationInsideTemp,
   setSimulationOutsideTemp,
   uploadLayout,
   stop,
+  setSummerMonths,
+  setSummerTemp,
+  setWinterMonths,
+  setWinterTemp,
+  setSeason,
+  setEmptyRoomTemp,
+  setTempThreshold,
 } from '../../services'
 
 const SimulationParameterCard = ({
@@ -27,17 +35,27 @@ const SimulationParameterCard = ({
   speedRate,
 }) => {
   const {
-    insideTemp,
     outsideTemp,
     time,
     date,
     simulationRunning,
+    summerMonths,
+    winterMonths,
+    summerTemp,
+    winterTemp,
+    emptyRoomTemp,
+    tempThreshold,
   } = simulationConfig
   const PARAMETER_FORM_DATA_INITIAL_STATE = {
-    insideTemp,
     outsideTemp,
     time: time ? moment(date.concat(time)) : null,
     date: date ? moment(date) : null,
+    summerMonths,
+    winterMonths,
+    summerTemp,
+    winterTemp,
+    emptyRoomTemp,
+    tempThreshold,
   }
   const [parameterFormData, setParameterFormData] = useState(
     PARAMETER_FORM_DATA_INITIAL_STATE,
@@ -46,13 +64,35 @@ const SimulationParameterCard = ({
 
   useEffect(() => {
     setParameterFormData({
-      insideTemp,
       outsideTemp,
       time: time ? moment(date.concat(time)) : null,
       date: date ? moment(date) : null,
+      summerMonths,
+      winterMonths,
+      summerTemp,
+      winterTemp,
+      emptyRoomTemp,
+      tempThreshold,
     })
     // eslint-disable-next-line
   }, [simulationConfig])
+
+  useEffect(() => {
+    if (summerMonths) {
+      const startMonth = parseInt(summerMonths.substring(0, summerMonths.indexOf('-')), 10) - 1
+      const endMonth = parseInt(summerMonths.substring(summerMonths.indexOf('-') + 1, summerMonths.length), 10) - 1
+      if (moment(date.concat(time)).get('month') >= startMonth && moment(date.concat(time)).get('month') < endMonth) {
+        setSeason(true)
+      }
+    }
+    if (winterMonths) {
+      const startMonth = winterMonths.substring(0, winterMonths.indexOf('-')) - 1
+      const endMonth = winterMonths.substring(winterMonths.indexOf('-') + 1, winterMonths.length) - 1 + 11
+      if (moment(date.concat(time)).get('month') >= startMonth && moment(date.concat(time)).get('month') < endMonth) {
+        setSeason(false)
+      }
+    }
+  }, [date, time, winterMonths, summerMonths])
 
   return (
     <Card
@@ -83,12 +123,6 @@ const SimulationParameterCard = ({
         <Button
           onClick={() => {
             if (
-              parameterFormData.insideTemp
-              !== PARAMETER_FORM_DATA_INITIAL_STATE.insideTemp
-            ) {
-              setSimulationInsideTemp(parameterFormData.insideTemp)
-            }
-            if (
               parameterFormData.outsideTemp
               !== PARAMETER_FORM_DATA_INITIAL_STATE.outsideTemp
             ) {
@@ -116,6 +150,36 @@ const SimulationParameterCard = ({
             if (speedRateFormData !== speedRate) {
               setSpeedRate(speedRateFormData)
             }
+            if (
+              parameterFormData.summerMonths
+              !== PARAMETER_FORM_DATA_INITIAL_STATE.summerMonths
+            ) {
+              setSummerMonths(parameterFormData.summerMonths)
+            }
+            if (
+              parameterFormData.winterMonths
+              !== PARAMETER_FORM_DATA_INITIAL_STATE.winterMonths
+            ) {
+              setWinterMonths(parameterFormData.winterMonths)
+            }
+            if (
+              parameterFormData.summerTemp
+              !== PARAMETER_FORM_DATA_INITIAL_STATE.summerTemp
+            ) {
+              setSummerTemp(parameterFormData.summerTemp)
+            }
+            if (
+              parameterFormData.winterTemp
+              !== PARAMETER_FORM_DATA_INITIAL_STATE.winterTemp
+            ) {
+              setWinterTemp(parameterFormData.winterTemp)
+            }
+            if (parameterFormData.emptyRoomTemp !== PARAMETER_FORM_DATA_INITIAL_STATE.emptyRoomTemp) {
+              setEmptyRoomTemp(parameterFormData.emptyRoomTemp)
+            }
+            if (parameterFormData.tempThreshold !== PARAMETER_FORM_DATA_INITIAL_STATE.tempThreshold) {
+              setTempThreshold(parameterFormData.tempThreshold)
+            }
             fetchUserProfiles()
             if (simulationRunning) {
               stop()
@@ -130,26 +194,21 @@ const SimulationParameterCard = ({
           Simulation Parameter
         </Typography.Text>
       }>
-      <Form.Item label='Temperature Indoor (°C)'>
-        <InputNumber
-          onChange={(value) => {
-            setParameterFormData({
-              insideTemp: value,
-              outsideTemp: parameterFormData.outsideTemp,
-              time: parameterFormData.time,
-              date: parameterFormData.date,
-            })
-          }}
-          value={parameterFormData.insideTemp} />
-      </Form.Item>
       <Form.Item label='Temperature Outdoor (°C)'>
         <InputNumber
+          step={0.1}
+          precision={1}
           onChange={(value) =>
             setParameterFormData({
-              insideTemp: parameterFormData.insideTemp,
+              summerMonths: parameterFormData.summerMonths,
+              summerTemp: parameterFormData.summerTemp,
+              winterMonths: parameterFormData.winterMonths,
+              winterTemp: parameterFormData.winterTemp,
               outsideTemp: value,
               time: parameterFormData.time,
               date: parameterFormData.date,
+              emptyRoomTemp: parameterFormData.emptyRoomTemp,
+              tempThreshold: parameterFormData.tempThreshold,
             })}
           value={parameterFormData.outsideTemp} />
       </Form.Item>
@@ -157,7 +216,10 @@ const SimulationParameterCard = ({
         <DatePicker
           onChange={(value) =>
             setParameterFormData({
-              insideTemp: parameterFormData.insideTemp,
+              summerMonths: parameterFormData.summerMonths,
+              summerTemp: parameterFormData.summerTemp,
+              winterMonths: parameterFormData.winterMonths,
+              winterTemp: parameterFormData.winterTemp,
               outsideTemp: parameterFormData.outsideTemp,
               time: parameterFormData.time,
               date: value,
@@ -169,18 +231,128 @@ const SimulationParameterCard = ({
         <TimePicker
           onChange={(value) => {
             setParameterFormData({
-              insideTemp: parameterFormData.insideTemp,
+              summerMonths: parameterFormData.summerMonths,
+              summerTemp: parameterFormData.summerTemp,
+              winterMonths: parameterFormData.winterMonths,
+              winterTemp: parameterFormData.winterTemp,
               outsideTemp: parameterFormData.outsideTemp,
               time: value,
               date: parameterFormData.date,
+              emptyRoomTemp: parameterFormData.emptyRoomTemp,
+              tempThreshold: parameterFormData.tempThreshold,
             })
           }}
           placeholder='enter a time'
           value={parameterFormData.time} />
       </Form.Item>
+      <Divider />
+      <Typography.Title level={5}>SHH Parameter</Typography.Title>
+      <Form.Item label='Alert Threshold Temperature (°C)'>
+        <InputNumber
+          step={0.1}
+          precision={1}
+          value={parameterFormData.tempThreshold}
+          onChange={(value) => setParameterFormData({
+          summerMonths: parameterFormData.summerMonths,
+          summerTemp: parameterFormData.summerTemp,
+          winterMonths: parameterFormData.winterMonths,
+          winterTemp: parameterFormData.winterTemp,
+          outsideTemp: parameterFormData.outsideTemp,
+          time: parameterFormData.time,
+          date: parameterFormData.date,
+          emptyRoomTemp: parameterFormData.emptyRoomTemp,
+          tempThreshold: value,
+        })} />
+      </Form.Item>
+      <Form.Item label='Desired Empty Room Temperature (°C)'>
+        <InputNumber
+          step={0.1}
+          precision={1}
+          value={parameterFormData.emptyRoomTemp}
+          onChange={(value) => setParameterFormData({
+          summerMonths: parameterFormData.summerMonths,
+          summerTemp: parameterFormData.summerTemp,
+          winterMonths: parameterFormData.winterMonths,
+          winterTemp: parameterFormData.winterTemp,
+          outsideTemp: parameterFormData.outsideTemp,
+          time: parameterFormData.time,
+          date: parameterFormData.date,
+          emptyRoomTemp: value,
+          tempThreshold: parameterFormData.tempThreshold,
+        })} />
+      </Form.Item>
+      <Form.Item label='Summer Months'>
+        <Input
+          placeholder='e.g. 6-8'
+          value={parameterFormData.summerMonths}
+          onChange={(e) =>
+            setParameterFormData({
+          summerMonths: e.target.value,
+          summerTemp: parameterFormData.summerTemp,
+          winterMonths: parameterFormData.winterMonths,
+          winterTemp: parameterFormData.winterTemp,
+          outsideTemp: parameterFormData.outsideTemp,
+          time: parameterFormData.time,
+          date: parameterFormData.date,
+          emptyRoomTemp: parameterFormData.emptyRoomTemp,
+          tempThreshold: parameterFormData.tempThreshold,
+        })} />
+      </Form.Item>
+      <Form.Item label='Winter Months'>
+        <Input
+          placeholder='e.g. 11-3'
+          value={parameterFormData.winterMonths}
+          onChange={(e) => setParameterFormData({
+          summerMonths: parameterFormData.summerMonths,
+          summerTemp: parameterFormData.summerTemp,
+          winterMonths: e.target.value,
+          winterTemp: parameterFormData.winterTemp,
+          outsideTemp: parameterFormData.outsideTemp,
+          time: parameterFormData.time,
+          date: parameterFormData.date,
+          emptyRoomTemp: parameterFormData.emptyRoomTemp,
+          tempThreshold: parameterFormData.tempThreshold,
+        })} />
+      </Form.Item>
+      <Form.Item label='Summer Temperature (°C)'>
+        <InputNumber
+          step={0.1}
+          precision={1}
+          value={parameterFormData.summerTemp}
+          onChange={(value) => setParameterFormData({
+          summerMonths: parameterFormData.summerMonths,
+          summerTemp: value,
+          winterMonths: parameterFormData.winterMonths,
+          winterTemp: parameterFormData.winterTemp,
+          outsideTemp: parameterFormData.outsideTemp,
+          time: parameterFormData.time,
+          date: parameterFormData.date,
+          emptyRoomTemp: parameterFormData.emptyRoomTemp,
+          tempThreshold: parameterFormData.tempThreshold,
+        })} />
+      </Form.Item>
+      <Form.Item label='Winter Temperature (°C)'>
+        <InputNumber
+          step={0.1}
+          precision={1}
+          value={parameterFormData.winterTemp}
+          onChange={(value) => setParameterFormData({
+          summerMonths: parameterFormData.summerMonths,
+          summerTemp: parameterFormData.summerTemp,
+          winterMonths: parameterFormData.winterMonths,
+          winterTemp: value,
+          outsideTemp: parameterFormData.outsideTemp,
+          time: parameterFormData.time,
+          date: parameterFormData.date,
+          emptyRoomTemp: parameterFormData.emptyRoomTemp,
+          tempThreshold: parameterFormData.tempThreshold,
+        })} />
+      </Form.Item>
+      <Divider />
       <Form.Item label='Speed Rate'>
         <InputNumber
           step={0.1}
+          precision={1}
           min={0}
           max={5}
           onChange={(value) => setSpeedRateFormData(value)}
@@ -190,5 +362,4 @@ const SimulationParameterCard = ({
   )
 }
 
-SimulationParameterCard.displayName = 'SimulationParameterCard'
 export default SimulationParameterCard

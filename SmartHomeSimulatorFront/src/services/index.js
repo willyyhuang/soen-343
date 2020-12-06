@@ -184,9 +184,21 @@ export async function stop() {
 // Simulation Parameter
 export const setDate = `${appsettings.baseApiUrl}/api/v1/simulation/setDate`
 export const setTime = `${appsettings.baseApiUrl}/api/v1/simulation/setTime`
-export const setInsideTemp = `${appsettings.baseApiUrl}/api/v1/simulation/setInsideTemp`
 export const setOutsideTemp = `${appsettings.baseApiUrl}/api/v1/simulation/setOutsideTemp`
 export const loadLayout = `${appsettings.baseApiUrl}/api/v1/simulation/loadLayout`
+export const summerMonths = `${appsettings.baseApiUrl}/api/v1/simulation/setSummerMonths`
+export const summerTemp = `${appsettings.baseApiUrl}/api/v1/simulation/setSummerTemperature`
+export const winterMonths = `${appsettings.baseApiUrl}/api/v1/simulation/setWinterMonths`
+export const winterTemp = `${appsettings.baseApiUrl}/api/v1/simulation/setWinterTemperature`
+export const season = `${appsettings.baseApiUrl}/api/v1/simulation/setSeason`
+
+export async function setSeason(payload) {
+  return axios({
+    method: 'POST',
+    url: season,
+    params: {isSummer: payload},
+  })
+}
 
 export async function setSimulationDate(payload) {
   return axios({
@@ -204,14 +216,6 @@ export async function setSimulationTime(payload) {
   })
 }
 
-export async function setSimulationInsideTemp(payload) {
-  return axios({
-    method: 'POST',
-    url: setInsideTemp,
-    params: {insideTemp: payload},
-  })
-}
-
 export async function setSimulationOutsideTemp(payload) {
   return axios({
     method: 'POST',
@@ -225,6 +229,38 @@ export async function uploadLayout(payload) {
     method: 'POST',
     url: loadLayout,
     data: {roomList: payload},
+  })
+}
+
+export async function setSummerMonths(payload) {
+  return axios({
+    method: 'POST',
+    url: summerMonths,
+    params: {months: payload},
+  })
+}
+
+export async function setSummerTemp(payload) {
+  return axios({
+    method: 'POST',
+    url: summerTemp,
+    params: {temperature: payload},
+  })
+}
+
+export async function setWinterMonths(payload) {
+  return axios({
+    method: 'POST',
+    url: winterMonths,
+    params: {months: payload},
+  })
+}
+
+export async function setWinterTemp(payload) {
+  return axios({
+    method: 'POST',
+    url: winterTemp,
+    params: {temperature: payload},
   })
 }
 
@@ -276,5 +312,65 @@ export async function deleteProfile(payload) {
   return axios({
     method: 'POST',
     url: removeSimulationProfile.replace(':name', payload),
+  })
+}
+
+// Smart Home Heating
+
+export const zone = `${appsettings.baseApiUrl}/api/v1/simulation/createZone`
+export const getZone = `${appsettings.baseApiUrl}/api/v1/simulation/getAllZones`
+export const overrideTemp = `${appsettings.baseApiUrl}/api/v1/simulation/changeRoomTemp`
+export const currentTemp = `${appsettings.baseApiUrl}/api/v1/simulation/setCurrentTemp`
+export const emptyRoomTemp = `${appsettings.baseApiUrl}/api/v1/simulation/setEmptyRoomTemp`
+export const threshholdTemp = `${appsettings.baseApiUrl}/api/v1/simulation/setTempThreshold`
+
+export async function createZone(payload) {
+  return axios({
+    url: zone,
+    method: 'POST',
+    data: payload,
+  })
+}
+
+export async function fetchZone() {
+  return axios({
+    url: getZone,
+    method: 'GET',
+  })
+}
+
+export async function overrideRoomTemp(payload) {
+  return axios({
+    url: overrideTemp,
+    method: 'POST',
+    params: payload,
+  })
+}
+
+export async function setCurrentTemp(payload) {
+  return axios({
+    url: currentTemp,
+    method: 'POST',
+    params: payload,
+  })
+}
+
+export async function setEmptyRoomTemp(payload) {
+  return axios({
+    url: emptyRoomTemp,
+    method: 'POST',
+    params: {
+      emptyRoomTemp: payload,
+    },
+  })
+}
+
+export async function setTempThreshold(payload) {
+  return axios({
+    url: threshholdTemp,
+    method: 'POST',
+    params: {
+      tempThreshold: payload,
+    },
   })
 }

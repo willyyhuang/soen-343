@@ -9,17 +9,19 @@ import {
   SimulationFunctionalityCard,
   OutputConsole,
   EditAwayModeModal,
+  SmartHomeHeatingCard,
 } from '../index'
 import './Dashboard.css'
 import {
 getProfile, start, stop, setAutoMode, setAwayMode,
 } from '../../services'
 
-const Dashboard = ({simulationConfig, consoleMessage, dispatch}) => {
+const Dashboard = ({
+simulationConfig, consoleMessage, zone, dispatch,
+}) => {
   const {messages} = consoleMessage
   const [speedRate, setSpeedRate] = useState(1)
   const [editAwayModeModalVisible, setEditAwayModeModalVisible] = useState(false)
-
   const addConsoleMessage = (message) => {
     dispatch({type: 'ADD_CONSOLE_MESSAGE', payload: message})
   }
@@ -28,6 +30,10 @@ const Dashboard = ({simulationConfig, consoleMessage, dispatch}) => {
       const {data} = response
       dispatch({type: 'SET_SIMULATION_CONFIG_STATE', payload: data})
     })
+  }
+
+  const setZone = (data) => {
+    dispatch({type: 'SET_ZONE', payload: data})
   }
 
   useEffect(() => {
@@ -51,7 +57,12 @@ const Dashboard = ({simulationConfig, consoleMessage, dispatch}) => {
           checked={simulationConfig.simulationRunning}
           onChange={(value) =>
             (value
-              ? start() && fetchUserProfiles()
+              ? start().then((response) => {
+                const {data} = response
+                if (!data.allowed) {
+                  addConsoleMessage(data.consoleMessage)
+                }
+              }) && fetchUserProfiles()
               : stop() && fetchUserProfiles())} />
         <Typography.Text>Simulation Mode</Typography.Text>
       </Row>
@@ -109,6 +120,12 @@ const Dashboard = ({simulationConfig, consoleMessage, dispatch}) => {
                   simulationConfig={simulationConfig}
                   fetchUserProfiles={fetchUserProfiles} />
                 <Divider />
+                <SmartHomeHeatingCard
+                  addConsoleMessage={addConsoleMessage}
+                  simulationConfig={simulationConfig}
+                  setZone={setZone}
+                  zone={zone} />
+                <Divider />
               </>
             )}
             {simulationSwitchCard}
@@ -137,6 +154,7 @@ const Dashboard = ({simulationConfig, consoleMessage, dispatch}) => {
 const mapStateToProps = (state) => ({
   simulationConfig: state.simulationConfig,
   consoleMessage: state.consoleMessage,
+  zone: state.zone,
 })
 
 Dashboard.displayName = 'Dashboard'
