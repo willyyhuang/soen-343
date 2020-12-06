@@ -63,8 +63,8 @@ const SimulationFunctionalityCard = ({
             }
           }
           if (period2) {
-            const hour = period1.substring(0, period1.indexOf(':'))
-            const minute = period1.substring(period1.indexOf(':') + 1, period1.length)
+            const hour = period2.substring(0, period2.indexOf(':'))
+            const minute = period2.substring(period2.indexOf(':') + 1, period2.length)
             const compareTime = moment(date.concat(time)).set('hour', hour).set('minute', minute).set('second', 0)
             if (compareTime.isSame(currentTime)) {
               setZonePeriod({
@@ -79,8 +79,8 @@ const SimulationFunctionalityCard = ({
             }
           }
           if (period3) {
-            const hour = period1.substring(0, period1.indexOf(':'))
-            const minute = period1.substring(period1.indexOf(':') + 1, period1.length)
+            const hour = period3.substring(0, period3.indexOf(':'))
+            const minute = period3.substring(period3.indexOf(':') + 1, period3.length)
             const compareTime = moment(date.concat(time)).set('hour', hour).set('minute', minute).set('second', 0)
             if (compareTime.isSame(currentTime)) {
               setZonePeriod({

@@ -78,16 +78,19 @@ const SimulationParameterCard = ({
   }, [simulationConfig])
 
   useEffect(() => {
-    if (summerMonths) {
+    if (summerMonths && date && time) {
       const startMonth = parseInt(summerMonths.substring(0, summerMonths.indexOf('-')), 10) - 1
       const endMonth = parseInt(summerMonths.substring(summerMonths.indexOf('-') + 1, summerMonths.length), 10) - 1
       if (moment(date.concat(time)).get('month') >= startMonth && moment(date.concat(time)).get('month') < endMonth) {
         setSeason(true)
       }
     }
-    if (winterMonths) {
+    if (winterMonths && date && time) {
       const startMonth = winterMonths.substring(0, winterMonths.indexOf('-')) - 1
-      const endMonth = winterMonths.substring(winterMonths.indexOf('-') + 1, winterMonths.length) - 1 + 11
+      let endMonth = winterMonths.substring(winterMonths.indexOf('-') + 1, winterMonths.length) - 1
+      if (startMonth > endMonth) {
+        endMonth += 11
+      }
       if (moment(date.concat(time)).get('month') >= startMonth && moment(date.concat(time)).get('month') < endMonth) {
         setSeason(false)
       }
