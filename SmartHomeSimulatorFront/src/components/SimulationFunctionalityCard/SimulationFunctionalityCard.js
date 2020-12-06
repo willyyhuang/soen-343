@@ -6,13 +6,16 @@ import moment from 'moment'
 import Clock from 'react-clock'
 import {RoomCard} from '../index'
 import 'react-clock/dist/Clock.css'
-import {setSimulationDate, setSimulationTime, setAwayModeLightStatus} from '../../services'
+import {
+setSimulationDate, setSimulationTime, setAwayModeLightStatus, setZonePeriod,
+} from '../../services'
 
 const SimulationFunctionalityCard = ({
   addConsoleMessage,
   speedRate,
   simulationConfig,
   fetchUserProfiles,
+  zone,
 }) => {
   const {
     simulationUsers,
@@ -37,6 +40,61 @@ const SimulationFunctionalityCard = ({
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentTime(currentTime.add(1, 'seconds'))
+      if (zone.length > 0) {
+        zone.map((item) => {
+          const {
+            period1, period2, period3, zoneName,
+          } = item
+          if (period1) {
+            const hour = period1.substring(0, period1.indexOf(':'))
+            const minute = period1.substring(period1.indexOf(':') + 1, period1.length)
+            const compareTime = moment(date.concat(time)).set('hour', hour).set('minute', minute).set('second', 0)
+            if (compareTime.isSame(currentTime)) {
+              setZonePeriod({
+                period: 1,
+                zoneName,
+              }).then((response) => {
+                const {data} = response
+                if (data.success) {
+                  addConsoleMessage(data.consoleMessage)
+                }
+              })
+            }
+          }
+          if (period2) {
+            const hour = period1.substring(0, period1.indexOf(':'))
+            const minute = period1.substring(period1.indexOf(':') + 1, period1.length)
+            const compareTime = moment(date.concat(time)).set('hour', hour).set('minute', minute).set('second', 0)
+            if (compareTime.isSame(currentTime)) {
+              setZonePeriod({
+                period: 2,
+                zoneName,
+              }).then((response) => {
+                const {data} = response
+                if (data.success) {
+                  addConsoleMessage(data.consoleMessage)
+                }
+              })
+            }
+          }
+          if (period3) {
+            const hour = period1.substring(0, period1.indexOf(':'))
+            const minute = period1.substring(period1.indexOf(':') + 1, period1.length)
+            const compareTime = moment(date.concat(time)).set('hour', hour).set('minute', minute).set('second', 0)
+            if (compareTime.isSame(currentTime)) {
+              setZonePeriod({
+                period: 3,
+                zoneName,
+              }).then((response) => {
+                const {data} = response
+                if (data.success) {
+                  addConsoleMessage(data.consoleMessage)
+                }
+              })
+            }
+          }
+        })
+      }
       setValue(new Date(currentTime.format('YYYY-MM-DD HH:mm:ss')))
       setSecondsPassed(secondsPassed + 1)
       if (awayMode) {

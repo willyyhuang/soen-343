@@ -17,7 +17,10 @@ getProfile, start, stop, setAutoMode, setAwayMode,
 } from '../../services'
 
 const Dashboard = ({
-simulationConfig, consoleMessage, zone, dispatch,
+  simulationConfig,
+  consoleMessage,
+  zone,
+  dispatch,
 }) => {
   const {messages} = consoleMessage
   const [speedRate, setSpeedRate] = useState(1)
@@ -136,6 +139,7 @@ simulationConfig, consoleMessage, zone, dispatch,
               && simulationConfig.date
               && simulationConfig.time && (
                 <SimulationFunctionalityCard
+                  zone={zone}
                   addConsoleMessage={addConsoleMessage}
                   speedRate={speedRate}
                   simulationConfig={simulationConfig}
