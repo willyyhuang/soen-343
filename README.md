@@ -89,7 +89,8 @@ You'll see the Spring logo appear in your console and all the services starting 
 3. Set Outdoor temperature
 4. Set desired empty room temperature
 5. Set winter/summer months and temperature
-6. Create the users you want and place them wherever you want them at the beginning
-7. Select a current simulation user 
-8. Add the rooms in zones (NOTE: all the rooms should be in zones except backyard and outside)
-9. Start the simulation and enjoy!
+6. Click the save button
+7. Create the users you want and place them wherever you want them at the beginning
+8. Select a current simulation user 
+9. Add the rooms in zones (NOTE: all the rooms should be in zones except backyard and outside)
+10. Start the simulation and enjoy!
