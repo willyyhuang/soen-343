@@ -108,10 +108,10 @@ const RoomCard = ({
           ? <Typography.Text onClick={() => setIsCurrentTempDisplayed(false)}>
             {`Current Temperature: ${_.round(currentTemperature, 2)}`}
           </Typography.Text>
-        : <Button style={{marginBottom: 5}} type='link' onClick={() => setIsCurrentTempDisplayed(true)}>Display Temperature</Button>}
+        : <Button disabled={(name === 'backyard') || (name === 'outside')} style={{marginBottom: 5}} type='link' onClick={() => setIsCurrentTempDisplayed(true)}>Display Temperature</Button>}
       </Row>
       <Row>
-        <Button onClick={() => setIsOverrideModalVisible(true)} type='link'>Override Temperature</Button>
+        <Button disabled={(name === 'backyard') || (name === 'outside')} onClick={() => setIsOverrideModalVisible(true)} type='link'>Override Temperature</Button>
       </Row>
       <Row>
         {objects.length === 0
