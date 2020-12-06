@@ -58,10 +58,15 @@ public class SmartHomeHeatingProxy {
         if (verifyPermission(user, "temp", roomName)) {
             success = smartHomeHeating.changeRoomTemp(roomName, newTemp);
         }
-        if (success) {
+        if (success && newTemp > SimulationContext.getInstance().getTempThreshold()) {
             smartHomeHeating.logSuccess(roomName, "Temperature in room", "changed", user.getName());
         } else {
-            smartHomeHeating.logFail(roomName, "Temperature in room", "changed", user.getName());
+            if(success) {
+                smartHomeHeating.logFail(roomName, "Temperature in room", "changed", user.getName());
+            }
+            else{
+                smartHomeHeating.logMessage("[Warning]" + "Temperature in room " + roomName + " is going below the threshold!");
+            }
         }
         return success;
     }

@@ -290,7 +290,7 @@ public class SmartHomeHeatingController {
      */
     @PostMapping(value = "/setEmptyRoomTemp")
     @ResponseStatus(value = HttpStatus.OK)
-    public boolean setCurrentTemp(@RequestParam("emptyRoomTemp") double emptyRoomTemp) {
+    public boolean setEmptyRoomTemp(@RequestParam("emptyRoomTemp") double emptyRoomTemp) {
         return smartHomeHeatingService.setEmptyRoomTemp(emptyRoomTemp);
     }
 }

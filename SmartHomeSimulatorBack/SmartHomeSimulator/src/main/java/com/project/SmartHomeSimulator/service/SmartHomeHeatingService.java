@@ -9,6 +9,7 @@ import com.project.SmartHomeSimulator.module.SmartHomeHeatingProxy;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class SmartHomeHeatingService {
@@ -124,6 +125,12 @@ public class SmartHomeHeatingService {
      */
     public boolean setEmptyRoomTemp(double emptyRoomTemp){
         simulationContext.setEmptyRoomTemp(emptyRoomTemp);
+        List<Room> rooms = simulationContext.getHomeLayout().getRoomList();
+        for (Room room : rooms){
+            if (room.getUsersInRoom() == 0){
+                room.setDesiredTemp(emptyRoomTemp);
+            }
+        }
         return true;
     }
 
