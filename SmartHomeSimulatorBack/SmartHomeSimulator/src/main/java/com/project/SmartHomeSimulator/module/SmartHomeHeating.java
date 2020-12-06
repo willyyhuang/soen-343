@@ -85,6 +85,14 @@ public class SmartHomeHeating extends Module implements AwayModeMonitor, Monitor
         switchStates(room, room.getCurrentTemp(), newTemp);
         room.setDesiredTemp(newTemp);
         room.setOverridden(true);
+        AC ac = (AC) room.getRoomObjectByType(RoomObjectType.AC);
+        if (ac.isStatus() && SimulationContext.getInstance().getOutsideTemp() < room.getCurrentTemp() && isSummer && !SimulationContext.getInstance().isAwayMode()){
+            List<RoomObject> objects = SimulationContext.getInstance().getHomeLayout().getRoomByName(roomName).getRoomObjectsByType(RoomObjectType.WINDOW);
+            for (RoomObject object : objects) {
+                openCloseWindows(object.getId().toString(), true);
+            }
+            ac.setStatus(false);
+        }
         return true;
     }
 

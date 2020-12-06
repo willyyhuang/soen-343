@@ -65,14 +65,6 @@ public class SmartHomeHeatingController {
     public ResponseAPI changeRoomTemp(@RequestParam("roomName") String roomName, @RequestParam("newTemp") double newTemp) {
         ResponseAPI response = new ResponseAPI();
         response.setDefaultValues();
-        if (smartHomeSecurity.getAwayModeConfig().isAwayMode()
-                && simulationContext.getCurrentSimulationUser() != simulationContext.getAwayModeUser()) {
-            response.success = false;
-            smartHomeHeating.logMessage("[Alert] Someone is trying to change home settings while you are away!");
-            response.consoleMessage = smartHomeHeating.getConsoleMessage();
-            response.alertModeOn = true;
-            return response;
-        }
         response.success = smartHomeHeatingService.changeRoomTemp(roomName, newTemp);
         response.consoleMessage = smartHomeHeating.getConsoleMessage();
         response.alertModeOn = false;

@@ -184,6 +184,29 @@ public class Room {
         return null;
     }
 
+    /**
+     * Gets a room object by type
+     *
+     * @param type
+     * @return room object
+     */
+    public List<RoomObject> getRoomObjectsByType(RoomObjectType type) {
+        List<RoomObject> objects = new ArrayList<>();
+        if (this.getObjects() != null) {
+            for (RoomObject roomObject : this.getObjects()) {
+                if (roomObject.getObjectType() == type) {
+                    objects.add(roomObject);
+                }
+            }
+        }
+        return objects;
+    }
+
+    /**
+     *Gets all the lights
+     * @return
+     */
+
     public List<RoomObject> allLights() {
         List<RoomObject> lights = new ArrayList<>();
         for (RoomObject object : this.getObjects()) {
