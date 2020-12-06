@@ -16,9 +16,10 @@ const RoomCard = ({
   outsideTemp,
 }) => {
   const {
-    desiredTemp, currentTemp, zone, name, objects, overridden,
+    desiredTemp, currentTemp, zone, name, objects, overridden, usersInRoom,
   } = room
   const [currentTemperature, setCurrentTemperature] = useState(currentTemp)
+  const [prevUserCount, setPrevUserCount] = useState(usersInRoom)
   const [isCurrentTempDisplayed, setIsCurrentTempDisplayed] = useState(false)
   const [isOverrideModalVisible, setIsOverrideModalVisible] = useState(false)
   const [newRoomTemp, setNewRoomTemp] = useState()
@@ -26,6 +27,14 @@ const RoomCard = ({
   // Temperature
   useEffect(() => {
     const interval = setInterval(() => {
+      if (usersInRoom !== prevUserCount) {
+        setPrevUserCount(usersInRoom)
+        setCurrentTemp({
+          roomName: name,
+          currentTemp: _.round(currentTemperature, 2),
+        })
+        fetchUserProfiles()
+      }
       const heaterObject = objects.filter((item) => item.objectType === 'HEATER')
       const acObject = objects.filter((item) => item.objectType === 'AC')
       if (acObject.length === 1 && heaterObject.length === 1) {
