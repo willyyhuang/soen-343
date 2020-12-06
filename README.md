@@ -25,7 +25,16 @@ This is a repo for the SOEN343 project of a Smart Home Simulation. Using an MVC 
 * Maven
 * React
 * Java Script - CSS
-	
+
+### What design patterns were used
+Singleton design pattern:
+
+We use the singleton design pattern in the SmartHomeHeater (SHH) class to restrict the instantiation of this class to only once. The reason behind implementing this pattern is because we need only one instance of the SHH module to keep it consistent throughout a simulation.  
+
+Observer design pattern:
+
+As for the functionality of the SHH, we implement it using the observer pattern. The SHH (observer), is subscribed to the smart home simulator and security (observables) to monitor the presence of individuals in rooms and the away mode state, respectively. This way, the SHH module can act accordingly when changes happen during a simulation.  
+
 # Installation
 
 ### Installation for Front-End
@@ -73,3 +82,14 @@ First time running the code of backend?
 
 You'll see the Spring logo appear in your console and all the services starting in port 8080.
 
+### FOLLOW THESE STEPS BEFORE STARTING THE SIMULATION
+
+1. Upload Home Layout --> you can use the HomeLayoutExample.json file provided
+2. Set Date and time
+3. Set Outdoor temperature
+4. Set desired empty room temperature
+5. Set winter/summer months and temperature
+6. Create the users you want and place them wherever you want them at the beginning
+7. Select a current simulation user 
+8. Add the rooms in zones (NOTE: all the rooms should be in zones except backyard and outside)
+9. Start the simulation and enjoy!
