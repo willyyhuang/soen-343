@@ -20,14 +20,14 @@ public class SmartHomeSecurity extends Module implements Monitor {
     private boolean alertModeOn;
     private List<String> lightIDs;
     private String timeToKeepLightsOn;
-    private List<AwayModeMonitor> awayModeMonitors;
+    private List<AwayModeMonitor> awayModeMonitors =new ArrayList<>();;
 
     //this class cannot be instantiated
     private SmartHomeSecurity() {
         this.setName("SmartHomeSecurity");
         this.awayModeConfig = new AwayModeConfig();
         this.lightIDs = new ArrayList<String>();
-        this.awayModeMonitors = new ArrayList<>();
+        this.awayModeMonitors.add(SmartHomeHeating.getInstance());
     }
 
     public static SmartHomeSecurity getInstance() {
@@ -156,6 +156,7 @@ public class SmartHomeSecurity extends Module implements Monitor {
 
     public void setAwayMode(boolean awayMode){
         this.awayModeConfig.setAwayMode(awayMode);
+        SimulationContext.getInstance().setAwayMode(awayMode);
         notifyAwayModeMonitors(awayMode);
     }
 }

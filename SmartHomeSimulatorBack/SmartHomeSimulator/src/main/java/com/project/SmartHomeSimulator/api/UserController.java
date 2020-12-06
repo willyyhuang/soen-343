@@ -88,7 +88,7 @@ public class UserController {
         ResponseAPI response = new ResponseAPI();
         if(smartHomeSecurity.getAwayModeConfig().isAwayMode() && name.equals(simulationContext.getAwayModeUser().getName())){
             smartHomeSecurity.setAwayMode(false);
-            simulationContext.setAwayMode(false);
+            smartHomeSecurity.setAwayMode(false);
             simulationContext.setAwayModeUser(null);
         }
 
