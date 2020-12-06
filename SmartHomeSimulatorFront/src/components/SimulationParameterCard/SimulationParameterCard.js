@@ -24,6 +24,7 @@ import {
   setWinterMonths,
   setWinterTemp,
   setSeason,
+  setEmptyRoomTemp,
 } from '../../services'
 
 const SimulationParameterCard = ({
@@ -41,6 +42,7 @@ const SimulationParameterCard = ({
     winterMonths,
     summerTemp,
     winterTemp,
+    emptyRoomTemp,
   } = simulationConfig
   const PARAMETER_FORM_DATA_INITIAL_STATE = {
     outsideTemp,
@@ -50,6 +52,7 @@ const SimulationParameterCard = ({
     winterMonths,
     summerTemp,
     winterTemp,
+    emptyRoomTemp,
   }
   const [parameterFormData, setParameterFormData] = useState(
     PARAMETER_FORM_DATA_INITIAL_STATE,
@@ -65,6 +68,7 @@ const SimulationParameterCard = ({
       winterMonths,
       summerTemp,
       winterTemp,
+      emptyRoomTemp,
     })
     // eslint-disable-next-line
   }, [simulationConfig])
@@ -166,6 +170,9 @@ const SimulationParameterCard = ({
             ) {
               setWinterTemp(parameterFormData.winterTemp)
             }
+            if (parameterFormData.emptyRoomTemp !== PARAMETER_FORM_DATA_INITIAL_STATE.emptyRoomTemp) {
+              setEmptyRoomTemp(parameterFormData.emptyRoomTemp)
+            }
             fetchUserProfiles()
             if (simulationRunning) {
               stop()
@@ -193,6 +200,7 @@ const SimulationParameterCard = ({
               outsideTemp: value,
               time: parameterFormData.time,
               date: parameterFormData.date,
+              emptyRoomTemp: parameterFormData.emptyRoomTemp,
             })}
           value={parameterFormData.outsideTemp} />
       </Form.Item>
@@ -222,6 +230,7 @@ const SimulationParameterCard = ({
               outsideTemp: parameterFormData.outsideTemp,
               time: value,
               date: parameterFormData.date,
+              emptyRoomTemp: parameterFormData.emptyRoomTemp,
             })
           }}
           placeholder='enter a time'
@@ -229,6 +238,22 @@ const SimulationParameterCard = ({
       </Form.Item>
       <Divider />
       <Typography.Title level={5}>SHH Parameter</Typography.Title>
+      <Form.Item label='Desired Empty Room Temperature (°C)'>
+        <InputNumber
+          step={0.1}
+          precision={1}
+          value={parameterFormData.emptyRoomTemp}
+          onChange={(value) => setParameterFormData({
+          summerMonths: parameterFormData.summerMonths,
+          summerTemp: parameterFormData.summerTemp,
+          winterMonths: parameterFormData.winterMonths,
+          winterTemp: parameterFormData.winterTemp,
+          outsideTemp: parameterFormData.outsideTemp,
+          time: parameterFormData.time,
+          date: parameterFormData.date,
+          emptyRoomTemp: value,
+        })} />
+      </Form.Item>
       <Form.Item label='Summer Months'>
         <Input
           placeholder='e.g. 6-8'
@@ -242,6 +267,7 @@ const SimulationParameterCard = ({
           outsideTemp: parameterFormData.outsideTemp,
           time: parameterFormData.time,
           date: parameterFormData.date,
+          emptyRoomTemp: parameterFormData.emptyRoomTemp,
         })} />
       </Form.Item>
       <Form.Item label='Winter Months'>
@@ -256,6 +282,7 @@ const SimulationParameterCard = ({
           outsideTemp: parameterFormData.outsideTemp,
           time: parameterFormData.time,
           date: parameterFormData.date,
+          emptyRoomTemp: parameterFormData.emptyRoomTemp,
         })} />
       </Form.Item>
       <Form.Item label='Summer Temperature (°C)'>
@@ -271,6 +298,7 @@ const SimulationParameterCard = ({
           outsideTemp: parameterFormData.outsideTemp,
           time: parameterFormData.time,
           date: parameterFormData.date,
+          emptyRoomTemp: parameterFormData.emptyRoomTemp,
         })} />
       </Form.Item>
       <Form.Item label='Winter Temperature (°C)'>
@@ -286,6 +314,7 @@ const SimulationParameterCard = ({
           outsideTemp: parameterFormData.outsideTemp,
           time: parameterFormData.time,
           date: parameterFormData.date,
+          emptyRoomTemp: parameterFormData.emptyRoomTemp,
         })} />
       </Form.Item>
       <Divider />

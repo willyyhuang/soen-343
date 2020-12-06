@@ -22,11 +22,12 @@ const RoomCard = ({
   const [isCurrentTempDisplayed, setIsCurrentTempDisplayed] = useState(false)
   const [isOverrideModalVisible, setIsOverrideModalVisible] = useState(false)
   const [newRoomTemp, setNewRoomTemp] = useState()
-  const heaterObject = objects.filter((item) => item.objectType === 'HEATER')
-  const acObject = objects.filter((item) => item.objectType === 'AC')
+
   // Temperature
   useEffect(() => {
     const interval = setInterval(() => {
+      const heaterObject = objects.filter((item) => item.objectType === 'HEATER')
+      const acObject = objects.filter((item) => item.objectType === 'AC')
       if (acObject.length === 1 && heaterObject.length === 1) {
         if (heaterObject[0].status === false && acObject[0].status === false) {
           if (_.round(currentTemperature, 1) > outsideTemp) {
@@ -34,6 +35,13 @@ const RoomCard = ({
           }
           if (_.round(currentTemperature, 1) < outsideTemp) {
             setCurrentTemperature(_.round(currentTemperature, 2) + 0.05)
+          }
+          if (_.round(currentTemperature, 2) === (desiredTemp + 0.25) || _.round(currentTemperature, 2) === (desiredTemp - 0.25)) {
+            setCurrentTemp({
+              roomName: name,
+              currentTemp: _.round(currentTemperature, 2),
+            })
+            return fetchUserProfiles()
           }
         }
         if (acObject[0].status && _.round(currentTemperature, 2) > desiredTemp) {
@@ -47,14 +55,15 @@ const RoomCard = ({
             roomName: name,
             currentTemp: _.round(currentTemperature, 2),
           })
-          fetchUserProfiles()
+          return fetchUserProfiles()
         }
       }
     }, 1000 / speedRate)
     return () => {
       clearInterval(interval)
     }
-  }, [currentTemperature])
+    // eslint-disable-next-line
+  }, [currentTemperature, objects])
 
   const overrideTempModal = (
     <Modal
