@@ -41,6 +41,7 @@ const SimulationFunctionalityCard = ({
     const interval = setInterval(() => {
       setCurrentTime(currentTime.add(1, 'seconds'))
       if (zone.length > 0) {
+        // eslint-disable-next-line
         zone.map((item) => {
           const {
             period1, period2, period3, zoneName,
