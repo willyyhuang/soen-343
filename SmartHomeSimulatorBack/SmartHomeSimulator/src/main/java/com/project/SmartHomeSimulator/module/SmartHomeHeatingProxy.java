@@ -62,7 +62,7 @@ public class SmartHomeHeatingProxy {
             smartHomeHeating.logSuccess(roomName, "Temperature in room", "changed", user.getName());
         } else {
             if(success) {
-                smartHomeHeating.logMessage("[Warning]" + "Temperature in room " + roomName + " is going below the threshold!");
+                smartHomeHeating.logMessage("[Warning] " + "Temperature in room " + roomName + " is going below the threshold!");
             }
             else{
                 smartHomeHeating.logFail(roomName, "Temperature in room", "changed", user.getName());
