@@ -227,7 +227,7 @@ public class SmartHomeHeating extends Module implements AwayModeMonitor, Monitor
     }
 
     @Override
-    public void update(String awayModeUser, User user) {
+    public void update( User user) {
         if (user != null) {
             User oldUserObject = findUserByName(user.getName());
             if (oldUserObject != null){
@@ -271,6 +271,7 @@ public class SmartHomeHeating extends Module implements AwayModeMonitor, Monitor
      * @param users
      */
     public void cloneSimulationUsers(List<User> users) {
+        simulationUsers = new ArrayList<>();
         if (users != null) {
             for (User user : users) {
                 simulationUsers.add(user.clone());

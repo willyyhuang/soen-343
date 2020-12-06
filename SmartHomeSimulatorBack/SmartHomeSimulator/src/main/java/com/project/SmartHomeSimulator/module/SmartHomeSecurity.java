@@ -38,9 +38,10 @@ public class SmartHomeSecurity extends Module implements Monitor {
     }
 
     @Override
-    public void update(String awayModeUser, User user) {
+    public void update(User user) {
         if (awayModeConfig.isAwayMode()) {
-            if (!awayModeUser.equals(user.getName()) && !user.getHomeLocation().equals("outside")) {
+            User awayModeUser = SimulationContext.getInstance().getAwayModeUser();
+            if (awayModeUser != null && !awayModeUser.equals(user.getName()) && !user.getHomeLocation().equals("outside")) {
                 this.alertModeOn = true;
                 logMessage("[Alert] " + user.getName() + " is detected in the house during away mode");
                 return;

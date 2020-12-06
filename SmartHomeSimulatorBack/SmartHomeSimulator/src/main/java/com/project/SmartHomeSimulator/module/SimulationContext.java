@@ -223,10 +223,10 @@ public class SimulationContext {
 		}
 		return usersInRoom;
 	}
-	
+
 	public void loadUserProfiles() {
 		ObjectMapper mapper = new ObjectMapper();
-		
+
 		try {
 			simulationUsers = mapper.readValue(userProfilesJSON, new TypeReference<List<User>>(){});
 			for (User user : simulationUsers){
@@ -238,10 +238,8 @@ public class SimulationContext {
 	}
 
 	public void notifyMonitors(User user){
-		if (awayModeUser != null) {
-			for (Monitor monitor : this.monitors) {
-				monitor.update(awayModeUser.getName(), user);
-			}
+		for (Monitor monitor : this.monitors) {
+			monitor.update(user);
 		}
 	}
 
