@@ -60,7 +60,7 @@ public class SmartHomeSecurityService {
      * before turning them off after setting away mode on
      *
      * @param lightIDs- List of light IDs
-     * @return- boolean
+     * @return - boolean
      */
     public boolean setLightIDs(List<String> lightIDs) {
         if (simulationContext.getCurrentSimulationUser() != null) {
@@ -72,9 +72,8 @@ public class SmartHomeSecurityService {
 
     /**
      * sets the time to keep the lights on when away mode is on
-     *
-     * @param timeToKeepLightsOn- amount of time to wait before closing the lights
-     * @return- boolean
+     * @param timeToKeepLightsOn
+     * @return
      */
     public boolean setTimeToKeepLightsOn(String timeToKeepLightsOn) {
         if (simulationContext.getCurrentSimulationUser() != null) {
@@ -91,9 +90,9 @@ public class SmartHomeSecurityService {
     }
 
     /**
-     * Turn on/off the lights that are specified in the attribute "lights"
-     *
-     * @return- boolean
+     * turns off light
+     * @param status
+     * @return
      */
     public boolean turnOnOffLights(boolean status) {
         return smartHomeSecurityProxy.turnOnOffLights(status);

@@ -244,9 +244,8 @@ public class SmartHomeHeatingController {
     }
 
     /**
-     * update the season
-     *
-     * @return
+     * update season
+     * @param isSummer
      */
     @PostMapping(value = "/setSeason")
     @ResponseStatus(value = HttpStatus.OK)
