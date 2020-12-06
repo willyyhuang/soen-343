@@ -322,6 +322,7 @@ export const getZone = `${appsettings.baseApiUrl}/api/v1/simulation/getAllZones`
 export const overrideTemp = `${appsettings.baseApiUrl}/api/v1/simulation/changeRoomTemp`
 export const currentTemp = `${appsettings.baseApiUrl}/api/v1/simulation/setCurrentTemp`
 export const emptyRoomTemp = `${appsettings.baseApiUrl}/api/v1/simulation/setEmptyRoomTemp`
+export const threshholdTemp = `${appsettings.baseApiUrl}/api/v1/simulation/setTempThreshold`
 
 export async function createZone(payload) {
   return axios({
@@ -360,6 +361,16 @@ export async function setEmptyRoomTemp(payload) {
     method: 'POST',
     params: {
       emptyRoomTemp: payload,
+    },
+  })
+}
+
+export async function setTempThreshold(payload) {
+  return axios({
+    url: threshholdTemp,
+    method: 'POST',
+    params: {
+      tempThreshold: payload,
     },
   })
 }

@@ -50,10 +50,10 @@ const RoomCard = ({
         if (heaterObject[0].status && _.round(currentTemperature, 1) < desiredTemp) {
           setCurrentTemperature(_.round(currentTemperature, 2) + 0.1)
         }
-        if (_.round(currentTemperature, 2) === desiredTemp && (heaterObject[0].status || acObject[0].status)) {
+        if (_.round(currentTemperature, 1) === desiredTemp && (heaterObject[0].status || acObject[0].status)) {
           setCurrentTemp({
             roomName: name,
-            currentTemp: _.round(currentTemperature, 2),
+            currentTemp: desiredTemp,
           })
           return fetchUserProfiles()
         }
@@ -63,7 +63,7 @@ const RoomCard = ({
       clearInterval(interval)
     }
     // eslint-disable-next-line
-  }, [currentTemperature, objects])
+  }, [desiredTemp, currentTemperature, objects])
 
   const overrideTempModal = (
     <Modal

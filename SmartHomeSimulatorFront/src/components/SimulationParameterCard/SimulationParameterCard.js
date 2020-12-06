@@ -25,6 +25,7 @@ import {
   setWinterTemp,
   setSeason,
   setEmptyRoomTemp,
+  setTempThreshold,
 } from '../../services'
 
 const SimulationParameterCard = ({
@@ -43,6 +44,7 @@ const SimulationParameterCard = ({
     summerTemp,
     winterTemp,
     emptyRoomTemp,
+    tempThreshold,
   } = simulationConfig
   const PARAMETER_FORM_DATA_INITIAL_STATE = {
     outsideTemp,
@@ -53,6 +55,7 @@ const SimulationParameterCard = ({
     summerTemp,
     winterTemp,
     emptyRoomTemp,
+    tempThreshold,
   }
   const [parameterFormData, setParameterFormData] = useState(
     PARAMETER_FORM_DATA_INITIAL_STATE,
@@ -69,6 +72,7 @@ const SimulationParameterCard = ({
       summerTemp,
       winterTemp,
       emptyRoomTemp,
+      tempThreshold,
     })
     // eslint-disable-next-line
   }, [simulationConfig])
@@ -173,6 +177,9 @@ const SimulationParameterCard = ({
             if (parameterFormData.emptyRoomTemp !== PARAMETER_FORM_DATA_INITIAL_STATE.emptyRoomTemp) {
               setEmptyRoomTemp(parameterFormData.emptyRoomTemp)
             }
+            if (parameterFormData.tempThreshold !== PARAMETER_FORM_DATA_INITIAL_STATE.tempThreshold) {
+              setTempThreshold(parameterFormData.tempThreshold)
+            }
             fetchUserProfiles()
             if (simulationRunning) {
               stop()
@@ -201,6 +208,7 @@ const SimulationParameterCard = ({
               time: parameterFormData.time,
               date: parameterFormData.date,
               emptyRoomTemp: parameterFormData.emptyRoomTemp,
+              tempThreshold: parameterFormData.tempThreshold,
             })}
           value={parameterFormData.outsideTemp} />
       </Form.Item>
@@ -231,6 +239,7 @@ const SimulationParameterCard = ({
               time: value,
               date: parameterFormData.date,
               emptyRoomTemp: parameterFormData.emptyRoomTemp,
+              tempThreshold: parameterFormData.tempThreshold,
             })
           }}
           placeholder='enter a time'
@@ -238,6 +247,23 @@ const SimulationParameterCard = ({
       </Form.Item>
       <Divider />
       <Typography.Title level={5}>SHH Parameter</Typography.Title>
+      <Form.Item label='Alert Threshold Temperature (°C)'>
+        <InputNumber
+          step={0.1}
+          precision={1}
+          value={parameterFormData.tempThreshold}
+          onChange={(value) => setParameterFormData({
+          summerMonths: parameterFormData.summerMonths,
+          summerTemp: parameterFormData.summerTemp,
+          winterMonths: parameterFormData.winterMonths,
+          winterTemp: parameterFormData.winterTemp,
+          outsideTemp: parameterFormData.outsideTemp,
+          time: parameterFormData.time,
+          date: parameterFormData.date,
+          emptyRoomTemp: parameterFormData.emptyRoomTemp,
+          tempThreshold: value,
+        })} />
+      </Form.Item>
       <Form.Item label='Desired Empty Room Temperature (°C)'>
         <InputNumber
           step={0.1}
@@ -252,6 +278,7 @@ const SimulationParameterCard = ({
           time: parameterFormData.time,
           date: parameterFormData.date,
           emptyRoomTemp: value,
+          tempThreshold: parameterFormData.tempThreshold,
         })} />
       </Form.Item>
       <Form.Item label='Summer Months'>
@@ -268,6 +295,7 @@ const SimulationParameterCard = ({
           time: parameterFormData.time,
           date: parameterFormData.date,
           emptyRoomTemp: parameterFormData.emptyRoomTemp,
+          tempThreshold: parameterFormData.tempThreshold,
         })} />
       </Form.Item>
       <Form.Item label='Winter Months'>
@@ -283,6 +311,7 @@ const SimulationParameterCard = ({
           time: parameterFormData.time,
           date: parameterFormData.date,
           emptyRoomTemp: parameterFormData.emptyRoomTemp,
+          tempThreshold: parameterFormData.tempThreshold,
         })} />
       </Form.Item>
       <Form.Item label='Summer Temperature (°C)'>
@@ -299,6 +328,7 @@ const SimulationParameterCard = ({
           time: parameterFormData.time,
           date: parameterFormData.date,
           emptyRoomTemp: parameterFormData.emptyRoomTemp,
+          tempThreshold: parameterFormData.tempThreshold,
         })} />
       </Form.Item>
       <Form.Item label='Winter Temperature (°C)'>
@@ -315,6 +345,7 @@ const SimulationParameterCard = ({
           time: parameterFormData.time,
           date: parameterFormData.date,
           emptyRoomTemp: parameterFormData.emptyRoomTemp,
+          tempThreshold: parameterFormData.tempThreshold,
         })} />
       </Form.Item>
       <Divider />
